@@ -1,6 +1,5 @@
 node_modules
 bower_components
-/target
 .classpath
 node_modules/*
 **bower_components/
