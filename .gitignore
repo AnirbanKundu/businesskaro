@@ -1,5 +1,9 @@
 node_modules
-dist
-.tmp
-.sass-cache
 bower_components
+/target
+.classpath
+node_modules/*
+**bower_components/
+dist/**
+.tmp
+coverage/**
