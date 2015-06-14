@@ -1,33 +1,30 @@
-'use strict';
-
-/**
- * @ngdoc overview
- * @name businesskaroApp
- * @description
- * # businesskaroApp
- *
- * Main module of the application.
- */
 angular
-  .module('businesskaroApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch'
+  .module('themesApp', [
+    'theme',
+    'theme.demos',
   ])
-  .config(function ($routeProvider) {
+  .config(['$provide', '$routeProvider', function($provide, $routeProvider) {
+    'use strict';
     $routeProvider
       .when('/', {
-        templateUrl: 'app/views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'app/views/index.html',
+        resolve: {
+          loadCalendar: ['$ocLazyLoad', function($ocLazyLoad) {
+            return $ocLazyLoad.load([
+              'bower_components/fullcalendar/fullcalendar.js',
+            ]);
+          }]
+        }
       })
-      .when('/about', {
-        templateUrl: 'app/views/about.html',
-        controller: 'AboutCtrl'
+      .when('/:templateFile', {
+        templateUrl: function(param) {
+          return 'app/views/' + param.templateFile + '.html';
+        }
+      })
+      .when('#', {
+        templateUrl: 'app/views/index.html',
       })
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);
