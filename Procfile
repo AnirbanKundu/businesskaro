@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar businesskaro-webapp/target/*.jar 
