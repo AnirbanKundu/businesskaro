@@ -23,6 +23,16 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>com.businesskaro</groupId>
+			  <artifactId>businesskaro-service-api</artifactId>
+			  <version>1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.businesskaro</groupId>
+			  <artifactId>businesskaro-service-impl</artifactId>
+			  <version>1</version>
+		</dependency>
 
 	</dependencies>
 

@@ -25,7 +25,7 @@ public class Application {
 	public static void main(String[] args) throws Exception {  
 	    String webPort = System.getenv("PORT");
 	    if (webPort == null || webPort.isEmpty()) {
-	        webPort = "8080";
+	        webPort = "9999";
 	    }
 	    System.setProperty("server.port", webPort);
 	    System.out.println("DB CONNECTION: "+DBConnection.getConnection());
