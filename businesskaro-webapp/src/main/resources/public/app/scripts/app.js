@@ -11,7 +11,7 @@ angular
         resolve: {
           loadCalendar: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'app/bower_components/fullcalendar/fullcalendar.js',
+              'app/assets/bower_components/fullcalendar/fullcalendar.js',
             ]);
           }]
         }
