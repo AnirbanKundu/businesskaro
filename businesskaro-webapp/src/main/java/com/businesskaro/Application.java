@@ -9,14 +9,9 @@ import com.businesskaro.dao.DBConnection;
 //when handling incoming web requests.
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/home")
 public class Application {
 
-	//the below annotation provides routing information.
-	@RequestMapping(method = RequestMethod.GET)
-    public String home() {
-        return "Hello World!";
-    }
+	
 	/*
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
