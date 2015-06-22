@@ -7,22 +7,22 @@ angular
     'use strict';
     $routeProvider
       .when('/', {
-        templateUrl: 'app/views/index.html',
+        templateUrl: 'views/index.html',
         resolve: {
           loadCalendar: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'app/bower_components/fullcalendar/fullcalendar.js',
+              'bower_components/fullcalendar/fullcalendar.js',
             ]);
           }]
         }
       })
       .when('/:templateFile', {
         templateUrl: function(param) {
-          return 'app/views/' + param.templateFile + '.html';
+          return 'views/' + param.templateFile + '.html';
         }
       })
       .when('#', {
-        templateUrl: 'app/views/index.html',
+        templateUrl: 'views/index.html',
       })
       .otherwise({
         redirectTo: '/'
