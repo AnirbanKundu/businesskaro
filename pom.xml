@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>jBusiness2</groupId>
-	<artifactId>jBusiness2</artifactId>
+	<groupId>businesskaro</groupId>
+	<artifactId>businesskaro</artifactId>
 	<version>1</version>
 
 	<parent>
@@ -21,7 +21,19 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version><!--$NO-MVN-MAN-VER$-->
+			<version>5.1.6</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
+		
+		 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.1.6.RELEASE</version>
 		</dependency>
 
 	</dependencies>

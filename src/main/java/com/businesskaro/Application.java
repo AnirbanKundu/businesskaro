@@ -1,35 +1,39 @@
 package com.businesskaro;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.web.bind.annotation.*;
+import java.util.Arrays;
 
-import com.businesskaro.dao.DBConnection;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.ApplicationContext;
 
 //The below annotation makes our class as web controller and spring will consider it 
 //when handling incoming web requests.
-@RestController
-@EnableAutoConfiguration
-@RequestMapping("/home")
-public class Application {
 
-	//the below annotation provides routing information.
-	@RequestMapping(method = RequestMethod.GET)
-    public String home() {
-        return "Hello World!";
+
+@SpringBootApplication
+
+public class Application extends SpringBootServletInitializer{
+
+	
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(Application.class);
     }
-	/*
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+
+	
+    public static void main(String[] args) {
+        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+       
+        
+         String[] beanNames = ctx.getBeanDefinitionNames();
+        Arrays.sort(beanNames);
+        for (String beanName : beanNames) {
+            System.out.println(beanName);
+        }
+        
+       
     }
-    */
-	public static void main(String[] args) throws Exception {  
-	    String webPort = System.getenv("PORT");
-	    if (webPort == null || webPort.isEmpty()) {
-	        webPort = "8080";
-	    }
-	    System.setProperty("server.port", webPort);
-	    System.out.println("DB CONNECTION: "+DBConnection.getConnection());
-	    SpringApplication.run(Application.class, args);
-	}
 
 }
