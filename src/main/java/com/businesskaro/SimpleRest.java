@@ -21,9 +21,9 @@ public class SimpleRest {
 	@RequestMapping(method = RequestMethod.GET)
     public String home() {
 		BKUser user = new BKUser();
-		user.email = "some";
-		user.phoneNo = "wewew";
-		user.userName = "anirba";
+		user.email = "some1";
+		user.phoneNo = "wewew1";
+		user.userName = "anirba1";
 		dao.createUser(user, null);
         return "Hello World!";
     }

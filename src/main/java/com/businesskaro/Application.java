@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationContext;
 
 
 @SpringBootApplication
-
 public class Application extends SpringBootServletInitializer{
 
 	
