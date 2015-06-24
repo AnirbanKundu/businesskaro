@@ -3,5 +3,10 @@ node_modules/**/*
 dist
 .tmp
 .sass-cache
-src/main/resources/public/app/bower_components
 docs/site
+.DS_Store
+src/main/.DS_Store
+src/.DS_Store
+src/main/resources/public/app/bower_components
+target/classes/**
+target/classes/**/*
