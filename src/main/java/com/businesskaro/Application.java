@@ -23,6 +23,15 @@ public class Application extends SpringBootServletInitializer{
 
 	
     public static void main(String[] args) {
+    	 String webPort = System.getenv("PORT");
+ 	    if (webPort == null || webPort.isEmpty()) {
+ 	        webPort = "8080";
+ 	    }
+ 	    System.setProperty("server.port", webPort);
+ 	    //System.out.println("DB CONNECTION: "+DBConnection.getConnection());
+ 	    //SpringApplication.run(Application.class, args);	    
+    	
+    	
         ApplicationContext ctx = SpringApplication.run(Application.class, args);
        
         
