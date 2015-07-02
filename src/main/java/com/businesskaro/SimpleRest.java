@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.dao.BKUserDao;
-import com.businesskaro.model.BKUser;
+import com.businesskaro.mail.Mail;
 
 @RestController
 @EnableAutoConfiguration
-@RequestMapping("/helloworld")
+@RequestMapping("/sendmail")
 public class SimpleRest {
 
 	@Autowired
@@ -19,12 +19,10 @@ public class SimpleRest {
 	
 	//the below annotation provides routing information.
 	@RequestMapping(method = RequestMethod.GET)
-    public String home() {
-		BKUser user = new BKUser();
-		user.email = "some1";
-		user.phoneNo = "wewew1";
-		user.userName = "anirba1";
-		dao.createUser(user, null);
-        return "Hello World!";
+    public String sendMail() {
+		String to = "anirban.kundu1981@gmail.com";
+		String from = "mengjiritesh@gmail.com";
+		Mail.sendMail(from,to,"Test from business karo ");
+        return "Mail sent";
     }
 }
