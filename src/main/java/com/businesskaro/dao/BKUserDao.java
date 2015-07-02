@@ -22,10 +22,10 @@ public class BKUserDao {
 	
 	String selectAll = "SELECT user_name, password_enc, email,phone FROM user WHERE user_name = ? ";
 	
-	public void createUser(BKUser user, char[] password){
+	public void createUser(BKUser user ){
 		
 		Object[] params = new Object[]{
-				user.userName, "todo", user.email, user.phoneNo
+				user.userName, user.password, user.email, user.phoneNo
 		};
 		
 		int result= db.jdbcTemplate.update(insert, params);
@@ -36,18 +36,20 @@ public class BKUserDao {
 		
 	}
 	
-	public void updateUser(BKUser user, char[] password){
+	public void updateUser(BKUser user){
 		Object[] params = new Object[]{
-				user.userName, "todo", user.email, user.phoneNo
+				user.userName, user.password, user.email, user.phoneNo, user.userName
 		};
 		
 		int result= db.jdbcTemplate.update(update, params);
 		System.out.println("No of rows created :" + result);
 	}
 	
-	public BKUser retrieveBKUser(String userName, char[] password){
+	public BKUser retrieveBKUser(String userName){
 		
-		List<BKUser> users = db.jdbcTemplate.query(selectAll, new RowMapper<BKUser>(){
+		Object[] params = new Object[]{ userName };
+		
+		List<BKUser> users = db.jdbcTemplate.query(selectAll, params, new RowMapper<BKUser>(){
 
 			@Override
 			public BKUser mapRow(ResultSet rs, int arg1) throws SQLException {
@@ -55,16 +57,13 @@ public class BKUserDao {
 				user.email = rs.getString("email");
 				user.phoneNo = rs.getString("phone");
 				user.userName = rs.getString("user_name");
-				
+				user.password = rs.getString("password_enc");
 				return user;
 			}} );
 		
 		return users.get(0);
 	}
 	
-	
-
-
 
 	
 }

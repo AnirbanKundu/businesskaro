@@ -66,18 +66,14 @@ public class SecureTokenUtil {
 		return isValid;
 	}
 
-	public static String generateSecurityToken(String clientId)
+	public static String generateSecurityToken(String newGuid)
 			throws InvalidKeyException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			UnsupportedEncodingException, Exception {
-
-		EncryptionFactory encFactory = new EncryptionFactory(clientId);
-		String newGuid = BKGuid.getNextGuid();
-
+		EncryptionFactory encFactory = new EncryptionFactory(newGuid);
 		Calendar cal = new GregorianCalendar();
-		cal.add(Calendar.HOUR_OF_DAY, 6);
+		cal.add(Calendar.HOUR_OF_DAY, 1);
 		String tokenEndLife = fomratTotokenDateFormat(cal.getTime());
-
 		return encFactory.Encrypt(newGuid + TOKEN_SEP + tokenEndLife );
 	}
 
