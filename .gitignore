@@ -8,4 +8,5 @@ docs/site
 src/main/.DS_Store
 src/.DS_Store
 src/main/resources/public/app/bower_components
+src/main/resources/public/dist/**/*
 /target/

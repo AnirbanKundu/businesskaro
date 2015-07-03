@@ -12,6 +12,12 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.2.2.RELEASE</version>
 	</parent>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<uifoldername>dist</uifoldername>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -47,12 +53,31 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+		<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			 <!--<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		          <systemPropertyVariables>
+		            <uifoldername>app</uifoldername>
+		            <buildDirectory>${project.build.directory}</buildDirectory>
+		          </systemPropertyVariables>
+		        </configuration>
+		      </plugin>
+		      -->
 		</plugins>
+		<resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>**/${uifoldername}/</exclude>
+		</excludes>
+		</resource>
+		</resources>
 	</build>
 </project>
