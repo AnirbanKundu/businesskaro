@@ -1,6 +1,7 @@
 {
   "name": "maverick",
   "version": "1.0.0",
+  "appPath":"src/main/resources/public/app",
   "dependencies": {
     "underscore": "~1.5.2",
     "jquery": "~1.11.0",
