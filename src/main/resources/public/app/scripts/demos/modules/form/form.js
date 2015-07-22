@@ -2,7 +2,7 @@ angular
   .module('theme.demos.forms', [
     'flow',
     'angular-meditor', // used in the wysiwyg demo
-    'xeditable',
+    //'xeditable',
     'theme.core.directives',
     'theme.core.services'
   ])
@@ -18,14 +18,14 @@ angular
     flowFactoryProvider.on('catchAll', function(event) {
       console.log('catchAll', event);
     });
-
+    /*
     $routeProvider
       .when('/form-imagecrop', {
         templateUrl: 'views/form-imagecrop.html',
         resolve: {
           loadJcrop: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'assets/plugins/jcrop/js/jquery.Jcrop.min.js'
+              //'assets/plugins/jcrop/js/jquery.Jcrop.min.js'
             ]);
           }]
         }
@@ -35,8 +35,8 @@ angular
         resolve: {
           loadStepy: ['$ocLazyLoad', function($ocLazyLoad) {
             return $ocLazyLoad.load([
-              'bower_components/jquery-validation/dist/jquery.validate.js',
-              'bower_components/stepy/lib/jquery.stepy.js'
+              'bower_components/jquery-validation/dist/jquery.validate.js'
+              //'bower_components/stepy/lib/jquery.stepy.js'
             ]);
           }]
         }
@@ -51,4 +51,5 @@ angular
           }]
         }
       });
+      */
   }]);

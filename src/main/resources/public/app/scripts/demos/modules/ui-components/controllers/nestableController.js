@@ -58,5 +58,5 @@ angular
         items: []
       });
     };
-  }])
-  .requires.push('ui.tree');
+  }]);
+  /*.requires.push('ui.tree');*/

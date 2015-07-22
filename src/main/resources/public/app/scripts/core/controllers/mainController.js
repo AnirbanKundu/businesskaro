@@ -6,7 +6,10 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     $scope.layoutFixedHeader = $theme.get('fixedHeader');
     $scope.layoutPageTransitionStyle = $theme.get('pageTransitionStyle');
     $scope.layoutDropdownTransitionStyle = $theme.get('dropdownTransitionStyle');
-    $scope.layoutPageTransitionStyleList = ['bounce',
+    $scope.layoutPageTransitionStyleList = ['fadeInDown'];
+    /*
+    [
+      'bounce',
       'flash',
       'pulse',
       'bounceIn',
@@ -38,6 +41,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       'zoomInRight',
       'zoomInUp'
     ];
+    */
 
     $scope.layoutLoading = true;
 

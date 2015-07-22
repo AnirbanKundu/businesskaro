@@ -1,6 +1,6 @@
 angular.module('theme.demos.mail', [
-    'theme.mail.inbox_controller',
-    'theme.mail.compose_controller'
+    //'theme.mail.inbox_controller',
+    //'theme.mail.compose_controller'
   ])
   .config(['$routeProvider', function($routeProvider) {
     'use strict';

@@ -11,13 +11,13 @@ angular
       fullscreen: false,
       layoutHorizontal: false,
       layoutHorizontalLargeIcons: false,
-      layoutBoxed: false,
+      layoutBoxed: true,//false,
       showSmallSearchBar: false,
       topNavThemeClass: 'navbar-midnightblue',
       sidebarThemeClass: 'sidebar-default',
       showChatBox: false,
       pageTransitionStyle: 'fadeIn',
-      dropdownTransitionStyle: 'flipInX'
+      dropdownTransitionStyle: 'fadeIn'
     };
 
     var brandColors = {

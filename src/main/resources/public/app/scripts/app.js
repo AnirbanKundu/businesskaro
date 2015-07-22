@@ -7,14 +7,7 @@ angular
     'use strict';
     $routeProvider
       .when('/', {
-        templateUrl: 'views/index.html',
-        resolve: {
-          loadCalendar: ['$ocLazyLoad', function($ocLazyLoad) {
-            return $ocLazyLoad.load([
-              'bower_components/fullcalendar/fullcalendar.js',
-            ]);
-          }]
-        }
+        templateUrl: 'views/index.html'
       })
       .when('/:templateFile', {
         templateUrl: function(param) {

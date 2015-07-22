@@ -1,7 +1,7 @@
 angular
   .module('theme.demos.gallery', [
-    'ui.bootstrap',
-    'theme.gallery',
+    'ui.bootstrap'
+    //'theme.gallery',
   ])
   .controller('GalleryController', ['$scope', '$modal', '$timeout', function($scope, $modal) {
     'use strict';

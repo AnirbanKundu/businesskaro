@@ -159,17 +159,17 @@ module.exports = function (grunt) {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath: '<%= yeoman.app %>/',
         // we're not going to inject these as they're lazyloaded
-        exclude: ['requirejs',
-                  'mocha',
-                  'jquery.vmap.europe.js',
-                  'jquery.vmap.usa.js',
-                  'Chart.min.js',
-                  'raphael',
-                  'morris',
+        exclude: [//'requirejs',
+                  //'mocha',
+                  //'jquery.vmap.europe.js',
+                  //'jquery.vmap.usa.js',
+                  //'Chart.min.js',
+                  //'raphael',
+                  //'morris',
                   'jquery.inputmask',
                   'jquery.validate.js',
-                  'jquery.stepy.js',
-                  'fullcalendar.js'
+                  'jquery.stepy.js'//,
+                  //'fullcalendar.js'
                   ]
       }
     },
@@ -198,7 +198,7 @@ module.exports = function (grunt) {
         flow: {
           html: {
             steps: {
-              js: ['concat', 'uglifyjs'],
+              js: ['concat','uglifyjs'],
               css: ['cssmin']
             },
             post: {}
@@ -304,13 +304,13 @@ module.exports = function (grunt) {
             // these files are lazyloaded
             'bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js',
             'bower_components/jquery-validation/dist/jquery.validate.js',
-            'bower_components/jqvmap/jqvmap/maps/jquery.vmap.europe.js',
-            'bower_components/jqvmap/jqvmap/maps/jquery.vmap.usa.js',
+            //'bower_components/jqvmap/jqvmap/maps/jquery.vmap.europe.js',
+            //'bower_components/jqvmap/jqvmap/maps/jquery.vmap.usa.js',
             'bower_components/stepy/lib/jquery.stepy.js',
-            'bower_components/Chart.js/Chart.min.js',
-            'bower_components/raphael/raphael.js',
-            'bower_components/morris.js/morris.js',
-            'bower_components/fullcalendar/fullcalendar.js'
+            //'bower_components/Chart.js/Chart.min.js',
+            //'bower_components/raphael/raphael.js',
+            //'bower_components/morris.js/morris.js',
+            //'bower_components/fullcalendar/fullcalendar.js'
           ]
         }, {
           expand: true,
