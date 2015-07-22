@@ -15,7 +15,7 @@ angular
         }
       })
       .when('#', {
-        templateUrl: 'views/index.html',
+        templateUrl: 'views/index.html', 
       })
       .otherwise({
         redirectTo: '/'
