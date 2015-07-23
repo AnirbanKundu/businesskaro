@@ -16,16 +16,16 @@ public class BKUserDao {
 	@Autowired
 	DBConnection  db;
 
-	String insert = "INSERT INTO user (user_name,password_enc,email,phone) VALUES (?, ?, ?, ?)";
+	String insert = "INSERT INTO tbl_user_password ( usr_name, usr_password, usr_email, usr_salt) VALUES ( ?, ?, ?,?)";
 	
-	String update = "UPDATE user SET user_name = ?, password_enc = ?, email = ?, phone = ? WHERE user_name = ?";
+	String update = "UPDATE tbl_user_password SET usr_name = ?, usr_password = ?, usr_email = ? WHERE usr_name = ?";
 	
-	String selectAll = "SELECT user_name, password_enc, email,phone FROM user WHERE user_name = ? ";
+	String selectAll = "SELECT usr_id, usr_name, usr_password, usr_email, usr_salt FROM tbl_user_password WHERE usr_name = ? ";
 	
 	public void createUser(BKUser user ){
 		
 		Object[] params = new Object[]{
-				user.userName, user.password, user.email, user.phoneNo
+				user.userName, user.password, user.email,  user.randomSalt
 		};
 		
 		int result= db.jdbcTemplate.update(insert, params);
@@ -38,7 +38,7 @@ public class BKUserDao {
 	
 	public void updateUser(BKUser user){
 		Object[] params = new Object[]{
-				user.userName, user.password, user.email, user.phoneNo, user.userName
+				user.id, user.userName, user.password, user.email, user.phoneNo, user.userName
 		};
 		
 		int result= db.jdbcTemplate.update(update, params);
@@ -54,10 +54,11 @@ public class BKUserDao {
 			@Override
 			public BKUser mapRow(ResultSet rs, int arg1) throws SQLException {
 				BKUser user = new BKUser();
-				user.email = rs.getString("email");
-				user.phoneNo = rs.getString("phone");
-				user.userName = rs.getString("user_name");
-				user.password = rs.getString("password_enc");
+				user.id = rs.getInt("usr_id");
+				user.email = rs.getString("usr_email");
+				user.userName = rs.getString("usr_name");
+				user.password = rs.getString("usr_password");
+				user.randomSalt = rs.getString("usr_salt");
 				return user;
 			}} );
 		

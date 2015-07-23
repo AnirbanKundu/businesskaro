@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.dao.BKUserDao;
 import com.businesskaro.model.BKUser;
+import com.businesskaro.security.BKGuid;
+import com.businesskaro.security.EncryptionUtil;
 
 @RestController
 public class UserRestService extends BKRestService {
@@ -24,6 +26,12 @@ public class UserRestService extends BKRestService {
 	@RequestMapping(value="/services/user" , method = RequestMethod.POST)
 	public void createUser(@RequestBody BKUser user){
 		logger.info("Create User for " + user);
+		
+		String randomSalt = BKGuid.getNextGuid();
+		String encoded = EncryptionUtil.encode(user.password, randomSalt);
+		user.password = encoded;
+		user.randomSalt = randomSalt;
+		
 		dao.createUser(user);
 	}
 	

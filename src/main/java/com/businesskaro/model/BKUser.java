@@ -2,11 +2,12 @@ package com.businesskaro.model;
 
 public class BKUser {
 
-	public String id;
+	public int id;
 	public String userName;
 	public String password;
 	public String email;
 	public String phoneNo;
+	public String randomSalt;
 	
 	
 	@Override

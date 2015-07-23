@@ -14,6 +14,7 @@ import com.businesskaro.model.BKUser;
 import com.businesskaro.rest.dto.LoginRequest;
 import com.businesskaro.rest.dto.LoginResponse;
 import com.businesskaro.security.BKGuid;
+import com.businesskaro.security.EncryptionUtil;
 import com.businesskaro.security.SecureTokenUtil;
 
 @RestController
@@ -32,7 +33,9 @@ public class UserSecurityRestService {
 		
 		
 		BKUser user = dao.retrieveBKUser(loginRequest.userName);
-		if(user.password.equals(loginRequest.password)){
+		String encoded = EncryptionUtil.encode(loginRequest.password, user.randomSalt);
+		
+		if(user.password.equals(encoded)){
 		
 			try {
 				String newGuid = BKGuid.getNextGuid();
