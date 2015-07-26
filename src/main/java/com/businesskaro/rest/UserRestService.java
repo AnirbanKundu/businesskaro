@@ -33,7 +33,6 @@ public class UserRestService extends BKRestService {
 		System.out.println("Raw password is :" + rawPassword);
 		String encryptedPassword = EncryptionUtil.encode(rawPassword, randomSalt); //Save this value in DB along with the SALT
 		
-		
 		user.password = encryptedPassword;
 		user.randomSalt = randomSalt;
 		
@@ -41,7 +40,7 @@ public class UserRestService extends BKRestService {
 	}
 	
 	
-	@RequestMapping(value="/services/user/{userName}" , method = RequestMethod.GET)
+	@RequestMapping(value="/services/user/{userName:.+}" , method = RequestMethod.GET)
 	public BKUser getUser(@PathVariable String userName, 
 			@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
