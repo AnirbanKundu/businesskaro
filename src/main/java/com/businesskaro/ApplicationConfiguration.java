@@ -9,7 +9,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
 	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
 		"classpath:/META-INF/resources/", "classpath:/resources/",
-		"classpath:/public/app/" , "classpath:/public/dist/"};//, "classpath:/public/dist/"
+		"classpath:/public/app/", "classpath:/public/dist/"};//, "classpath:/public/dist/"
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

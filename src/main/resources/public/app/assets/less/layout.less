@@ -33,9 +33,27 @@ footer					{background: @body-bg;}
 
 
 /* Logo */
+.businesskaro-logo {
+  height: 35px;
+  width: 45px;
+  background: transparent url("../img/logo2.png") no-repeat;
+  background-size: 60px 60px;
+  background-position: -5px center;
+  display:inline-block;
+  vertical-align: bottom;
+  margin-top: 5px;
+}
+
+.businesskaro-logo-header{
+	color:white;
+	font-size: medium;
+}
+
 @navbar-brand-width: 190px;
-.navbar-brand {.text-hide() !important; background: url("../img/logo.png") no-repeat left top; height: @navbar-height; width: @navbar-brand-width;}
-.navbar-default .navbar-brand {.text-hide() !important; background: url("../img/logo.png") no-repeat left bottom; height: @navbar-height;width: @navbar-brand-width;}
+/*
+.navbar-brand {.text-hide() !important; background: url("../img/logo2.png") no-repeat left top; height: @navbar-height; width: @navbar-brand-width;}
+*/
+.navbar-default .navbar-brand {.text-hide() !important; background: url("../img/logo2.png") no-repeat left bottom; height: @navbar-height;width: @navbar-brand-width;}
 
 // In small screens header becomes two lines
 @media (max-width: 520px) {
