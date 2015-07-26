@@ -33,9 +33,11 @@ public class UserSecurityRestService {
 		
 		
 		BKUser user = dao.retrieveBKUser(loginRequest.userName);
-		String encoded = EncryptionUtil.encode(loginRequest.password, user.randomSalt);
 		
-		if(user.password.equals(encoded)){
+		String decryptedPassword = EncryptionUtil.decode(user.password, user.randomSalt); //Fetch the encrypted password and SALT from DB
+		System.out.println("Decrypted password is :" + decryptedPassword);
+		
+		if(loginRequest.password.equals(decryptedPassword)){
 		
 			try {
 				String newGuid = BKGuid.getNextGuid();

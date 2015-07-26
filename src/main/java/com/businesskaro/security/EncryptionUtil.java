@@ -40,6 +40,7 @@ public class EncryptionUtil {
 	}
 	
 	
+	
 	public static String nextSessionId() {
 		return new BigInteger(130, random).toString(32);
 	}	
