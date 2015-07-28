@@ -7,5 +7,7 @@ docs/site
 src/main/.DS_Store
 src/.DS_Store
 src/main/resources/public/app/bower_components
-/target/
+/target
 /target/**/*
+/target/classes/**
+/target/**

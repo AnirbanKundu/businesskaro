@@ -13,12 +13,12 @@ angular
     },
     {
       label: 'Policy',
-      iconClasses: 'glyphicon glyphicon-home',
+      iconClasses: 'glyphicon glyphicon-file',
       url: '#/'
     },
     {
       label: 'Business News',
-      iconClasses: 'glyphicon glyphicon-home',
+      iconClasses: 'fa fa-newspaper-o',
       url: '#/'
     },
     {
@@ -27,18 +27,18 @@ angular
       separator: true
     }, {
       label: 'Search Provider',
-      iconClasses: 'glyphicon glyphicon-ok'
+      iconClasses: 'fa fa-users'
     }, {
       label: 'Search Entrepreneur',
-      iconClasses: 'glyphicon glyphicon-ok',
+      iconClasses: 'fa fa-users',
       url: '#/tasks'
     }, {
       label: 'Search Offers',
-      iconClasses: 'glyphicon glyphicon-calendar',
+      iconClasses: 'glyphicon glyphicon-search',
       url: '#/calendar'
     }, {
-      label: 'Search Entrepreneur',
-      iconClasses: 'glyphicon glyphicon-th-large',
+      label: 'Search Request',
+      iconClasses: 'glyphicon glyphicon-search',
       url: '#/gallery'
     }, {
       label: 'Create',
@@ -59,13 +59,13 @@ angular
     },
     {
       label: 'Knowledge Base',
-      iconClasses: 'glyphicon glyphicon-cog',
+      iconClasses: 'glyphicon glyphicon-tasks',
       url: '#/ui-panels',
       html: '<span class="label label-danger">TBD</span>'
     },
     {
       label: 'Trainings',
-      iconClasses: 'glyphicon glyphicon-cog',
+      iconClasses: 'glyphicon glyphicon-share',
       url: '#/ui-panels',
       html: '<span class="label label-danger">TBD</span>'
     }
