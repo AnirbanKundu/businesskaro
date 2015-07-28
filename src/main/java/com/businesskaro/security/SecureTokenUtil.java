@@ -21,7 +21,7 @@ public class SecureTokenUtil {
 	
 	private static final Logger logger = Logger.getLogger(SecureTokenUtil.class);
 	
-	public static boolean validateSecureToken(String clientId, String secureToken)
+	public static Integer validateSecureToken(String clientId, String secureToken)
 			throws Exception {
 		boolean isValid =true;
 		try{
@@ -49,6 +49,14 @@ public class SecureTokenUtil {
 						logger.info("Secure token failed. Token expired");
 						isValid = false;
 					}
+					String userIdStr = tokenizer.nextToken();
+					logger.debug("User Id in Token :" + userIdStr);
+					if(userIdStr == null){
+						throw new Exception("Securetoken is not valid / Expired");
+					}
+					
+					return Integer.parseInt(userIdStr);
+					
 				}
 			}else{
 				isValid = false;
@@ -63,10 +71,10 @@ public class SecureTokenUtil {
 			throw new Exception("Securetoken is not valid / Expired");
 		}
 		
-		return isValid;
+		return null;
 	}
 
-	public static String generateSecurityToken(String newGuid)
+	public static String generateSecurityToken(String newGuid, Integer userId)
 			throws InvalidKeyException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			UnsupportedEncodingException, Exception {
@@ -74,7 +82,7 @@ public class SecureTokenUtil {
 		Calendar cal = new GregorianCalendar();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		String tokenEndLife = fomratTotokenDateFormat(cal.getTime());
-		return encFactory.Encrypt(newGuid + TOKEN_SEP + tokenEndLife );
+		return encFactory.Encrypt(newGuid + TOKEN_SEP + tokenEndLife + TOKEN_SEP + userId.toString());
 	}
 
 	private static String fomratTotokenDateFormat(Date date) {

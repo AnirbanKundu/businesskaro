@@ -5,7 +5,7 @@ import com.businesskaro.security.SecureTokenUtil;
 
 public class BKRestService {
 
-	public boolean validateSecureToken(String clientId, String secureToken){
+	public Integer validateSecureToken(String clientId, String secureToken){
 		try {
 			return SecureTokenUtil.validateSecureToken(clientId, secureToken);
 		} catch (Exception e) {

@@ -42,7 +42,7 @@ public class UserSecurityRestService {
 			try {
 				String newGuid = BKGuid.getNextGuid();
 				LoginResponse response = new LoginResponse();
-				response.secureToken =  SecureTokenUtil.generateSecurityToken(newGuid);
+				response.secureToken =  SecureTokenUtil.generateSecurityToken(newGuid, user.id);
 				response.clientId = newGuid;
 				return response;
 			}  catch (Exception e) {

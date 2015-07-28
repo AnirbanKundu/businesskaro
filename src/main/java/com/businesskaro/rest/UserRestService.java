@@ -3,7 +3,6 @@ package com.businesskaro.rest;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,17 +39,19 @@ public class UserRestService extends BKRestService {
 	}
 	
 	
-	@RequestMapping(value="/services/user/{userName:.+}" , method = RequestMethod.GET)
-	public BKUser getUser(@PathVariable String userName, 
+	@RequestMapping(value="/services/user" , method = RequestMethod.GET)
+	public BKUser getUser( 
 			@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
-		logger.info("Get User for " + userName);
+		
 		logger.info("Secure Token " + secureToken);
 		logger.info("Client Id  " + clientId);
 		
-		validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(clientId, secureToken);
 		
-		return dao.retrieveBKUser(userName);
+		logger.info("User Id  " + userId);
+		
+		return dao.retrieveBKId(userId);
 	}
 	
 	

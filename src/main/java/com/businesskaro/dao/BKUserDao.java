@@ -22,6 +22,8 @@ public class BKUserDao {
 	
 	String selectAll = "SELECT usr_id, usr_name, usr_password, usr_email, usr_salt FROM tbl_user_password WHERE usr_name = ? ";
 	
+	String selectAllById = "SELECT usr_id, usr_name, usr_password, usr_email, usr_salt FROM tbl_user_password WHERE usr_id = ? ";
+	
 	public void createUser(BKUser user ){
 		
 		Object[] params = new Object[]{
@@ -50,6 +52,26 @@ public class BKUserDao {
 		Object[] params = new Object[]{ userName };
 		
 		List<BKUser> users = db.jdbcTemplate.query(selectAll, params, new RowMapper<BKUser>(){
+
+			@Override
+			public BKUser mapRow(ResultSet rs, int arg1) throws SQLException {
+				BKUser user = new BKUser();
+				user.id = rs.getInt("usr_id");
+				user.email = rs.getString("usr_email");
+				user.userName = rs.getString("usr_name");
+				user.password = rs.getString("usr_password");
+				user.randomSalt = rs.getString("usr_salt");
+				return user;
+			}} );
+		
+		return users.get(0);
+	}
+	
+	public BKUser retrieveBKId(Integer userId){
+		
+		Object[] params = new Object[]{ userId };
+		
+		List<BKUser> users = db.jdbcTemplate.query(selectAllById, params, new RowMapper<BKUser>(){
 
 			@Override
 			public BKUser mapRow(ResultSet rs, int arg1) throws SQLException {
