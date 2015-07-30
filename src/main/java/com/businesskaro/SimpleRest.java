@@ -16,13 +16,17 @@ public class SimpleRest {
 
 	@Autowired
 	BKUserDao dao;
+	/*
+	@Autowired
+	Mail email;
+	*/
 	
 	//the below annotation provides routing information.
 	@RequestMapping(method = RequestMethod.GET)
     public String sendMail() {
 		String to = "anirban.kundu1981@gmail.com";
 		String from = "mengjiritesh@gmail.com";
-		Mail.sendMail(from,to,"Test from business karo ");
+		//email.sendMailx(from,to,"Test from business karo ");
         return "Mail sent";
     }
 }

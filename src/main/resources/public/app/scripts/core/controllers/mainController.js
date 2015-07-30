@@ -1,6 +1,6 @@
 angular.module('theme.core.main_controller', ['theme.core.services'])
-  .controller('MainController', ['$scope', '$theme', '$timeout', 'progressLoader', '$location',
-    function($scope, $theme, $timeout, progressLoader, $location) {
+  .controller('MainController', ['$scope', '$theme', '$timeout', 'progressLoader', '$location', 'UserAuthentication',
+    function($scope, $theme, $timeout, progressLoader, $location,UserAuthentication) {
     'use strict';
     // $scope.layoutIsSmallScreen = false;
     $scope.layoutFixedHeader = $theme.get('fixedHeader');
@@ -112,57 +112,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       $theme.set('showSmallSearchBar', !$theme.get('showSmallSearchBar'));
     };
 
-    $scope.chatters = [{
-      id: 0,
-      status: 'online',
-      avatar: 'potter.png',
-      name: 'Jeremy Potter'
-    }, {
-      id: 1,
-      status: 'online',
-      avatar: 'tennant.png',
-      name: 'David Tennant'
-    }, {
-      id: 2,
-      status: 'online',
-      avatar: 'johansson.png',
-      name: 'Anna Johansson'
-    }, {
-      id: 3,
-      status: 'busy',
-      avatar: 'jackson.png',
-      name: 'Eric Jackson'
-    }, {
-      id: 4,
-      status: 'online',
-      avatar: 'jobs.png',
-      name: 'Howard Jobs'
-    }, {
-      id: 5,
-      status: 'online',
-      avatar: 'potter.png',
-      name: 'Jeremy Potter'
-    }, {
-      id: 6,
-      status: 'away',
-      avatar: 'tennant.png',
-      name: 'David Tennant'
-    }, {
-      id: 7,
-      status: 'away',
-      avatar: 'johansson.png',
-      name: 'Anna Johansson'
-    }, {
-      id: 8,
-      status: 'online',
-      avatar: 'jackson.png',
-      name: 'Eric Jackson'
-    }, {
-      id: 9,
-      status: 'online',
-      avatar: 'jobs.png',
-      name: 'Howard Jobs'
-    }];
+    $scope.chatters = [];
     $scope.currentChatterId = null;
     $scope.hideChatBox = function() {
       $theme.set('showChatBox', false);
@@ -204,8 +154,21 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     // there are better ways to do this, e.g. using a dedicated service
     // but for the purposes of this demo this will do :P
     $scope.isLoggedIn = false;
-    $scope.logOut = function() {
+    UserAuthentication.getUserDetails().then(function(data){
+      //console.log('User details are', data);
+      $scope.isLoggedIn = true;
+    },
+    function(error){
+      console.log('error', error);
       $scope.isLoggedIn = false;
+    });
+
+    $scope.logOut = function() {
+      UserAuthentication.logOut();
+      $scope.isLoggedIn = false;
+      setTimeout(function(){
+        //$location.path('/');
+      },50);
     };
     $scope.logIn = function() {
       //
