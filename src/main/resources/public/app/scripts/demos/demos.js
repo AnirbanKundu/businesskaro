@@ -25,6 +25,8 @@ angular
     'theme.demos.error_page',
     'theme.demos.tasks',
     'theme.demos.mail', 
+    'theme.demos.filter',
+    'theme.demos.offerrequest'
   ])
   .directive('img', ['$timeout', function ($t) {
       // NOTE: this affects all <img> tags

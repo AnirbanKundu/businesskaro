@@ -17,6 +17,8 @@ angular
     'theme.core.directives',
     'theme.core.main_controller',
     'theme.core.navigation_controller',
+    'theme.core.goipolicy_controller',
+    'theme.core.businessnews_controller'
     //'theme.core.notifications_controller'
     //,'theme.core.messages_controller',
   ]);

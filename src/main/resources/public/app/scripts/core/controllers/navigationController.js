@@ -14,12 +14,12 @@ angular
     {
       label: 'Policy',
       iconClasses: 'glyphicon glyphicon-file',
-      url: '#/'
+      url: '#/goipolicy'
     },
     {
       label: 'Business News',
       iconClasses: 'fa fa-newspaper-o',
-      url: '#/'
+      url: '#/businessnews'
     },
     {
       label: 'Filter',
@@ -27,30 +27,32 @@ angular
       separator: true
     }, {
       label: 'Search Provider',
-      iconClasses: 'fa fa-users'
+      iconClasses: 'fa fa-users',
+      url: '#/filterprovider'
     }, {
       label: 'Search Entrepreneur',
       iconClasses: 'fa fa-users',
-      url: '#/tasks'
+      url: '#/filterentrepreneur'
     }, {
       label: 'Search Offers',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/calendar'
+      url: '#/filteroffer'
     }, {
       label: 'Search Request',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/gallery'
+      url: '#/filterrequest'
     }, {
       label: 'Create',
       iconClasses: 'fa fa-home',
       separator: true
     }, {
       label: 'Create Offer',
-      iconClasses: 'glyphicon glyphicon-random'
+      iconClasses: 'glyphicon glyphicon-random',
+      url: '#/createoffer'
     }, {
       label: 'Create Request',
       iconClasses: 'glyphicon glyphicon-cog',
-      url: '#/ui-panels'
+      url: '#/createrequest'
     },
     {
       label: 'Resources',
@@ -60,13 +62,11 @@ angular
     {
       label: 'Knowledge Base',
       iconClasses: 'glyphicon glyphicon-tasks',
-      url: '#/ui-panels',
       html: '<span class="label label-danger">TBD</span>'
     },
     {
       label: 'Trainings',
       iconClasses: 'glyphicon glyphicon-share',
-      url: '#/ui-panels',
       html: '<span class="label label-danger">TBD</span>'
     }
     ];
