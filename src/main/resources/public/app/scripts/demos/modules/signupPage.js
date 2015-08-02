@@ -14,29 +14,37 @@ angular
     $scope.form = {};
     $scope.loginForm.email = '';
     $scope.loginForm.password = '';
+    $scope.serverMessage = '';
 
     var lastRoute = $route.current;
     $scope.$on('$locationChangeSuccess', function() {
-      console.log('$route is', $route);
+      //console.log('$route is', $route);
     });
     $scope.logIn = function(){
       var apphistory = UserAuthentication.getuserRoutes();
-      console.log($scope.loginForm.password);
-      console.log($scope.loginForm.email);
-      UserAuthentication.signInUser({userName:$scope.loginForm.email, password:$scope.loginForm.password});
-      $timeout(function(){
+      //console.log($scope.loginForm.password);
+      //console.log($scope.loginForm.email);
+      UserAuthentication.signInUser({userName:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
+        $scope.$emit('loginsuccess', data);
+        $scope.serverMessage = '';
         if(apphistory[0]==='/extras-login2'){
-          console.log('History is',history);
+          //console.log('History is',history);
+          $location.path('/'); 
         }
-        $location.path(apphistory[0]);        
-      },20);
+        else{
+          $location.path(apphistory[0]);  
+        }         
+      },function(error){
+        $scope.showServerMessage = 'Your username or password was not correct';
+
+      });
     };
     $scope.$on('$routeChangeStart', function() {
       $scope.previouspath = $location.path();
     });
 
     $scope.$on('$routeChangeSuccess', function() {
-      console.log('routeChangeSuccess success in signuppage.js', $location);
+      //console.log('routeChangeSuccess success in signuppage.js', $location);
     });
 
 

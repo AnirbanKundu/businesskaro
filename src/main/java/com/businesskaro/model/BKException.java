@@ -8,7 +8,9 @@ public class BKException extends RuntimeException{
 	
 	public enum Type {
 		IN_VALID_USER,
-		INTERNAL_ERRROR
+		INTERNAL_ERRROR,
+		BUSSINESS_VALIDATION,
+		USER_AUTH_FAIL
 	};
 	
 	public Type errorType;

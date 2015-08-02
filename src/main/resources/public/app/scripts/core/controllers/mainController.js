@@ -1,6 +1,6 @@
 angular.module('theme.core.main_controller', ['theme.core.services'])
-  .controller('MainController', ['$scope', '$theme', '$timeout', 'progressLoader', '$location', 'UserAuthentication',
-    function($scope, $theme, $timeout, progressLoader, $location,UserAuthentication) {
+  .controller('MainController', ['$rootScope', '$scope', '$theme', '$timeout', 'progressLoader', '$location', 'UserAuthentication',
+    function($rootScope, $scope, $theme, $timeout, progressLoader, $location,UserAuthentication) {
     'use strict';
     // $scope.layoutIsSmallScreen = false;
     $scope.layoutFixedHeader = $theme.get('fixedHeader');
@@ -153,15 +153,22 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
 
     // there are better ways to do this, e.g. using a dedicated service
     // but for the purposes of this demo this will do :P
-    $scope.isLoggedIn = false;
-    UserAuthentication.getUserDetails().then(function(data){
-      //console.log('User details are', data);
-      $scope.isLoggedIn = true;
-    },
-    function(error){
-      console.log('error', error);
+    if($rootScope.loggedIn && ($rootScope.loggedIn=='called'|| $rootScope.loggedIn=='loggedin')){
+
+    }
+    else{
+      $rootScope.loggedIn='called';
       $scope.isLoggedIn = false;
-    });
+      UserAuthentication.getUserDetails().then(function(data){
+        //console.log('User details are', data);
+        $scope.isLoggedIn = true;
+        $rootScope.loggedIn = 'loggedin';
+      },
+      function(error){
+        console.log('error', error);
+        $scope.isLoggedIn = false;
+      });
+    }    
 
     $scope.logOut = function() {
       UserAuthentication.logOut();
@@ -171,9 +178,14 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       },50);
     };
     $scope.logIn = function() {
-      //
+      //  Raise an event. 
       $scope.isLoggedIn = true;
     };
+    $rootScope.$on('loginsuccess',function(event,data){
+      $scope.isLoggedIn = true;
+    });
+
+    //
 
     $scope.rightbarAccordionsShowOne = false;
     $scope.rightbarAccordions = [{

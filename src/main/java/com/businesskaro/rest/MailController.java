@@ -16,15 +16,15 @@ import com.businesskaro.model.EMailMessage;
 @RestController
 class MailController {
     //private final JavaMailSender javaMailSender; 
-	/*
+	
     @Autowired
 	Mail email;
-	*/
+	
 
     // JUST FOR TESTING.THE EMAIL ROUTE NOT AVAILBLE TO EXT WORLD
     @RequestMapping(value="/mail", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void send(/*@RequestBody EMailMessage mailMessage*/) throws Exception {   
+    public void send(@RequestBody EMailMessage mailMessage) throws Exception {   
     	/*
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo("durgaprasadkumar@gmail.com");
@@ -35,7 +35,8 @@ class MailController {
         javaMailSender.send(mailMessage);
         return mailMessage;
         */    	
-    	//email.sendMailx("Anirban","Kundu","123");   	
+    	//email.sendMail("Anirban","Kundu","123");
+    	email.sendMail(mailMessage);
     	
     }
 }
