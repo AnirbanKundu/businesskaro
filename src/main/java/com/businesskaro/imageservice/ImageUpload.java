@@ -7,6 +7,9 @@ import com.cloudinary.Singleton;
 import java.io.IOException;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ImageUpload {
 
 	@SuppressWarnings("rawtypes")

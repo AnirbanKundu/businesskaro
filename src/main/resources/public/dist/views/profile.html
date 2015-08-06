@@ -15,12 +15,22 @@
 			<div class="panel panel-orange">
 				<div class="panel-heading">
 					<h2>Registration Form</h2>
+					
 				</div>
 				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-6">
+							<input id="documentInput" name="file" type="file" class="input-file">					
+						</div>
+						<div class="col-md-6">
+							<button class="btn btn-primary modal-save" ng-click="addNewDocument()">Upload</button>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-md-12">
 						    <form action="" name="reg_form" class="form-horizontal row-border">
 					            <div class="form-group">
+					            	
 					                <label class="col-sm-3 control-label">Full Name</label>
 					                <div class="col-sm-6">
 					                    <input type="text" class="form-control">
