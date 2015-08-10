@@ -1,10 +1,12 @@
 package com.businesskaro;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
+@ComponentScan("com.businesskaro.entity")
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
 	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
