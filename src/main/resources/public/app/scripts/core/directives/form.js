@@ -11,6 +11,7 @@ angular
       }
     };
   })
+  /*
   .directive('fullscreen', function() {
     'use strict';
     return {
@@ -31,6 +32,7 @@ angular
       }
     };
   })
+  */
   .directive('daterangepicker', function() {
     'use strict';
     return {

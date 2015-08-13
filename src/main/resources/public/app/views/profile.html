@@ -59,10 +59,10 @@
 					            <div class="form-group">
 					            	<label class="col-sm-2 control-label">Profession</label>
 					            	<div class="col-sm-4">
-					                	<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 300px;" title="Choose a country">
-										    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected[$index]}}</ui-select-match>
-										    <ui-select-choices repeat="countryIterator in industries">
-										      <span ng-bind-html="countryIterator"></span>
+					                	<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 300px;" title="Select your profession">
+										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index]}}</ui-select-match>
+										    <ui-select-choices repeat="iterator in industries">
+										      <span ng-bind-html="iterator.industry_name"></span>
 										    </ui-select-choices>
 										</ui-select>					                    
 					                </div>

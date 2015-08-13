@@ -10,7 +10,7 @@ angular
     //'NgSwitchery',
     //'sun.scrollable',
     'ui.bootstrap',
-    //'ui.select',
+    'ui.select',
     'theme.core.templates',
     'theme.core.template_overrides',
     'theme.core.panels',
