@@ -1,6 +1,6 @@
 angular.module('theme.demos.dashboard', [
     'angular-skycons',
-    //'theme.demos.forms',
+    'theme.demos.forms',
     'theme.demos.tasks'
   ])
   .controller('DashboardController', ['$scope', '$timeout', '$window', function($scope, $timeout, $window) {

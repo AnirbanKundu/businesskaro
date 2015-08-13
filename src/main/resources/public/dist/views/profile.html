@@ -1,8 +1,7 @@
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
-		<li>Extras</li>
-		<li class="active">Sign Up</li>
+		<li>Settings</li>
 	</ol>
 
 	<h1>User Profile</h1>
@@ -14,10 +13,11 @@
 		<div class="col-md-12">
 			<div class="panel panel-orange">
 				<div class="panel-heading">
-					<h2>Registration Form</h2>
+					<h2>Enter your personal details</h2>
 					
 				</div>
 				<div class="panel-body">
+				<!--
 					<div class="row">
 						<div class="col-md-6">
 							<input id="documentInput" name="file" type="file" class="input-file">					
@@ -26,79 +26,142 @@
 							<button class="btn btn-primary modal-save" ng-click="addNewDocument()">Upload</button>
 						</div>
 					</div>
+				-->
 					<div class="row">
 						<div class="col-md-12">
 						    <form action="" name="reg_form" class="form-horizontal row-border">
-					            <div class="form-group">
-					            	
-					                <label class="col-sm-3 control-label">Full Name</label>
-					                <div class="col-sm-6">
-					                    <input type="text" class="form-control">
+					            <div class="form-group">					            	
+					                <label class="col-sm-2 control-label">Full Name</label>
+					                <div class="col-sm-4">
+					                    <input type="text" class="form-control input-sm">
+					                </div>
+					                <label class="col-sm-2 control-label">Age Group</label>
+					                <div class="col-sm-4">
+					                	<select class="form-control input-sm" ng-model="selectedAgeId">
+					                		<option value="0">Select you age group</option>
+					                		<option ng:repeat="age in ageGroup" value="{{age.age_id}}">{{age.displ_age}}</option>
+					                	</select>					                    
+					                </div>
+					            </div>
+					            <div class="form-group">					            	
+					                <label class="col-sm-2 control-label">Education</label>
+					                <div class="col-sm-4">
+					                    <select class="form-control input-sm" ng-model="selectedEducationId">
+					                		<option value="0">Select you education</option>
+					                		<option ng:repeat="edu in educations" value="{{edu.education_id}}">{{edu.education_name}}</option>
+					                	</select>
+					                </div>
+					                <label class="col-sm-2 control-label">Work Experience</label>
+					                <div class="col-sm-4">
+					                	<input type="text" class="form-control input-sm">			                    
 					                </div>
 					            </div>
 					            <div class="form-group">
-					                <label class="col-sm-3 control-label">Gender</label>
+					            	<label class="col-sm-2 control-label">Profession</label>
+					            	<div class="col-sm-4">
+					                	<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 300px;" title="Choose a country">
+										    <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected[$index]}}</ui-select-match>
+										    <ui-select-choices repeat="countryIterator in industries">
+										      <span ng-bind-html="countryIterator"></span>
+										    </ui-select-choices>
+										</ui-select>					                    
+					                </div>
+					                <label class="col-sm-2 control-label">Upload your picture</label>
+					                <div class="col-sm-4">
+					                	<input id="documentInput" name="file" type="file" class="input-file input-sm">
+					                </div>
+					            </div>
+					            <div class="form-group">					            	
+					                <label class="col-sm-2 control-label">State name</label>
+					                <div class="col-sm-4">
+					                    <select class="form-control input-sm">
+					                		<option value="1">West Bengal</option>
+					                		<option value="2">MP</option>				                		
+					                	</select>
+					                </div>
+					                <label class="col-sm-2 control-label">City name</label>
+					                <div class="col-sm-4">
+					                	<input type="text" class="form-control input-sm">			                    
+					                </div>
+					            </div>
+					            <div class="form-group">
+					                <label class="col-sm-3 control-label">What you aspire to be ?</label>
 					                <div class="col-sm-6">
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-					                        Male
+					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios1" value="Entrepreneur" checked="">
+					                        Entrepreneur
 					                      </label>
 					                    </div>
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-					                        Female
+					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="Provider">
+					                        Provider
 					                      </label>
 					                    </div>
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-					                        Other
+					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="Both">
+					                        Both
 					                      </label>
-					                    </div>
+					                    </div>	
 					                </div>
+					                <div class="col-sm-12">
+						                <label class="col-sm-4 control-label">Enter your company name</label>
+					                    <div class="col-sm-6 input-sm">
+						                	<input type="text" class="form-control input-sm">                   
+						                </div>
+						            </div>
+						            
+					            </div>	
+					            <div class="form-group">
+					            	<label class="col-sm-2 control-label">My knowledge is in</label>
+					            	<div class="col-sm-10">
+					            		<select class="form-control input-sm">
+					                		<option value="1">Software Engineer</option>
+					                		<option value="2">Student</option>
+					                		<option value="3">Electrical Engineer</option>
+					                		<option value="4">Own Business</option>
+					                		<option value="5">Car Mechanic</option>
+					                		<option value="6">Elecrician</option>
+					                		<option value="7">Plumber</option>
+					                	</select>
+					            	</div>
+					            </div>    
+					            <div class="form-group">
+					            	<label class="col-sm-4 control-label">My FaceBook page</label>
+					            	<div class="col-sm-6 input-sm">
+						                	<input type="text" class="form-control input-sm">                   
+						           	</div>
 					            </div>
 					            <div class="form-group">
-			                        <label class="col-sm-3 control-label">Birthday</label>
-			                        <div class="col-sm-6">
-			                            <input type="text" class="form-control mask" data-inputmask="'alias': 'date'">
-			                        </div>
-			                        <div class="col-sm-3"><p class="help-block">Day/Month/Year</p></div>
-			                    </div>
+					            	<label class="col-sm-4 control-label">My Twitter handle</label>
+					            	<div class="col-sm-6 input-sm">
+						                	<input type="text" class="form-control input-sm">                   
+						           	</div>
+					            </div> 
 					            <div class="form-group">
-					                <label class="col-sm-3 control-label">Address</label>
-					                <div class="col-sm-6">
-					                    <input type="text" class="form-control">
-					                </div>
-					            </div>
+					            	<label class="col-sm-4 control-label">My LinkedIn profile</label>
+					            	<div class="col-sm-6 input-sm">
+						                	<input type="text" class="form-control input-sm">                   
+						           	</div>
+					            </div>   
 					            <div class="form-group">
-					                <label class="col-sm-3 control-label">Address 2</label>
-					                <div class="col-sm-6">
-					                    <input type="text" class="form-control">
-					                </div>
-					            </div>
-					            <div class="form-group">
-					                <label class="col-sm-3 control-label">Country</label>
-					                <div class="col-sm-6">
-					                    <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input class="tt-hint" type="text" autocomplete="on" spellcheck="off" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background-attachment: scroll; background-clip: border-box; background-color: rgb(255, 255, 255); background-image: none; background-origin: padding-box; background-size: auto; background-position: 0% 0%; background-repeat: repeat repeat;"><input type="text" class="form-control typeahead example-countries tt-query" placeholder="Country" width="300" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><span style="position: absolute; left: -9999px; visibility: hidden; white-space: nowrap; font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></span><span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"></span></span>
-					                    
-					                </div>
-					            </div>
-					            <div class="form-group">
-			                        <label class="col-sm-3 control-label">Phone</label>
-			                        <div class="col-sm-6">
-			                            <input type="text" class="form-control mask" data-inputmask="'mask':'(999) 999-9999'">
-			                        </div>
-			                        <div class="col-sm-3"><p class="help-block">(999) 999-9999</p></div>
-            					</div>
-            					<div class="form-group">
-					                <label class="col-sm-3 control-label">Website</label>
-					                <div class="col-sm-6">
-					                    <input type="text" class="form-control" value="http://">
-					                </div>
-					            </div>
-									<div class="form-group">
+					            	<label class="col-sm-2 control-label">I am looking for</label>
+					            	<div class="col-sm-10">
+					            		<select class="form-control input-sm">
+					                		<option value="1">Software Engineer</option>
+					                		<option value="2">Student</option>
+					                		<option value="3">Electrical Engineer</option>
+					                		<option value="4">Own Business</option>
+					                		<option value="5">Car Mechanic</option>
+					                		<option value="6">Elecrician</option>
+					                		<option value="7">Plumber</option>
+					                	</select>
+					            	</div>
+					            </div>      
+					          
+								<div class="form-group">
 					                <label class="col-sm-3 control-label"></label>
 					                <div class="col-sm-6">
 					                    <label class="checkbox-inline">
@@ -115,7 +178,7 @@
 		      	<div class="row">
 		      		<div class="col-sm-6 col-sm-offset-3">
 		      			<div class="btn-toolbar">
-			      			<button class="btn-primary btn">Sign Up</button>
+			      			<button class="btn-primary btn">Save</button>
 			      			<button class="btn-default btn">Reset</button>
 		      			</div>
 		      		</div>
