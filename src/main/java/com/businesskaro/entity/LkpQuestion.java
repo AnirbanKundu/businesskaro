@@ -2,6 +2,7 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -27,6 +28,10 @@ public class LkpQuestion implements Serializable {
 
 	@Column(name="RESPONSE_TYP")
 	private String responseTyp;
+
+	//bi-directional many-to-one association to BrgUsrReqOfferQuestion
+	@OneToMany(mappedBy="lkpQuestion")
+	private List<BrgUsrReqOfferQuestion> brgUsrReqOfferQuestions;
 
 	//bi-directional many-to-one association to BrgUsrRequiremnt
 	@OneToMany(mappedBy="lkpQuestion")
@@ -65,6 +70,28 @@ public class LkpQuestion implements Serializable {
 
 	public void setResponseTyp(String responseTyp) {
 		this.responseTyp = responseTyp;
+	}
+
+	public List<BrgUsrReqOfferQuestion> getBrgUsrReqOfferQuestions() {
+		return this.brgUsrReqOfferQuestions;
+	}
+
+	public void setBrgUsrReqOfferQuestions(List<BrgUsrReqOfferQuestion> brgUsrReqOfferQuestions) {
+		this.brgUsrReqOfferQuestions = brgUsrReqOfferQuestions;
+	}
+
+	public BrgUsrReqOfferQuestion addBrgUsrReqOfferQuestion(BrgUsrReqOfferQuestion brgUsrReqOfferQuestion) {
+		getBrgUsrReqOfferQuestions().add(brgUsrReqOfferQuestion);
+		brgUsrReqOfferQuestion.setLkpQuestion(this);
+
+		return brgUsrReqOfferQuestion;
+	}
+
+	public BrgUsrReqOfferQuestion removeBrgUsrReqOfferQuestion(BrgUsrReqOfferQuestion brgUsrReqOfferQuestion) {
+		getBrgUsrReqOfferQuestions().remove(brgUsrReqOfferQuestion);
+		brgUsrReqOfferQuestion.setLkpQuestion(null);
+
+		return brgUsrReqOfferQuestion;
 	}
 
 	public List<BrgUsrRequiremnt> getBrgUsrRequiremnts() {

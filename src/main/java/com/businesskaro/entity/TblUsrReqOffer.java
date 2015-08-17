@@ -2,6 +2,9 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.businesskaro.entity.UserPersonalInfoSummary;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +48,10 @@ public class TblUsrReqOffer implements Serializable {
 
 	@Column(name="TARG_AUDIENCE_ID")
 	private int targAudienceId;
+
+	//bi-directional many-to-one association to BrgUsrReqOfferQuestion
+	@OneToMany(mappedBy="tblUsrReqOffer")
+	private List<BrgUsrReqOfferQuestion> brgUsrReqOfferQuestions;
 
 	//bi-directional many-to-one association to BrgUsrReqrIndustry
 	@OneToMany(mappedBy="tblUsrReqOffer")
@@ -136,6 +143,28 @@ public class TblUsrReqOffer implements Serializable {
 
 	public void setTargAudienceId(int targAudienceId) {
 		this.targAudienceId = targAudienceId;
+	}
+
+	public List<BrgUsrReqOfferQuestion> getBrgUsrReqOfferQuestions() {
+		return this.brgUsrReqOfferQuestions;
+	}
+
+	public void setBrgUsrReqOfferQuestions(List<BrgUsrReqOfferQuestion> brgUsrReqOfferQuestions) {
+		this.brgUsrReqOfferQuestions = brgUsrReqOfferQuestions;
+	}
+
+	public BrgUsrReqOfferQuestion addBrgUsrReqOfferQuestion(BrgUsrReqOfferQuestion brgUsrReqOfferQuestion) {
+		getBrgUsrReqOfferQuestions().add(brgUsrReqOfferQuestion);
+		brgUsrReqOfferQuestion.setTblUsrReqOffer(this);
+
+		return brgUsrReqOfferQuestion;
+	}
+
+	public BrgUsrReqOfferQuestion removeBrgUsrReqOfferQuestion(BrgUsrReqOfferQuestion brgUsrReqOfferQuestion) {
+		getBrgUsrReqOfferQuestions().remove(brgUsrReqOfferQuestion);
+		brgUsrReqOfferQuestion.setTblUsrReqOffer(null);
+
+		return brgUsrReqOfferQuestion;
 	}
 
 	public List<BrgUsrReqrIndustry> getBrgUsrReqrIndustries() {
