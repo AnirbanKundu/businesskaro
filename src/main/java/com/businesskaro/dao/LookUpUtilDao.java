@@ -12,7 +12,7 @@ import com.businesskaro.model.AgeGroup1;
 import com.businesskaro.model.Education1;
 import com.businesskaro.model.Industry1;
 
-@Repository
+
 public class LookUpUtilDao {
 	
 	@Autowired

@@ -1,7 +1,11 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -26,14 +30,17 @@ public class LkpIndustry implements Serializable {
 	private String industryName;
 
 	//bi-directional many-to-one association to BrgTopicsIndustry
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpIndustry")
 	private List<BrgTopicsIndustry> brgTopicsIndustries;
 
 	//bi-directional many-to-one association to BrgUsrIndustry
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpIndustry")
 	private List<BrgUsrIndustry> brgUsrIndustries;
 
 	//bi-directional many-to-one association to BrgUsrReqrIndustry
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpIndustry")
 	private List<BrgUsrReqrIndustry> brgUsrReqrIndustries;
 

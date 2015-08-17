@@ -12,18 +12,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.dao.LookUpUtilDao;
 import com.businesskaro.entity.AgeGroup;
+import com.businesskaro.entity.Education;
+import com.businesskaro.entity.LkpIndustry;
 import com.businesskaro.entity.repo.AgeGroupRepo;
-import com.businesskaro.model.Education1;
+import com.businesskaro.entity.repo.EducationRepo;
+import com.businesskaro.entity.repo.ExperienceRepo;
+import com.businesskaro.entity.repo.ProfessionRepo;
+import com.businesskaro.entity.repo.UserInductryRepo;
 import com.businesskaro.model.Industry1;
 
 @RestController
 class LookupUtilService { 	
 	Logger logger = Logger.getLogger(LookupUtilService.class.getName());	
-	@Autowired
-	LookUpUtilDao lkputildao;
+	
 	
 	@Autowired
 	AgeGroupRepo ageGroupRepo;
+	
+	@Autowired
+	EducationRepo educationRepo;
+	
+	@Autowired
+	ProfessionRepo professionRepo;
+	
+	@Autowired
+	ExperienceRepo experienceRepo;
+	
+	@Autowired
+	UserInductryRepo industryRepo;
+	
 	
     @RequestMapping(value="/utilservices/ages", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,14 +51,14 @@ class LookupUtilService {
     }
     @RequestMapping(value="/utilservices/education", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Education1> getAllEducation() throws Exception {   
+    public Iterable<Education> getAllEducation() throws Exception {   
     	//List<AgeGroup> ages = new ArrayList<AgeGroup>();
-    	return lkputildao.getAllEducation();
+    	return educationRepo.findAll();
     }
     @RequestMapping(value="/utilservices/industries", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public List<Industry1> getAllIndustry() throws Exception {   
+    public Iterable<LkpIndustry> getAllIndustry() throws Exception {   
     	//List<AgeGroup> ages = new ArrayList<AgeGroup>();
-    	return lkputildao.getAllIndustry();
+    	 return industryRepo.findAll();
     }
 }

@@ -6,11 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import com.businesskaro.model.BKUser;
 
-@Repository
+
 public class BKUserDao {
 	
 	@Autowired

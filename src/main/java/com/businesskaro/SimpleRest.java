@@ -14,8 +14,7 @@ import com.businesskaro.mail.Mail;
 @RequestMapping("/sendmail")
 public class SimpleRest {
 
-	@Autowired
-	BKUserDao dao;
+
 	/*
 	@Autowired
 	Mail email;

@@ -14,8 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Service;
 
-@Service
-@Configuration
+
 public class DBConnection {
 	
 	public JdbcTemplate jdbcTemplate;

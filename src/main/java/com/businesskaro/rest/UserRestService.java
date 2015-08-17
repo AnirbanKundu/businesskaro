@@ -1,5 +1,6 @@
 package com.businesskaro.rest;
 
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.dao.BKUserDao;
+import com.businesskaro.entity.TblUserPassword;
+import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.model.BKUser;
 import com.businesskaro.security.EncryptionUtil;
 
@@ -18,8 +21,9 @@ public class UserRestService extends BKRestService {
 	
 	Logger logger = Logger.getLogger(UserRestService.class.getName());
 	
+	
 	@Autowired
-	BKUserDao dao;
+	TblUserPasswordRepo userDao;
 
 	@RequestMapping(value="/services/user" , method = RequestMethod.POST)
 	public void createUser(@RequestBody BKUser user){
@@ -35,7 +39,15 @@ public class UserRestService extends BKRestService {
 		user.password = encryptedPassword;
 		user.randomSalt = randomSalt;
 		
-		dao.createUser(user);
+		TblUserPassword userPswd = new TblUserPassword();
+		userPswd.setUsrEmail(user.email);
+		userPswd.setUsrName(user.userName);
+		userPswd.setUsrPassword(user.password);
+		userPswd.setUsrSalt(user.randomSalt);
+		userPswd.setCreateDt(new Date());
+		userPswd.setLastUpd(new Date());
+		
+		userPswd = userDao.save(userPswd);
 	}
 	
 	
@@ -51,7 +63,14 @@ public class UserRestService extends BKRestService {
 		
 		logger.info("User Id  " + userId);
 		
-		return dao.retrieveBKId(userId);
+		TblUserPassword userPswd = userDao.findOne(userId);
+		BKUser user = new BKUser();
+		user.email = userPswd.getUsrEmail();
+		user.id = userPswd.getUsrId();
+		user.userName = userPswd.getUsrName();
+	
+		
+		return user;  
 	}
 	
 	
