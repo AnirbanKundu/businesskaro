@@ -1,7 +1,11 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -29,6 +33,7 @@ public class AgeGroup implements Serializable {
 	private String displAge;
 
 	//bi-directional many-to-one association to TblUserPersInfoDetail
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpAgeGrp")
 	private List<UserPersonalInfoDetails> tblUserPersInfoDetails;
 

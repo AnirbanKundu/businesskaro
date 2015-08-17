@@ -80,12 +80,21 @@ angular.module('theme.core.services')
     */
     userRoutes = paths;
   };
+
+  var _getUserDetailProfile = function(){
+    //Get User Details .. ASK DURGA
+    var deferred = $q.defer(); 
+    var response = {user: {"ImageUrl": ""}};
+    deferred.resolve(response);
+    return deferred.promise;
+  };
   return {
     signInUser: _signInUser,
     getToken: _getToken,
     getUserDetails : _getUserDetails,
     logOut : _logOut,
     getuserRoutes : _getuserRoutes,
-    setuserRoutes : _setuserRoutes
+    setuserRoutes : _setuserRoutes,
+    getUserDetailProfile : _getUserDetailProfile
   };
 }]);

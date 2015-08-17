@@ -1,7 +1,7 @@
 angular.module('theme.core.services')
   .factory("LookUpService", ['$http','$q',function($http, $q) {
   'use strict';
-  var ageGroup = [], educationGroup = [];
+  var ageGroup = [], educationGroup = [], professions= [];
   var _getAgeGroup = function(){
     var deferred = $q.defer(); 
     if(ageGroup && ageGroup.length>0){
@@ -38,8 +38,37 @@ angular.module('theme.core.services')
     }    
     return deferred.promise;
   };
+  var _getProfession = function(){
+    var deferred = $q.defer(); 
+    if(professions && professions.length>0){
+      deferred.resolve(professions);
+    }
+    else{
+      professions = [
+        {
+          "profession_id" : "1",
+          "profession_name" : "Software Engineer"
+        },
+        {
+          "profession_id" : "2",
+          "profession_name" : "Architect"
+        },
+        {
+          "profession_id" : "3",
+          "profession_name" : "Doctor/Medical"
+        },
+        {
+          "profession_id" : "4",
+          "profession_name" : "Lecturer/ Professor"
+        }
+      ];
+      deferred.resolve(professions);
+    }    
+    return deferred.promise;
+  }
   return {
     getAgeGroup: _getAgeGroup,
-    getEducations : _getEducations
+    getEducations : _getEducations,
+    getProfession : _getProfession
   };
 }]);

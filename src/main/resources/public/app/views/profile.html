@@ -28,12 +28,39 @@
 					</div>
 				-->
 					<div class="row">
+					<div class="col-sm-12">
+							<div class="col-sm-4">
+			                <!--
+			                	<input id="documentInput" name="file" type="file" class="input-file input-sm">
+		                	-->
+		                		<label class="control-label">Upload your picure</label>
+		                		<br/>
+			                	<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+									<div>
+									  <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..." id="documentInput"></span>
+									  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+									</div>
+								</div>							
+			                </div>
+			                <div class="col-sm-8">
+			                	<label class="control-label">Full Name</label>
+			                	<br/>
+			                	<input type="text" class="form-control input-sm">
+			                </div>
+		                </div>
+		                <div class="col-sm-12">
+		                	<hr/>
+		                </div>
 						<div class="col-md-12">
-						    <form action="" name="reg_form" class="form-horizontal row-border">
+						    <form action="" name="form.reg_form" class="form-horizontal row-border">
 					            <div class="form-group">					            	
-					                <label class="col-sm-2 control-label">Full Name</label>
+					                <label class="col-sm-2 control-label">Profession</label>
 					                <div class="col-sm-4">
-					                    <input type="text" class="form-control input-sm">
+					                    <select class="form-control input-sm" ng-model="selectedProfessionId">
+					                		<option value="0">Select your Profession</option>
+					                		<option ng:repeat="prof in professions" value="{{prof.profession_id}}">{{prof.profession_name}}</option>
+					                	</select>	
 					                </div>
 					                <label class="col-sm-2 control-label">Age Group</label>
 					                <div class="col-sm-4">
@@ -53,28 +80,19 @@
 					                </div>
 					                <label class="col-sm-2 control-label">Work Experience</label>
 					                <div class="col-sm-4">
-					                	<input type="text" class="form-control input-sm">			                    
-					                </div>
-					            </div>
-					            <div class="form-group">
-					            	<label class="col-sm-2 control-label">Profession</label>
-					            	<div class="col-sm-4">
-					                	<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 300px;" title="Select your profession">
-										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index]}}</ui-select-match>
-										    <ui-select-choices repeat="iterator in industries">
-										      <span ng-bind-html="iterator.industry_name"></span>
-										    </ui-select-choices>
-										</ui-select>					                    
-					                </div>
-					                <label class="col-sm-2 control-label">Upload your picture</label>
-					                <div class="col-sm-4">
-					                	<input id="documentInput" name="file" type="file" class="input-file input-sm">
+					                	<select class="form-control input-sm" ng-model="selectedExperienceId">
+					                		<option value="0">Select you Experience</option>
+					                		<option value="1">0-5 yrs</option>
+					                		<option value="3">5-10 yrs</option>	
+					                		<option value="4">10-25 yrs</option>
+					                		<option value="5">25+ yrs</option>			
+					                	</select>
 					                </div>
 					            </div>
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">State name</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm">
+					                    <select class="form-control input-sm" ng-model="selectedStateId">
 					                		<option value="1">West Bengal</option>
 					                		<option value="2">MP</option>				                		
 					                	</select>
@@ -109,23 +127,23 @@
 					                <div class="col-sm-12">
 						                <label class="col-sm-4 control-label">Enter your company name</label>
 					                    <div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm">                   
+						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" data-ng-maxlength="5">     
+						                	<span class="help-block" ng-show="form.reg_form.maxlength.$error.required && form.reg_form.maxlength.$dirty">This field is required</span>
+                            				<span class="help-block" ng-show="form.reg_form.maxlength.$error.maxlength && form.reg_form.maxlength.$dirty">Value must be 6 characters or less</span>              
 						                </div>
 						            </div>
 						            
 					            </div>	
 					            <div class="form-group">
-					            	<label class="col-sm-2 control-label">My knowledge is in</label>
+					            	<label class="col-sm-2 control-label">I am aware of</label>
 					            	<div class="col-sm-10">
-					            		<select class="form-control input-sm">
-					                		<option value="1">Software Engineer</option>
-					                		<option value="2">Student</option>
-					                		<option value="3">Electrical Engineer</option>
-					                		<option value="4">Own Business</option>
-					                		<option value="5">Car Mechanic</option>
-					                		<option value="6">Elecrician</option>
-					                		<option value="7">Plumber</option>
-					                	</select>
+					            		<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 400px;" title="Select your profession">
+										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industry_name}}</ui-select-match>
+										    <ui-select-choices repeat="iterator in industries">
+										      <span ng-bind-html="iterator.industry_name"></span>
+										    </ui-select-choices>
+										</ui-select>
+					       
 					            	</div>
 					            </div>    
 					            <div class="form-group">
@@ -149,15 +167,12 @@
 					            <div class="form-group">
 					            	<label class="col-sm-2 control-label">I am looking for</label>
 					            	<div class="col-sm-10">
-					            		<select class="form-control input-sm">
-					                		<option value="1">Software Engineer</option>
-					                		<option value="2">Student</option>
-					                		<option value="3">Electrical Engineer</option>
-					                		<option value="4">Own Business</option>
-					                		<option value="5">Car Mechanic</option>
-					                		<option value="6">Elecrician</option>
-					                		<option value="7">Plumber</option>
-					                	</select>
+					            		<ui-select multiple ng-model="lookingfor.selected" close-on-select="false" style="width: 400px;" title="Select your profession">
+										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industry_name}}</ui-select-match>
+										    <ui-select-choices repeat="iterator in industries">
+										      <span ng-bind-html="iterator.industry_name"></span>
+										    </ui-select-choices>
+										</ui-select>
 					            	</div>
 					            </div>      
 					          

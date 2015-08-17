@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.dao.LookUpUtilDao;
-import com.businesskaro.model.AgeGroup1;
+import com.businesskaro.entity.AgeGroup;
+import com.businesskaro.entity.repo.AgeGroupRepo;
 import com.businesskaro.model.Education1;
 import com.businesskaro.model.Industry1;
 
@@ -21,11 +22,15 @@ class LookupUtilService {
 	@Autowired
 	LookUpUtilDao lkputildao;
 	
+	@Autowired
+	AgeGroupRepo ageGroupRepo;
+	
     @RequestMapping(value="/utilservices/ages", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
-    public List<AgeGroup1> getAllAges() throws Exception {   
+    public List<AgeGroup> getAllAges() throws Exception {   
     	//List<AgeGroup> ages = new ArrayList<AgeGroup>();
-    	return lkputildao.getAgeGroups();
+    	 return ageGroupRepo.findAll();
+    	//return lkputildao.getAgeGroups();
     }
     @RequestMapping(value="/utilservices/education", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
