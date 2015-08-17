@@ -1,0 +1,38 @@
+package com.businesskaro.rest;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.businesskaro.model.OfferRequest;
+import com.businesskaro.service.OfferRequestService;
+
+public class RequestRestService {
+
+	@Autowired
+	OfferRequestService service;
+	
+	@RequestMapping(value="/services/request" , method = RequestMethod.POST)
+	public void createRequest(@RequestBody OfferRequest request){
+		service.create(request);
+	}
+	
+	@RequestMapping(value="/services/request" , method = RequestMethod.PUT)
+	public void updateRequest(@RequestBody OfferRequest request){
+		service.update(request);
+	}
+	
+	@RequestMapping(value="/services/request/{userId}" , method = RequestMethod.GET)
+	public List<OfferRequest> getRequest(@PathVariable("userId") Integer userId){
+		return service.getAll(userId);
+	}
+	
+	@RequestMapping(value="/services/request/{requestId}" , method = RequestMethod.DELETE)
+	public void deleteRequest(@PathVariable("requestId") Integer requestId){
+		service.delete(requestId);
+	}
+}

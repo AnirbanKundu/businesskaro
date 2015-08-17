@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.businesskaro.dao.BKUserDao;
 import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.model.BKUser;
