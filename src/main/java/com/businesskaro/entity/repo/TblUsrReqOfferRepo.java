@@ -9,4 +9,5 @@ import com.businesskaro.entity.TblUsrReqOffer;
 public interface TblUsrReqOfferRepo extends CrudRepository<TblUsrReqOffer, Integer> {
 
 	public List<TblUsrReqOffer> findAllByUserId(Integer Id);
+	
 }
