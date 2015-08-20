@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.model.OfferRequest;
+import com.businesskaro.model.OfferRequestEnum;
 import com.businesskaro.service.OfferRequestService;
 
 @RestController
@@ -20,12 +21,12 @@ public class OfferRestService {
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.POST)
 	public void createOffer(@RequestBody OfferRequest offer){
-		service.create(offer);
+		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.PUT)
 	public void updateOffer(@RequestBody OfferRequest offer){
-		service.update(offer);
+		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
 	@RequestMapping(value="/services/offer/{userId}" , method = RequestMethod.GET)

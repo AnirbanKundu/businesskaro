@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.businesskaro.model.OfferRequest;
+import com.businesskaro.model.OfferRequestEnum;
 import com.businesskaro.service.OfferRequestService;
 
 public class RequestRestService {
@@ -18,12 +19,12 @@ public class RequestRestService {
 	
 	@RequestMapping(value="/services/request" , method = RequestMethod.POST)
 	public void createRequest(@RequestBody OfferRequest request){
-		service.create(request);
+		service.createorUpdate(request,OfferRequestEnum.REQUEST);
 	}
 	
 	@RequestMapping(value="/services/request" , method = RequestMethod.PUT)
 	public void updateRequest(@RequestBody OfferRequest request){
-		service.update(request);
+		service.createorUpdate(request,OfferRequestEnum.REQUEST);
 	}
 	
 	@RequestMapping(value="/services/request/{userId}" , method = RequestMethod.GET)
