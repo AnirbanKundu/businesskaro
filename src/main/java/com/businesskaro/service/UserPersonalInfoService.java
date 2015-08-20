@@ -31,6 +31,7 @@ import com.businesskaro.entity.repo.UserInductryRepo;
 import com.businesskaro.entity.repo.UserPersonalInfoSummaryRepo;
 import com.businesskaro.entity.repo.UserProfileInfoDetailsRepo;
 import com.businesskaro.entity.repo.UserSkillRepo;
+import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUserProfileDetails;
 import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.BkUserProfile;
@@ -189,9 +190,18 @@ public class UserPersonalInfoService {
 
 		UserPersonalInfoSummary summaryEntity = summaryRepo.findOne(id);
 		UserPersonalInfoDetails detailEntity = detailsRepo.findOne(id);
+		
+		if(summaryEntity == null &&  detailEntity == null){
+			throw new BKException("USER PROFILE NOT FOUND", "000", BKException.Type.ENTITY_NOT_FOUND);
+		}
 
-		info.details = detailsMapper(detailEntity);
-		info.summary = summryMapper(summaryEntity);
+		if(detailEntity!= null){
+			info.details = detailsMapper(detailEntity);
+		}
+		
+		if(summaryEntity != null){
+			info.summary = summryMapper(summaryEntity);
+		}
 		return info;
 	}
 	
@@ -261,16 +271,29 @@ public class UserPersonalInfoService {
 
 		BKUserProfileDetails details = new BKUserProfileDetails();
 
-		details.ageGroupId = detailsEntity.getLkpAgeGrp().getAgeId();
+		if(detailsEntity.getLkpAgeGrp() != null){
+			details.ageGroupId = detailsEntity.getLkpAgeGrp().getAgeId();
+		}
+		
 		details.createdDate = detailsEntity.getCreateDt();
 		details.updatedDate = detailsEntity.getLastUpd();
 
-		details.educatonId = detailsEntity.getLkpEducation().getEductnId();
+		if(detailsEntity.getLkpEducation() != null){
+			details.educatonId = detailsEntity.getLkpEducation().getEductnId();
+		}
+		
+		if(detailsEntity.getLkpExperience() != null)
 		details.experienceId = detailsEntity.getLkpExperience()
 				.getExperienceId();
+		
+		if(detailsEntity.getLkpProfession() != null)
 		details.professionalId = detailsEntity.getLkpProfession()
 				.getProfsionId();
+		
+		if(detailsEntity.getLkpState() != null)
 		details.stateId = detailsEntity.getLkpState().getStateId();
+		
+		if(detailsEntity.getLkpAgeGrp() != null)
 		details.ageGroupId = detailsEntity.getLkpAgeGrp().getAgeId();
 
 		details.faceBookUrl = detailsEntity.getFbUrl();
