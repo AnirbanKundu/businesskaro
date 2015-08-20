@@ -43,10 +43,21 @@
 									</div>
 								</div>							
 			                </div>
-			                <div class="col-sm-8">
-			                	<label class="control-label">Full Name</label>
+			                <div class="col-sm-4">
+			                	<label class="">First Name</label>
 			                	<br/>
-			                	<input type="text" class="form-control input-sm">
+			                	<input type="text" class="form-control input-sm" ng-model="user.summary.firstName">
+			                </div>
+			                <div class="col-sm-4">
+			                	<label class="">Last Name</label>
+			                	<br/>
+			                	<input type="text" class="form-control input-sm" ng-model="user.summary.lastName">
+			                </div>
+			                <br/>
+			                <div class="col-sm-8">
+			                	<label class="">About Me</label>
+			                	<br/>
+			                	<textarea class="form-control" ng-model="user.summary.aboutMe"></textarea>
 			                </div>
 		                </div>
 		                <div class="col-sm-12">
@@ -64,23 +75,23 @@
 					                </div>
 					                <label class="col-sm-2 control-label">Age Group</label>
 					                <div class="col-sm-4">
-					                	<select class="form-control input-sm" ng-model="selectedAgeId">
+					                	<select class="form-control input-sm" ng-model="user.details.ageGroupId">
 					                		<option value="0">Select you age group</option>
-					                		<option ng:repeat="age in ageGroup" value="{{age.age_id}}">{{age.displ_age}}</option>
+					                		<option ng:repeat="age in ageGroup" value="{{age.ageId}}">{{age.displAge}}</option>
 					                	</select>					                    
 					                </div>
 					            </div>
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">Education</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="selectedEducationId">
+					                    <select class="form-control input-sm" ng-model="user.details.educatonId">
 					                		<option value="0">Select you education</option>
-					                		<option ng:repeat="edu in educations" value="{{edu.education_id}}">{{edu.education_name}}</option>
+					                		<option ng:repeat="edu in educations" value="{{edu.eductnId}}">{{edu.eductnName}}</option>
 					                	</select>
 					                </div>
 					                <label class="col-sm-2 control-label">Work Experience</label>
 					                <div class="col-sm-4">
-					                	<select class="form-control input-sm" ng-model="selectedExperienceId">
+					                	<select class="form-control input-sm" ng-model="user.details.experienceId">
 					                		<option value="0">Select you Experience</option>
 					                		<option value="1">0-5 yrs</option>
 					                		<option value="3">5-10 yrs</option>	
@@ -92,14 +103,14 @@
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">State name</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="selectedStateId">
+					                    <select class="form-control input-sm" ng-model="user.details.stateId">
 					                		<option value="1">West Bengal</option>
 					                		<option value="2">MP</option>				                		
 					                	</select>
 					                </div>
 					                <label class="col-sm-2 control-label">City name</label>
 					                <div class="col-sm-4">
-					                	<input type="text" class="form-control input-sm">			                    
+					                	<input type="text" class="form-control input-sm" ng-model="user.summary.cityName">			                    
 					                </div>
 					            </div>
 					            <div class="form-group">
@@ -127,7 +138,7 @@
 					                <div class="col-sm-12">
 						                <label class="col-sm-4 control-label">Enter your company name</label>
 					                    <div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" data-ng-maxlength="5">     
+						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" data-ng-maxlength="5" ng-model="user.summary.companyUrl">     
 						                	<span class="help-block" ng-show="form.reg_form.maxlength.$error.required && form.reg_form.maxlength.$dirty">This field is required</span>
                             				<span class="help-block" ng-show="form.reg_form.maxlength.$error.maxlength && form.reg_form.maxlength.$dirty">Value must be 6 characters or less</span>              
 						                </div>
@@ -138,9 +149,9 @@
 					            	<label class="col-sm-2 control-label">I am aware of</label>
 					            	<div class="col-sm-10">
 					            		<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 400px;" title="Select your profession">
-										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industry_name}}</ui-select-match>
+										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
 										    <ui-select-choices repeat="iterator in industries">
-										      <span ng-bind-html="iterator.industry_name"></span>
+										      <span ng-bind-html="iterator.industryName"></span>
 										    </ui-select-choices>
 										</ui-select>
 					       
@@ -149,28 +160,28 @@
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My FaceBook page</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.faceBookUrl">                   
 						           	</div>
 					            </div>
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My Twitter handle</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.twiterURL">                   
 						           	</div>
 					            </div> 
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My LinkedIn profile</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.linkedInUrl">                   
 						           	</div>
 					            </div>   
 					            <div class="form-group">
 					            	<label class="col-sm-2 control-label">I am looking for</label>
 					            	<div class="col-sm-10">
 					            		<ui-select multiple ng-model="lookingfor.selected" close-on-select="false" style="width: 400px;" title="Select your profession">
-										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industry_name}}</ui-select-match>
+										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
 										    <ui-select-choices repeat="iterator in industries">
-										      <span ng-bind-html="iterator.industry_name"></span>
+										      <span ng-bind-html="iterator.industryName"></span>
 										    </ui-select-choices>
 										</ui-select>
 					            	</div>
@@ -193,7 +204,7 @@
 		      	<div class="row">
 		      		<div class="col-sm-6 col-sm-offset-3">
 		      			<div class="btn-toolbar">
-			      			<button class="btn-primary btn">Save</button>
+			      			<button class="btn-primary btn" ng-click="saveUserInfo()">Save</button>
 			      			<button class="btn-default btn">Reset</button>
 		      			</div>
 		      		</div>

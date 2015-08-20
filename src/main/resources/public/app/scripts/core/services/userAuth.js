@@ -84,8 +84,28 @@ angular.module('theme.core.services')
   var _getUserDetailProfile = function(){
     //Get User Details .. ASK DURGA
     var deferred = $q.defer(); 
-    var response = {user: {"ImageUrl": ""}};
-    deferred.resolve(response);
+    $http({
+      url: 'services/userProfile',
+      method: 'GET'
+    }).then(function(response){
+      deferred.resolve(response);
+    },function(error){
+      if(error.status ===400 && error.data.type==="ENTITY_NOT_FOUND"){
+        var details = {"ageGroupId": 0, "educatonId":0, "experienceId":0, "faceBookUrl":"","imageUrl":"", "linkedInUrl":"","professionalId":0,"stateId":0,"twiterURL":""};
+        var summary = {"aboutMe":"","cityName":"","companyUrl":"","firstName":"","imageUrl":"","industrys":[],"lastName":"","lookinfForSkill":[],"offeredServices":[],"userSkills":[],"userType":""};
+        error.data.details = details;
+        error.data.summary = summary;
+        error.data.newUser = true;
+        deferred.resolve(error);
+      }
+      else{
+        deferred.reject(error);
+      }
+      
+    });
+
+    //var response = {user: {"ImageUrl": ""}};
+    //deferred.resolve(response);
     return deferred.promise;
   };
   return {

@@ -10,7 +10,8 @@ public class BKException extends RuntimeException{
 		IN_VALID_USER,
 		INTERNAL_ERRROR,
 		BUSSINESS_VALIDATION,
-		USER_AUTH_FAIL
+		USER_AUTH_FAIL,
+		ENTITY_NOT_FOUND
 	};
 	
 	public Type errorType;
@@ -20,5 +21,14 @@ public class BKException extends RuntimeException{
 		errorCode = code;
 		errorType = t;
 	}
+
+	@Override
+	public String toString() {
+		return "BKException [errorMsg=" + errorMsg + ", errorCode=" + errorCode
+				+ ", errorType=" + errorType + "]";
+	}
+	
+	
+	 
 	
 }

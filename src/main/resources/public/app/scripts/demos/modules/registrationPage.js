@@ -7,10 +7,12 @@ angular
 
     $scope.checking = false;
     $scope.checked = false;
+    $scope.user = {};
     $scope.selectedAgeId=0;
     $scope.selectedEducationId=0;
     $scope.selectedProfessionId = 0;
     $scope.selectedStateId = 0;
+    $scope.newUser = false;
     /*********** Get all Lookup values *********/
     LookUpService.getAgeGroup().then(function(data){
       $scope.ageGroup = data;
@@ -29,15 +31,39 @@ angular
     });
     
     UserAuthentication.getUserDetailProfile().then(function(data){
-      if(data && data.user){
+      if(data && data.data.details && data.data.summary){
         //TO DO - SET THE VALUES ACCORDINGLY
-        $scope.selectedAgeId=0;
-        $scope.selectedEducationId=0;
-        $scope.selectedProfessionId = 0;
-        $scope.selectedStateId = 0;
-        $scope.selectedExperienceId = 0;
-        if(data.user.ImageUrl){
-          var imagePath = data.user.ImageUrl;
+        $scope.user.details = data.data.details;
+        $scope.user.summary = data.data.summary;
+        for(var i=0;i<$scope.user.summary.industrys.length;i++){
+          for(var j=0;j<$scope.industries.length;j++){
+            if($scope.user.summary.industrys[i] == $scope.industries[j].industryId){
+              $scope.selectedIndustries.selected.push($scope.industries[j]);
+              break;
+            }
+          }
+        }
+
+        for(var i=0;i<$scope.user.summary.lookinfForSkill.length;i++){
+          for(var j=0;j<$scope.industries.length;j++){
+            if($scope.user.summary.lookinfForSkill[i] == $scope.industries[j].industryId){
+              $scope.lookingfor.selected.push($scope.industries[j]);
+              break;
+            }
+          }
+        }
+
+        //$scope.selectedIndustries.selected = $scope.user.summary.industrys;
+        if(data.data.newUser){
+          $scope.newUser = true;
+        }
+        //$scope.selectedAgeId=0;
+        //$scope.selectedEducationId=0;
+        //$scope.selectedProfessionId = 0;
+        //$scope.selectedStateId = 0;
+        //$scope.selectedExperienceId = 0;
+        if($scope.user.details.imageUrl){
+          var imagePath = $scope.user.details.imageUrl;
           var widgetFileInput = $('.fileinput').fileinput();
           widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
           if(imagePath){  //user_avator)
@@ -48,11 +74,21 @@ angular
           }          
         }
       }
+      /*
+      else if(data && data.newuser){
+        $scope.newUser = true;
+        $scope.selectedAgeId=0;
+        $scope.selectedEducationId=0;
+        $scope.selectedProfessionId = 0;
+        $scope.selectedStateId = 0;
+        $scope.selectedExperienceId = 0;        
+      }
+      */
     },function(error){
-
+      console.log('Error happened');
     });
-    $scope.selectedIndustries = {};
-    $scope.lookingfor = {};
+    $scope.selectedIndustries = { "selected": [] };
+    $scope.lookingfor = { "selected": [] };
     $scope.industries = [];
     $http.get('utilservices/industries').success(function(response) {
       $scope.industries = response;
@@ -143,6 +179,34 @@ angular
             return response.data;
           });
     };
+    $scope.saveUserInfo = function(){
+      $scope.selectedAgeId=0;
+      $scope.selectedEducationId=0;
+      $scope.selectedProfessionId = 0;
+      $scope.selectedStateId = 0;
+      $scope.selectedExperienceId = 0;  
+
+      var userDetail = {
+          "ageGroupId": $scope.selectedAgeId, 
+          "educatonId": $scope.selectedEducationId , 
+          "stateId" : $scope.selectedStateId, 
+          "experienceId" : $scope.selectedExperienceId,
+          "professionalId" : $scope.selectedProfessionId,
+          "faceBookUrl" : $scope.faceBookUrl,
+          "linkedInUrl" : $scope.linkedInUrl,
+          "twiterURL" : $scope.twiterURL,
+          "imageUrl": $scope.imageUrl
+      },
+      summaryDetail = {
+        "firstName": "anirban",
+        "lastName": "kundu",
+        "stateName": "WB",
+        "cityName": "CAL",
+
+
+      } 
+    }
+
     $scope.checkAvailability = function() {
       if ($scope.reg_form.username.$dirty === false) {
         return;
