@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.businesskaro.entity.Tag;
 import com.businesskaro.entity.TagEntity;
@@ -46,8 +47,8 @@ public class TagService {
 		tagEntityRepo.deleteAllByEntityId(request.entityId);
 	}
 
-	public List<Tag> getTagNames() {
-		return tagRepo.findAll();
+	public List<Tag> getTagNames(String keyword) {
+		return tagRepo.findByNameIgnoreCaseStartsWith(keyword);
 	}
 
 	public List<TagEntity> searchForTagName(String tagName) {
@@ -55,7 +56,7 @@ public class TagService {
 		List<TagEntity> results = new ArrayList<TagEntity>();
 
 		List<TagEntity> resuts = new ArrayList<TagEntity>();
-		List<Tag> tags = tagRepo.findByNameContainingIgnoreCase(tagName);
+		List<Tag> tags = tagRepo.findByNameLikeIgnoreCase(tagName);
 		if (tags.size() == 0) {
 			return resuts;
 		}

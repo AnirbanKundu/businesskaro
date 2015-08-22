@@ -21,17 +21,17 @@ public class TagRestService {
 	@Autowired
 	TagService tagService;
 	
-	@RequestMapping(value="/services/tag" , method = RequestMethod.POST)
+	@RequestMapping(value="/services/tag", method = RequestMethod.POST)
 	public void createTag(@RequestBody TagEntityRequest request){
 		tagService.createTagEntry(request);
 	}
 	
-	@RequestMapping(value="/services/tag/names" , method = RequestMethod.GET)
-	public List<Tag> getTAgNames(){
-		return tagService.getTagNames();
+	@RequestMapping(value="/services/tag/names", method = RequestMethod.GET)
+	public List<Tag> getTAgNames(@RequestParam("keyword") String keyword){
+		return tagService.getTagNames(keyword);
 	}
 	
-	@RequestMapping(value="/services/tag/entity" , method = RequestMethod.GET)
+	@RequestMapping(value="/services/tag/entity", method = RequestMethod.GET)
 	public List<TagEntity> searchTag(@RequestParam("keyword") String keyword , @RequestParam("entityType") BKEntityType entityType ){
 		if(entityType == BKEntityType.ALL){
 			return tagService.searchForTagName(keyword);
