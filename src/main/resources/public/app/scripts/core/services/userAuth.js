@@ -80,7 +80,6 @@ angular.module('theme.core.services')
     */
     userRoutes = paths;
   };
-
   var _getUserDetailProfile = function(){
     //Get User Details .. ASK DURGA
     var deferred = $q.defer(); 
@@ -99,7 +98,7 @@ angular.module('theme.core.services')
         deferred.resolve(error);
       }
       else{
-        deferred.reject(error);
+        deferred.reject(error); 
       }
       
     });
@@ -108,6 +107,20 @@ angular.module('theme.core.services')
     //deferred.resolve(response);
     return deferred.promise;
   };
+
+  var _saveUserDetailProfile = function(data){
+    var deferred = $q.defer(); 
+    $http({
+      url: 'services/userProfile',
+      method: 'POST',
+      data: data
+    }).then(function(response){
+      deferred.resolve(response);
+    },function(error){
+      deferred.reject(error);
+    });
+    return deferred.promise;    
+  };
   return {
     signInUser: _signInUser,
     getToken: _getToken,
@@ -115,6 +128,7 @@ angular.module('theme.core.services')
     logOut : _logOut,
     getuserRoutes : _getuserRoutes,
     setuserRoutes : _setuserRoutes,
-    getUserDetailProfile : _getUserDetailProfile
+    getUserDetailProfile : _getUserDetailProfile,
+    saveUserDetailProfile : _saveUserDetailProfile
   };
 }]);

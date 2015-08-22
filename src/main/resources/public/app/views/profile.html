@@ -4,7 +4,7 @@
 		<li>Settings</li>
 	</ol>
 
-	<h1>User Profile</h1>
+	<h1>User Profile</h1> 
 	
 </div>
 
@@ -54,7 +54,8 @@
 			                	<input type="text" class="form-control input-sm" ng-model="user.summary.lastName">
 			                </div>
 			                <br/>
-			                <div class="col-sm-8">
+			                <br/>
+			                <div class="col-sm-8" style="margin-top:25px;">
 			                	<label class="">About Me</label>
 			                	<br/>
 			                	<textarea class="form-control" ng-model="user.summary.aboutMe"></textarea>
@@ -68,7 +69,7 @@
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">Profession</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="selectedProfessionId">
+					                    <select class="form-control input-sm" ng-model="user.details.professionalId">
 					                		<option value="0">Select your Profession</option>
 					                		<option ng:repeat="prof in professions" value="{{prof.profession_id}}">{{prof.profession_name}}</option>
 					                	</select>	
@@ -118,24 +119,24 @@
 					                <div class="col-sm-6">
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios1" value="Entrepreneur" checked="">
+					                        <input icheck type="radio" name="optionsRadios" value="E"  ng-model="user.summary.userType" ng-click="updateUserType()">
 					                        Entrepreneur
 					                      </label>
 					                    </div>
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="Provider">
+					                        <input icheck type="radio" name="optionsRadios" value="P" ng-model="user.summary.userType" ng-click="updateUserType()">
 					                        Provider
 					                      </label>
 					                    </div>
 					                    <div class="radio-inline">
 					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" id="optionsRadios2" value="Both">
+					                        <input icheck type="radio" name="optionsRadios"  value="B" ng-model="user.summary.userType" ng-click="updateUserType()">
 					                        Both
 					                      </label>
 					                    </div>	
 					                </div>
-					                <div class="col-sm-12">
+					                <div class="col-sm-12" ng-show="user.summary.userType !=='E'">
 						                <label class="col-sm-4 control-label">Enter your company name</label>
 					                    <div class="col-sm-6 input-sm">
 						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" data-ng-maxlength="5" ng-model="user.summary.companyUrl">     
@@ -186,7 +187,7 @@
 										</ui-select>
 					            	</div>
 					            </div>      
-					          
+					          	<!--
 								<div class="form-group">
 					                <label class="col-sm-3 control-label"></label>
 					                <div class="col-sm-6">
@@ -195,7 +196,7 @@
 					                    </label>
 					                </div>
 					            </div>
-					            
+					            -->					            
 					        </form>
 						</div>
 					</div>

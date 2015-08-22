@@ -14,7 +14,7 @@ angular
     $scope.selectedStateId = 0;
     $scope.newUser = false;
     /*********** Get all Lookup values *********/
-    LookUpService.getAgeGroup().then(function(data){
+    LookUpService.getAgeGroup().then(function(data){ 
       $scope.ageGroup = data;
     },function(error){
       $log.log(error); 
@@ -154,6 +154,7 @@ angular
       }).then(function(data){
         $scope.userImageId = "";
         $scope.userImageUrl = "";
+        $scope.user.details.imageUrl = "";
       },function(error){
         console.log('Error in delete');
       })
@@ -171,6 +172,7 @@ angular
           data: formData,
           cache : false
         }).then(function(response){
+            $scope.user.details.imageUrl = response.data.url;
             $scope.userImageId = response.data.publicId;
             $scope.userImageUrl = response.data.url;
             return response.data;
@@ -179,7 +181,30 @@ angular
             return response.data;
           });
     };
+    $scope.updateUserType = function(){
+      if(user.summary.userType ==="B"){
+        
+      }
+    };
+
     $scope.saveUserInfo = function(){
+      $scope.user.summary.lookinfForSkill = [];
+      $scope.user.summary.industrys = [];
+      for(var i=0; i<$scope.lookingfor.selected.length;i++){
+        $scope.user.summary.lookinfForSkill.push($scope.lookingfor.selected[i].industryId);
+      }
+      for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+        $scope.user.summary.industrys.push($scope.selectedIndustries.selected[i].industryId);
+      }
+      if($scope.user.summary.userType ==='E'){
+        $scope.user.summary.companyUrl = "";
+      }
+      UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
+        console.log('Data saved');
+      },function(data){
+        console.log('error'); 
+      });
+      /*
       $scope.selectedAgeId=0;
       $scope.selectedEducationId=0;
       $scope.selectedProfessionId = 0;
@@ -205,6 +230,7 @@ angular
 
 
       } 
+      */
     }
 
     $scope.checkAvailability = function() {
