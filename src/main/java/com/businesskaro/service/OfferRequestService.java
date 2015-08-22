@@ -92,7 +92,7 @@ public class OfferRequestService {
 			entity.setBrgUsrReqrStates(stateList);
 		}
 		
-		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(model.userId);
+		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(1);
 		entity.setTblUserPersInfoSumry(userInfo);
 		
 		reqOfferRepo.save(entity);
@@ -100,7 +100,7 @@ public class OfferRequestService {
 	}
 
 	public List<OfferRequest> getAll(Integer userId) {
-		List<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByUserId(userId);
+		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAll();//findAllByUserId(userId);
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){
