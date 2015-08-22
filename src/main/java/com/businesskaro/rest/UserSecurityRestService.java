@@ -26,10 +26,7 @@ import com.businesskaro.security.SecureTokenUtil;
 public class UserSecurityRestService {
 
 	Logger logger = Logger.getLogger(UserSecurityRestService.class.getName());
-	
-	
-
-	
+		
 	@Autowired
 	TblUserPasswordRepo userDao;
 
