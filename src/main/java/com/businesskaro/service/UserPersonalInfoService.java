@@ -1,7 +1,9 @@
 package com.businesskaro.service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -239,7 +241,8 @@ public class UserPersonalInfoService {
 			for (UserSkill userSkill : skillList) {
 				skillIds[i++] = userSkill.getLkpSkill().getSkillId();
 			}
-			summary.userSkills = skillIds;
+			
+			summary.userSkills = toSet(skillIds);
 		}
 
 		List<BrgUsrIndustry> usrIndList = summryEntity.getBrgUsrIndustries();
@@ -249,7 +252,7 @@ public class UserPersonalInfoService {
 			for (BrgUsrIndustry usrInd : usrIndList) {
 				indId[i++] = usrInd.getLkpIndustry().getIndustryId();
 			}
-			summary.industrys = indId;
+			summary.industrys = toSet(indId);
 		}
 
 		List<BrgUsrLookingFor> usrLookingForList = summryEntity
@@ -260,7 +263,7 @@ public class UserPersonalInfoService {
 			for (BrgUsrLookingFor userSkill : usrLookingForList) {
 				skillIds[i++] = userSkill.getLkpSkill().getSkillId();
 			}
-			summary.lookinfForSkill = skillIds;
+			summary.lookinfForSkill = toSet(skillIds);
 		}
 
 		return summary;
@@ -303,6 +306,24 @@ public class UserPersonalInfoService {
 
 		return details;
 
+	}
+	
+	
+	int[] toArray(Set<Integer> set){
+		int[] arr = new int[set.size()];
+		int i =0;
+		for(Integer e : set){
+			arr[i++] =e;
+		}
+		return arr;
+	}
+	
+	public Set<Integer> toSet(int[] arr){
+		Set<Integer> set = new HashSet<Integer>();
+		for(int i : arr){
+			set.add(i);
+		}
+		return set;
 	}
 
 	public BkUserProfile getUserPersonalInfoSummary(Integer userId) {
