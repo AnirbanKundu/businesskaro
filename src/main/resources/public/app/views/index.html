@@ -11,7 +11,41 @@
         
             <form action="#">
                <div class="input-group well w100">
-                  <input type="text" placeholder="Search what you are looking for" class="form-control">
+                  <!--<input type="text" placeholder="Search what you are looking for" class="form-control">-->
+                  <!--<ui-select multiple ng-model="selectedTag.selected" theme="bootstrap" close-on-select="false" title="Choose a color">
+                    <ui-select-match placeholder="Select colors...">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="iterator in tags | filter:$select.search">
+                      {{iterator.name}}
+                    </ui-select-choices>
+                  </ui-select>-->
+                  
+                  <!--<input type="text" ng-model="selectedValues" placeholder="Locations loaded via $http" typeahead="tag as tag.name for tag in tags | filter:$viewValue | limitTo:3" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">-->
+
+                  <!--<ui-select ng-model="address.selected"
+               theme="bootstrap"
+               ng-disabled="disabled"
+               reset-search-input="false"
+               style="width: 300px;"
+               title="Choose an address"
+               append-to-body="true">
+      <ui-select-match placeholder="Enter an address...">{{$select.selected.formatted_address}}</ui-select-match>
+      <ui-select-choices repeat="address in addresses track by $index"
+               refresh="refreshAddresses($select.search)"
+               refresh-delay="0">
+        <div ng-bind-html="address.formatted_address | highlight: $select.search"></div>
+      </ui-select-choices>
+    </ui-select>-->
+
+
+                  <ui-select multiple ng-model="selectedTag.selected" close-on-select="true" title="Select your profession">
+                    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].name}}</ui-select-match>
+                    <ui-select-choices repeat="iterator in tags"
+                    refresh="refreshTags($select.search)">
+                      <span ng-bind-html="iterator.name | highlight: $select.search"></span>
+                    </ui-select-choices>
+                    </ui-select>
+                    
+                  <!--<input type="text" ng-model="asyncSelected" placeholder="Search what you are looking for" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" class="form-control">-->
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
                   </span>
