@@ -1,6 +1,7 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -16,6 +17,7 @@ public class UserSkill implements Serializable {
 
 	@Id
 	@Column(name="USR_SKIL_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int usrSkilId;
 
 	//bi-directional many-to-one association to TblUserPersInfoSumry

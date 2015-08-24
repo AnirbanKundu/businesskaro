@@ -1,6 +1,7 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -16,6 +17,7 @@ public class BrgUsrIndustry implements Serializable {
 
 	@Id
 	@Column(name="USR_INDUS_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int usrIndusId;
 
 	//bi-directional many-to-one association to TblUserPersInfoSumry

@@ -6,4 +6,5 @@ import com.businesskaro.entity.UserSkill;
 
 public interface UserSkillRepo extends CrudRepository<UserSkill, Integer>  {
 	
+	
 }

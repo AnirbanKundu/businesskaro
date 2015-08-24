@@ -1,6 +1,7 @@
 package com.businesskaro.rest;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
+import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUser;
+import com.businesskaro.rest.dto.ResetPasswordRequest;
 import com.businesskaro.security.EncryptionUtil;
 
 @RestController
@@ -29,6 +32,11 @@ public class UserRestService extends BKRestService {
 		logger.info("Create User for " + user);
 		
 		//String randomSalt = BKGuid.getNextGuid();
+		
+		List<TblUserPassword> list = userDao.findByUsrName(user.userName);
+		if(list != null && list.size() > 0){
+			throw new BKException("User Already Exist", "001", BKException.Type.USER_ALREADY_EXIST);
+		}
 		
 		String rawPassword = user.password;
 		String randomSalt =  EncryptionUtil.nextSessionId(); //Save this value in Database
@@ -47,6 +55,18 @@ public class UserRestService extends BKRestService {
 		userPswd.setLastUpd(new Date());
 		
 		userPswd = userDao.save(userPswd);
+	}
+	
+	@RequestMapping(value="/services/user/resetPassword" , method = RequestMethod.POST)
+	public void getResetPassword(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId, 
+			ResetPasswordRequest request){
+		
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(request.userName);
+		if(userPswdEntitys.size() == 0){
+			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+		}
+		
 	}
 	
 	
