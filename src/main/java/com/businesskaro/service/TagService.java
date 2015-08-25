@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.businesskaro.entity.Tag;
 import com.businesskaro.entity.TagEntity;
 import com.businesskaro.entity.repo.TagEntityRepo;
 import com.businesskaro.entity.repo.TagRepo;
-import com.businesskaro.model.TagEntityRequest;
+import com.businesskaro.rest.dto.TagEntityRequest;
+import com.businesskaro.rest.dto.TagItem;
 
 @Service
 public class TagService {
@@ -22,25 +22,31 @@ public class TagService {
 	@Autowired
 	TagEntityRepo tagEntityRepo;
 
-	public void createTagEntry(TagEntityRequest request) {
+	public void createTagEntry(com.businesskaro.rest.dto.TagEntityRequest request) {
 
 		clearTagEntry(request);
 
-		for (String tagName : request.tags) {
-			Tag tag = tagRepo.findByNameIgnoreCase(tagName);
-			if (tag == null) {
-				tag = new Tag();
-				tag.setName(tagName);
-
-				tag = tagRepo.save(tag);
+		for (TagItem tag : request.newTags) {
+			Tag tagEntity = tagRepo.findByNameIgnoreCase(tag.name);
+			if (tagEntity == null) {
+				tagEntity = new Tag();
+				tagEntity.setName(tag.name);
+				tagEntity = tagRepo.save(tagEntity);
 			}
-
 			TagEntity entityTag = new TagEntity();
-			entityTag.setTagId(tag.getTagId());
+			entityTag.setTagId(tagEntity.getTagId());
 			entityTag.setEntityType(request.entityType.toString());
 			entityTag.setEntityId(request.entityId);
 			tagEntityRepo.save(entityTag);
 		}
+		
+		for (TagItem tag : request.existingtags) {
+			TagEntity entityTag = new TagEntity();
+			entityTag.setTagId(tag.tagId);
+			entityTag.setEntityType(request.entityType.toString());
+			entityTag.setEntityId(request.entityId);
+			tagEntityRepo.save(entityTag);
+		}	
 	}
 
 	private void clearTagEntry(TagEntityRequest request) {
