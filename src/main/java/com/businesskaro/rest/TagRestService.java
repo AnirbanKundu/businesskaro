@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.entity.Tag;
 import com.businesskaro.entity.TagEntity;
 import com.businesskaro.model.BKEntityType;
-import com.businesskaro.model.TagEntityRequest;
+import com.businesskaro.rest.dto.TagEntityRequest;
 import com.businesskaro.service.TagService;
 
 @RestController
