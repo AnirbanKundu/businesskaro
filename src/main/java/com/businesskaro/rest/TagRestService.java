@@ -32,12 +32,17 @@ public class TagRestService {
 	}
 	
 	@RequestMapping(value="/services/tag/entity", method = RequestMethod.GET)
-	public List<TagEntity> searchTag(@RequestParam("keyword") String keyword , @RequestParam("entityType") BKEntityType entityType ){
+	public List<TagEntity> searchTag(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
+		
+		String[] keywordArr = keywords.split(",");
+		System.out.println(keywordArr);
 		if(entityType == BKEntityType.ALL){
-			return tagService.searchForTagName(keyword);
+			return tagService.searchForTagName(keywordArr);
 		}else{
-			return tagService.searchForTagNameAndEntityType(keyword, entityType.name());
+			return tagService.searchForTagNameAndEntityType(keywordArr, entityType.name());
 		}
 	}
+	
+	
 	
 }

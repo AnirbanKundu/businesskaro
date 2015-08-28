@@ -1,7 +1,9 @@
 package com.businesskaro.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,6 @@ import com.businesskaro.entity.TagEntity;
 import com.businesskaro.entity.repo.TagEntityRepo;
 import com.businesskaro.entity.repo.TagRepo;
 import com.businesskaro.rest.dto.TagEntityRequest;
-import com.businesskaro.rest.dto.TagItem;
 
 @Service
 public class TagService {
@@ -26,11 +27,11 @@ public class TagService {
 
 		clearTagEntry(request);
 
-		for (TagItem tag : request.newTags) {
-			Tag tagEntity = tagRepo.findByNameIgnoreCase(tag.name);
+		for (String tag : request.tags) {
+			Tag tagEntity = tagRepo.findByNameIgnoreCase(tag);
 			if (tagEntity == null) {
 				tagEntity = new Tag();
-				tagEntity.setName(tag.name);
+				tagEntity.setName(tag );
 				tagEntity = tagRepo.save(tagEntity);
 			}
 			TagEntity entityTag = new TagEntity();
@@ -39,14 +40,6 @@ public class TagService {
 			entityTag.setEntityId(request.entityId);
 			tagEntityRepo.save(entityTag);
 		}
-		
-		for (TagItem tag : request.existingtags) {
-			TagEntity entityTag = new TagEntity();
-			entityTag.setTagId(tag.tagId);
-			entityTag.setEntityType(request.entityType.toString());
-			entityTag.setEntityId(request.entityId);
-			tagEntityRepo.save(entityTag);
-		}	
 	}
 
 	private void clearTagEntry(TagEntityRequest request) {
@@ -57,38 +50,61 @@ public class TagService {
 		return tagRepo.findByNameIgnoreCaseStartsWith(keyword);
 	}
 
-	public List<TagEntity> searchForTagName(String tagName) {
+	public List<TagEntity> searchForTagName(String[] tagNames) {
 
 		List<TagEntity> results = new ArrayList<TagEntity>();
-
-		List<TagEntity> resuts = new ArrayList<TagEntity>();
-		List<Tag> tags = tagRepo.findByNameLikeIgnoreCase(tagName);
-		if (tags.size() == 0) {
-			return resuts;
+		for (String tagName : tagNames) {
+			List<Tag> tags = tagRepo.findByNameLikeIgnoreCase(tagName);
+			if (tags.size() == 0) {
+				break;
+			}
+			for (Tag tag : tags) {
+				results.addAll(tagEntityRepo.findAllByTagId(tag.getTagId()));
+			}
 		}
-
-		for (Tag tag : tags) {
-			results.addAll(tagEntityRepo.findAllByTagId(tag.getTagId()));
+		
+		if(tagNames.length == 1){
+			return results;
 		}
-
-		return results;
+		return findSubSet(results,tagNames.length);
 	}
 
-	public List<TagEntity> searchForTagNameAndEntityType(String tagName,
+	public List<TagEntity> searchForTagNameAndEntityType(String[] tagNames,
 			String entityType) {
+		
 		List<TagEntity> results = new ArrayList<TagEntity>();
-
-		List<TagEntity> resuts = new ArrayList<TagEntity>();
-		List<Tag> tags = tagRepo.findByNameContainingIgnoreCase(tagName);
-		if (tags.size() == 0) {
-			return resuts;
+		for(String tagName : tagNames) {
+			List<Tag> tags = tagRepo.findByNameContainingIgnoreCase(tagName);
+			if (tags.size() == 0) {
+				break;
+			}
+			for (Tag tag : tags) {
+				results.addAll(tagEntityRepo.findAllByTagIdAndEntityType(
+						tag.getTagId(), entityType));
+			}
 		}
-
-		for (Tag tag : tags) {
-			results.addAll(tagEntityRepo.findAllByTagIdAndEntityType(
-					tag.getTagId(), entityType));
+		
+		if(tagNames.length == 1){
+			return results;
 		}
-		return results;
+		return findSubSet(results,tagNames.length);
 	}
-
+	
+	 public List<TagEntity> findSubSet(List<TagEntity> results, int count){
+		 Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		 List<TagEntity> finalResult = new ArrayList<TagEntity>();
+		 for(TagEntity entity : results){
+			 if(map.containsKey(entity.getEntityId())){
+				 int c = map.get(entity.getEntityId());
+				 c=c+1;
+				 map.put(entity.getEntityId(), c);
+				 if(c == count){
+					 finalResult.add(entity);
+				 }
+			 }else{
+				 map.put(entity.getEntityId(), 1);
+			 }
+		 }
+		 return finalResult;
+	 }
 }

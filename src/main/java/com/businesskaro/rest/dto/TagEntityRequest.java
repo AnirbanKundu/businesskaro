@@ -8,9 +8,8 @@ public class TagEntityRequest {
 	
 	public BKEntityType entityType;
 	
-	public TagItem[] existingtags;
+	public String[] tags;
 	
-	public TagItem[] newTags;
 }
 
 
