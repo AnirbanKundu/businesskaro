@@ -1,0 +1,138 @@
+<style type="text/css">
+    .panel-body{
+        padding:0 !important;
+    }
+    .entity-type-user{
+        position: absolute;
+        background-color: #f9d00d;
+        top: -28px;
+        text-transform: uppercase; 
+    }
+    .entity-type-offer{
+        position: absolute;
+        background-color: #2685ee;
+        top: -28px;
+        color:#ffffff;
+        text-transform: uppercase; 
+    }
+</style>
+<div id="page-heading">
+	<ol class="breadcrumb">
+		<li><a href="#/">Dashboard</a></li>
+		<li class="active">Search</li>
+	</ol>
+	<h1>Search Page</h1>
+</div>
+<div class="container-fluid" ng-controller="SearchController">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="panel">
+				<div class="panel-heading">
+					<h2>Search Results</h2>
+				</div>
+			</div>
+
+		</div> <!-- col-md-12 -->
+	</div> <!-- row -->
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-4" ng-repeat="result in searchResults">
+
+            <panel ng-if="result.entityType == 'USER_PROFILE'" panel-class="panel-warning">
+                <p class="entity-type-user">
+                    <span ng-if="result.data.userType==='E'">Entrepreneur</span>
+                    <span ng-if="result.data.userType==='P'">Provider</span>
+                    <span ng-if="result.data.userType==='B'">Entrepreneur and Provider</span>
+                    <span ng-if="!result.data">Loading...</span>
+                </p>
+                <div class="col-md-4" style="padding-top:0;">
+                    <img ng-src="{{result.data.imageUrl}}" style="height:80px;" />
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-4"><strong>Name</strong></div>
+                        <div class="col-md-8">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><i class="fa fa-map-marker"></i></div>
+                        <div class="col-md-8">{{result.data.stateName}},&nbsp;{{result.data.cityName}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><strong>About Me</strong></div>
+                        <div class="col-md-8">{{result.data.aboutMe}}</div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding:0;">
+                    <hr/>
+                </div>              
+                <div class="col-md-12">
+                    <div class="col-md-4"><span><strong>Lookin For</strong></span></div>
+                    <div class="col-md-8"><span>Lookin For</span></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-4"><span><strong>Industry</strong></span></div>
+                    <div class="col-md-8"><span>Industries</span></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <a href="" class="">View more.. </a>
+                    </div>                    
+                </div>
+                <div class="col-md-12">
+                    <br/>
+                </div>
+                <div class="panel-loading" ng-if="!result.data">
+                    <div class="panel-loader-dots"></div>
+                </div>
+            </panel>
+            <panel ng-if="result.entityType == 'OFFER'" panel-class="panel-primary">
+                <p class="entity-type-offer">
+                    <span ng-if="result.data.userType==='E'">Offer</span>
+                    <span ng-if="result.data.userType==='P'">Offer</span>
+                    <span ng-if="result.data.userType==='B'">Request</span>
+                    <span ng-if="!result.data">Loading...</span>
+                </p>
+                <div class="col-md-4" style="padding-top:0;">
+                    <img ng-src="{{result.data.imageUrl}}" style="height:80px;" />
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-4"><strong>Name</strong></div>
+                        <div class="col-md-8">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><i class="fa fa-map-marker"></i></div>
+                        <div class="col-md-8">{{result.data.stateName}},&nbsp;{{result.data.cityName}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"><strong>About Me</strong></div>
+                        <div class="col-md-8">{{result.data.aboutMe}}</div>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding:0;">
+                    <hr/>
+                </div>              
+                <div class="col-md-12">
+                    <div class="col-md-4"><span><strong>Lookin For</strong></span></div>
+                    <div class="col-md-8"><span>Lookin For</span></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-4"><span><strong>Industry</strong></span></div>
+                    <div class="col-md-8"><span>Industries</span></div>
+                </div>
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <a href="" class="">View more..</a>
+                    </div>                                 
+                </div>
+                <div class="col-md-12">
+                    <br/>
+                </div>
+                <div class="panel-loading" ng-if="!result.data">
+                    <div class="panel-loader-dots"></div>
+                </div>
+            </panel>
+        </div> 
+    </div>
+
+</div> <!-- container-fluid -->

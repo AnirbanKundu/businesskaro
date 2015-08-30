@@ -50,6 +50,8 @@ public class UserPersonalInfoSummary implements Serializable {
 
 	@Column(name="USR_TYP")
 	private String usrTyp;
+	@Column(name="IMAGE_URL")
+	private String imageUrl;
 
 	//bi-directional many-to-one association to BrgUsrIndustry
 	@OneToMany(mappedBy="tblUserPersInfoSumry")
@@ -156,6 +158,13 @@ public class UserPersonalInfoSummary implements Serializable {
 
 	public void setUsrTyp(String usrTyp) {
 		this.usrTyp = usrTyp;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public List<BrgUsrIndustry> getBrgUsrIndustries() {

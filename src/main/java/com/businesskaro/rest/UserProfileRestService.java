@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.model.BKUserProfileSummary;
@@ -51,11 +52,9 @@ public class UserProfileRestService extends BKRestService {
 	}
 	
 	@RequestMapping(value="/services/userProfile/summary" , method = RequestMethod.GET)
-	public BKUserProfileSummary getUserProfileSummary( 
-			@RequestHeader("SECURE_TOKEN") String secureToken, 
-			@RequestHeader("CLIENT_ID") String clientId ){
-		Integer userId = validateSecureToken(clientId, secureToken);
-		return service.getUserPersonalSummary(userId);
+	public BKUserProfileSummary getUserProfileSummary(@RequestParam("userId") String userId){
+		//Integer userId = validateSecureToken(clientId, secureToken);
+		return service.getUserPersonalSummary(Integer.parseInt(userId));
 	}
 	
 	@RequestMapping(value="/services/userProfile/details" , method = RequestMethod.GET)

@@ -26,6 +26,7 @@ angular
     'theme.demos.tasks',
     'theme.demos.mail', 
     'theme.demos.filter',
+    'theme.demos.offerrequest',
     'theme.demos.offerrequest'
   ])
   .directive('img', ['$timeout', function ($t) {

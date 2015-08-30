@@ -11,7 +11,7 @@ angular
       fullscreen: false,
       layoutHorizontal: false,
       layoutHorizontalLargeIcons: false,
-      layoutBoxed: true,//false,
+      layoutBoxed: false,
       showSmallSearchBar: false,
       topNavThemeClass: 'navbar-midnightblue',
       sidebarThemeClass: 'sidebar-default',

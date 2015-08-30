@@ -1,0 +1,110 @@
+[
+    {
+        "tagEntityId": 112,
+        "entityId": 1,
+        "entityType": "USER_PROFILE",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 132,
+        "entityId": 2,
+        "entityType": "USER_PROFILE",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 154,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 85,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 91,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 87,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 93,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 201,
+        "entityId": 2,
+        "entityType": "REQUEST",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 202,
+        "entityId": 2,
+        "entityType": "OFFER",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 219,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 314,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 919,
+        "entityId": 2,
+        "entityType": "USER_PROFILE",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 897,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 987,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 569,
+        "entityId": 2,
+        "entityType": "USER_PROFILE",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 908,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 907,
+        "entityId": 2,
+        "entityType": "NEWS",
+        "tagId": 62
+    },
+    {
+        "tagEntityId": 910,
+        "entityId": 2,
+        "entityType": "USER_PROFILE",
+        "tagId": 62
+    }
+]

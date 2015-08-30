@@ -3,7 +3,7 @@ angular.module('theme.demos.dashboard', [
     'theme.demos.forms',
     'theme.demos.tasks'
   ])
-  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http', function($scope, $timeout, $window,$http) {
+  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', function($scope, $timeout, $window,$http, $location) {
     'use strict';
     var moment = $window.moment;
     var _ = $window._;
@@ -20,6 +20,18 @@ angular.module('theme.demos.dashboard', [
       }      
     };
     */
+    $scope.tagTransform = function(newTag){
+      var item = {
+        tagId: -1,
+        name : newTag.toLowerCase()
+      };
+      return item;
+    };
+
+    $scope.searchTags = function(){
+      $location.path('/search');
+      console.log('Tags selected are:', $scope.selectedTag);
+    }
 
     $scope.refreshTags = function(value) {
      if(value=="" || value==undefined ){
