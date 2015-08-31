@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.request', [])
-  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http', function($scope, $timeout, $log, $http) {
+  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication) {
 	    'use strict';
 	    console.log('In CreateRequestController');
 	    $scope.reg_form = {};

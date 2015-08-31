@@ -88,6 +88,36 @@
 								</div>
 							</form>
 						</div>
+						<div class="col-sm-12">
+							<hr />
+						</div>
+						<div class="col-sm-12">
+							<label class="col-sm-1 control-label">Questions</label><br>
+							<div ng-repeat="question in questions">
+								<span>{{question.questId}}. </span>
+								<span>{{question.questTxt}}</span><br>
+								<div class="col-sm-6">
+					                    <div class="radio-inline">
+					                      <label>
+					                        <input icheck type="radio" name="optionsRadios" value="Y">
+					                        Yes
+					                      </label>
+					                    </div>
+					                    <div class="radio-inline">
+					                      <label>
+					                        <input icheck type="radio" name="optionsRadios" value="N">
+					                        No
+					                      </label>
+					                    </div>
+					                    <div class="radio-inline" ng-if="question.responseTyp === 'NOT_SURE'">
+					                      <label>
+					                        <input icheck type="radio" name="optionsRadios"  value="NS">
+					                        Not Sure
+					                      </label>
+					                    </div>	
+					                </div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
