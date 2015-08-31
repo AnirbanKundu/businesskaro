@@ -143,5 +143,8 @@ public class OfferRequestService {
 		
 		return result;
 	}
-
+	
+	public OfferRequest getSumary(Integer offerId){
+		return mapper(reqOfferRepo.findOne(offerId)); 
+	}
 }

@@ -34,6 +34,11 @@ public class OfferRestService {
 		return service.getAll(userId);
 	}
 	
+	@RequestMapping(value="/services/offer/summary/{offerId}" , method = RequestMethod.GET)
+	public OfferRequest getOfferSummary(@PathVariable("offerId") Integer offerId){
+		return service.getSumary(offerId);
+	}
+	
 	@RequestMapping(value="/services/offer/{offerId}" , method = RequestMethod.DELETE)
 	public void deleteOffer(@PathVariable("offerId") Integer offerId){
 		service.delete(offerId);

@@ -36,4 +36,9 @@ public class RequestRestService {
 	public void deleteRequest(@PathVariable("requestId") Integer requestId){
 		service.delete(requestId);
 	}
+	
+	@RequestMapping(value="/services/request/summary/{requestId}" , method = RequestMethod.GET)
+	public OfferRequest getRequestSummary(@PathVariable("requestId") Integer requestId){
+		return service.getSumary(requestId);
+	}
 }
