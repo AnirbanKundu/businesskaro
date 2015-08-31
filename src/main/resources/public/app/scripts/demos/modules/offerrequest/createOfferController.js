@@ -33,6 +33,11 @@ angular
     },function(error){
       $log.log(error);
     });
+    LookUpService.getQuestions('O').then(function(data){
+        $scope.questions = data;
+      },function(error){
+        $log.log(error);
+      });
     
     $scope.selectedIndustries = { "selected": [] };
     $scope.lookingfor = { "selected": [] };

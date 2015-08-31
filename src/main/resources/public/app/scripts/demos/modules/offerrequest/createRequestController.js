@@ -15,7 +15,7 @@ angular
 	    $scope.selectedStateId = 0;
 	    
 	    /*********** Get all Lookup values *********/
-	    /*
+	    
 	    LookUpService.getAgeGroup().then(function(data){ 
 	      $scope.ageGroup = data;
 	    },function(error){
@@ -31,6 +31,11 @@ angular
 	    },function(error){
 	      $log.log(error);
 	    });
+	    LookUpService.getQuestions('R').then(function(data){
+	        $scope.questions = data;
+	      },function(error){
+	        $log.log(error);
+	      });
 	    
 	    $scope.selectedIndustries = { "selected": [] };
 	    $scope.lookingfor = { "selected": [] };
@@ -115,5 +120,5 @@ angular
 	              return response.data;
 	            });
 	      };
-	      */
+	      
 	  }]);

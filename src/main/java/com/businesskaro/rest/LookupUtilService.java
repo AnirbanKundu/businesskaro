@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,10 +15,12 @@ import com.businesskaro.dao.LookUpUtilDao;
 import com.businesskaro.entity.AgeGroup;
 import com.businesskaro.entity.Education;
 import com.businesskaro.entity.LkpIndustry;
+import com.businesskaro.entity.LkpQuestion;
 import com.businesskaro.entity.repo.AgeGroupRepo;
 import com.businesskaro.entity.repo.EducationRepo;
 import com.businesskaro.entity.repo.ExperienceRepo;
 import com.businesskaro.entity.repo.ProfessionRepo;
+import com.businesskaro.entity.repo.QuestionRepo;
 import com.businesskaro.entity.repo.UserInductryRepo;
 import com.businesskaro.model.Industry1;
 
@@ -41,6 +44,9 @@ class LookupUtilService {
 	@Autowired
 	UserInductryRepo industryRepo;
 	
+	@Autowired
+	QuestionRepo questionsRepo;
+	
 	
     @RequestMapping(value="/utilservices/ages", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
@@ -60,5 +66,11 @@ class LookupUtilService {
     public Iterable<LkpIndustry> getAllIndustry() throws Exception {   
     	//List<AgeGroup> ages = new ArrayList<AgeGroup>();
     	 return industryRepo.findAll();
+    }
+    @RequestMapping(value="/utilservices/questions/{questionType}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Iterable<LkpQuestion> getAllQuestions(@PathVariable("questionType") String questionType) throws Exception {   
+    	//List<AgeGroup> ages = new ArrayList<AgeGroup>();
+    	return questionsRepo.findByQuestTyp(questionType);
     }
 }
