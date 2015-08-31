@@ -1,7 +1,8 @@
 angular
-  .module('theme.demos.offerrequest', [])
-  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http, LookUpService, UserAuthentication) {
+  .module('theme.demos.request', [])
+  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http', function($scope, $timeout, $log, $http) {
 	    'use strict';
+	    console.log('In CreateRequestController');
 	    $scope.reg_form = {};
 	    $scope.form = {};
 
@@ -14,6 +15,7 @@ angular
 	    $scope.selectedStateId = 0;
 	    
 	    /*********** Get all Lookup values *********/
+	    /*
 	    LookUpService.getAgeGroup().then(function(data){ 
 	      $scope.ageGroup = data;
 	    },function(error){
@@ -113,4 +115,5 @@ angular
 	              return response.data;
 	            });
 	      };
+	      */
 	  }]);

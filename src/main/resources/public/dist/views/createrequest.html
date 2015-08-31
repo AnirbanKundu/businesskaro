@@ -1,30 +1,92 @@
-<div ng-controller="GOIPolicyController">
-	<div id="page-heading">
-		<ol class="breadcrumb">
-			<li><a href="#/">Dashboard</a></li>
-			<li>Create Request</li>
-		</ol>
+<div id="page-heading">
+	<ol class="breadcrumb">
+		<li><a href="#/">Dashboard</a></li>
+		<li>Create Request</li>
+	</ol>
+</div>
+<div class="container-fluid" ng-controller="CreateRequestController">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-orange">
+				<div class="panel-heading">
+					<h2>Post your Request</h2>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-12" >
+							<form action="" name="form.reg_form" class="form-horizontal row-border">
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Title</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control input-sm">
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Description</label>
+									<div class="col-sm-8">
+										<textarea class="form-control input-sm"></textarea>
+									</div>
+									
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Target Industry</label>
+									<div class="col-sm-10">
+										<ui-select multiple ng-model="selectedIndustries.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select your profession"> <ui-select-match
+											placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
+										<ui-select-choices repeat="iterator in industries">
+										<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Intended Audience</label>
+									<div class="col-sm-10">
+										<ui-select multiple ng-model="selectedIndustries.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select your profession"> <ui-select-match
+											placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
+										<ui-select-choices repeat="iterator in industries">
+										<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
 
-		<h1>Create Request</h1>
-	</div>
-	<div class="container-fluid">
-		
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h4>Heading</h4>
-						<div class="options">
-					
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Target Location</label>
+									<div class="col-sm-10">
+										<ui-select multiple ng-model="selectedIndustries.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select your profession"> <ui-select-match
+											placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
+										<ui-select-choices repeat="iterator in industries">
+										<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
+
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="col-sm-12">
+							<hr />
+						</div>
+						<div class="col-md-12">
+							<label class="col-sm-2 control-label">Questions</label>
 						</div>
 					</div>
-					<div class="panel-body">
-						Body
+				</div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-sm-6 col-sm-offset-3">
+							<div class="btn-toolbar">
+								<button class="btn-primary btn">Save</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 
-
-	</div> <!-- container-fluid -->
 </div>
+
+<!-- container-fluid -->
