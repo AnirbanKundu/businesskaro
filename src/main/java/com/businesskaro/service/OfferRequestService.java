@@ -100,7 +100,8 @@ public class OfferRequestService {
 	}
 
 	public List<OfferRequest> getAll(Integer userId) {
-		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAll();//findAllByUserId(userId);
+		
+		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumry(userInfoSummary.findOne(userId));
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){

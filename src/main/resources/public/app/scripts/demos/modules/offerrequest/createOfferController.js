@@ -93,9 +93,9 @@ angular
           url : 'services/delete/'+ $scope.userImageId +'/image',
           method: 'GET'
         }).then(function(data){
-          $scope.userImageId = "";
-          $scope.userImageUrl = "";
-          $scope.user.details.imageUrl = "";
+          $scope.ImageId = "";
+          $scope.ImageUrl = "";
+          $scope.imageUrl = "";
         },function(error){
           console.log('Error in delete');
         })
@@ -113,9 +113,9 @@ angular
             data: formData,
             cache : false
           }).then(function(response){
-              $scope.user.details.imageUrl = response.data.url;
-              $scope.userImageId = response.data.publicId;
-              $scope.userImageUrl = response.data.url;
+              $scope.imageUrl = response.data.url;
+              $scope.ImageId = response.data.publicId;
+              $scope.ImageUrl = response.data.url;
               return response.data;
             }, function(response){
                 alert("Error loading file... Please try again.");
@@ -123,4 +123,29 @@ angular
             });
       };
       
+      $scope.save =  function(){
+    		var state=[];
+    		state.push($scope.stateId);
+    		var industries=[];
+    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+    			industries.push($scope.selectedIndustries.selected[i].industryId);
+    		}
+    	  $http({
+              url: '/services/offer',
+              method: 'POST',
+              isArray: false,
+              data: { "title" : $scope.offerTitle,
+                  "compName" : $scope.offerCompanyname,
+                  "description" : $scope.offerDescription,
+                  "trgtIndustry" : industries,
+                  "intdAudience" : $scope.profId,
+                  "trgtLocation" : state,
+                  "imgUrl" :$scope.imageUrl
+                  },
+              cache : false}).then(function(response){
+                  return response.data;
+              }, function(response){
+                      return response.data;
+              });
+      };
   }]);
