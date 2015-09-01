@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,34 +15,47 @@ import com.businesskaro.model.OfferRequestEnum;
 import com.businesskaro.service.OfferRequestService;
 
 @RestController
-public class OfferRestService {
+public class OfferRestService extends BKRestService{
 
 	@Autowired
 	OfferRequestService service;
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.POST)
-	public void createOffer(@RequestBody OfferRequest offer){
+	public void createOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
+		Integer userId = validateSecureToken(clientId, secureToken);
+		offer.userId = userId;
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.PUT)
-	public void updateOffer(@RequestBody OfferRequest offer){
+	public void updateOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
+		Integer userId = validateSecureToken(clientId, secureToken);
+		offer.userId = userId;
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
-	@RequestMapping(value="/services/offer/{userId}" , method = RequestMethod.GET)
-	public List<OfferRequest> getOffers(@PathVariable("userId") Integer userId){
+	@RequestMapping(value="/services/offer" , method = RequestMethod.GET)
+	public List<OfferRequest> getOffers(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId){
+		Integer userId = validateSecureToken(clientId, secureToken);
 		return service.getAll(userId);
 	}
 	
 	@RequestMapping(value="/services/offer/summary/{offerId}" , method = RequestMethod.GET)
 	public OfferRequest getOfferSummary(@PathVariable("offerId") Integer offerId){
-		return service.getSumary(offerId);
+		return service.getSummary(offerId);
 	}
 	
 	@RequestMapping(value="/services/offer/{offerId}" , method = RequestMethod.DELETE)
-	public void deleteOffer(@PathVariable("offerId") Integer offerId){
-		service.delete(offerId);
+	public void deleteOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("offerId") Integer offerId){
+		Integer userId = validateSecureToken(clientId, secureToken);
+		if(userId!=null){
+			service.delete(offerId);
+		}
+		
 	}
 	
 }

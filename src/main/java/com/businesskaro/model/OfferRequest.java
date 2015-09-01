@@ -13,7 +13,7 @@ public class OfferRequest {
 	public int[] trgtLocation;
 	public String imgUrl;
 	public List<Questions> questionList;
-	//public int userId;
+	public int userId;
 	public boolean isVerified = false;
 	
 	public Date createDate;

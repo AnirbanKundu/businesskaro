@@ -92,7 +92,7 @@ public class OfferRequestService {
 			entity.setBrgUsrReqrStates(stateList);
 		}
 		
-		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(1);
+		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(model.userId);
 		entity.setTblUserPersInfoSumry(userInfo);
 		
 		reqOfferRepo.save(entity);
@@ -141,11 +141,12 @@ public class OfferRequestService {
 			question.response = quest.getLkpQuestion().getResponseTyp();
 		}
 		result.questionList = questions;
+		result.imgUrl = fromTable.getImageUrl();
 		
 		return result;
 	}
 	
-	public OfferRequest getSumary(Integer offerId){
+	public OfferRequest getSummary(Integer offerId){
 		return mapper(reqOfferRepo.findOne(offerId)); 
 	}
 }
