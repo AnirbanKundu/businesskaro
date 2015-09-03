@@ -50,6 +50,7 @@ public class UserPersonalInfoSummary implements Serializable {
 
 	@Column(name="USR_TYP")
 	private String usrTyp;
+	
 	@Column(name="IMAGE_URL")
 	private String imageUrl;
 

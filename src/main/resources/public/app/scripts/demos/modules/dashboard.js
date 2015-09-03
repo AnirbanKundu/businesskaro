@@ -1,12 +1,18 @@
 angular.module('theme.demos.dashboard', [
     'angular-skycons',
     'theme.demos.forms',
-    'theme.demos.tasks'
+    'theme.demos.tasks',
+    'theme.core.services'
   ])
-  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', function($scope, $timeout, $window,$http, $location) {
+  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', function($scope, $timeout, $window,$http, $location,$theme) {
     'use strict';
     var moment = $window.moment;
     var _ = $window._;
+    $theme.set('leftbarCollapsed', true);
+    //$theme.set('layoutHorizontal', true);
+    $scope.$on('$destroy', function() {
+      $theme.set('leftbarCollapsed', false);
+    });
     $scope.selectedTag = { "selected": [] };
     $scope.selectedValues = undefined;
 
@@ -45,10 +51,9 @@ angular.module('theme.demos.dashboard', [
         $scope.tags = response.data;
       });
     };
-    /*
-    $http.get('services/tag/names?keyword').success(function(response) {
-      $scope.tags = response;
+    $scope.industries = [];
+    $http.get('utilservices/industries').success(function(response) {
+      $scope.industries = response;
     });
-    */
     
   }]);

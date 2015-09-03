@@ -87,7 +87,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     });
 
     $scope.hideHeaderBar = function() {
-      $theme.set('headerBarHidden', true);
+      //$theme.set('headerBarHidden', true);
     };
 
     $scope.showHeaderBar = function($event) {

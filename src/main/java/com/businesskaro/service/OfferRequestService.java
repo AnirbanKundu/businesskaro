@@ -49,7 +49,6 @@ public class OfferRequestService {
 		TblUsrReqOffer entity = new TblUsrReqOffer();
 		entity.setReqOffrTyp(type.toString());
 		entity.setReqOffrTitle(model.title);
-		//entity.setCompanyName(model.compName);
 		entity.setReqOffrDesc(model.description);
 		entity.setTargAudienceId(model.intdAudience);
 		entity.setCreateDt(model.createDate);
@@ -92,7 +91,7 @@ public class OfferRequestService {
 			entity.setBrgUsrReqrStates(stateList);
 		}
 		
-		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(1);
+		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(model.userId);
 		entity.setTblUserPersInfoSumry(userInfo);
 		
 		reqOfferRepo.save(entity);
@@ -118,7 +117,6 @@ public class OfferRequestService {
 	
 	private OfferRequest mapper(TblUsrReqOffer fromTable){
 		OfferRequest result = new OfferRequest();
-		//result.compName = fromTable.get
 		result.description = fromTable.getReqOffrDesc();
 		result.title = fromTable.getReqOffrTitle();
 		result.intdAudience = fromTable.getTargAudienceId();
@@ -141,11 +139,14 @@ public class OfferRequestService {
 			question.response = quest.getLkpQuestion().getResponseTyp();
 		}
 		result.questionList = questions;
-		
+		result.imgUrl = fromTable.getImageUrl();
+		result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		result.createDate = fromTable.getCreateDt();
+		result.updateDate = fromTable.getLastUpd();
 		return result;
 	}
 	
-	public OfferRequest getSumary(Integer offerId){
+	public OfferRequest getSummary(Integer offerId){
 		return mapper(reqOfferRepo.findOne(offerId)); 
 	}
 }
