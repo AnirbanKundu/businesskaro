@@ -14,7 +14,7 @@ angular
       layoutBoxed: false,
       showSmallSearchBar: false,
       topNavThemeClass: 'navbar-midnightblue',
-      sidebarThemeClass: 'sidebar-default',
+      sidebarThemeClass: 'sidebar-midnightblue',
       showChatBox: false,
       pageTransitionStyle: 'fadeIn',
       dropdownTransitionStyle: 'fadeIn'

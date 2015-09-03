@@ -233,6 +233,7 @@ public class UserPersonalInfoService {
 		summary.stateName = summryEntity.getStateName();
 		summary.updatedDate = summryEntity.getLastUpd();
 		summary.userType = summryEntity.getUsrTyp();
+		summary.imageUrl = summryEntity.getImageUrl();
 
 		List<UserSkill> skillList = summryEntity.getBrgUsrSkills();
 		if (skillList != null) {

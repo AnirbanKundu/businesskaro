@@ -301,6 +301,7 @@ module.exports = function (grunt) {
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'assets/**',
+            'appdata/**',
             // these files are lazyloaded
             'bower_components/jquery.inputmask/dist/jquery.inputmask.bundle.js',
             'bower_components/jquery-validation/dist/jquery.validate.js',

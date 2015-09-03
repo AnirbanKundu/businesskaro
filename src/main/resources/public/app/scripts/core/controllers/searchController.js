@@ -62,7 +62,7 @@ angular
     console.log('industry is:',$scope.industry);
     //services/tag/entity?keyword=JAVA&entityType=ALL
     $http({
-        url : 'scripts/core/services/tagentity.json',
+        url : 'appdata/tagentity.json',
         method: 'GET'
       }).then(function(response){        
         $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
