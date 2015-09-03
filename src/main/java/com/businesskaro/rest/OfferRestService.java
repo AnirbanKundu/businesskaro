@@ -1,5 +1,6 @@
 package com.businesskaro.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class OfferRestService extends BKRestService{
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
 		Integer userId = validateSecureToken(clientId, secureToken);
 		offer.userId = userId;
+		offer.createDate = new Date();
+		offer.updateDate = new Date();
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
@@ -33,6 +36,7 @@ public class OfferRestService extends BKRestService{
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
 		Integer userId = validateSecureToken(clientId, secureToken);
 		offer.userId = userId;
+		offer.updateDate = new Date();
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
