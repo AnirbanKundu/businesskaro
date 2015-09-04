@@ -86,7 +86,7 @@ public class UserSecurityRestService {
 		userPswd.setUsrPassword(encryptedPassword);
 		userDao.save(userPswd);
 		
-		mailService.sendMailx("", loginRequest.userName, " Please use the password "+ newpswd +"  to login. Please dont forgot to change the password ");
+		mailService.sendMailx("", userPswd.getUsrEmail(), " Please use the password "+ newpswd +"  to login. Please dont forgot to change the password ");
 		
 	}
 	
