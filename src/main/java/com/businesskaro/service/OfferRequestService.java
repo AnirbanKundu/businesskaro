@@ -64,10 +64,13 @@ public class OfferRequestService {
 			entity.setIsVerified(0);
 		}
 		
+		System.out.println("Model Industry "+model.trgtIndustry.length);
+		
 		if(model.trgtIndustry!=null){
 			List<BrgUsrReqrIndustry> bkUsrIndustryList = new ArrayList<BrgUsrReqrIndustry>();
 			for (Integer indusId : model.trgtIndustry) {
 				LkpIndustry indEntity = userIndRepo.findOne(indusId);
+				System.out.println("Lookup answer: "+indEntity);
 				if (indEntity != null) {
 					BrgUsrReqrIndustry industry = new BrgUsrReqrIndustry();
 					industry.setLkpIndustry(indEntity);
@@ -77,6 +80,7 @@ public class OfferRequestService {
 			entity.setBrgUsrReqrIndustries(bkUsrIndustryList);
 		}
 		
+		System.out.println("Trgt Location: "+model.trgtIndustry.length);
 		
 		if(model.trgtLocation!=null){
 			List<BrgUsrReqrState> stateList = new ArrayList<BrgUsrReqrState>();
@@ -146,7 +150,38 @@ public class OfferRequestService {
 		return result;
 	}
 	
+	private OfferRequest mapperSummary(TblUsrReqOffer fromTable){
+		OfferRequest result = new OfferRequest();
+		result.description = fromTable.getReqOffrDesc();
+		result.title = fromTable.getReqOffrTitle();
+		result.intdAudience = fromTable.getTargAudienceId();
+		
+		int[] usrStatesIds = new int[fromTable.getBrgUsrReqrStates().size()];
+		for(int j=0;j<fromTable.getBrgUsrReqrStates().size();j++){
+			usrStatesIds[j] = fromTable.getBrgUsrReqrStates().get(j).getReqrIndus();
+		}
+		result.trgtLocation = usrStatesIds;
+		
+		// Change imageURL to send the thumb nail
+		if(fromTable.getImageUrl()!=null){
+			String url = fromTable.getImageUrl();
+			String[] splitted = url.split("upload/");
+			String summaryUrl = splitted[0]+"upload/t_media_lib_thumb/"+splitted[1];
+			result.imgUrl = summaryUrl;
+		}
+		
+		
+		result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		result.createDate = fromTable.getCreateDt();
+		result.updateDate = fromTable.getLastUpd();
+		return result;
+	}
+	
 	public OfferRequest getSummary(Integer offerId){
+		return mapperSummary(reqOfferRepo.findOne(offerId)); 
+	}
+	
+	public OfferRequest getDetails(Integer offerId){
 		return mapper(reqOfferRepo.findOne(offerId)); 
 	}
 }

@@ -2,7 +2,7 @@ angular
   .module('theme.demos.offer', [])
   .controller('CreateOfferController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication) {
     'use strict';
-    console.log('In CreateOfferController');
+    
 
     $scope.reg_form = {};
     $scope.form = {};
@@ -33,6 +33,11 @@ angular
     },function(error){
       $log.log(error);
     });
+    LookUpService.getStates().then(function(data){
+        $scope.states = data;
+      },function(error){
+        $log.log(error);
+      });
     LookUpService.getQuestions('O').then(function(data){
         $scope.questions = data;
       },function(error){
@@ -40,6 +45,7 @@ angular
       });
     
     $scope.selectedIndustries = { "selected": [] };
+    $scope.selectedStates = { "selected": [] };
     $scope.lookingfor = { "selected": [] };
     $scope.industries = [];
     $http.get('utilservices/industries').success(function(response) {
@@ -125,7 +131,9 @@ angular
       
       $scope.save =  function(){
     		var state=[];
-    		state.push($scope.stateId);
+    		for(var i=0;i<$scope.selectedStates.selected.length;i++){
+    			state.push($scope.selectedStates.selected[i].stateId);
+    		}
     		var industries=[];
     		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
     			industries.push($scope.selectedIndustries.selected[i].industryId);

@@ -31,6 +31,11 @@ angular
 	    },function(error){
 	      $log.log(error);
 	    });
+	    LookUpService.getStates().then(function(data){
+	        $scope.states = data;
+	      },function(error){
+	        $log.log(error);
+	      });
 	    LookUpService.getQuestions('R').then(function(data){
 	        $scope.questions = data;
 	      },function(error){
@@ -38,6 +43,8 @@ angular
 	      });
 	    
 	    $scope.selectedIndustries = { "selected": [] };
+	    $scope.selectedStates = { "selected": [] };
+
 	    $scope.lookingfor = { "selected": [] };
 	    $scope.industries = [];
 	    $http.get('utilservices/industries').success(function(response) {
@@ -122,28 +129,30 @@ angular
 	      };
 	      
 	      $scope.save =  function(){
-	    		var state=[];
-	    		state.push($scope.stateId);
-	    		var industries=[];
-	    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
-	    			industries.push($scope.selectedIndustries.selected[i].industryId);
-	    		}
-	    	  $http({
-	              url: '/services/request',
-	              method: 'POST',
-	              isArray: false,
-	              data: { "title" : $scope.requestTitle,
-	                  "description" : $scope.requestDescription,
-	                  "trgtIndustry" : industries,
-	                  "intdAudience" : $scope.profId,
-	                  "trgtLocation" : state,
-	                  "imgUrl" :$scope.imageUrl
-	                  },
-	              cache : false}).then(function(response){
-	                  return response.data;
-	              }, function(response){
-	                      return response.data;
-	              });
+    		var state=[];
+    		for(var i=0;i<$scope.selectedStates.selected.length;i++){
+    			state.push($scope.selectedStates.selected[i].stateId);
+    		}
+    		var industries=[];
+    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+    			industries.push($scope.selectedIndustries.selected[i].industryId);
+    		}
+    	  $http({
+              url: '/services/request',
+              method: 'POST',
+              isArray: false,
+              data: { "title" : $scope.requestTitle,
+                  "description" : $scope.requestDescription,
+                  "trgtIndustry" : industries,
+                  "intdAudience" : $scope.profId,
+                  "trgtLocation" : state,
+                  "imgUrl" :$scope.imageUrl
+                  },
+              cache : false}).then(function(response){
+                  return response.data;
+              }, function(response){
+                      return response.data;
+              });
 	      };
 	      
 	  }]);

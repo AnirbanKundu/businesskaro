@@ -52,6 +52,12 @@ public class OfferRestService extends BKRestService{
 		return service.getSummary(offerId);
 	}
 	
+	@RequestMapping(value="/services/offer/detail/{offerId}" , method = RequestMethod.GET)
+	public OfferRequest getOfferDetails(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId){
+		return service.getDetails(offerId);
+	}
+	
 	@RequestMapping(value="/services/offer/{offerId}" , method = RequestMethod.DELETE)
 	public void deleteOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("offerId") Integer offerId){

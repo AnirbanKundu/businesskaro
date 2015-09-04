@@ -27,7 +27,8 @@ angular
     'theme.demos.mail', 
     'theme.demos.filter',
     'theme.demos.offer',
-    'theme.demos.request'
+    'theme.demos.request',
+    'theme.demos.myoffer'
   ])
   .directive('img', ['$timeout', function ($t) {
       // NOTE: this affects all <img> tags

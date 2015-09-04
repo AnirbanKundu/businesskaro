@@ -2,6 +2,9 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -25,11 +28,13 @@ public class LkpState implements Serializable {
 	@Column(name="STATE_SHRT_NM")
 	private String stateShrtNm;
 
-	//bi-directional many-to-one association to BrgUsrReqrState
+	//bi-directional many-to-one association to BrgUsrReqrState@JsonIgnore
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpState")
 	private List<BrgUsrReqrState> brgUsrReqrStates;
 
 	//bi-directional many-to-one association to TblUserPersInfoDetail
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpState")
 	private List<UserPersonalInfoDetails> tblUserPersInfoDetails;
 
