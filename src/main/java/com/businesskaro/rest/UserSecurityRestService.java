@@ -4,18 +4,17 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.core.subst.Token.Type;
-
-import com.businesskaro.dao.BKUserDao;
 import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
+import com.businesskaro.mail.Mail;
 import com.businesskaro.model.BKException;
-import com.businesskaro.model.BKUser;
 import com.businesskaro.rest.dto.LoginRequest;
 import com.businesskaro.rest.dto.LoginResponse;
 import com.businesskaro.security.BKGuid;
@@ -29,6 +28,10 @@ public class UserSecurityRestService {
 		
 	@Autowired
 	TblUserPasswordRepo userDao;
+	
+	@Autowired
+	Mail mailService;
+	
 
 	@RequestMapping(value="/services/login" , method = RequestMethod.POST)
 	public LoginResponse login(@RequestBody LoginRequest loginRequest ){
@@ -60,5 +63,32 @@ public class UserSecurityRestService {
 		}
 		
 	}
+	
+	//generate 10 random string
+	//Update new password t the profile
+	//use mail service send
+	
+	
+	@RequestMapping(value="/services/resetPassword" , method = RequestMethod.POST)
+	@ResponseStatus(value=HttpStatus.OK)
+	public void resetPassword(@RequestBody LoginRequest loginRequest ){
+		
+		logger.info("Security Request " + loginRequest.userName);
+		
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.userName);
+		if(userPswdEntitys.size() == 0){
+			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+		}
+		
+		TblUserPassword userPswd = userPswdEntitys.get(0);
+		String newpswd = BKGuid.randomString(10);
+		String encryptedPassword = EncryptionUtil.encode(newpswd, userPswd.getUsrSalt());
+		userPswd.setUsrPassword(encryptedPassword);
+		userDao.save(userPswd);
+		
+		mailService.sendMailx("", loginRequest.userName, " Please use the password "+ newpswd +"  to login. Please dont forgot to change the password ");
+		
+	}
+	
 	
 }
