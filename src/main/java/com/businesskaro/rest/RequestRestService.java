@@ -61,4 +61,10 @@ public class RequestRestService extends BKRestService{
 	public OfferRequest getRequestSummary(@PathVariable("requestId") Integer requestId){
 		return service.getSummary(requestId);
 	}
+	
+	@RequestMapping(value="/services/request/detail/{requestId}" , method = RequestMethod.GET)
+	public OfferRequest getRequestDetails(@PathVariable("requestId") Integer requestId, @RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId){
+		return service.getDetails(requestId);
+	}
 }
