@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.offer', [])
-  .controller('CreateOfferController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication) {
+  .controller('CreateOfferController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', '$window', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication,$window) {
     'use strict';
     
 
@@ -151,9 +151,9 @@ angular
                   "imgUrl" :$scope.imageUrl
                   },
               cache : false}).then(function(response){
-                  return response.data;
+            	  $window.location.href = '/#/myoffers';
               }, function(response){
-                      return response.data;
+            	  $window.location.href = '/#/myoffers';
               });
       };
   }]);

@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.request', [])
-  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication) {
+  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication','$window', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication,$window) {
 	    'use strict';
 	    console.log('In CreateRequestController');
 	    $scope.reg_form = {};
@@ -149,9 +149,9 @@ angular
                   "imgUrl" :$scope.imageUrl
                   },
               cache : false}).then(function(response){
-                  return response.data;
+            	  $window.location.href = '/#/myrequests';
               }, function(response){
-                      return response.data;
+            	  $window.location.href = '/#/myrequests';
               });
 	      };
 	      

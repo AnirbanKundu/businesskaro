@@ -1,6 +1,9 @@
 angular
   .module('theme.demos.myoffer', [])
-  .controller('MyOfferController', ['$scope', function($scope){
-	  console.log('In MyOfferController');
-	  $scope.name="Ritesh";
+  .controller('MyOfferController', ['$scope', '$http', function($scope,$http){
+
+	  $http.get('/services/offer').success(function(response) {
+	      $scope.offers = response;
+	    });
+	  
   }]);

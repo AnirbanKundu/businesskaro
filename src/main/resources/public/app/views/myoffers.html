@@ -1,9 +1,48 @@
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
-		<li>My Offers</li>
+		<li>Offer</li>
+		<li class="active">My Offers</li>
 	</ol>
 </div>
+
 <div class="container-fluid" ng-controller="MyOfferController">
-{{name}}
+	<div class="row">
+		<div class="col-sm-12">
+			<tabset panel-tabs="true" panel-class="panel-sky" heading="My Offers"> 
+				<tab> 
+			<div class="table-vertical">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th style="padding-right: 100px">Title</th>
+							<th>Description</th>
+							<th>Target Industries</th>
+							<th>Intended Audience</th>
+							<th>Target Location</th>
+							<th>Created Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+						</tr>
+						<tr ng-repeat="offer in offers" >
+							<td align="left" data-title="Title"><i>{{offer.title}}</i></td>
+							<td data-title="Description">{{offer.description}}</td>
+							<td data-title="Target Industries">{{offer.trgtIndustry}}</td>
+							<td data-title="Intended Audience">{{offer.intdAudience}}</td>
+							<td data-title="Target Location">{{offer.trgtLocation}}</td>
+							<td data-title="Created Date">{{offer.createDate}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</tab>  
+			</tabset>
+		</div>
+	</div>
+
+
+
 </div>
+<!-- container-fluid -->
