@@ -10,6 +10,12 @@ angular
       .when('/', {
         templateUrl: 'views/index.html'
       })
+      .when('/entitydetail/:type/:entityId',{
+        templateUrl: 'views/entitydetail.html'
+      })
+      .when('/search/:type/:keywords',{
+        templateUrl: 'views/search.html'
+      })
       .when('/userprofile',{
         templateUrl: 'views/profile.html',
         controller: 'RegistrationPageController',
@@ -85,3 +91,14 @@ angular
         
     });
   }]);
+
+(function(){
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1628152447465336";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+})();

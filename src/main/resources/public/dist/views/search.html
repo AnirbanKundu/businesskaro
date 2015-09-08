@@ -4,16 +4,83 @@
     }
     .entity-type-user{
         position: absolute;
-        background-color: #f9d00d;
-        top: -28px;
+        background-color: rgb(250,164,58);
+        top: -18px;
         text-transform: uppercase; 
+        color:white;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
     }
+    .ribbon-wrapper-green {
+  width: 85px;
+  height: 88px;
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: 8px;
+  z-index: 21;
+}
+
+.ribbon-green {
+  color: white;
+  text-align: center;
+  -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 7px 0;
+  left: -5px;
+  top: 15px;
+  width: 120px;
+  background-color: #BFDC7A;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#032E27), to(#03705E)); 
+  background-image: -webkit-linear-gradient(top, #032E27, #03705E); 
+  background-image:    -moz-linear-gradient(top, #032E27, #03705E); 
+  background-image:     -ms-linear-gradient(top, #032E27, #03705E); 
+  background-image:      -o-linear-gradient(top, #032E27, #03705E); 
+  color: white;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+}
+
+.ribbon-green:before, .ribbon-green:after {
+  content: "";
+  border-top:   3px solid #6e8900;   
+  border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+}
+
+.ribbon-green:before {
+  left: 0;
+}
+.ribbon-green:after {
+  right: 0;
+}
     .entity-type-offer{
         position: absolute;
-        background-color: #2685ee;
-        top: -28px;
-        color:#ffffff;
+        background-color: rgb(96,189,104);
+        top: -18px;
         text-transform: uppercase; 
+        color:white;
+        border-radius: 2px; 
+    }
+    .slide {
+      background-color: black;
+      opacity:0.5;
+      width: 100%;
+      height: 75px;
+      position: absolute;
+      bottom: 0px;
+      z-index: 5;
+      transition: 1s ease bottom !important;
+      display: block !important; 
+    }
+    .slide.ng-hide {
+      bottom: -30px;
     }
 </style>
 <div id="page-heading">
@@ -24,115 +91,195 @@
 	<h1>Search Page</h1>
 </div>
 <div class="container-fluid" ng-controller="SearchController">
-	<div class="row">
-		<div class="col-md-12">
+	<div class="row banner-header">    
+        <div class="col-md-12" style="margin-top:55px;">
 
-			<div class="panel">
-				<div class="panel-heading">
-					<h2>Search Results</h2>
-				</div>
-			</div>
+            <div class="col-md-5 col-md-offset-2">
+              <h2 style="color:white">Your Search results..</h2>
+            </div>
 
-		</div> <!-- col-md-12 -->
-	</div> <!-- row -->
-    <div class="row" style="margin-top:20px;">
+            <div class="col-md-3">
+            <ui-select allow-clear ng-model="selectedIndustries.selected" theme="bootstrap" reset-search-input="true">
+                <ui-select-match placeholder="Search your industry">{{$select.selected.industryName}}</ui-select-match>
+                <ui-select-choices repeat="iterator in industries | filter: $select.search">
+                  <span ng-bind-html="iterator.industryName | highlight: $select.search"></span>                        
+                </ui-select-choices>
+              </ui-select>
+              <br/>
+               <ui-select allow-clear ng-model="selectedIndustries.selected" theme="bootstrap" reset-search-input="true">
+                <ui-select-match placeholder="Search state you are looking for..">{{$select.selected.industryName}}</ui-select-match>
+                <ui-select-choices repeat="iterator in industries | filter: $select.search">
+                  <span ng-bind-html="iterator.industryName | highlight: $select.search"></span>                        
+                </ui-select-choices>
+              </ui-select>
+              <br/>
+              <button class="btn btn-orange" style="width:100px;" ng-click="searchTags()">Search</button>
+            </div>
+        </div>           
+        
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+                <div class="row" style="margin-top:30px;">
       <div class="col-md-4" ng-repeat="result in searchResults">
 
-            <panel ng-if="result.entityType == 'USER_PROFILE'" panel-class="panel-warning">
-                <p class="entity-type-user">
+        <div class="col-md-12" ng-if="result.entityType == 'USER_PROFILE'" panel-class="panel-warning">
+            <div class="ribbon-wrapper-green">
+                <div class="ribbon-green">
                     <span ng-if="result.data.userType==='E'">Entrepreneur</span>
                     <span ng-if="result.data.userType==='P'">Provider</span>
-                    <span ng-if="result.data.userType==='B'">Entrepreneur and Provider</span>
+                    <span ng-if="result.data.userType==='B'">Entrepreneur &amp; Provider</span>
                     <span ng-if="!result.data">Loading...</span>
-                </p>
-                <div class="col-md-4" style="padding-top:0;">
-                    <img ng-src="{{result.data.imageUrl}}" style="height:80px;" />
                 </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-4"><strong>Name</strong></div>
-                        <div class="col-md-8">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</div>
+            </div>
+            <div class="panel panel-widget widget-userfocus">
+                <div class="widget-body">
+                    <div class="panel-loading" ng-if="!result.data">
+                        <div class="panel-loader-dots"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4"><i class="fa fa-map-marker"></i></div>
-                        <div class="col-md-8">{{result.data.stateName}},&nbsp;{{result.data.cityName}}</div>
+                    <img ng-src="{{result.data.imageUrl}}" class="img-circle img-user" />
+                    <span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
+                    <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
+                </div>
+                <div class="widget-footer" ng-mouseenter="show = true" ng-mouseleave="show = false">
+                    <!--<p>
+                        {{result.data.aboutMe}}
+                    </p>-->
+                    <div class="table-responsive">
+                    <table class="table table-condensed m0">
+                        <tbody ng-if="result.data.userType==='E'">
+                            <tr>
+                                <td>
+                                    <span>Profession:</span>
+                                </td>
+                                <td>
+                                    <span>Software Developer</span>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Industry aware of:</span>
+                                </td>
+                                <td>
+                                    <span>Agriculture, IT Software, Audit, Fianance, Labor</span>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Looking for:</span>
+                                </td>
+                                <td>
+                                    <span>Agriculture, IT Software, Audit, Fianance, Labor</span>
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody ng-if="result.data.userType==='P' || result.data.userType==='B'">
+                            <tr>
+                                <td>Profession</td>
+                                <td>
+                                    Software Developer                                 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Industry I support
+                                </td>
+                                <td>
+                                    Agriculture, IT Software, Audit, Fianance,Labor                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Company Name
+                                </td>
+                                <td>
+                                    Bian Fiancial                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                        <div ng-show="show" ng-mouseenter="show = true" ng-mouseleave="show = false" class="slide">
+
+                            <a ng-href="#/entitydetail/User/{{result.entityId}}" ng-if="result.data">View Details..</a>
+                        </div>
+                    </table>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4"><strong>About Me</strong></div>
-                        <div class="col-md-8">{{result.data.aboutMe}}</div>
+                </div>
+            </div>
+        </div>
+            
+            <div class="col-md-12" ng-if="result.entityType == 'OFFER'" panel-class="panel-warning">
+                <div class="ribbon-wrapper-green">
+                    <div class="ribbon-green">
+                        <span ng-if="result.data">Offer</span>
+                        <span ng-if="!result.data">Loading...</span>
                     </div>
                 </div>
-                <div class="col-md-12" style="padding:0;">
-                    <hr/>
-                </div>              
-                <div class="col-md-12">
-                    <div class="col-md-4"><span><strong>Lookin For</strong></span></div>
-                    <div class="col-md-8"><span>Lookin For</span></div>
-                </div>
-                <div class="col-md-12">
-                    <div class="col-md-4"><span><strong>Industry</strong></span></div>
-                    <div class="col-md-8"><span>Industries</span></div>
-                </div>
-                <div class="col-md-12">
-                    <div class="pull-right">
-                        <a href="" class="">View more.. </a>
-                    </div>                    
-                </div>
-                <div class="col-md-12">
-                    <br/>
-                </div>
-                <div class="panel-loading" ng-if="!result.data">
-                    <div class="panel-loader-dots"></div>
-                </div>
-            </panel>
-            <panel ng-if="result.entityType == 'OFFER'" panel-class="panel-primary">
-                <p class="entity-type-offer">
-                    <span ng-if="result.data.userType==='E'">Offer</span>
-                    <span ng-if="result.data.userType==='P'">Offer</span>
-                    <span ng-if="result.data.userType==='B'">Request</span>
-                    <span ng-if="!result.data">Loading...</span>
-                </p>
-                <div class="col-md-4" style="padding-top:0;">
-                    <img ng-src="{{result.data.imageUrl}}" style="height:80px;" />
-                </div>
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-4"><strong>Name</strong></div>
-                        <div class="col-md-8">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</div>
+                <div class="panel panel-widget widget-userfocus" style="background-color:#60bd68;">
+                    <div class="widget-body" style="padding-top:0">
+                        <div class="panel-loading" ng-if="!result.data">
+                            <div class="panel-loader-dots"></div>
+                        </div>
+                        <img ng-src="{{result.data.imageUrl}}" class="img-offer" />
+
+                        <span>Posted By:</span><span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
+                        <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4"><i class="fa fa-map-marker"></i></div>
-                        <div class="col-md-8">{{result.data.stateName}},&nbsp;{{result.data.cityName}}</div>
+                    <div class="widget-footer" ng-mouseenter="show = true" ng-mouseleave="show = false">
+                        <table class="table">
+                            <tbody ng-if="result.data">
+                                <tr>
+                                    <td>
+                                        <span class="">Title</span>
+                                    </td>
+                                    <td>
+                                        <span>This is a dummy offer. Meant for the agriculture indutry. </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Company Name</span>
+                                    </td>
+                                    <td>
+                                        <span>Bian Fiancial</span>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Target Industry</span>
+                                    </td>
+                                    <td>
+                                        <span>Agriculture, Finance</span>
+                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <div ng-show="show" ng-mouseenter="show = true" ng-mouseleave="show = false" class="slide">  
+                                <a ng-href="#/entitydetail/Offer/{{result.entityId}}" ng-if="result.data">View Details..</a>                              
+                            </div>
+                        </table>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4"><strong>About Me</strong></div>
-                        <div class="col-md-8">{{result.data.aboutMe}}</div>
-                    </div>
                 </div>
-                <div class="col-md-12" style="padding:0;">
-                    <hr/>
-                </div>              
-                <div class="col-md-12">
-                    <div class="col-md-4"><span><strong>Lookin For</strong></span></div>
-                    <div class="col-md-8"><span>Lookin For</span></div>
-                </div>
-                <div class="col-md-12">
-                    <div class="col-md-4"><span><strong>Industry</strong></span></div>
-                    <div class="col-md-8"><span>Industries</span></div>
-                </div>
-                <div class="col-md-12">
-                    <div class="pull-right">
-                        <a href="" class="">View more..</a>
-                    </div>                                 
-                </div>
-                <div class="col-md-12">
-                    <br/>
-                </div>
-                <div class="panel-loading" ng-if="!result.data">
-                    <div class="panel-loader-dots"></div>
-                </div>
-            </panel>
+            </div>
         </div> 
+    </div> <!-- Main row -->
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="panel panel-widget" style="padding:20px;">
+                    <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="8.5%" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                </div>
+            </div>
+            <div class="row">
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-widget-id="640828866504753152">Tweets by @TwitterDev</a>
+            </div>
+        </div>
     </div>
+
+
 
 </div> <!-- container-fluid -->
