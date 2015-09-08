@@ -4,4 +4,5 @@ public class LoginRequest {
 
 	public String userName;
 	public String password;
+	public String newPassword;
 }

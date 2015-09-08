@@ -61,6 +61,7 @@ public class Mail {
 	            msg.setSubject(mailMessage.getSubject());    
 	            // msg.setHeader(h.getKey(), h.getValue());
 	            msg.setText(mailMessage.getHtml());
+	         
 	            javaMailSender.send(msg);
 	            // TBD --- Log the User details ----- .
 	             

@@ -4,7 +4,7 @@ angular.module('theme.demos.dashboard', [
     'theme.demos.tasks',
     'theme.core.services'
   ])
-  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', function($scope, $timeout, $window,$http, $location,$theme) {
+  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', '$state',function($scope, $timeout, $window,$http, $location,$theme, $state) {
     'use strict';
     var moment = $window.moment;
     var _ = $window._;
@@ -15,6 +15,7 @@ angular.module('theme.demos.dashboard', [
     });
     $scope.selectedTag = { "selected": [] };
     $scope.selectedValues = undefined;
+    $scope.selectedIndustries = { "selected": [] };
 
     $scope.tags = [];
     /*
@@ -35,7 +36,16 @@ angular.module('theme.demos.dashboard', [
     };
 
     $scope.searchTags = function(){
-      $location.path('/search');
+      var keywords='',
+      industry = $scope.selectedIndustries.selected.industryName;
+      var state = 'West Bengal';
+
+      if(industry){
+        keywords = industry+',';
+      }
+      keywords += state + ',';
+      keywords = keywords.substring(0, keywords.lastIndexOf(','));
+      $location.path('/search/ALL/'+keywords);
       console.log('Tags selected are:', $scope.selectedTag);
     }
 

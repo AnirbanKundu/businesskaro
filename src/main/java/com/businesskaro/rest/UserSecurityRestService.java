@@ -63,6 +63,30 @@ public class UserSecurityRestService {
 		}
 		
 	}
+	@RequestMapping(value="/services/resetpassword" , method = RequestMethod.POST)
+	public LoginResponse resetPassword(@RequestBody LoginRequest loginRequest ){
+	
+		logger.info("Security Request " + loginRequest.userName);
+		
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.userName);
+		if(userPswdEntitys.size() == 0){
+			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+		}
+		
+		TblUserPassword userPswd = userPswdEntitys.get(0);
+		String decryptedPassword = EncryptionUtil.decode(userPswd.getUsrPassword(), userPswd.getUsrSalt()); //Fetch the encrypted password and SALT from DB
+		System.out.println("Decrypted password is :" + decryptedPassword);
+		
+		if(loginRequest.password.equals(decryptedPassword)){
+			String encryptedPassword = EncryptionUtil.encode(loginRequest.newPassword, userPswd.getUsrSalt()); //Save this value in DB along with the SALT
+			userPswd.setUsrPassword(encryptedPassword);
+			userDao.save(userPswd);
+		}else{
+			throw new BKException("Invalid User" , "000" , BKException.Type.IN_VALID_USER);
+		}
+		
+		return null;
+	}
 	
 	//generate 10 random string
 	//Update new password t the profile

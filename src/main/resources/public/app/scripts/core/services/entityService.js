@@ -14,7 +14,7 @@ angular.module('theme.core.services')
         "aboutMe": "software devloper",
         "userType": "P",
         "companyUrl": "",
-        "imageUrl": "http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1440066492/voxfgxb18hlslx0t6j2a.png",
+        "imageUrl": "http://res.cloudinary.com/difyxhuza/image/upload/v1441264302/application_images/bk_banner_background.jpg",
         "userSkills": [
           1
         ],

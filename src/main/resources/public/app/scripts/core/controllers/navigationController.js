@@ -16,11 +16,13 @@ angular
       iconClasses: 'glyphicon glyphicon-file',
       url: '#/goipolicy'
     },
+    /*
     {
       label: 'Business News',
       iconClasses: 'fa fa-newspaper-o',
       url: '#/businessnews'
     },
+    */
     {
       label: 'Filter',
       iconClasses: '',
@@ -28,19 +30,19 @@ angular
     }, {
       label: 'Search Provider',
       iconClasses: 'fa fa-users',
-      url: '#/filterprovider'
+      url: '#/search/Provider/'
     }, {
       label: 'Search Entrepreneur',
       iconClasses: 'fa fa-users',
-      url: '#/filterentrepreneur'
+      url: '#/search/Entrepreneur/'
     }, {
       label: 'Search Offers',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/filteroffer'
+      url: '#/search/Offer/'
     }, {
       label: 'Search Request',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/filterrequest'
+      url: '#/search/Request/'
     }, {
       label: 'Create',
       iconClasses: 'fa fa-home',
