@@ -17,21 +17,17 @@
 						<tr>
 							<th style="padding-right: 100px">Title</th>
 							<th>Description</th>
-							<th>Target Industries</th>
-							<th>Intended Audience</th>
-							<th>Target Location</th>
+							<th>Updated Date</th>
 							<th>Created Date</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 						</tr>
-						<tr ng-repeat="offer in offers" >
+						<tr ng-repeat="offer in offers" ng-click="openOffer(offer)">
 							<td align="left" data-title="Title"><i>{{offer.title}}</i></td>
 							<td data-title="Description">{{offer.description}}</td>
-							<td data-title="Target Industries">{{offer.trgtIndustry}}</td>
-							<td data-title="Intended Audience">{{offer.intdAudience}}</td>
-							<td data-title="Target Location">{{offer.trgtLocation}}</td>
+							<td data-title="Updated Date">{{offer.updateDate}}</td>
 							<td data-title="Created Date">{{offer.createDate}}</td>
 						</tr>
 					</tbody>

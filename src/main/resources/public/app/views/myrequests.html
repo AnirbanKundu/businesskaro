@@ -17,19 +17,15 @@
 						<tr>
 							<th style="padding-right: 100px">Title</th>
 							<th>Description</th>
-							<th>Target Industries</th>
-							<th>Intended Audience</th>
-							<th>Target Location</th>
+							<th>Updated Date</th>
 							<th>Created Date</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="request in requests" >
+						<tr ng-repeat="request in requests" ng-click="openRequest(request)">
 							<td align="left" data-title="Title"><i>{{request.title}}</i></td>
 							<td data-title="Description">{{request.description}}</td>
-							<td data-title="Target Industries">{{request.trgtIndustry}}</td>
-							<td data-title="Intended Audience">{{request.intdAudience}}</td>
-							<td data-title="Target Location">{{request.trgtLocation}}</td>
+							<td data-title="Updated Date">{{request.updateDate}}</td>
 							<td data-title="Created Date">{{request.createDate}}</td>
 						</tr>
 					</tbody>

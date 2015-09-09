@@ -2,7 +2,33 @@ angular
   .module('theme.demos.request', [])
   .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication','$window', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication,$window) {
 	    'use strict';
-	    console.log('In CreateRequestController');
+	    
+	    $scope.id = $route.current.params.id;
+	    console.log("Request COntroller: "+$scope.id);
+	    
+	    if($scope.id !== undefined){
+	    	$http({
+		          url : '/services/offer/detail'+ $scope.id,
+		          method: 'GET'
+		        }).then(function(data){
+		        	$scope.offerTitle=data.title;
+			        $scope.offerDescription=data.description;
+			        if(data.imageUrl){
+			          var imagePath = data.imageUrl;
+			          var widgetFileInput = $('.fileinput').fileinput();
+			          widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
+			          if(imagePath){ 
+			            widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
+			            $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
+			            $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
+			            console.log('actualImageName is :',$scope.actualImageName);
+			          }          
+			        }
+		        },function(error){
+		          console.log('Error in pulling the offer data');
+		        })
+	    }
+	    
 	    $scope.reg_form = {};
 	    $scope.form = {};
 

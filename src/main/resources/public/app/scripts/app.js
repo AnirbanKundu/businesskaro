@@ -31,6 +31,12 @@ angular
           }]
         }
       })
+      .when('/createoffer/:id',{
+        templateUrl: 'views/createoffer.html'
+      })
+      .when('/createrequest/:id',{
+        templateUrl: 'views/createrequest.html'
+      })
       .when('/:templateFile', {
         templateUrl: function(param) {
           return 'views/' + param.templateFile + '.html';

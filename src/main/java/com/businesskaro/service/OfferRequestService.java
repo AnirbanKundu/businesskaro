@@ -102,15 +102,16 @@ public class OfferRequestService {
 		
 	}
 
-	public List<OfferRequest> getAll(Integer userId) {
+	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {
 		
 		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumry(userInfoSummary.findOne(userId));
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){
-			result.add(mapper(offerReq));
+			if(offerReq.getReqOffrTyp().equalsIgnoreCase(offer.name())){
+				result.add(mapper(offerReq));
+			}
 		}
-		
 		return result;
 	}
 
@@ -121,6 +122,7 @@ public class OfferRequestService {
 	
 	private OfferRequest mapper(TblUsrReqOffer fromTable){
 		OfferRequest result = new OfferRequest();
+		result.id = fromTable.getReqOffrId();
 		result.description = fromTable.getReqOffrDesc();
 		result.title = fromTable.getReqOffrTitle();
 		result.intdAudience = fromTable.getTargAudienceId();
@@ -152,6 +154,7 @@ public class OfferRequestService {
 	
 	private OfferRequest mapperSummary(TblUsrReqOffer fromTable){
 		OfferRequest result = new OfferRequest();
+		result.id = fromTable.getReqOffrId();
 		result.description = fromTable.getReqOffrDesc();
 		result.title = fromTable.getReqOffrTitle();
 		result.intdAudience = fromTable.getTargAudienceId();

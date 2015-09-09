@@ -95,7 +95,7 @@ public class UserSecurityRestService {
 	
 	@RequestMapping(value="/services/resetPassword" , method = RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.OK)
-	public void resetPassword(@RequestBody LoginRequest loginRequest ){
+	public void resetPassword1(@RequestBody LoginRequest loginRequest ){
 		
 		logger.info("Security Request " + loginRequest.userName);
 		

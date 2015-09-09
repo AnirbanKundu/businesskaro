@@ -44,7 +44,7 @@ public class RequestRestService extends BKRestService{
 	public List<OfferRequest> getRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		Integer userId = validateSecureToken(clientId, secureToken);
-		return service.getAll(userId);
+		return service.getAll(userId, OfferRequestEnum.REQUEST);
 	}
 	
 	@RequestMapping(value="/services/request/{requestId}" , method = RequestMethod.DELETE)
