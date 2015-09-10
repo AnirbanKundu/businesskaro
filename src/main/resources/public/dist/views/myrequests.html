@@ -1,0 +1,42 @@
+<div id="page-heading">
+	<ol class="breadcrumb">
+		<li><a href="#/">Dashboard</a></li>
+		<li>Request</li>
+		<li class="active">My Requests</li>
+	</ol>
+</div>
+
+<div class="container-fluid" ng-controller="MyrequestController">
+	<div class="row">
+		<div class="col-sm-12">
+			<tabset panel-tabs="true" panel-class="panel-sky" heading="My Requests"> 
+				<tab> 
+			<div class="table-vertical">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th style="padding-right: 100px">Title</th>
+							<th>Description</th>
+							<th>Updated Date</th>
+							<th>Created Date</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="request in requests" ng-click="openRequest(request)">
+							<td align="left" data-title="Title"><i>{{request.title}}</i></td>
+							<td data-title="Description">{{request.description}}</td>
+							<td data-title="Updated Date">{{request.updateDate}}</td>
+							<td data-title="Created Date">{{request.createDate}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</tab>  
+			</tabset>
+		</div>
+	</div>
+
+
+
+</div>
+<!-- container-fluid -->

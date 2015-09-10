@@ -50,10 +50,13 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Target Location</label>
 									<div class="col-sm-6">
-									 <select class="form-control input-sm" ng-model="stateId">
-					                		<option value="1">West Bengal</option>
-					                		<option value="2">MP</option>				                		
-					                	</select>
+									 	<ui-select multiple ng-model="selectedStates.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select your state"> <ui-select-match
+											placeholder="Select or search state">{{$select.selected[$index].stateName}}</ui-select-match>
+										<ui-select-choices repeat="iterator in states">
+										<span ng-bind-html="iterator.stateName"></span> </ui-select-choices> </ui-select>
+
 					                </div>
 								</div>
 							</form>
