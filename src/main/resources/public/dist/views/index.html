@@ -27,10 +27,10 @@
                 </ui-select-choices>
               </ui-select>
               <br/>
-               <ui-select allow-clear ng-model="selectedIndustries.selected" theme="bootstrap" reset-search-input="true">
-                <ui-select-match placeholder="Search state you are looking for..">{{$select.selected.industryName}}</ui-select-match>
-                <ui-select-choices repeat="iterator in industries | filter: $select.search">
-                  <span ng-bind-html="iterator.industryName | highlight: $select.search"></span>                        
+               <ui-select allow-clear ng-model="selectedStates.selected" theme="bootstrap" reset-search-input="true">
+                <ui-select-match placeholder="Search state you are looking for..">{{$select.selected.stateName}}</ui-select-match>
+                <ui-select-choices repeat="iterator in states | filter: $select.search">
+                  <span ng-bind-html="iterator.stateName | highlight: $select.search"></span>                        
                 </ui-select-choices>
               </ui-select>
               <br/>
@@ -57,51 +57,63 @@
         
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <panel panel-class="panel-warning" heading="Why do business?">
-                <panel-controls>
-                    <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                </panel-controls>            
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
-            </panel>
-        </div>  
-        <div class="col-md-4">  
-            <panel panel-class="panel-danger" heading="Need Assistance?">
-                <panel-controls>
-                    <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                </panel-controls>
-            
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
-            </panel>
-        </div>
-        <div class="col-md-4">
-            <panel panel-class="panel-midnightblue" heading="Want to know GOI policy?">
-                <panel-controls>
-                    <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                </panel-controls>
-            
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
-            </panel>
-        </div>
+        <div class="col-md-9">
+          <div class="col-md-4">
+              <panel panel-class="panel-warning" heading="Why do business?" class="background-color:#fbb258;">
+                  <panel-controls>
+                      <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                  </panel-controls>            
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
+              </panel>
+          </div>  
+          <div class="col-md-4">  
+              <panel panel-class="panel-danger" heading="Need Assistance?">
+                  <panel-controls>
+                      <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                  </panel-controls>
+              
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
+              </panel>
+          </div>
+          <div class="col-md-4">
+              <panel panel-class="panel-midnightblue" heading="Want to know GOI policy?">
+                  <panel-controls>
+                      <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                  </panel-controls>
+              
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
+              </panel>
+          </div>
 
-        <div class="col-md-4">
-            <panel panel-class="panel-toyo" heading="Search Entrepreneurs">
-                <panel-controls>
-                    <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                </panel-controls>
+          <div class="col-md-4">
+              <panel panel-class="panel-toyo" heading="Search Entrepreneurs">
+                  <panel-controls>
+                      <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                  </panel-controls>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
-            </panel>
-        </div>
-        <div class="col-md-4">
-            <panel panel-class="panel-purple" heading="Business News">
-                <panel-controls>
-                    <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
-                </panel-controls>
-            
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
-            </panel>
-        </div>
-
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
+              </panel>
+          </div>
+          <div class="col-md-4">
+              <panel panel-class="panel-purple" heading="Business News">
+                  <panel-controls>
+                      <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button>
+                  </panel-controls>
+              
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti.</p>
+              </panel>
+          </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row">
+                <div class="panel panel-widget" style="padding:20px;">
+                    <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="8.5%" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                </div>
+            </div>
+            <div class="row">
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-widget-id="640828866504753152">Tweets by @TwitterDev</a>
+            </div>
+      </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 angular
   .module('theme.core.search_controller', [])
-  .controller('SearchController', ['$scope', '$http', '$route', '$state', '$log', '$timeout', 'EntityService', function($scope, $http, $route, $state, $log, $timeout, EntityService) {
+  .controller('SearchController', ['$scope', '$http', '$route', '$state', '$log', '$timeout', '$location', 'EntityService', 'LookUpService', function($scope, $http, $route, $state, $log, $timeout, $location, EntityService, LookUpService) {
     'use strict';
     var pageSize = 10,count=0;   
     $scope.show = false; 
@@ -21,6 +21,18 @@ angular
         }
       }
     });
+    $scope.selectedStates = { "selected": [] };
+    LookUpService.getStates().then(function(data){
+        $scope.states = data;
+        for(var i=0;i<$scope.states.length;i++){
+        if($scope.states[i].stateName == $scope.state){
+          $scope.selectedStates.selected = $scope.states[i];
+          break;
+        }
+      }
+      },function(error){
+        $log.log(error);
+      });
 
     $timeout(function(){
       twttr.widgets.load(); 
@@ -83,6 +95,20 @@ angular
         return $scope.MasterSerachResult.splice(0,masterLength);
       }      
     };
+
+    $scope.searchTags = function(){
+      var keywords='',
+      industry = $scope.selectedIndustries.selected.industryName;
+      var state = $scope.selectedStates.selected.stateName;;
+
+      if(industry){
+        keywords = industry+',';
+      }
+      keywords += state + ',';
+      keywords = keywords.substring(0, keywords.lastIndexOf(','));
+      $location.path('/search/ALL/'+keywords);
+      console.log('Tags selected are:', $scope.selectedTag);
+    }
 
     
 

@@ -4,7 +4,7 @@ angular.module('theme.demos.dashboard', [
     'theme.demos.tasks',
     'theme.core.services'
   ])
-  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', '$state',function($scope, $timeout, $window,$http, $location,$theme, $state) {
+  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', '$state', 'LookUpService',function($scope, $timeout, $window,$http, $location,$theme, $state, LookUpService) {
     'use strict';
     var moment = $window.moment;
     var _ = $window._;
@@ -16,6 +16,12 @@ angular.module('theme.demos.dashboard', [
     $scope.selectedTag = { "selected": [] };
     $scope.selectedValues = undefined;
     $scope.selectedIndustries = { "selected": [] };
+    $scope.selectedStates = { "selected": [] };
+    LookUpService.getStates().then(function(data){
+        $scope.states = data;
+      },function(error){
+        $log.log(error);
+      });
 
     $scope.tags = [];
     /*
@@ -35,10 +41,20 @@ angular.module('theme.demos.dashboard', [
       return item;
     };
 
+    $timeout(function(){
+      twttr.widgets.load(); 
+      FB.init({
+        appId      : '1628152447465336',
+        status     : true,
+        xfbml      : true,
+        version    : 'v2.3' // or v2.0, v2.1, v2.0
+      });
+    },1000);
+
     $scope.searchTags = function(){
       var keywords='',
       industry = $scope.selectedIndustries.selected.industryName;
-      var state = 'West Bengal';
+      var state = $scope.selectedStates.selected.stateName;;
 
       if(industry){
         keywords = industry+',';

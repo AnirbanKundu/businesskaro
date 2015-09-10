@@ -30,7 +30,8 @@ angular
     'theme.demos.request',
     'theme.demos.myoffer',
     'theme.demos.myrequest'
-  ])
+  ]);
+  /*
   .directive('img', ['$timeout', function ($t) {
       // NOTE: this affects all <img> tags
       // Remove this directive for production
@@ -47,3 +48,4 @@ angular
       }
       };
   }]);
+  */
