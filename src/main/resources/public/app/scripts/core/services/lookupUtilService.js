@@ -1,7 +1,7 @@
 angular.module('theme.core.services')
   .factory("LookUpService", ['$http','$q',function($http, $q) {
   'use strict';
-  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[];
+  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[], intAudience=[];
   var _getAgeGroup = function(){
     var deferred = $q.defer(); 
     if(ageGroup && ageGroup.length>0){
@@ -102,11 +102,30 @@ angular.module('theme.core.services')
 	    }    
 	    return deferred.promise;
   };
+  var _getIntAudience = function(){
+	  var deferred = $q.defer(); 
+	    if(intAudience && intAudience.length>0){
+	      deferred.resolve(intAudience);
+	    }
+	    else{
+	      $http({
+	        url: 'utilservices/intendedAudience/',
+	        method: 'GET'
+	      }).then(function(response){    
+	    	  intAudience = response.data;  
+	        deferred.resolve(intAudience);
+	      },function(error){
+	        deferred.reject(error);
+	      });
+	    }    
+	    return deferred.promise;
+  };
   return {
     getAgeGroup: _getAgeGroup,
     getEducations : _getEducations,
     getProfession : _getProfession,
     getQuestions : _getQuestions,
-    getStates : _getState
+    getStates : _getState,
+    getIntAudience: _getIntAudience
   };
 }]);

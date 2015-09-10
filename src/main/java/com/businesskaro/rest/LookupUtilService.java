@@ -16,9 +16,11 @@ import com.businesskaro.entity.Education;
 import com.businesskaro.entity.LkpIndustry;
 import com.businesskaro.entity.LkpQuestion;
 import com.businesskaro.entity.LkpState;
+import com.businesskaro.entity.LkpTargAudience;
 import com.businesskaro.entity.repo.AgeGroupRepo;
 import com.businesskaro.entity.repo.EducationRepo;
 import com.businesskaro.entity.repo.ExperienceRepo;
+import com.businesskaro.entity.repo.IntendedAudienceRepo;
 import com.businesskaro.entity.repo.ProfessionRepo;
 import com.businesskaro.entity.repo.QuestionRepo;
 import com.businesskaro.entity.repo.StateRepo;
@@ -50,6 +52,9 @@ class LookupUtilService {
 	@Autowired
 	StateRepo stateRepo;
 	
+	@Autowired
+	IntendedAudienceRepo audienceRepo;
+	
     @RequestMapping(value="/utilservices/ages", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
     public List<AgeGroup> getAllAges() throws Exception {   
@@ -74,5 +79,10 @@ class LookupUtilService {
     @ResponseStatus(HttpStatus.CREATED)
     public Iterable<LkpState> getAllStates() throws Exception {   
     	 return stateRepo.findAll();
+    }
+    @RequestMapping(value="/utilservices/intendedAudience", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Iterable<LkpTargAudience> getIntendedAudience() throws Exception {   
+    	 return audienceRepo.findAll();
     }
 }

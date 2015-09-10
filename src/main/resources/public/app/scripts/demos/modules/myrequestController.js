@@ -6,6 +6,6 @@ angular
 	      $scope.requests = response;
 	    });
 	  $scope.openRequest = function(offer){
-		  $window.location.href = '/#/createrequest?'+offer.id;
+		  $window.location.href = '/#/createrequest?id='+offer.id;
 	  }
   }]);

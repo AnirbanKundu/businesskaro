@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.request', [])
-  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication','$window', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication,$window) {
+  .controller('CreateRequestController', ['$scope', '$timeout' , '$log', '$http','LookUpService', 'UserAuthentication','$window','$route', function($scope, $timeout, $log, $http,LookUpService,UserAuthentication,$window,$route) {
 	    'use strict';
 	    
 	    $scope.id = $route.current.params.id;
@@ -8,11 +8,13 @@ angular
 	    
 	    if($scope.id !== undefined){
 	    	$http({
-		          url : '/services/offer/detail'+ $scope.id,
+		          url : '/services/request/detail/'+ $scope.id,
 		          method: 'GET'
-		        }).then(function(data){
-		        	$scope.offerTitle=data.title;
-			        $scope.offerDescription=data.description;
+		        }).then(function(response){
+		        	var data = response.data;
+		        	$scope.requestTitle=data.title;
+			        $scope.requestDescription=data.description;
+			        
 			        if(data.imageUrl){
 			          var imagePath = data.imageUrl;
 			          var widgetFileInput = $('.fileinput').fileinput();
@@ -22,7 +24,28 @@ angular
 			            $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
 			            $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
 			            console.log('actualImageName is :',$scope.actualImageName);
-			          }          
+			          }   
+			          for(var i=0;i<data.trgtIndustry.length;i++){
+	    	              for(var j=0;j<$scope.industries.length;j++){
+	    	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
+	    	                  $scope.selectedIndustries.selected.push($scope.industries[j]);
+	    	                  break;
+	    	                }
+	    	              }
+	    	            }
+	    	          for(var i=0;i<data.trgtLocation.length;i++){
+	    	              for(var j=0;j<$scope.states.length;j++){
+	    	                if(data.trgtLocation[i] == $scope.states[j].stateId){
+	    	                  $scope.selectedStates.selected.push($scope.states[j]);
+	    	                  break;
+	    	                }
+	    	              }
+	    	            }
+	    	          for(var i=0;i<$scope.intendedAudience.length;i++){
+	    	        	  if($scope.intendedAudience[i].targAudId === data.intdAudience){
+	    	        		  $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
+	    	        	  }
+	    	          }
 			        }
 		        },function(error){
 		          console.log('Error in pulling the offer data');
@@ -67,10 +90,15 @@ angular
 	      },function(error){
 	        $log.log(error);
 	      });
+	    LookUpService.getIntAudience().then(function(data){
+	        $scope.intendedAudience = data;
+	      },function(error){
+	        $log.log(error);
+	      });
 	    
 	    $scope.selectedIndustries = { "selected": [] };
 	    $scope.selectedStates = { "selected": [] };
-
+	    $scope.selectedAudience = { "selected": [] };
 	    $scope.lookingfor = { "selected": [] };
 	    $scope.industries = [];
 	    $http.get('utilservices/industries').success(function(response) {
@@ -163,22 +191,49 @@ angular
     		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
     			industries.push($scope.selectedIndustries.selected[i].industryId);
     		}
-    	  $http({
-              url: '/services/request',
-              method: 'POST',
-              isArray: false,
-              data: { "title" : $scope.requestTitle,
-                  "description" : $scope.requestDescription,
-                  "trgtIndustry" : industries,
-                  "intdAudience" : $scope.profId,
-                  "trgtLocation" : state,
-                  "imgUrl" :$scope.imageUrl
-                  },
-              cache : false}).then(function(response){
-            	  $window.location.href = '/#/myrequests';
-              }, function(response){
-            	  $window.location.href = '/#/myrequests';
-              });
-	      };
+    		var intAudience = [];
+    		for(var i=0;i<$scope.selectedAudience.selected.length;i++){
+    			intAudience.push($scope.selectedAudience.selected[i].targAudId);
+    		}
+    		if($scope.id !== undefined){
+    			$http({
+    	              url: '/services/request',
+    	              method: 'PUT',
+    	              isArray: false,
+    	              data: { 
+    	            	  "id" : $scope.id,
+    	            	  "title" : $scope.offerTitle,
+    	                  "description" : $scope.offerDescription,
+    	                  "trgtIndustry" : industries,
+    	                  "intdAudience" : intAudience[0],
+    	                  "trgtLocation" : state,
+    	                  "imgUrl" :$scope.imageUrl
+    	                  },
+    	              cache : false}).then(function(response){
+    	            	  $window.location.href = '/#/myrequests';
+    	              }, function(response){
+    	            	  $window.location.href = '/#/myrequests';
+    	              });
+    		      
+    		} else{
+    			$http({
+    	              url: '/services/request',
+    	              method: 'POST',
+    	              isArray: false,
+    	              data: { "title" : $scope.offerTitle,
+    	                  "description" : $scope.offerDescription,
+    	                  "trgtIndustry" : industries,
+    	                  "intdAudience" : intAudience[0],
+    	                  "trgtLocation" : state,
+    	                  "imgUrl" :$scope.imageUrl,
+    	                  },
+    	              cache : false}).then(function(response){
+    	            	  $window.location.href = '/#/myrequests';
+    	              }, function(response){
+    	            	  $window.location.href = '/#/myrequests';
+    	              });
+    		      };
+    		}
+    	  
 	      
 	  }]);

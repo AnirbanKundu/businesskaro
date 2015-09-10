@@ -13,8 +13,9 @@ import com.businesskaro.entity.LkpIndustry;
 import com.businesskaro.entity.LkpState;
 import com.businesskaro.entity.TblUsrReqOffer;
 import com.businesskaro.entity.UserPersonalInfoSummary;
-import com.businesskaro.entity.repo.BrgUsrIndustryRepo;
 import com.businesskaro.entity.repo.BrgUsrReqOfferQuestionRepo;
+import com.businesskaro.entity.repo.BrgUsrReqrIndustryRepo;
+import com.businesskaro.entity.repo.BrgUsrReqrStateRepo;
 import com.businesskaro.entity.repo.StateRepo;
 import com.businesskaro.entity.repo.TblUsrReqOfferRepo;
 import com.businesskaro.entity.repo.UserInductryRepo;
@@ -36,7 +37,10 @@ public class OfferRequestService {
 	UserInductryRepo userIndRepo;
 	
 	@Autowired
-	BrgUsrIndustryRepo brgUsrIndustryRepo;
+	BrgUsrReqrIndustryRepo bgrUsrReqIndustryRepo;
+	
+	@Autowired
+	BrgUsrReqrStateRepo brgUsrReqState;
 	
 	@Autowired
 	StateRepo stateRepo;
@@ -47,6 +51,10 @@ public class OfferRequestService {
 	public void createorUpdate(OfferRequest model, OfferRequestEnum type) {
 		
 		TblUsrReqOffer entity = new TblUsrReqOffer();
+		if(Integer.getInteger(Integer.toString(model.id)) != null){
+			entity.setReqOffrId(model.id);
+		}
+		
 		entity.setReqOffrTyp(type.toString());
 		entity.setReqOffrTitle(model.title);
 		entity.setReqOffrDesc(model.description);
@@ -64,42 +72,36 @@ public class OfferRequestService {
 			entity.setIsVerified(0);
 		}
 		
-		System.out.println("Model Industry "+model.trgtIndustry.length);
+		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(model.userId);
+		entity.setTblUserPersInfoSumry(userInfo);
+		
+		entity = reqOfferRepo.save(entity);
 		
 		if(model.trgtIndustry!=null){
-			List<BrgUsrReqrIndustry> bkUsrIndustryList = new ArrayList<BrgUsrReqrIndustry>();
 			for (Integer indusId : model.trgtIndustry) {
 				LkpIndustry indEntity = userIndRepo.findOne(indusId);
 				System.out.println("Lookup answer: "+indEntity);
 				if (indEntity != null) {
 					BrgUsrReqrIndustry industry = new BrgUsrReqrIndustry();
 					industry.setLkpIndustry(indEntity);
-					bkUsrIndustryList.add(industry);
+					//industry.setReqrIndus(tempResult.getReqOffrId());
+					industry.setTblUsrReqOffer(entity);
+					bgrUsrReqIndustryRepo.save(industry);
 				}
 			}
-			entity.setBrgUsrReqrIndustries(bkUsrIndustryList);
 		}
 		
-		System.out.println("Trgt Location: "+model.trgtIndustry.length);
-		
 		if(model.trgtLocation!=null){
-			List<BrgUsrReqrState> stateList = new ArrayList<BrgUsrReqrState>();
 			for(Integer stateId: model.trgtLocation){
 				LkpState stateLkpEntity = stateRepo.findOne(stateId);
 				if(stateLkpEntity!=null){
 					BrgUsrReqrState state =  new BrgUsrReqrState();
 					state.setLkpState(stateLkpEntity);
-					stateList.add(state);
+					state.setTblUsrReqOffer(entity);
+					brgUsrReqState.save(state);
 				}
 			}
-			entity.setBrgUsrReqrStates(stateList);
 		}
-		
-		UserPersonalInfoSummary userInfo = userInfoSummary.findOne(model.userId);
-		entity.setTblUserPersInfoSumry(userInfo);
-		
-		reqOfferRepo.save(entity);
-		
 	}
 
 	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {
@@ -128,13 +130,13 @@ public class OfferRequestService {
 		result.intdAudience = fromTable.getTargAudienceId();
 		int[] trgtIndustryIds = new int[fromTable.getBrgUsrReqrIndustries().size()];
 		for(int i=0;i<fromTable.getBrgUsrReqrIndustries().size();i++){
-			trgtIndustryIds[i] = fromTable.getBrgUsrReqrIndustries().get(i).getReqrIndus();
+			trgtIndustryIds[i] = fromTable.getBrgUsrReqrIndustries().get(i).getLkpIndustry().getIndustryId();
 		}
 		result.trgtIndustry = trgtIndustryIds;
 		
 		int[] usrStatesIds = new int[fromTable.getBrgUsrReqrStates().size()];
 		for(int j=0;j<fromTable.getBrgUsrReqrStates().size();j++){
-			usrStatesIds[j] = fromTable.getBrgUsrReqrStates().get(j).getReqrIndus();
+			usrStatesIds[j] = fromTable.getBrgUsrReqrStates().get(j).getLkpState().getStateId();
 		}
 		result.trgtLocation = usrStatesIds;
 		

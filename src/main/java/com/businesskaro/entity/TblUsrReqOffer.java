@@ -21,6 +21,7 @@ public class TblUsrReqOffer implements Serializable {
 
 	@Id
 	@Column(name="REQ_OFFR_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int reqOffrId;
 
 	@Temporal(TemporalType.DATE)
