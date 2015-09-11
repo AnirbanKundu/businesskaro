@@ -32,7 +32,7 @@ angular
       }
       },function(error){
         $log.log(error);
-      });
+    });
 
     $timeout(function(){
       twttr.widgets.load(); 

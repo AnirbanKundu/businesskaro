@@ -21,6 +21,25 @@ angular.module('theme.core.services')
     return deferred.promise;
   };
 
+  var _registerUser = function(options) {
+    var deferred = $q.defer(); 
+    $http({
+        url: '/services/user',
+        method: 'POST',
+        data: options,
+      }).then(function(response) {
+      userInfo = {
+        secureToken: response.data.secureToken,
+        clientId: response.data.clientId
+      };
+      $window.localStorage["bk_userInfo"] = JSON.stringify(userInfo);
+        deferred.resolve(userInfo);
+    }, function(error) {
+      deferred.reject(error);
+    }); 
+    return deferred.promise;
+  };
+
   var _getToken = function(){
     if($window && $window.localStorage && $window.localStorage["bk_userInfo"]){
       return JSON.parse($window.localStorage["bk_userInfo"]);
@@ -129,6 +148,7 @@ angular.module('theme.core.services')
     getuserRoutes : _getuserRoutes,
     setuserRoutes : _setuserRoutes,
     getUserDetailProfile : _getUserDetailProfile,
-    saveUserDetailProfile : _saveUserDetailProfile
+    saveUserDetailProfile : _saveUserDetailProfile,
+    registerUser : _registerUser
   };
 }]);
