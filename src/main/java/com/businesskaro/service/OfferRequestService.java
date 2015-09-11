@@ -3,6 +3,8 @@ package com.businesskaro.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -48,6 +50,7 @@ public class OfferRequestService {
 	@Autowired
 	UserPersonalInfoSummaryRepo userInfoSummary;
 	
+	@Transactional
 	public void createorUpdate(OfferRequest model, OfferRequestEnum type) {
 		
 		TblUsrReqOffer entity = new TblUsrReqOffer();
@@ -80,11 +83,9 @@ public class OfferRequestService {
 		if(model.trgtIndustry!=null){
 			for (Integer indusId : model.trgtIndustry) {
 				LkpIndustry indEntity = userIndRepo.findOne(indusId);
-				System.out.println("Lookup answer: "+indEntity);
 				if (indEntity != null) {
 					BrgUsrReqrIndustry industry = new BrgUsrReqrIndustry();
 					industry.setLkpIndustry(indEntity);
-					//industry.setReqrIndus(tempResult.getReqOffrId());
 					industry.setTblUsrReqOffer(entity);
 					bgrUsrReqIndustryRepo.save(industry);
 				}
