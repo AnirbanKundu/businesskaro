@@ -53,4 +53,33 @@ angular
       return $scope.form.loginForm.$valid;
     };
 
+  }])
+  .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
+    console.log('In NewSignUpController');
+    $theme.set('fullscreen', true);
+    $scope.$on('$destroy', function() {
+      $theme.set('fullscreen', false);
+    });
+    $scope.email= '';
+    $scope.password = '';
+    $scope.register = function(){
+      var apphistory = UserAuthentication.getuserRoutes();
+      //console.log($scope.loginForm.password);
+      //console.log($scope.loginForm.email);
+      UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
+        $scope.$emit('loginsuccess', data);
+        $scope.serverMessage = '';
+        /*if(apphistory[0]==='/signupform'){
+          //console.log('History is',history);
+          $location.path('/'); 
+        }
+        else{
+          $location.path(apphistory[0]);  
+        }  */       
+      },function(error){
+        $scope.showServerMessage = 'Your username or password was not correct';
+
+      });
+    };
+
   }]);

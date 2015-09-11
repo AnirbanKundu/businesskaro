@@ -65,6 +65,9 @@
 		                	<hr/>
 		                </div>
 						<div class="col-md-12">
+							<div class="panel-loading" ng-if="waiting">
+		                        <div class="panel-loader-circular"></div>
+		                    </div>
 						    <form action="" name="form.reg_form" class="form-horizontal row-border">
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">Profession</label>
@@ -105,8 +108,7 @@
 					                <label class="col-sm-2 control-label">State name</label>
 					                <div class="col-sm-4">
 					                    <select class="form-control input-sm" ng-model="user.details.stateId">
-					                		<option value="1">West Bengal</option>
-					                		<option value="2">MP</option>				                		
+					                		<option ng:repeat="s in states" value="{{s.stateId}}">{{s.stateName}}</option>				                		
 					                	</select>
 					                </div>
 					                <label class="col-sm-2 control-label">City name</label>

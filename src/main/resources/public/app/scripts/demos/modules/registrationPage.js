@@ -13,6 +13,7 @@ angular
     $scope.selectedProfessionId = 0;
     $scope.selectedStateId = 0;
     $scope.newUser = false;
+    $scope.waiting = true;
     /*********** Get all Lookup values *********/
     LookUpService.getAgeGroup().then(function(data){ 
       $scope.ageGroup = data;
@@ -29,6 +30,13 @@ angular
     },function(error){
       $log.log(error);
     });
+
+    LookUpService.getStates().then(function(data){
+        $scope.states = data;
+      },function(error){
+        $log.log(error);
+    });
+
     
     UserAuthentication.getUserDetailProfile().then(function(data){
       if(data && data.data.details && data.data.summary){
@@ -52,6 +60,14 @@ angular
             }
           }
         }
+        /*
+        for(var i=0;i<$scope.states.length;i++){
+          if($scope.states[i].stateName == $scope.state){
+            $scope.selectedStates.selected = $scope.states[i];
+            break;
+          }
+        }
+        */
 
         //$scope.selectedIndustries.selected = $scope.user.summary.industrys;
         if(data.data.newUser){
@@ -74,6 +90,7 @@ angular
           }          
         }
       }
+      $scope.waiting = false;
       /*
       else if(data && data.newuser){
         $scope.newUser = true;
@@ -190,17 +207,39 @@ angular
     $scope.saveUserInfo = function(){
       $scope.user.summary.lookinfForSkill = [];
       $scope.user.summary.industrys = [];
+      var tags = [];
       for(var i=0; i<$scope.lookingfor.selected.length;i++){
         $scope.user.summary.lookinfForSkill.push($scope.lookingfor.selected[i].industryId);
       }
+      for(var i=0;i<$scope.states.length;i++){
+        if($scope.states[i].stateId == $scope.user.details.stateId){
+          $scope.user.summary.stateName = $scope.states[i].stateName;
+          tags.push($scope.states[i].stateName);
+          break;
+        }        
+      }
+
       for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
         $scope.user.summary.industrys.push($scope.selectedIndustries.selected[i].industryId);
+        tags.push($scope.selectedIndustries.selected[i].industryName);
       }
       if($scope.user.summary.userType ==='E'){
         $scope.user.summary.companyUrl = "";
       }
+      $scope.waiting = true;
       UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
         console.log('Data saved');
+        //CALL THE TAGENTRY
+        var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
+        $http({
+          url: 'services/tag',
+          method: 'POST',
+          data: tagEntity
+        }).then(function(response){
+          $scope.waiting = false;
+        },function(error){
+          console.log('TAG Entity error',error);
+        });
       },function(data){
         console.log('error'); 
       });
