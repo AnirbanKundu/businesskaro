@@ -1,4 +1,4 @@
-<div class="verticalcenter" ng-controller="SignupPageController">
+<div class="verticalcenter" ng-controller="NewSignUpController">
 	<a href="#/"><img src="assets/img/logo-big-black.png" alt="Logo" class="brand" /></a>
 	<div class="panel panel-primary">
 		<div class="panel-body">
@@ -8,11 +8,11 @@
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-							<input type="text" class="form-control" id="email" placeholder="Email">
+							<input type="email" class="form-control" id="email" placeholder="Email" ng-model="email">
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="display:none;">
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -24,24 +24,24 @@
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" id="password" placeholder="Password">
+							<input type="password" class="form-control" id="password" placeholder="Password" ng-model="password">
 						</div>
 					</div>
-				</div>
+				</div> 
 				<div class="form-group">
 					<div class="col-sm-12">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-							<input type="password" class="form-control" id="password" placeholder="Repeat password">
+							<input type="password" class="form-control" id="password" placeholder="Repeat password" ng-model="repeatpassword">
 						</div>
 					</div>
 				</div>
-				<div class="checkbox block" style="text-align:center">
+				<!--<div class="checkbox block" style="text-align:center" style="display:none;">
 					<input icheck type="checkbox">
 					<span>
 						I accept the <a href="#">User Agreement</a>
 					</span>
-				</div>
+				</div>-->
 			</form>	
 		</div>
 		<div class="panel-footer">
@@ -49,7 +49,7 @@
 				<a href="#/index" class="btn btn-default">Cancel</a>
 			</div>
 			<div class="pull-right">
-				<a href="#" class="btn btn-success">Sign up</a>
+				<button class="btn btn-success" ng-click="register()">Sign up</button>
 			</div>
 		</div>
 	</div>

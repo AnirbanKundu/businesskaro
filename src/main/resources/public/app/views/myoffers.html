@@ -1,17 +1,24 @@
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
-		<li>Offer</li>
 		<li class="active">My Offers</li>
 	</ol>
 </div>
-
 <div class="container-fluid" ng-controller="MyOfferController">
 	<div class="row">
+		<div class="col-sm-4 pull-right">
+			<div class="pull-right ">
+				<i class="fa fa-edit" style="font-size:16px;" ng-click="createOffer()"></i>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-sm-12">
-			<tabset panel-tabs="true" panel-class="panel-sky" heading="My Offers"> 
-				<tab> 
-			<div class="table-vertical">
+			<div class="panel panel-orange">
+				
+				<div class="panel-loading" ng-if="waiting">
+                    <div class="panel-loader-circular"></div>
+                </div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -31,10 +38,13 @@
 							<td data-title="Created Date">{{offer.createDate}}</td>
 						</tr>
 					</tbody>
+					<tbody ng-if="offers!=undefined && offers.length===0">
+						<tr>
+							<td colspan="4"><alert type="{{alert.type}}"><span>You do not have any offers created.</span></td></alert>
+						</tr>
+					</tbody>
 				</table>
 			</div>
-			</tab>  
-			</tabset>
 		</div>
 	</div>
 

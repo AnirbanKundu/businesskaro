@@ -67,8 +67,13 @@ angular
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-        $scope.$emit('loginsuccess', data);
-        $scope.serverMessage = '';
+        UserAuthentication.signInUser({userName:$scope.email, password:$scope.password}).then(function(data){
+          $location.path('/userprofile/firstLogin'); 
+        },function(error){
+
+        });
+        //$scope.$emit('loginsuccess', data);
+        //$scope.serverMessage = '';
         /*if(apphistory[0]==='/signupform'){
           //console.log('History is',history);
           $location.path('/'); 
