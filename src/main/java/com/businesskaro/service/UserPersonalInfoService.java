@@ -106,6 +106,7 @@ public class UserPersonalInfoService {
 		summaryEntiy.setUsrId(summary.userId);
 		summaryEntiy.setUsrTyp(summary.userType);
 		summaryEntiy.setLstName(summary.lastName);
+		summaryEntiy.setStateName(summary.stateName);
 		summaryEntiy = summaryRepo.save(summaryEntiy);
 
 		if (summary.userSkills != null)

@@ -16,8 +16,8 @@ angular
     	        	var data = response.data;
     	          $scope.offerTitle=data.title;
     	          $scope.offerDescription=data.description;
-    	          if(data.imageUrl){
-    		          var imagePath = data.imageUrl;
+    	          if(data.imgUrl){
+    		          var imagePath = data.imgUrl;
     		          var widgetFileInput = $('.fileinput').fileinput();
     		          widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
     		          if(imagePath){ 

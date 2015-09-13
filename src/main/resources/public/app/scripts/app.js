@@ -16,7 +16,7 @@ angular
       .when('/search/:type/:keywords',{
         templateUrl: 'views/search.html'
       })
-      .when('/userprofile',{
+      .when('/userprofile/:message?',{
         templateUrl: 'views/profile.html',
         controller: 'RegistrationPageController',
         resolve: {

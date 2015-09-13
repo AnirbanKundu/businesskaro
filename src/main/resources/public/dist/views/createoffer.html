@@ -15,7 +15,7 @@
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="col-sm-4">
-								<label class="control-label">Upload Company's logo</label> <br />
+								<label class="control-label">Upload Offer logo</label> <br />
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-preview thumbnail"
 										data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -60,12 +60,15 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Intended Audience</label>
 									<div class="col-sm-6">
-										<select class="form-control input-sm" ng-model="profId">
-					                		<option value="0">Select your Profession</option>
-					                		<option ng:repeat="prof in professions" value="{{prof.profession_id}}">{{prof.profession_name}}</option>
-					                	</select>
-
-									</div>
+									 	<ui-select multiple ng-model="selectedAudience.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select intended audience"> 
+											<ui-select-match placeholder="Select or search intended audience">{{$select.selected[$index].targAudDispVal}}</ui-select-match>
+											<ui-select-choices repeat="iterator in intendedAudience">
+												<span ng-bind-html="iterator.targAudDispVal"></span> 
+											</ui-select-choices> 
+											</ui-select>
+					                </div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Target Location</label>
@@ -84,30 +87,35 @@
 							<hr />
 						</div>
 						<div class="col-sm-12">
-							<label class="col-sm-1 control-label">Questions</label><br>
+							<div class="panel-heading-custom">
+								<h2>Questions</h2>
+							</div>
 							<div ng-repeat="question in questions">
-								<span>{{question.questId}}. </span>
-								<span>{{question.questTxt}}</span><br>
-								<div class="col-sm-6">
-					                    <div class="radio-inline">
-					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" value="Y" ng-model="questionAnswer">
-					                        Yes
-					                      </label>
-					                    </div>
-					                    <div class="radio-inline">
-					                      <label>
-					                        <input icheck type="radio" name="optionsRadios" value="N" ng-model="questionAnswer">
-					                        No
-					                      </label>
-					                    </div>
-					                    <div class="radio-inline" ng-if="question.responseTyp === 'NOT_SURE'">
-					                      <label>
-					                        <input icheck type="radio" name="optionsRadios"  value="NS" ng-model="questionAnswer">
-					                        Not Sure
-					                      </label>
-					                    </div>	
-					                </div>
+							<div>
+								<div >
+									{{$index + 1}}. <span>{{question.questTxt}}</span>
+								</div>
+								<div class="col-sm-6" style="padding-top:10px;">
+				                    <div class="radio-inline">
+				                      <label>
+				                        <input type="radio" name="optionsRadios" value="Y" ng-model="questionAnswer">
+				                        Yes
+				                      </label>
+				                    </div>
+				                    <div class="radio-inline">
+				                      <label>
+				                        <input type="radio" name="optionsRadios" value="N" ng-model="questionAnswer">
+				                        No
+				                      </label>
+				                    </div>
+				                    <div class="radio-inline" ng-if="question.responseTyp === 'NOT_SURE'">
+				                      <label>
+				                        <input type="radio" name="optionsRadios"  value="NS" ng-model="questionAnswer">
+				                        Not Sure
+				                      </label>
+				                    </div>	
+					              </div>
+					           </div>  
 							</div>
 						</div>
 					</div>
@@ -126,4 +134,19 @@
 	</div>
 
 </div>
+<style>
+.panel-heading-custom h2{
+	    color: #a2acb3;
+    height: 100%;
+    width: auto;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 0 5px;
+    position: relative;
+    margin: 0;
+    line-height: 20px;
+    cursor: text;
+    text-transform: uppercase;
+}
+</style>
 <!-- container-fluid -->

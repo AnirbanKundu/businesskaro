@@ -1,10 +1,14 @@
 angular
   .module('theme.demos.registration_page', [])
-  .controller('RegistrationPageController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', function($scope, $timeout, $log, $http, LookUpService, UserAuthentication) {
+  .controller('RegistrationPageController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', '$route', function($scope, $timeout, $log, $http, LookUpService, UserAuthentication,$route) {
     'use strict';
     $scope.reg_form = {};
     $scope.form = {};
-
+    var message = $route.current.params.message;
+    if(message && message ==='firstLogin'){
+      $scope.firstLogin = message;
+      $scope.alert = { type: 'success', msg: '<strong>Welcome to BusinessKaro</strong>. Please enter your personal details.' };
+    }
     $scope.checking = false;
     $scope.checked = false;
     $scope.user = {};

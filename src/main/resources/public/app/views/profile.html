@@ -16,6 +16,9 @@
 					<h2>Enter your personal details</h2>
 					
 				</div>
+				<div ng-if="firstLogin">
+					<alert type="{{alert.type}}"><span ng-bind-html="alert.msg | safe_html"></alert>
+				</div>
 				<div class="panel-body">
 				<!--
 					<div class="row">
