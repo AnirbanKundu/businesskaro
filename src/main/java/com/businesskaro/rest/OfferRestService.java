@@ -37,6 +37,7 @@ public class OfferRestService extends BKRestService{
 		Integer userId = validateSecureToken(clientId, secureToken);
 		offer.userId = userId;
 		offer.updateDate = new Date();
+		
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	

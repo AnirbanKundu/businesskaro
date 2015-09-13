@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -77,6 +79,7 @@ public class UserPersonalInfoService {
 	@Autowired
 	BrgUsrLookingForRepo brgUsrLookingForRepo;
 
+	@Transactional
 	public BkUserProfile createOrUpdateUserPersonalInfo(
 			BkUserProfile bkUserProfile, boolean isCreate) {
 
