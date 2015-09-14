@@ -3,7 +3,20 @@ angular.module('theme.core.services')
   'use strict';
 
   var _getEntityData = function(options){
-    var deferred = $q.defer(), data = {};
+    var deferred = $q.defer(), data = {},url='';
+    if(options.entityType==='USER_PROFILE'){
+      url = 'services/userProfile/summary?userId='+options.entityId;
+    }
+    else if(options.entityType==='OFFER'){
+      url = '/services/offer/summary/'+options.entityId;
+    }
+    else if(options.entityType==='REQUEST'){
+      url = '/services/request/summary/'+options.entityId;
+    }
+    else{
+      //NEWS
+    }
+    /*
     if(options.url ==='user'){
       data = {
         "userId": 42,
@@ -33,17 +46,18 @@ angular.module('theme.core.services')
     };
 
     deferred.resolve(data);
+    */
 
-    /*$http({
-        url: options.url,
+    $http({
+        url: url,
         method: 'GET'
       }).then(function(response){    
-        var 
-        deferred.resolve(ageGroup);
+        var data = response.data
+        deferred.resolve(data);
       },function(error){
         deferred.reject(error);
       });   
-    */
+    
       return deferred.promise;
     };
   return {

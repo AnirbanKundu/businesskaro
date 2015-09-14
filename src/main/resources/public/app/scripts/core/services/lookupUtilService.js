@@ -1,7 +1,7 @@
 angular.module('theme.core.services')
   .factory("LookUpService", ['$http','$q',function($http, $q) {
   'use strict';
-  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[], intAudience=[];
+  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[], intAudience=[], industries = [];
   var _getAgeGroup = function(){
     var deferred = $q.defer(); 
     if(ageGroup && ageGroup.length>0){
@@ -120,12 +120,39 @@ angular.module('theme.core.services')
 	    }    
 	    return deferred.promise;
   };
+  var _getIndustries = function(){
+    var deferred = $q.defer(); 
+      if(industries && industries.length>0){
+        deferred.resolve(industries);
+      }
+      else{
+        $http({
+          url: 'utilservices/industries/',
+          method: 'GET'
+        }).then(function(response){    
+          industries = response.data;  
+          deferred.resolve(industries);
+        },function(error){
+          deferred.reject(error);
+        });
+      }    
+      return deferred.promise;
+  };
+
+  var _getIndustryName = function(industryId){
+    if(industries){
+      var serached =  _.findWhere(industries, {industryId:industryId});
+      return serached.industryName;
+    }
+  };
   return {
     getAgeGroup: _getAgeGroup,
     getEducations : _getEducations,
     getProfession : _getProfession,
     getQuestions : _getQuestions,
     getStates : _getState,
-    getIntAudience: _getIntAudience
+    getIntAudience: _getIntAudience,
+    getIndustries : _getIndustries,
+    getIndustryName : _getIndustryName
   };
 }]);

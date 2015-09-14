@@ -12,15 +12,18 @@ angular
     $scope.state = $scope.keywords.split(',')[1];
 
 
-    $http.get('utilservices/industries').success(function(response) {
-      $scope.industries = response;
-      for(var i=0;i<$scope.industries.length;i++){
-        if($scope.industries[i].industryName == $scope.industry){
-          $scope.selectedIndustries.selected = $scope.industries[i];
-          break;
+    LookUpService.getIndustries().then(function(data){
+        $scope.industries = data;
+        for(var i=0;i<$scope.industries.length;i++){
+          if($scope.industries[i].industryName == $scope.industry){
+            $scope.selectedIndustries.selected = $scope.industries[i];
+            break;
+          }
         }
-      }
+    },function(error){
+        $log.log(error);
     });
+
     $scope.selectedStates = { "selected": [] };
     LookUpService.getStates().then(function(data){
         $scope.states = data;
@@ -48,7 +51,7 @@ angular
       var elm = arr.shift();
       if(elm){
         console.log('Current Count is',count++);      
-        EntityService.getEntityData({url:'user'}).then(function(data){
+        EntityService.getEntityData({entityType:elm.entityType, entityId:elm.entityId}).then(function(data){
           //elm.data = data;
           //o.entityType == elm.entityType && o.entityId == elm.entityId;
           $timeout(function(){
@@ -104,7 +107,9 @@ angular
       if(industry){
         keywords = industry+',';
       }
-      keywords += state + ',';
+      if(state){
+        keywords+= state+',';
+      }
       keywords = keywords.substring(0, keywords.lastIndexOf(','));
       $location.path('/search/ALL/'+keywords);
       console.log('Tags selected are:', $scope.selectedTag);
@@ -112,9 +117,9 @@ angular
 
     
 
-    //services/tag/entity?keyword=JAVA&entityType=ALL
+    //services/tag/entity?keyword=JAVA&entityType=ALL ; services/tag/entity?keywords ; appdata/tagentity.json
     $http({
-        url : 'appdata/tagentity.json',
+        url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
         method: 'GET'
       }).then(function(response){        
         $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
@@ -128,4 +133,16 @@ angular
         console.log('Error in delete');
     });
 
+}])
+.filter('industryfilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
+  return function(array){ 
+    var industryNames = ''
+    if(array){
+      for(var i=0;i<array.length;i++){
+        industryNames += LookUpService.getIndustryName(array[i]) + ','
+      }
+      industryNames = industryNames.substring(0, industryNames.lastIndexOf(','));
+      return industryNames;
+    }
+  } 
 }]);

@@ -53,16 +53,21 @@ angular.module('theme.demos.dashboard', [
 
     $scope.searchTags = function(){
       var keywords='',
-      industry = $scope.selectedIndustries.selected.industryName;
-      var state = $scope.selectedStates.selected.stateName;;
+      industry = $scope.selectedIndustries.selected.industryName,
+      state = $scope.selectedStates.selected.stateName;
 
       if(industry){
         keywords = industry+',';
       }
-      keywords += state + ',';
+      if(state){
+        keywords += state + ',';
+      }      
       keywords = keywords.substring(0, keywords.lastIndexOf(','));
-      $location.path('/search/ALL/'+keywords);
-      console.log('Tags selected are:', $scope.selectedTag);
+      $timeout(function(){
+        $location.path('/search/ALL/'+keywords);
+      },100)
+      
+      //console.log('Tags selected are:', $scope.selectedTag);
     }
 
     $scope.refreshTags = function(value) {
