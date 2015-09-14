@@ -2,7 +2,7 @@ angular
   .module('theme.demos.signup_page', [
     'theme.core.services'
   ])
-  .controller('SignupPageController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
+  .controller('SignupPageController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', '$http', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route,$http) {
     'use strict';
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
@@ -54,7 +54,7 @@ angular
     };
 
   }])
-  .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
+  .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', '$http', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route, $http) {
     console.log('In NewSignUpController');
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
@@ -67,11 +67,20 @@ angular
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-        UserAuthentication.signInUser({userName:$scope.email, password:$scope.password}).then(function(data){
-          $location.path('/userprofile/firstLogin'); 
-        },function(error){
+    	  
+    	  $http({
+              url: '/newUserMail',
+              method: 'POST',
+              isArray: false,
+              data: { "email" : $scope.email,
+                  },
+              cache : false}).then(function(response){
+                  UserAuthentication.signInUser({userName:$scope.email, password:$scope.password}).then(function(data){
+                      $location.path('/userprofile/firstLogin'); 
+                    },function(error){
 
-        });
+                    });
+              });
         //$scope.$emit('loginsuccess', data);
         //$scope.serverMessage = '';
         /*if(apphistory[0]==='/signupform'){

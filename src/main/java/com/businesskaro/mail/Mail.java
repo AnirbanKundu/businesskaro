@@ -1,13 +1,9 @@
 package com.businesskaro.mail;
 
-import java.util.List;
-
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -15,18 +11,8 @@ import org.springframework.stereotype.Component;
 import com.businesskaro.model.EMailMessage;
 import com.businesskaro.model.EmailTo;
 
-/*
- import javax.mail.Message;
- import javax.mail.MessagingException;
- import javax.mail.Session;
- import javax.mail.Transport;
- import javax.mail.internet.InternetAddress;
- import javax.mail.internet.MimeMessage;
- */
 @Component
 public class Mail {
-
-	private static Logger log = LoggerFactory.getLogger(Mail.class);
 
 	private final JavaMailSender javaMailSender;
 
