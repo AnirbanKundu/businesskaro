@@ -68,6 +68,7 @@ angular
       //console.log($scope.loginForm.email);
       UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
           UserAuthentication.signInUser({userName:$scope.email, password:$scope.password}).then(function(data){
+              $scope.$emit('loginsuccess', data);
               $location.path('/userprofile/firstLogin'); 
             },function(error){
 
