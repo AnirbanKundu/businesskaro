@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
+import com.businesskaro.mail.NewUserEmailSender;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUser;
 import com.businesskaro.rest.dto.ResetPasswordRequest;
@@ -26,6 +27,9 @@ public class UserRestService extends BKRestService {
 	
 	@Autowired
 	TblUserPasswordRepo userDao;
+	
+	@Autowired
+	NewUserEmailSender email;
 
 	@RequestMapping(value="/services/user" , method = RequestMethod.POST)
 	public void createUser(@RequestBody BKUser user){
@@ -55,6 +59,12 @@ public class UserRestService extends BKRestService {
 		userPswd.setLastUpd(new Date());
 		
 		userPswd = userDao.save(userPswd);
+		System.out.println("****** Sending the email ******");
+		try {
+			email.send(user.email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="/services/user/resetPassword" , method = RequestMethod.POST)

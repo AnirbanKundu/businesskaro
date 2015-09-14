@@ -3,6 +3,7 @@ package com.businesskaro.mail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,16 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.model.EmailTo;
 
-@RestController
+//@RestController
+@Service
 public class NewUserEmailSender extends AbstractEmailNotification{
 	
 
-	@RequestMapping(value="/newUserMail", method = RequestMethod.POST)
+	/*@RequestMapping(value="/newUserMail", method = RequestMethod.POST)
     public void send(@RequestBody EmailTo email) throws Exception {   
 		System.out.println("EMAIL: "+email.getEmail());
 		send(email.getEmail());
     	
-    }
+    }*/
 	
 	private String toAddress;
 	private String subject;
