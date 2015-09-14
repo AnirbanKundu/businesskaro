@@ -22,7 +22,7 @@ public class TblUsrReqOffer implements Serializable {
 	@Id
 	@Column(name="REQ_OFFR_ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int reqOffrId;
+	private Integer reqOffrId;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="CREATE_DT")
@@ -74,11 +74,11 @@ public class TblUsrReqOffer implements Serializable {
 	public TblUsrReqOffer() {
 	}
 
-	public int getReqOffrId() {
+	public Integer getReqOffrId() {
 		return this.reqOffrId;
 	}
 
-	public void setReqOffrId(int reqOffrId) {
+	public void setReqOffrId(Integer reqOffrId) {
 		this.reqOffrId = reqOffrId;
 	}
 
