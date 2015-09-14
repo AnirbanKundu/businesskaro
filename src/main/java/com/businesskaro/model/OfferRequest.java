@@ -5,7 +5,7 @@ import java.util.List;
 
 public class OfferRequest {
 
-	public int id;
+	public Integer id;
 	public String title;
 	public String description;
 	public int[] trgtIndustry;

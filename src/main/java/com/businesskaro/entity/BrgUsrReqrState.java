@@ -1,6 +1,7 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -16,6 +17,7 @@ public class BrgUsrReqrState implements Serializable {
 
 	@Id
 	@Column(name="REQR_INDUS")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int reqrIndus;
 
 	//bi-directional many-to-one association to TblUsrReqOffer

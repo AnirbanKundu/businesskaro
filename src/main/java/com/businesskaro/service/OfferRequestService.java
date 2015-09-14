@@ -54,10 +54,8 @@ public class OfferRequestService {
 	public void createorUpdate(OfferRequest model, OfferRequestEnum type) {
 		
 		TblUsrReqOffer entity = new TblUsrReqOffer();
-		if(Integer.getInteger(Integer.toString(model.id)) != null){
-			entity.setReqOffrId(model.id);
-		}
 		
+		entity.setReqOffrId(model.id);
 		entity.setReqOffrTyp(type.toString());
 		entity.setReqOffrTitle(model.title);
 		entity.setReqOffrDesc(model.description);
@@ -149,7 +147,9 @@ public class OfferRequestService {
 		}
 		result.questionList = questions;
 		result.imgUrl = fromTable.getImageUrl();
-		result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		if(fromTable.getTblUserPersInfoSumry() != null){
+			result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		}
 		result.createDate = fromTable.getCreateDt();
 		result.updateDate = fromTable.getLastUpd();
 		return result;
