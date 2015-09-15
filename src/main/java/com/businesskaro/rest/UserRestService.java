@@ -72,7 +72,7 @@ public class UserRestService extends BKRestService {
 			@RequestHeader("CLIENT_ID") String clientId, 
 			ResetPasswordRequest request){
 		
-		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(request.userName);
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(request.email);
 		if(userPswdEntitys.size() == 0){
 			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
 		}

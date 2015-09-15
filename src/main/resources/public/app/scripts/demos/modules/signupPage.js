@@ -27,7 +27,7 @@ angular
       UserAuthentication.signInUser({userName:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
         $scope.$emit('loginsuccess', data);
         $scope.serverMessage = '';
-        if(apphistory[0]==='/extras-login2'){
+        if(apphistory[0]==='/login'){
           //console.log('History is',history);
           $location.path('/'); 
         }
@@ -90,5 +90,26 @@ angular
 
       });
     };
+
+  }])
+  .controller('RestPasswordController', ['$scope', '$theme', '$http', '$window',function($scope, $theme, $http, $window) {
+    console.log('In Password Reset Controller');
+    $theme.set('fullscreen', true);
+    $scope.$on('$destroy', function() {
+      $theme.set('fullscreen', false);
+    });
+    $scope.reset = function(){
+    	console.log('In reset'+$scope.resetEmail);
+    	$http({
+            url: 'services/resetPassword',
+            method: 'POST',
+            data: {
+          	  "email":$scope.resetEmail
+            }
+          }).then(function(response){
+        	  $window.location.href = '/#/login';
+          });
+    	
+    }
 
   }]);

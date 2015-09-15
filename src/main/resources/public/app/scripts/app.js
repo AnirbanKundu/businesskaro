@@ -52,7 +52,7 @@ angular
   .run(['$rootScope', '$location','UserAuthentication', function($rootScope, $location, UserAuthentication){
       $rootScope.$on("$routeChangeError", function(event, current, previous, eventObj) {
         if (eventObj.authenticated === false) {
-          $location.path("/extras-login2");
+          $location.path("/login");
           var apphistory = UserAuthentication.getuserRoutes();
           if(apphistory && apphistory.length ==0){
             apphistory.push(eventObj.visitedroute);

@@ -57,16 +57,6 @@ public abstract class AbstractEmailNotification implements ResourceLoaderAware {
 			bodyPart.setContent(body.toString(), "text/html; charset=utf-8");
 			multipart.addBodyPart(bodyPart);
 
-			// Attach Header Image
-			bodyPart = new MimeBodyPart();
-			DataSource headerDataSource = new FileDataSource(
-					FileUtils.toFile(this.getClass().getResource("/images/Startups.png")));
-
-			bodyPart.setDataHandler(new DataHandler(headerDataSource));
-			bodyPart.setFileName("Startups.png");
-			bodyPart.setHeader("Content-ID", "<bkHeader>");
-			multipart.addBodyPart(bodyPart);
-
 			msg.setContent(multipart);
 			javaMailSender.send(msg);
 

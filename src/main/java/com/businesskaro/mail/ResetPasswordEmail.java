@@ -6,23 +6,18 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
-public class NewUserEmailSender extends AbstractEmailNotification{
-	
+public class ResetPasswordEmail extends AbstractEmailNotification{
+
 	private String toAddress;
 	private String subject;
 	private Map<String, String> emailTokens;
-
-	public void send(String toEmailAddress) throws Exception {
+	
+	public void send(String toEmailAddress, String tempPassword) throws Exception {
 		this.toAddress = toEmailAddress;
-		this.subject = "Welcome to Business Karo";
-		loadEmailTokens();
-		sendEmail("CREATE_USER_TEMPLATE.txt");
-	}
-
-	private void loadEmailTokens() {
+		this.subject = "[BusinessKaro] Please reset your password";
 		emailTokens = new HashMap<String, String>();
-		emailTokens.put("#test_text", "Welcome to businesskaro.com. You have succesfully registered.");
-
+		emailTokens.put("#tempPassword", tempPassword);
+		sendEmail("RESET_PASSWORD_TEMPLATE.txt");
 	}
 
 	@Override
@@ -39,5 +34,6 @@ public class NewUserEmailSender extends AbstractEmailNotification{
 	public String getSubject(){
 		return subject;
 	}
+
 
 }

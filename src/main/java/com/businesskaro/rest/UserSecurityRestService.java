@@ -1,6 +1,7 @@
 package com.businesskaro.rest;
 
 import java.util.List;
+
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
-import com.businesskaro.mail.Mail;
+import com.businesskaro.mail.ResetPasswordEmail;
 import com.businesskaro.model.BKException;
 import com.businesskaro.rest.dto.LoginRequest;
 import com.businesskaro.rest.dto.LoginResponse;
+import com.businesskaro.rest.dto.ResetPasswordRequest;
 import com.businesskaro.security.BKGuid;
 import com.businesskaro.security.EncryptionUtil;
 import com.businesskaro.security.SecureTokenUtil;
@@ -30,15 +32,15 @@ public class UserSecurityRestService {
 	TblUserPasswordRepo userDao;
 	
 	@Autowired
-	Mail mailService;
+	ResetPasswordEmail mailService;
 	
 
 	@RequestMapping(value="/services/login" , method = RequestMethod.POST)
 	public LoginResponse login(@RequestBody LoginRequest loginRequest ){
 		
-		logger.info("Security Request " + loginRequest.userName);
+		logger.info("Security Request " + loginRequest.email);
 		
-		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.userName);
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){
 			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
 		}
@@ -63,12 +65,12 @@ public class UserSecurityRestService {
 		}
 		
 	}
-	@RequestMapping(value="/services/resetpassword" , method = RequestMethod.POST)
-	public LoginResponse resetPassword(@RequestBody LoginRequest loginRequest ){
+	@RequestMapping(value="/services/changePassword" , method = RequestMethod.POST)
+	public LoginResponse changePassword(@RequestBody LoginRequest loginRequest ){
 	
-		logger.info("Security Request " + loginRequest.userName);
+		logger.info("Security Request " + loginRequest.email);
 		
-		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.userName);
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){
 			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
 		}
@@ -95,11 +97,11 @@ public class UserSecurityRestService {
 	
 	@RequestMapping(value="/services/resetPassword" , method = RequestMethod.POST)
 	@ResponseStatus(value=HttpStatus.OK)
-	public void resetPassword1(@RequestBody LoginRequest loginRequest ){
+	public void resetPassword(@RequestBody ResetPasswordRequest loginRequest ){
 		
-		logger.info("Security Request " + loginRequest.userName);
+		logger.info("Security Request " + loginRequest.email);
 		
-		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.userName);
+		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){
 			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
 		}
@@ -110,7 +112,11 @@ public class UserSecurityRestService {
 		userPswd.setUsrPassword(encryptedPassword);
 		userDao.save(userPswd);
 		
-		mailService.sendMailx("", userPswd.getUsrEmail(), " Please use the password "+ newpswd +"  to login. Please dont forgot to change the password ");
+		try {
+			mailService.send(loginRequest.email, newpswd);
+		} catch (Exception e) {
+			throw new BKException("Email Failed", "", BKException.Type.INTERNAL_ERRROR );
+		}
 		
 	}
 	
