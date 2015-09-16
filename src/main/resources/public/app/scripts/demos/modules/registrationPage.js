@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.registration_page', [])
-  .controller('RegistrationPageController', ['$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', '$route', function($scope, $timeout, $log, $http, LookUpService, UserAuthentication,$route) {
+  .controller('RegistrationPageController', ['$rootScope', '$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', '$route', function($rootScope, $scope, $timeout, $log, $http, LookUpService, UserAuthentication,$route) {
     'use strict';
     $scope.reg_form = {};
     $scope.form = {};
@@ -19,6 +19,17 @@ angular
     $scope.newUser = false;
     $scope.waiting = true;
     /*********** Get all Lookup values *********/
+    $scope.selectedIndustries = { "selected": [] };
+    $scope.lookingfor = { "selected": [] };
+    $scope.industries = [];
+    
+
+    LookUpService.getIndustries().then(function(data){
+        $scope.industries = data;
+    },function(error){
+        $log.log(error);
+    });
+
     LookUpService.getAgeGroup().then(function(data){ 
       $scope.ageGroup = data;
     },function(error){
@@ -76,6 +87,7 @@ angular
         //$scope.selectedIndustries.selected = $scope.user.summary.industrys;
         if(data.data.newUser){
           $scope.newUser = true;
+          $rootScope.newUser=true;
         }
         //$scope.selectedAgeId=0;
         //$scope.selectedEducationId=0;
@@ -108,12 +120,7 @@ angular
     },function(error){
       console.log('Error happened');
     });
-    $scope.selectedIndustries = { "selected": [] };
-    $scope.lookingfor = { "selected": [] };
-    $scope.industries = [];
-    $http.get('utilservices/industries').success(function(response) {
-      $scope.industries = response;
-    });
+    
     //*********************
     //While getting the user info get the image path and then set to it
     $scope.userImageId = "";
@@ -232,7 +239,7 @@ angular
       }
       $scope.waiting = true;
       UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
-        console.log('Data saved');
+        $rootScope.newUser=false;
         //CALL THE TAGENTRY
         var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
         $http({

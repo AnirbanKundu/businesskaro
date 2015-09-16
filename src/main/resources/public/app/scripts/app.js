@@ -32,7 +32,18 @@ angular
         }
       })
       .when('/createoffer/:id',{
-        templateUrl: 'views/createoffer.html'
+        templateUrl: 'views/createoffer.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
       })
       .when('/createrequest/:id',{
         templateUrl: 'views/createrequest.html'

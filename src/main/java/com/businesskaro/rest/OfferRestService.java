@@ -22,13 +22,13 @@ public class OfferRestService extends BKRestService{
 	OfferRequestService service;
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.POST)
-	public void createOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
+	public Integer createOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
 		Integer userId = validateSecureToken(clientId, secureToken);
 		offer.userId = userId;
 		offer.createDate = new Date();
 		offer.updateDate = new Date();
-		service.createorUpdate(offer, OfferRequestEnum.OFFER);
+		return service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.PUT)

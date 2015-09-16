@@ -192,12 +192,15 @@ angular
       
       $scope.save =  function(){
     		var state=[];
+        var tags = [];
     		for(var i=0;i<$scope.selectedStates.selected.length;i++){
     			state.push($scope.selectedStates.selected[i].stateId);
+          tags.push($scope.states[i].stateName);
     		}
     		var industries=[];
     		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
     			industries.push($scope.selectedIndustries.selected[i].industryId);
+          tags.push($scope.selectedIndustries.selected[i].industryName);
     		}
     		var intAudience = [];
     		for(var i=0;i<$scope.selectedAudience.selected.length;i++){
@@ -219,9 +222,19 @@ angular
     	                  "imgUrl" :$scope.imageUrl
     	                  },
     	              cache : false}).then(function(response){
-    	            	  $window.location.href = '/#/myoffers';
+    	            	  //$window.location.href = '/#/myoffers';
+                      var tagEntity = { "entityId" : $scope.id, "entityType" : "OFFER", "tags" : tags }
+                      $http({
+                        url: 'services/tag',
+                        method: 'POST',
+                        data: tagEntity
+                      }).then(function(response){
+                        $scope.waiting = false;
+                      },function(error){
+                        console.log('TAG Entity error',error);
+                      });
     	              }, function(response){
-    	            	  $window.location.href = '/#/myoffers';
+    	            	  //$window.location.href = '/#/myoffers';
     	              });
     			
     		} else{
@@ -238,9 +251,19 @@ angular
     	                  
     	                  },
     	              cache : false}).then(function(response){
-    	            	  $window.location.href = '/#/myoffers';
+                      var tagEntity = { "entityId" : response.data, "entityType" : "OFFER", "tags" : tags }
+                      $http({
+                        url: 'services/tag',
+                        method: 'POST',
+                        data: tagEntity
+                      }).then(function(response){
+                        $scope.waiting = false;
+                      },function(error){
+                        console.log('TAG Entity error',error);
+                      });
+    	            	  //$window.location.href = '/#/myoffers';
     	              }, function(response){
-    	            	  $window.location.href = '/#/myoffers';
+    	            	  //$window.location.href = '/#/myoffers';
     	              });
     		}
     	  

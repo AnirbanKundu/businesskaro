@@ -51,11 +51,13 @@ public class OfferRequestService {
 	UserPersonalInfoSummaryRepo userInfoSummary;
 	
 	@Transactional
-	public void createorUpdate(OfferRequest model, OfferRequestEnum type) {
+	public Integer createorUpdate(OfferRequest model, OfferRequestEnum type) {
 		
 		TblUsrReqOffer entity = new TblUsrReqOffer();
 		
-		entity.setReqOffrId(model.id);
+		if(model.id!=null){
+			entity.setReqOffrId(model.id);
+		}		
 		entity.setReqOffrTyp(type.toString());
 		entity.setReqOffrTitle(model.title);
 		entity.setReqOffrDesc(model.description);
@@ -101,6 +103,7 @@ public class OfferRequestService {
 				}
 			}
 		}
+		return entity.getReqOffrId();
 	}
 
 	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {

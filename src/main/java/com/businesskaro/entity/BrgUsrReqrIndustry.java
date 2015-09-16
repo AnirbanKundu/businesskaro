@@ -18,7 +18,7 @@ public class BrgUsrReqrIndustry implements Serializable {
 	@Id
 	@Column(name="REQR_INDUS")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int reqrIndus;
+	private Integer reqrIndus;
 
 	//bi-directional many-to-one association to TblUsrReqOffer
 	@ManyToOne
@@ -33,11 +33,11 @@ public class BrgUsrReqrIndustry implements Serializable {
 	public BrgUsrReqrIndustry() {
 	}
 
-	public int getReqrIndus() {
+	public Integer getReqrIndus() {
 		return this.reqrIndus;
 	}
 
-	public void setReqrIndus(int reqrIndus) {
+	public void setReqrIndus(Integer reqrIndus) {
 		this.reqrIndus = reqrIndus;
 	}
 
