@@ -31,8 +31,9 @@ angular
           }]
         }
       })
-      .when('/createoffer/:id',{
+      .when('/createoffer/:id?',{
         templateUrl: 'views/createoffer.html',
+        controller: 'CreateOfferController',
         resolve: {
           auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
             var userInfo = authenticationSvc.getToken();       
@@ -45,13 +46,25 @@ angular
           }]
         }
       })
-      .when('/createrequest/:id',{
-        templateUrl: 'views/createrequest.html'
-      })
-      .when('/:templateFile', {
-        templateUrl: function(param) {
-          return 'views/' + param.templateFile + '.html';
+      .when('/createrequest/:id?',{
+        templateUrl: 'views/createrequest.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
         }
+      }) //
+      .when('/login',{
+        templateUrl: 'views/extras-login2.html'
+      })
+      .when('/signupform',{
+        templateUrl: 'views/signupform.html'
       })
       .when('#', {
         templateUrl: 'views/index.html', 

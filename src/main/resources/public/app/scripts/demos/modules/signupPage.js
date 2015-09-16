@@ -63,7 +63,7 @@ angular
     $scope.email= '';
     $scope.password = '';
     $scope.register = function(){
-      var apphistory = UserAuthentication.getuserRoutes();
+      var apphistory = UserAuthentication.getuserRoutes(); 
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
