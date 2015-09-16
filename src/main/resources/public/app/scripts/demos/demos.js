@@ -29,7 +29,8 @@ angular
     'theme.demos.offer',
     'theme.demos.request',
     'theme.demos.myoffer',
-    'theme.demos.myrequest'
+    'theme.demos.myrequest',
+    'theme.demos.chngpwd'
   ]);
   /*
   .directive('img', ['$timeout', function ($t) {

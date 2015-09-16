@@ -1,5 +1,6 @@
 package com.businesskaro.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import java.util.logging.Logger;
@@ -82,6 +83,7 @@ public class UserSecurityRestService {
 		if(loginRequest.password.equals(decryptedPassword)){
 			String encryptedPassword = EncryptionUtil.encode(loginRequest.newPassword, userPswd.getUsrSalt()); //Save this value in DB along with the SALT
 			userPswd.setUsrPassword(encryptedPassword);
+			userPswd.setLastUpd(new Date());
 			userDao.save(userPswd);
 		}else{
 			throw new BKException("Invalid User" , "000" , BKException.Type.IN_VALID_USER);

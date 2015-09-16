@@ -61,13 +61,16 @@ angular
         }
       }) //
       .when('/login',{
-        templateUrl: 'views/extras-login2.html'
+        templateUrl: 'views/login.html'
       })
       .when('/signupform',{
         templateUrl: 'views/signupform.html'
       })
       .when('#', {
         templateUrl: 'views/index.html', 
+      })
+      .when('/changepassword',{
+        templateUrl: 'views/changepassword.html'
       })
       .otherwise({
         redirectTo: '/'

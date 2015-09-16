@@ -24,7 +24,7 @@ angular
       var apphistory = UserAuthentication.getuserRoutes();
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
-      UserAuthentication.signInUser({userName:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
+      UserAuthentication.signInUser({email:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
         $scope.$emit('loginsuccess', data);
         $scope.serverMessage = '';
         if(apphistory[0]==='/login'){
