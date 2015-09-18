@@ -202,8 +202,8 @@ angular
     	              isArray: false,
     	              data: { 
     	            	  "id" : $scope.id,
-    	            	  "title" : $scope.offerTitle,
-    	                  "description" : $scope.offerDescription,
+    	            	  "title" : $scope.requestTitle,
+    	                  "description" : $scope.requestDescription,
     	                  "trgtIndustry" : industries,
     	                  "intdAudience" : intAudience[0],
     	                  "trgtLocation" : state,

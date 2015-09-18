@@ -108,13 +108,11 @@ public class OfferRequestService {
 
 	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {
 		
-		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumry(userInfoSummary.findOne(userId));
+		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumryAndReqOffrTyp(userInfoSummary.findOne(userId),offer.name());
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){
-			if(offerReq.getReqOffrTyp().equalsIgnoreCase(offer.name())){
-				result.add(mapper(offerReq));
-			}
+			result.add(mapper(offerReq));
 		}
 		return result;
 	}
@@ -181,6 +179,7 @@ public class OfferRequestService {
 		
 		
 		result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		result.userName = fromTable.getTblUserPersInfoSumry().getFstName() +" "+fromTable.getTblUserPersInfoSumry().getLstName();
 		result.createDate = fromTable.getCreateDt();
 		result.updateDate = fromTable.getLastUpd();
 		return result;
@@ -192,5 +191,9 @@ public class OfferRequestService {
 	
 	public OfferRequest getDetails(Integer offerId){
 		return mapper(reqOfferRepo.findOne(offerId)); 
+	}
+
+	public List<OfferRequest> getOfferByUserId(Integer userId, OfferRequestEnum offer) {
+		return getAll(userId, offer);
 	}
 }

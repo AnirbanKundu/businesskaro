@@ -13,5 +13,8 @@ import com.businesskaro.entity.UserPersonalInfoSummary;
 public interface TblUsrReqOfferRepo extends CrudRepository<TblUsrReqOffer, Integer> {
 
 	public List<TblUsrReqOffer> findAllByTblUserPersInfoSumry(UserPersonalInfoSummary entity);
+
+	public Iterable<TblUsrReqOffer> findAllByTblUserPersInfoSumryAndReqOffrTyp(UserPersonalInfoSummary findOne,
+			String name);
 	
 }

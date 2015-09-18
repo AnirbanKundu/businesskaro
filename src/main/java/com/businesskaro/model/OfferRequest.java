@@ -19,4 +19,6 @@ public class OfferRequest {
 	public Date createDate;
 	public Date updateDate;
 	
+	public String userName;
+	
 }

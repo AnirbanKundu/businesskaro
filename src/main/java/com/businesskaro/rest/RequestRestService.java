@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.businesskaro.model.BKException;
 import com.businesskaro.model.OfferRequest;
 import com.businesskaro.model.OfferRequestEnum;
 import com.businesskaro.service.OfferRequestService;
@@ -67,4 +68,17 @@ public class RequestRestService extends BKRestService{
 			@RequestHeader("CLIENT_ID") String clientId){
 		return service.getDetails(requestId);
 	}
+	
+	@RequestMapping(value="/services/request/user/{userId}" , method = RequestMethod.GET)
+	public List<OfferRequest> getRequestByUser(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
+		try{
+			validateSecureToken(clientId, secureToken);
+			return service.getOfferByUserId(userId, OfferRequestEnum.OFFER);
+		} catch(Exception e){
+			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
+		}
+        
+	}
+
 }
