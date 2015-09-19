@@ -70,23 +70,6 @@ angular
     $scope.selectedStateId = 0;
     
     /*********** Get all Lookup values *********/
-
-    
-    LookUpService.getAgeGroup().then(function(data){ 
-      $scope.ageGroup = data;
-    },function(error){
-      $log.log(error); 
-    });
-    LookUpService.getEducations().then(function(data){
-      $scope.educations = data;
-    },function(error){
-      $log.log(error);
-    });
-    LookUpService.getProfession().then(function(data){
-      $scope.professions = data;
-    },function(error){
-      $log.log(error);
-    });
     LookUpService.getStates().then(function(data){
         $scope.states = data;
       },function(error){

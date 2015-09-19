@@ -59,7 +59,35 @@ angular
             }
           }]
         }
-      }) //
+      })
+      .when('/myoffers',{
+        templateUrl: 'views/myoffers.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
+      })
+      .when('/myrequests',{
+        templateUrl: 'views/myrequests.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
+      })
       .when('/login',{
         templateUrl: 'views/login.html'
       })

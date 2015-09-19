@@ -5,6 +5,31 @@ angular
 	    
 	    $scope.id = $route.current.params.id;
 	    console.log("Request COntroller: "+$scope.id);
+
+	    LookUpService.getStates().then(function(data){
+	        $scope.states = data;
+	      },function(error){
+	        $log.log(error);
+	      });
+	    LookUpService.getQuestions('R').then(function(data){
+	        $scope.questions = data;
+	      },function(error){
+	      	console.log('In questions http');
+	        $log.log(error);
+	      });
+	    LookUpService.getIntAudience().then(function(data){
+	        $scope.intendedAudience = data;
+	      },function(error){
+	        $log.log(error);
+	      });
+	    
+	    $scope.selectedIndustries = { "selected": [] };
+	    $scope.selectedStates = { "selected": [] };
+	    $scope.selectedAudience = 0;	    
+	    $scope.industries = [];
+	    $http.get('utilservices/industries').success(function(response) {
+	      $scope.industries = response;
+	    });
 	    
 	    if($scope.id !== undefined){
 	    	$http({
@@ -13,43 +38,31 @@ angular
 		        }).then(function(response){
 		        	var data = response.data;
 		        	$scope.requestTitle=data.title;
-			        $scope.requestDescription=data.description;
-			        
-			        if(data.imageUrl){
-			          var imagePath = data.imageUrl;
-			          var widgetFileInput = $('.fileinput').fileinput();
-			          widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
-			          if(imagePath){ 
-			            widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
-			            $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
-			            $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
-			            console.log('actualImageName is :',$scope.actualImageName);
-			          }   
-			          for(var i=0;i<data.trgtIndustry.length;i++){
-	    	              for(var j=0;j<$scope.industries.length;j++){
-	    	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
-	    	                  $scope.selectedIndustries.selected.push($scope.industries[j]);
-	    	                  break;
-	    	                }
-	    	              }
-	    	            }
-	    	          for(var i=0;i<data.trgtLocation.length;i++){
-	    	              for(var j=0;j<$scope.states.length;j++){
+			        $scope.requestDescription=data.description;			        
+			        for(var i=0;i<data.trgtIndustry.length;i++){
+    	              for(var j=0;j<$scope.industries.length;j++){
+    	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
+    	                  $scope.selectedIndustries.selected.push($scope.industries[j]);
+    	                  break;
+    	                }
+    	              }
+	    	        }
+    	          	for(var i=0;i<data.trgtLocation.length;i++){
+	    	            for(var j=0;j<$scope.states.length;j++){
 	    	                if(data.trgtLocation[i] == $scope.states[j].stateId){
 	    	                  $scope.selectedStates.selected.push($scope.states[j]);
 	    	                  break;
 	    	                }
-	    	              }
 	    	            }
-	    	          for(var i=0;i<$scope.intendedAudience.length;i++){
-	    	        	  if($scope.intendedAudience[i].targAudId === data.intdAudience){
-	    	        		  $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
-	    	        	  }
-	    	          }
-			        }
+    	            }
+    	            for(var i=0;i<data.questionList.length;i++){
+    	            	//Loop through the Question and set the value
+    	            }    	            
+	    	        $scope.selectedAudience = data.intdAudience;
+	    
 		        },function(error){
-		          console.log('Error in pulling the offer data');
-		        })
+		        console.log('Error in pulling the offer data');
+		    });
 	    }
 	    
 	    $scope.reg_form = {};
@@ -64,123 +77,11 @@ angular
 	    $scope.selectedStateId = 0;
 	    
 	    /*********** Get all Lookup values *********/
-	    
-	    LookUpService.getAgeGroup().then(function(data){ 
-	      $scope.ageGroup = data;
-	    },function(error){
-	      $log.log(error); 
-	    });
-	    LookUpService.getEducations().then(function(data){
-	      $scope.educations = data;
-	    },function(error){
-	      $log.log(error);
-	    });
-	    LookUpService.getProfession().then(function(data){
-	      $scope.professions = data;
-	    },function(error){
-	      $log.log(error);
-	    });
-	    LookUpService.getStates().then(function(data){
-	        $scope.states = data;
-	      },function(error){
-	        $log.log(error);
-	      });
-	    LookUpService.getQuestions('R').then(function(data){
-	        $scope.questions = data;
-	      },function(error){
-	        $log.log(error);
-	      });
-	    LookUpService.getIntAudience().then(function(data){
-	        $scope.intendedAudience = data;
-	      },function(error){
-	        $log.log(error);
-	      });
-	    
-	    $scope.selectedIndustries = { "selected": [] };
-	    $scope.selectedStates = { "selected": [] };
-	    $scope.selectedAudience = { "selected": [] };
-	    $scope.lookingfor = { "selected": [] };
-	    $scope.industries = [];
-	    $http.get('utilservices/industries').success(function(response) {
-	      $scope.industries = response;
-	    });
+
 	    
 	    $scope.$watch('selectedIndustries',function(newval,oldval){
 	    	console.log('selected industriess',newval);    
 	    });
-	    
-	    $('.fileinput').bind('change.bs.fileinput', function(file){ 
-	        if(file && file.target.value!==undefined){
-	          var fileIndex = file.target.value.lastIndexOf('\\'),
-	          fileName = file.target.value.substring(file.target.value.lastIndexOf('\\')+1, file.target.value.length);
-	          if(fileIndex > -1){
-	            if(fileName!=$scope.actualImageName){
-	              if($scope.actualImageName!==""){
-	                $scope.actualImageName = fileName;
-	                //Now Delete & Create
-	                $scope.deleteFile();
-	                $timeout(function(){
-	                  $scope.createFile();
-	                },100);
-	              }
-	              else{
-	                $scope.actualImageName = fileName;
-	                $scope.createFile();
-	              }            
-	            }         
-	          }
-	          else{
-	              $scope.actualImageName = fileName;
-	          }
-
-	        }
-	        //$scope.actualImageName = file.target.value
-	        console.log('change.bs.fileinput was called');
-	        //$scope.createFile();
-	      });
-
-	      $('.fileinput').bind('clear.bs.fileinput', function(event,file){ 
-	        console.log('clear.bs.fileinput was called');
-	        $scope.deleteFile();
-	      });
-	      $('.fileinput').bind('reset.bs.fileinput', function(event,file){ 
-	        console.log('reset.bs.fileinput was called'); 
-	        //$scope.createFile(); 
-	      });
-	      $scope.deleteFile = function(){
-	        $http({
-	          url : 'services/delete/'+ $scope.userImageId +'/image',
-	          method: 'GET'
-	        }).then(function(data){
-	          $scope.ImageId = "";
-	          $scope.ImageUrl = "";
-	          $scope.imageUrl = "";
-	        },function(error){
-	          console.log('Error in delete');
-	        })
-	      };
-	      $scope.createFile = function() {
-	        var documentInput = angular.element("#documentInput");
-	        var file = documentInput[0].files[0];
-	          var formData = new FormData();
-	          formData.append('file', file);
-	          $http({
-	            url: '/services/upload/',
-	            method: 'POST',
-	            headers: { 'Content-Type' : undefined},
-	            transformRequest: function(data) { return data; },
-	            data: formData,
-	            cache : false
-	          }).then(function(response){
-	              $scope.imageUrl = response.data.url;
-	              $scope.ImageId = response.data.publicId;
-	              $scope.ImageUrl = response.data.url;
-	              return response.data;
-	            }, function(response){
-	                alert("Error loading file... Please try again.");
-	              return response.data;
-	            });
-	      };
 	      
 	      $scope.save =  function(){
     		var state=[];
@@ -191,13 +92,10 @@ angular
     		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
     			industries.push($scope.selectedIndustries.selected[i].industryId);
     		}
-    		var intAudience = [];
-    		for(var i=0;i<$scope.selectedAudience.selected.length;i++){
-    			intAudience.push($scope.selectedAudience.selected[i].targAudId);
-    		}
+    		
     		if($scope.id !== undefined){
     			$http({
-    	              url: '/services/request',
+    	              url: '',//'/services/request',
     	              method: 'PUT',
     	              isArray: false,
     	              data: { 
@@ -205,7 +103,7 @@ angular
     	            	  "title" : $scope.requestTitle,
     	                  "description" : $scope.requestDescription,
     	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : intAudience[0],
+    	                  "intdAudience" : $scope.selectedAudience,
     	                  "trgtLocation" : state,
     	                  "imgUrl" :$scope.imageUrl
     	                  },
@@ -217,13 +115,13 @@ angular
     		      
     		} else{
     			$http({
-    	              url: '/services/request',
+    	              url: '',//'/services/request',
     	              method: 'POST',
     	              isArray: false,
-    	              data: { "title" : $scope.offerTitle,
-    	                  "description" : $scope.offerDescription,
+    	              data: { "title" : $scope.requestTitle,
+    	                  "description" : $scope.requestDescription,
     	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : intAudience[0],
+    	                  "intdAudience" : $scope.selectedAudience,
     	                  "trgtLocation" : state,
     	                  "imgUrl" :$scope.imageUrl,
     	                  },
