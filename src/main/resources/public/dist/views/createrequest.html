@@ -40,14 +40,18 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Intended Audience</label>
 									<div class="col-sm-6">
-									 	<ui-select multiple ng-model="selectedAudience.selected"
+									 	<!--<ui-select ng-model="selectedAudience.selected"
 											close-on-select="false" style="width: 400px;"
 											title="Select intended audience"> 
 											<ui-select-match placeholder="Select or search intended audience">{{$select.selected[$index].targAudDispVal}}</ui-select-match>
 											<ui-select-choices repeat="iterator in intendedAudience">
 												<span ng-bind-html="iterator.targAudDispVal"></span> 
 											</ui-select-choices> 
-											</ui-select>
+											</ui-select>-->
+											<select class="form-control input-sm" ng-model="selectedAudience">
+					                		<option value="0">Select your Profession</option>
+					                		<option ng:repeat="iterator in intendedAudience" value="{{iterator.targAudId}}">{{iterator.targAudDispVal}}</option>
+					                	</select>
 					                </div>
 								</div>
 								<div class="form-group">
@@ -71,32 +75,32 @@
 							<div class="panel-heading-custom">
 								<h2>Questions</h2>
 							</div>
-							<div ng-repeat="question in questions">
-							<div>
-								<div >
+							<div ng-repeat="question in questions" class="col-sm-12 col-sm-offset-2">
+						
+								<div>
 									{{$index + 1}}. <span>{{question.questTxt}}</span>
 								</div>
 								<div class="col-sm-6" style="padding-top:10px;">
 				                    <div class="radio-inline">
 				                      <label>
-				                        <input type="radio" name="optionsRadios" value="Y" ng-model="questionAnswer">
+				                        <input type="radio" ng-attr-name="{{$index}}_type" value="Y" ng-model="question.type">
 				                        Yes
 				                      </label>
 				                    </div>
 				                    <div class="radio-inline">
 				                      <label>
-				                        <input type="radio" name="optionsRadios" value="N" ng-model="questionAnswer">
+				                        <input type="radio" ng-attr-name="{{$index}}_type" value="N" ng-model="question.type">
 				                        No
 				                      </label>
 				                    </div>
 				                    <div class="radio-inline" ng-if="question.responseTyp === 'NOT_SURE'">
 				                      <label>
-				                        <input type="radio" name="optionsRadios"  value="NS" ng-model="questionAnswer">
+				                        <input type="radio" ng-attr-name="{{$index}}_type"  value="NS" ng-model="question.type">
 				                        Not Sure
 				                      </label>
 				                    </div>	
 					              </div>
-					           </div>  
+					            
 							</div>
 						</div>
 					</div>

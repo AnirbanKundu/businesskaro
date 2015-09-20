@@ -83,6 +83,7 @@
       bottom: -30px;
     }
 </style>
+<!--
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
@@ -90,6 +91,7 @@
 	</ol>
 	<h1>Search Page</h1>
 </div>
+-->
 <div class="container-fluid" ng-controller="SearchController">
 	<div class="row banner-header">    
         <div class="col-md-12" style="margin-top:55px;">
@@ -212,10 +214,11 @@
             </div>
         </div>
             
-            <div class="col-md-12" ng-if="result.entityType == 'OFFER'" panel-class="panel-warning">
+            <div class="col-md-12" ng-if="result.entityType == 'OFFER' || result.entityType == 'REQUEST'" panel-class="panel-warning">
                 <div class="ribbon-wrapper-green">
-                    <div class="ribbon-green">
-                        <span ng-if="result.data">Offer</span>
+                    <div class="ribbon-green">          
+                        <span ng-if="result.data && result.entityType==='OFFER'">Offer</span>
+                        <span ng-if="result.data && result.entityType==='REQUEST'">Request</span>
                         <span ng-if="!result.data">Loading...</span>
                     </div>
                 </div>
@@ -226,12 +229,16 @@
                             <div class="panel-loader-dots"></div>
                         </div>
                         -->
-                        <div>
+                        <!--<div>
                           {{ result.data | json }}
-                        </div>
-                        <img ng-src="{{result.data.imageUrl}}" class="img-offer" />
+                        </div>-->
 
-                        <span>Posted By:</span><span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
+                        <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" />
+                        <img ng-if="!result.data.imgUrl && result.entityType==='OFFER'" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png"/>
+
+                        <img ng-if="!result.data.imgUrl && result.entityType==='REQUEST'" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442656507/application_images/request.png"/>
+
+                        <div>Posted By:</div><div class="name">{{result.data.userName}}</div>
                         <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
                     </div>
                     <div class="widget-footer" ng-mouseenter="show = true" ng-mouseleave="show = false">
@@ -242,15 +249,15 @@
                                         <span class="">Title</span>
                                     </td>
                                     <td>
-                                        <span>This is a dummy offer. Meant for the agriculture indutry. </span>
+                                        <span>{{result.data.title}} </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Company Name</span>
+                                        <span>Description</span>
                                     </td>
                                     <td>
-                                        <span>Bian Fiancial</span>
+                                        <span>{{result.data.description}}</span>
                                         
                                     </td>
                                 </tr>
@@ -259,7 +266,7 @@
                                         <span>Target Industry</span>
                                     </td>
                                     <td>
-                                        <span>Agriculture, Finance</span>
+                                        <span>{{result.data.trgtIndustry | industryfilter}}   </span>
                                         
                                     </td>
                                 </tr>

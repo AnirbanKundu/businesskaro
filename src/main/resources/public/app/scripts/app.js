@@ -11,7 +11,18 @@ angular
         templateUrl: 'views/index.html'
       })
       .when('/entitydetail/:type/:entityId',{
-        templateUrl: 'views/entitydetail.html'
+        templateUrl: 'views/entitydetail.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
       })
       .when('/search/:type/:keywords',{
         templateUrl: 'views/search.html'

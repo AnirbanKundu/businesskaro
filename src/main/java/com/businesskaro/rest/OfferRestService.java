@@ -57,8 +57,14 @@ public class OfferRestService extends BKRestService{
 	
 	@RequestMapping(value="/services/offer/detail/{offerId}" , method = RequestMethod.GET)
 	public OfferRequest getOfferDetails(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
-			@RequestHeader("CLIENT_ID") String clientId){
-		return service.getDetails(offerId);
+			@RequestHeader("CLIENT_ID") String clientId){		
+		try{
+			validateSecureToken(clientId, secureToken);
+			return service.getDetails(offerId);
+		} catch(Exception e){
+			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
+		}
+        
 	}
 	
 	@RequestMapping(value="/services/offer/{offerId}" , method = RequestMethod.DELETE)

@@ -11,8 +11,8 @@
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
-		<li>{{entityType}}</li>
-		<li class="active">User Profile</li>
+		<li><a href="#/search/{{searchType}}/{{keywords}}">Search</a></li>
+		<li class="active">{{entityType}} Detail</li>
 	</ol>
 </div>
 <div class="container-fluid" >
@@ -32,41 +32,38 @@
 		</div>
 		<div class="col-md-9" ng-if="entityType!='GOIPolicy'">
 			<div class="col-sm-4">
-				<div class="panel panel-default panel-profile" ng-if="entityType=='User'">
+				<div class="panel panel-default panel-profile" ng-if="entityType=='USER'">
 					<div class="panel-body user-profile">
 						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
 
 						<div class="user-detail">
-							<h2 class="user-name">James Black</h2>
+							<h2 class="user-name">{{entityResult.summary.firstName}}&nbsp;{{entityResult.summary.lastName}}</h2>
 							<h6 class="user-info">About</h6>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur ipsam consectetur sint. Nobis facere illo iste quaerat sapiente doloribus deserunt et nam obcaecati recusandae possimus aperiam similique.</p>
+							<p>{{entityResult.summary.aboutMe}}</p>
 							<div class="table-responsive">
 								<h6 class="user-info">Details</h6>
 								<table class="table table-condensed m0">
 									<tbody>
 										<tr>
 											<td style="border-top: 0">Web</td>
-											<td style="border-top: 0"><a href="#">www.johndoe.com</a></td>
+											<td style="border-top: 0"><a href="#">{{entityResult.summary.companyUrl}}</a></td>
 										</tr>
 										<tr>
 											<td>Email</td>
-											<td><a href="">doe@lime.com</a></td>
+											<td><a href="">TBD</a></td>
 										</tr>
-										<tr>
-											<td>Phone</td>
-											<td>(123)-342-5412</td>
-										</tr>
+										
 										<tr>
 											<td>Education</td>
-											<td>Computer Engineer</td>
+											<td>{{entityResult.details.educatonId}}</td>
 										</tr>
 										<tr>
 											<td>Profession</td>
-											<td>Designer</td>
+											<td>{{entityResult.details.professionalId}}</td>
 										</tr>
 										<tr>
 											<td>Status</td>
-											<td>Provider and Entrepreneur</td>
+											<td>{{entityResult.summary.userType}}</td>
 										</tr>
 										<tr>
 											<td>Social</td>
@@ -87,40 +84,37 @@
 					</div>
 	        	</div>
 	        	<!-- End User -->
-	        	<div class="panel panel-default panel-profile" ng-if="entityType=='Offer' || entityType=='Request'">
+	        	<div class="panel panel-default panel-profile" ng-if="entityType=='OFFER' || entityType=='REQUEST'">
 					<div class="panel-body user-profile">
-						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
+						<img ng-if="entityResult && entityResult.imgUrl!=null"src="{{entityResult.imgUrl}}" alt="" class="img-responsive user-avatar">
+						<img ng-if="entityResult.imgUrl==null"src="http://res.cloudinary.com/difyxhuza/image/upload/v1442655518/application_images/offer.png" alt="" class="img-responsive user-avatar">
 
 						<div class="user-detail">
 							<h3 class="user-info">{{entityType}} Title</h3>
-							<p>This is a dummy offer title. </p>
+							<p>{{entityResult.title}}</p>
 							<div class="table-responsive">
-								<h6 class="user-info">User Details</h6>
+								<h6 class="user-info">User details</h6>
 								<table class="table table-condensed m0">
 									<tbody>
 										<tr>
-											<td style="border-top: 0">Web</td>
-											<td style="border-top: 0"><a href="#">www.johndoe.com</a></td>
+											<td style="border-top: 0">Submitted by</td>
+											<td style="border-top: 0"><a href="#">{{userDetail.userName}}</a></td>
+										</tr>
+										<tr>
+											<td style="border-top: 0">Company</td>
+											<td style="border-top: 0"><a href="#">{{userDetail.companyUrl}}</a></td>
 										</tr>
 										<tr>
 											<td>Email</td>
-											<td><a href="">doe@lime.com</a></td>
+											<td><a href="">TBD</a></td>
 										</tr>
 										<tr>
-											<td>Phone</td>
-											<td>(123)-342-5412</td>
+											<td>Location</td>
+											<td>{{userDetail.cityName}},&nbsp;{{userDetail.stateName}}</td>
 										</tr>
 										<tr>
-											<td>Education</td>
-											<td>Computer Engineer</td>
-										</tr>
-										<tr>
-											<td>Profession</td>
-											<td>Designer</td>
-										</tr>
-										<tr>
-											<td>Status</td>
-											<td>Provider and Entrepreneur</td>
+											<td>Industries Known</td>
+											<td>{{userDetail.industrys | industryfilter}}</td>
 										</tr>
 									</tbody>
 								</table>
@@ -139,20 +133,20 @@
 								<div class="col-md-12 mb">
 									<div class="row">
 										<div class="col-xs-12">
-											<h5>Description</h5>
-											<span>Last Seen 10 minutes ago</span>
+											<h5>{{entityType}} Description</h5>
+											<span>{{entityResult.description}}</span>
 										</div>
 										<div class="col-xs-12">
-											<h5>Work Experience</h5>
-											<span>10-15 years</span>
+											<h5>Industry Details</h5>
+											<span>{{entityResult.trgtIndustry | industryfilter}}</span>
 										</div>
 										<div class="col-xs-12">
-											<h5>Related Industry</h5>
-											<span>Agriculture, Finance, Auditing</span>
+											<h5>Intended Audience</h5>
+											<span>TBD</span>
 										</div>
 										<div class="col-xs-12">
-											<h5>Looking for</h5>
-											<span>Agriculture, Finance, Auditing</span>
+											<h5>Target Location</h5>
+											<span>{{entityResult.trgtLocation}}</span>
 										</div>
 										<div class="col-xs-12">
 											<h5>Specific Need</h5>
@@ -164,7 +158,7 @@
 								</div>
 							</div>
 						</tab>
-						<tab heading="Offers posted by User">
+						<tab heading="Offers posted by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
 								<li class="timeline-danger">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
@@ -182,7 +176,7 @@
 							</ul>
 						</tab>
 						
-						<tab heading="Requests Raised by User">
+						<tab heading="Requests Raised by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
 								<li class="timeline-danger">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
@@ -229,7 +223,7 @@
 			</div>
 			<div class="panel">
 				<div class="col-md-12">
-					Social
+					<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button"></div>
 				</div>
 			</div>
 		</div>

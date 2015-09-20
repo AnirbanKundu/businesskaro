@@ -1,13 +1,13 @@
 angular
   .module('theme.core.search_controller', [])
-  .controller('SearchController', ['$scope', '$http', '$route', '$state', '$log', '$timeout', '$location', 'EntityService', 'LookUpService', function($scope, $http, $route, $state, $log, $timeout, $location, EntityService, LookUpService) {
+  .controller('SearchController', ['$rootScope','$scope', '$http', '$route', '$state', '$log', '$timeout', '$location', 'EntityService', 'LookUpService', function($rootScope, $scope, $http, $route, $state, $log, $timeout, $location, EntityService, LookUpService) {
     'use strict';
     var pageSize = 10,count=0;   
     $scope.show = false; 
     $scope.industries = [];
     $scope.selectedIndustries = { "selected": [] };
-    $scope.searchType = $route.current.params.type || 'all';
-    $scope.keywords = $route.current.params.keywords || 'all';
+    $rootScope.searchType = $scope.searchType = $route.current.params.type || 'all';
+    $rootScope.keywords = $scope.keywords = $route.current.params.keywords || 'all';
     $scope.industry = $scope.keywords.split(',')[0];
     $scope.state = $scope.keywords.split(',')[1];
 
@@ -72,7 +72,7 @@ angular
 
     function sliceArrayAndRemove(arr){
       var temp =[], mainArr = angular.fromJson(angular.toJson(arr));
-      for(var i=0;i<4;i++){ //=> DO NOT MAKE MORE THAN 4 parallel calls. 
+      for(var i=0;i<20;i++){ //=> DO NOT MAKE MORE THAN 4 parallel calls. 
         if(mainArr && mainArr.length>0){
           temp.push(mainArr.shift());
         }        
@@ -121,7 +121,8 @@ angular
     $http({
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
         method: 'GET'
-      }).then(function(response){        
+      }).then(function(response){    
+        $    
         $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
         $scope.searchResults = $scope.returnPagedData($scope.searchResults,0);
         $timeout(function(){
