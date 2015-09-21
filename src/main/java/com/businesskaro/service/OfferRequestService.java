@@ -107,8 +107,9 @@ public class OfferRequestService {
 	}
 
 	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {
+		UserPersonalInfoSummary userSummary = userInfoSummary.findOne(userId);
 		
-		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumryAndReqOffrTyp(userInfoSummary.findOne(userId),offer.name());
+		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumryAndReqOffrTyp(userSummary,offer.name());
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){
@@ -150,6 +151,7 @@ public class OfferRequestService {
 		result.imgUrl = fromTable.getImageUrl();
 		if(fromTable.getTblUserPersInfoSumry() != null){
 			result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+			result.userName = fromTable.getTblUserPersInfoSumry().getFstName() +" "+fromTable.getTblUserPersInfoSumry().getLstName();
 		}
 		result.createDate = fromTable.getCreateDt();
 		result.updateDate = fromTable.getLastUpd();
@@ -179,6 +181,7 @@ public class OfferRequestService {
 		
 		
 		result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+		
 		result.userName = fromTable.getTblUserPersInfoSumry().getFstName() +" "+fromTable.getTblUserPersInfoSumry().getLstName();
 		result.createDate = fromTable.getCreateDt();
 		result.updateDate = fromTable.getLastUpd();
