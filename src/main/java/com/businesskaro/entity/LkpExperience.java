@@ -2,6 +2,9 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -29,6 +32,7 @@ public class LkpExperience implements Serializable {
 	private int experMinVal;
 
 	//bi-directional many-to-one association to TblUserPersInfoDetail
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpExperience")
 	private List<UserPersonalInfoDetails> tblUserPersInfoDetails;
 

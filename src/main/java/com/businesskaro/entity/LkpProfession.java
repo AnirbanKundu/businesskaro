@@ -2,6 +2,9 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -23,6 +26,7 @@ public class LkpProfession implements Serializable {
 	private String profsionName;
 
 	//bi-directional many-to-one association to TblUserPersInfoDetail
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpProfession")
 	private List<UserPersonalInfoDetails> tblUserPersInfoDetails;
 

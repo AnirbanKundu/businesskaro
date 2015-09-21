@@ -3,6 +3,8 @@ package com.businesskaro.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -30,10 +32,12 @@ public class LkpQuestion implements Serializable {
 	private String responseTyp;
 
 	//bi-directional many-to-one association to BrgUsrReqOfferQuestion
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpQuestion")
 	private List<BrgUsrReqOfferQuestion> brgUsrReqOfferQuestions;
 
 	//bi-directional many-to-one association to BrgUsrRequiremnt
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpQuestion")
 	private List<BrgUsrRequiremnt> brgUsrRequiremnts;
 

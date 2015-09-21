@@ -2,6 +2,9 @@ package com.businesskaro.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 
@@ -26,10 +29,12 @@ public class LkpSkill implements Serializable {
 	private String skillName;
 
 	//bi-directional many-to-one association to BrgUsrLookingFor
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpSkill")
 	private List<BrgUsrLookingFor> brgUsrLookingFors;
 
 	//bi-directional many-to-one association to BrgUsrSkill
+	@JsonIgnore
 	@OneToMany(mappedBy="lkpSkill")
 	private List<UserSkill> brgUsrSkills;
 
