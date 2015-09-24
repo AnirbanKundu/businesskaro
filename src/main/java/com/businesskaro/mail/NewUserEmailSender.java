@@ -10,11 +10,13 @@ public class NewUserEmailSender extends AbstractEmailNotification{
 	
 	private String toAddress;
 	private String subject;
+	private String fromAddress;
 	private Map<String, String> emailTokens;
 
 	public void send(String toEmailAddress) throws Exception {
 		this.toAddress = toEmailAddress;
 		this.subject = "Welcome to Business Karo";
+		this.fromAddress = "admin@businesskaro.com";
 		loadEmailTokens();
 		sendEmail("CREATE_USER_TEMPLATE.txt");
 	}
@@ -38,6 +40,11 @@ public class NewUserEmailSender extends AbstractEmailNotification{
 	@Override
 	public String getSubject(){
 		return subject;
+	}
+	
+	@Override
+	public String getFromAddress() {
+		return fromAddress;
 	}
 
 }

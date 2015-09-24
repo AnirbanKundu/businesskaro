@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<html xmlns=\"http://www.w3.org/1999/xhtml\">
+<body style=\"margin:0;padding:0;\">
+<div>
+	<p>
+		Dear <#to_Name>,
+           <#from_Name>, wanted to connect with you regarding <a href="http://<server>/<#entity_type>/<#entity_id>"><#entity_type></a>.
+           Message <fromUser>: 
+           <#message>
+
+           Sincerely,
+           BusinessKaro Team	
+	</p>
+<div>
+
+</body>
+</html>

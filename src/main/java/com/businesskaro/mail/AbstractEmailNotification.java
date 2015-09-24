@@ -36,6 +36,7 @@ public abstract class AbstractEmailNotification implements ResourceLoaderAware {
 	public abstract Map<String, String> getEmailTokens();
 
 	public abstract String getToAddress();
+	public abstract String getFromAddress();
 
 	public abstract String getSubject();
 
@@ -47,7 +48,7 @@ public abstract class AbstractEmailNotification implements ResourceLoaderAware {
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		try {
 
-			msg.setFrom(new InternetAddress("admin@businesskaro.com", "Admin BusinessKaro"));
+			msg.setFrom(new InternetAddress(getFromAddress()));
 
 			msg.addRecipient(RecipientType.TO, new InternetAddress(toAddress));
 			msg.setSubject(getSubject());
