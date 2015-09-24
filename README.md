@@ -5,9 +5,19 @@ version 0.11.1.
 
 ## Build & development
 
-Run `grunt` for building and `grunt serve` for preview.
+`npm install`
+`bower install`
+###go to pom.xml file and comment out the following [but do not check in this part]
+<!-- 		<resources> -->
+<!-- 			<resource> -->
+<!-- 				<directory>src/main/resources</directory> -->
+<!-- 				<excludes> -->
+<!-- 					<exclude>**/${uifoldername}/</exclude> -->
+<!-- 				</excludes> -->
+<!-- 			</resource> -->
+<!-- 		</resources> -->
 
-## Testing
+Assuming JAVA and Maven is installed already, 
 
-Running `grunt test` will run the unit tests with karma.
-# dummytest
+`mvn clean install`
+`java -jar target/businesskaro-1.jar`
