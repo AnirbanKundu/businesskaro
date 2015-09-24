@@ -113,7 +113,7 @@ public class OfferRequestService {
 		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
 		for(TblUsrReqOffer offerReq : usrObjs ){
-			result.add(mapper(offerReq));
+			result.add(mapperForList(offerReq));
 		}
 		return result;
 	}
@@ -121,6 +121,21 @@ public class OfferRequestService {
 	public void delete(Integer offerId) {
 		reqOfferRepo.delete(offerId);
 		
+	}
+	
+	private OfferRequest mapperForList(TblUsrReqOffer fromTable){
+		OfferRequest result = new OfferRequest();
+		result.id = fromTable.getReqOffrId();
+		result.description = fromTable.getReqOffrDesc();
+		result.title = fromTable.getReqOffrTitle();
+		result.intdAudience = fromTable.getTargAudienceId();
+		result.createDate = fromTable.getCreateDt();
+		result.updateDate = fromTable.getLastUpd();
+		if(fromTable.getTblUserPersInfoSumry() != null){
+			result.userId = fromTable.getTblUserPersInfoSumry().getUsrId();
+			result.userName = fromTable.getTblUserPersInfoSumry().getFstName() +" "+fromTable.getTblUserPersInfoSumry().getLstName();
+		}
+		return result;
 	}
 	
 	private OfferRequest mapper(TblUsrReqOffer fromTable){
