@@ -57,6 +57,7 @@ public class UserSecurityRestService {
 				LoginResponse response = new LoginResponse();
 				response.secureToken =  SecureTokenUtil.generateSecurityToken(newGuid, userPswd.getUsrId());
 				response.clientId = newGuid;
+				response.profileCreated = userPswd.getProfileCreated();
 				return response;
 			}  catch (Exception e) {
 				throw new BKException("Unknown Error while generating secure token" , "000" , BKException.Type.INTERNAL_ERRROR);

@@ -31,6 +31,9 @@ public class UserRestService extends BKRestService {
 	@Autowired
 	NewUserEmailSender email;
 
+	/*****
+	 * REST END POINT TO CREATE NEW USER
+	 *********/
 	@RequestMapping(value="/services/user" , method = RequestMethod.POST)
 	public void createUser(@RequestBody BKUser user){
 		logger.info("Create User for " + user);

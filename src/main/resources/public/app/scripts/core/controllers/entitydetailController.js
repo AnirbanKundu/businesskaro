@@ -18,7 +18,22 @@ angular
     	//Get Related Entity details
     	if($scope.entityType!='GOIPOLICY'){
     		if($scope.entityType=='USER'){
-    			//GET ALL OFFERS/REQUESTS POSTED BY USER
+    			$http({
+		          url : '/services/offer/user/'+ $scope.entityResult.summary.userId,
+		          method: 'GET'
+		        }).then(function(response){
+		        	$scope.offers = response.data;
+		        },function(error){
+
+		        });
+		        $http({
+		          url : '/services/request/user/'+ $scope.entityResult.summary.userId,
+		          method: 'GET'
+		        }).then(function(response){
+		        	$scope.requests = response.data;
+		        },function(error){
+
+		        });
     		}
     		else{
     			//GET USER Details

@@ -1,6 +1,7 @@
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
+		<li><a href="#/myoffers">My Offers</a>
 		<li>Create Offer</li>
 	</ol>
 </div>
@@ -43,6 +44,9 @@
 							<hr />
 						</div>
 						<div class="col-md-12">
+							<div class="panel-loading" ng-if="waiting">
+		                        <div class="panel-loader-circular"></div>
+		                    </div>
 							<form action="" name="form.reg_form"
 								class="form-horizontal row-border">
 								<div class="form-group">

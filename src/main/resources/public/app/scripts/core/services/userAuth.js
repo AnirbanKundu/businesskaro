@@ -14,6 +14,7 @@ angular.module('theme.core.services')
         clientId: response.data.clientId
       };
       $window.localStorage["bk_userInfo"] = JSON.stringify(userInfo);
+        userInfo.profileCreated = response.data.profileCreated;
         deferred.resolve(userInfo);
     }, function(error) {
       deferred.reject(error);
@@ -42,6 +43,7 @@ angular.module('theme.core.services')
 
   var _getToken = function(){
     if($window && $window.localStorage && $window.localStorage["bk_userInfo"]){
+
       return JSON.parse($window.localStorage["bk_userInfo"]);
     }
   } ;

@@ -25,6 +25,7 @@ angular
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.signInUser({email:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
+        //$rootScope.profileCreated = data.profileCreated;
         $scope.$emit('loginsuccess', data);
         $scope.serverMessage = '';
         if(apphistory[0]==='/login'){
@@ -67,7 +68,7 @@ angular
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-          UserAuthentication.signInUser({userName:$scope.email, password:$scope.password}).then(function(data){
+          UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
               $scope.$emit('loginsuccess', data);
               $location.path('/userprofile/firstLogin'); 
             },function(error){

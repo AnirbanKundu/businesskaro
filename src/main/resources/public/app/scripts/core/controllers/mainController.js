@@ -182,6 +182,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       $scope.isLoggedIn = true;
     };
     $rootScope.$on('loginsuccess',function(event,data){
+      $rootScope.profileCreated = data.profileCreated;
       $scope.isLoggedIn = true;
     });
 

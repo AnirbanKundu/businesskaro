@@ -9,6 +9,10 @@ angular
       $scope.firstLogin = message;
       $scope.alert = { type: 'success', msg: '<strong>Welcome to BusinessKaro</strong>. Please enter your personal details.' };
     }
+    else if(message && message ==='filldetails'){
+      $scope.firstLogin = message;
+      $scope.alert = { type: 'warning', msg: 'You need to enter your profile information to connect.' };
+    }
     $scope.checking = false;
     $scope.checked = false;
     $scope.user = {};
@@ -88,6 +92,7 @@ angular
         if(data.data.newUser){
           $scope.newUser = true;
           $rootScope.newUser=true;
+          $rootScope.profileCreated=0;
         }
         //$scope.selectedAgeId=0;
         //$scope.selectedEducationId=0;
@@ -118,6 +123,9 @@ angular
       }
       */
     },function(error){
+      if(error.type==='ENTITY_NOT_FOUND'){
+        $rootScope.profileCreated=0;
+      }
       console.log('Error happened');
     });
     
@@ -240,6 +248,7 @@ angular
       $scope.waiting = true;
       UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
         $rootScope.newUser=false;
+        $rootScope.profileCreated=1;
         //CALL THE TAGENTRY
         var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
         $http({

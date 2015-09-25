@@ -160,16 +160,15 @@
 						</tab>
 						<tab heading="Offers posted by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
-								<li class="timeline-danger">
+								<li class="timeline-danger" ng-repeat="o in offers">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
 									<div class="timeline-body">
-										<div class="timeline-header">
-											<span class="author">Posted by <a href="#">David Tennant</a></span>
-											<span class="date">Monday, November 21, 2013</span>
+										<div class="timeline-header">											
+											<span class="date">{{o.updateDate}}</span>
 										</div>
 										<div class="timeline-content">
-											<h3>Consectetur Adipisicing Elit</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, officiis, molestiae, deserunt asperiores architecto ut vel repudiandae dolore inventore nesciunt necessitatibus doloribus ratione facere consectetur suscipit!</p>
+											<h3>{{o.title}}</h3>
+											<p>{{o.description}}</p>
 										</div>
 									</div>
 								</li>
@@ -178,16 +177,15 @@
 						
 						<tab heading="Requests Raised by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
-								<li class="timeline-danger">
+								<li class="timeline-danger" ng-repeat="r in requests">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
 									<div class="timeline-body">
 										<div class="timeline-header">
-											<span class="author">Posted by <a href="#">David Tennant</a></span>
-											<span class="date">Monday, November 21, 2013</span>
+											<span class="date">{{r.updateDate}}</span>
 										</div>
 										<div class="timeline-content">
-											<h3>Consectetur Adipisicing Elit</h3>
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia, officiis, molestiae, deserunt asperiores architecto ut vel repudiandae dolore inventore nesciunt necessitatibus doloribus ratione facere consectetur suscipit!</p>
+											<h3>{{r.title}}</h3>
+											<p>{{r.description}}</p>
 										</div>
 									</div>
 								</li>

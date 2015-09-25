@@ -5,6 +5,7 @@ angular
 	    
 	    $scope.id = $route.current.params.id;
 	    console.log("Request COntroller: "+$scope.id);
+	    $scope.waiting = true;
 
 	    LookUpService.getStates().then(function(data){
 	        $scope.states = data;
@@ -59,10 +60,14 @@ angular
     	            	//Loop through the Question and set the value
     	            }    	            
 	    	        $scope.selectedAudience = data.intdAudience;
+	    	        $scope.waiting = false;
 	    
 		        },function(error){
 		        console.log('Error in pulling the offer data');
 		    });
+	    }
+	    else{
+	    	$scope.waiting = false;
 	    }
 	    
 	    $scope.reg_form = {};
@@ -95,6 +100,7 @@ angular
     			industries.push($scope.selectedIndustries.selected[i].industryId);
     			tags.push($scope.selectedIndustries.selected[i].industryName);
     		}
+    		$scope.waiting = true;
     		
     		if($scope.id !== undefined){
     			$http({
@@ -112,6 +118,7 @@ angular
     	                  },
     	              cache : false}).then(function(response){
     	            	  //$window.location.href = '/#/myrequests';
+    	            	  $scope.waiting = false;
     	            	  var tagEntity = { "entityId" : $scope.id, "entityType" : "REQUEST", "tags" : tags }
 	                      $http({
 	                        url: 'services/tag',
@@ -140,6 +147,7 @@ angular
     	                  },
     	              cache : false}).then(function(response){
     	            	  //$window.location.href = '/#/myrequests';
+    	            	  $scope.waiting = false;
     	            	  var tagEntity = { "entityId" : response.data, "entityType" : "REQUEST", "tags" : tags }
 	                      $http({
 	                        url: 'services/tag',

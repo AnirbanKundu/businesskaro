@@ -7,11 +7,14 @@ import java.util.Date;
 
 /**
  * The persistent class for the tbl_user_password database table.
- * 
+ *     @NamedQuery(name="Country.findByName",query="SELECT c FROM Country c WHERE c.name = :name"),
  */
 @Entity
 @Table(name="tbl_user_password")
-@NamedQuery(name="TblUserPassword.findAll", query="SELECT t FROM TblUserPassword t")
+
+@NamedQueries({
+	@NamedQuery(name="TblUserPassword.findAll", query="SELECT t FROM TblUserPassword t")
+}) 
 public class TblUserPassword implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -38,6 +41,17 @@ public class TblUserPassword implements Serializable {
 
 	@Column(name="USR_SALT")
 	private String usrSalt;
+	
+	@Column(name="PROFILE_CREATED")
+	private int profileCreated;
+
+	public int getProfileCreated() {
+		return profileCreated;
+	}
+
+	public void setProfileCreated(int profileCreated) {
+		this.profileCreated = profileCreated;
+	}
 
 	public TblUserPassword() {
 	}

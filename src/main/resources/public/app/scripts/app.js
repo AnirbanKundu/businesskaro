@@ -13,12 +13,15 @@ angular
       .when('/entitydetail/:type/:entityId',{
         templateUrl: 'views/entitydetail.html',
         resolve: {
-          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+          auth: ['$q', 'UserAuthentication', '$location', '$rootScope', function($q, authenticationSvc, $location, $rootScope) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
+              if($rootScope.profileCreated ===0){
+                $location.url('/userprofile/filldetails')
+                return false;
+              }
               return $q.when(userInfo);
             } else {
-              console.log('current location', $location);
               return $q.reject({ authenticated: false , visitedroute: $location.url() });
             }
           }]
@@ -34,9 +37,9 @@ angular
           auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
+
               return $q.when(userInfo);
             } else {
-              console.log('current location', $location);
               return $q.reject({ authenticated: false , visitedroute: $location.url() });
             }
           }]

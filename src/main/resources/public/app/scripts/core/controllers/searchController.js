@@ -121,15 +121,14 @@ angular
     $http({
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
         method: 'GET'
-      }).then(function(response){    
-        $    
+      }).then(function(response){   
+           
         $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
         $scope.searchResults = $scope.returnPagedData($scope.searchResults,0);
         $timeout(function(){
           var arrToMakeCalls =  sliceArrayAndRemove($scope.searchResults);
           makeAJAXCall(arrToMakeCalls);
-        },2000);
-        
+        },50);        
       },function(error){
         console.log('Error in delete');
     });

@@ -5,9 +5,9 @@ angular
     
     $scope.id= $route.current.params.id;
     console.log("Offer COntroller: "+$scope.id);
+    $scope.waiting = true;
     
-    if($scope.id !== undefined){
-    	
+    if($scope.id !== undefined){    	
     	$timeout(function(){
     		$http({
     	          url : '/services/request/detail/'+ $scope.id,
@@ -48,14 +48,16 @@ angular
     	        		  $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
     	        	  }
     	          }
+                $scope.waiting = false;
     	          
     	          
     	        },function(error){
     	          console.log('Error in pulling the offer data');
     	        })
-    	},1000);
-    	
-    	
+    	},1000);    	
+    }
+    else{
+      $scope.waiting = false;
     }
     
     $scope.reg_form = {};
@@ -176,6 +178,7 @@ angular
       $scope.save =  function(){
     		var state=[];
         var tags = [];
+        $scope.waiting = true;
     		for(var i=0;i<$scope.selectedStates.selected.length;i++){
     			state.push($scope.selectedStates.selected[i].stateId);
           tags.push($scope.states[i].stateName);
@@ -206,6 +209,7 @@ angular
     	                  },
     	              cache : false}).then(function(response){
     	            	  //$window.location.href = '/#/myoffers';
+                      $scope.waiting = false;
                       var tagEntity = { "entityId" : $scope.id, "entityType" : "OFFER", "tags" : tags }
                       $http({
                         url: 'services/tag',
@@ -234,6 +238,7 @@ angular
     	                  
     	                  },
     	              cache : false}).then(function(response){
+                      $scope.waiting = false;
                       var tagEntity = { "entityId" : response.data, "entityType" : "OFFER", "tags" : tags }
                       $http({
                         url: 'services/tag',

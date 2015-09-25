@@ -19,6 +19,7 @@ import com.businesskaro.entity.LkpIndustry;
 import com.businesskaro.entity.LkpProfession;
 import com.businesskaro.entity.LkpSkill;
 import com.businesskaro.entity.LkpState;
+import com.businesskaro.entity.TblUserPasswordProfile;
 import com.businesskaro.entity.UserPersonalInfo;
 import com.businesskaro.entity.UserPersonalInfoDetails;
 import com.businesskaro.entity.UserPersonalInfoSummary;
@@ -31,6 +32,7 @@ import com.businesskaro.entity.repo.ExperienceRepo;
 import com.businesskaro.entity.repo.ProfessionRepo;
 import com.businesskaro.entity.repo.SkillRepo;
 import com.businesskaro.entity.repo.StateRepo;
+import com.businesskaro.entity.repo.TblUserPasswordProfileRepo;
 import com.businesskaro.entity.repo.UserInductryRepo;
 import com.businesskaro.entity.repo.UserPersonalInfoSummaryRepo;
 import com.businesskaro.entity.repo.UserProfileInfoDetailsRepo;
@@ -48,6 +50,10 @@ public class UserPersonalInfoService {
 
 	@Autowired
 	UserProfileInfoDetailsRepo detailsRepo;
+	
+	@Autowired
+	TblUserPasswordProfileRepo tblUserPasswordProfileRepo;
+	
 
 	@Autowired
 	AgeGroupRepo ageGroupRepo;
@@ -87,6 +93,11 @@ public class UserPersonalInfoService {
 				bkUserProfile.details, isCreate);
 		UserPersonalInfoSummary personalInfoEntiySummary = createSummary(
 				bkUserProfile.summary, isCreate);
+		if(isCreate==true){
+			//EntityManagerFactory factory = Persistence.createEntityManagerFactory("TblUserPassword");
+			//EntityManager em = factory.createEntityManager();
+			
+		}
 
 		return getUserPersonalInfo(personalInfoEntiyDetails.getUsrId());
 	}
@@ -108,7 +119,16 @@ public class UserPersonalInfoService {
 		summaryEntiy.setLstName(summary.lastName);
 		summaryEntiy.setStateName(summary.stateName);
 		summaryEntiy = summaryRepo.save(summaryEntiy);
-
+		
+		if(isCreate==true){
+			System.out.println("GetUsrId : "+ summaryEntiy.getUsrId());
+			TblUserPasswordProfile arg = new TblUserPasswordProfile();
+			arg.setUsrId(summaryEntiy.getUsrId());
+			arg.setProfileCreated(1);
+			tblUserPasswordProfileRepo.save(arg);
+			System.out.println("SUCCESS in  UPDATING TBL PWD ");
+		}		
+		
 		if (summary.userSkills != null)
 			for (Integer skillId : summary.userSkills) {
 				LkpSkill skillEntity = skillRepo.findOne(skillId);
