@@ -145,6 +145,12 @@ angular.module('theme.core.services')
       return serached.industryName;
     }
   };
+  var _getStateName = function(stateId){
+    if(states){
+      var serached =  _.findWhere(states, {stateId:stateId});
+      return serached.stateName;
+    }
+  };
   return {
     getAgeGroup: _getAgeGroup,
     getEducations : _getEducations,
@@ -153,6 +159,7 @@ angular.module('theme.core.services')
     getStates : _getState,
     getIntAudience: _getIntAudience,
     getIndustries : _getIndustries,
-    getIndustryName : _getIndustryName
+    getIndustryName : _getIndustryName,
+    getStateName : _getStateName
   };
 }]);

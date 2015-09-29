@@ -2,12 +2,12 @@ package com.businesskaro.rest;
 
 import java.util.Date;
 import java.util.List;
-
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,7 +25,7 @@ import com.businesskaro.security.EncryptionUtil;
 import com.businesskaro.security.SecureTokenUtil;
 
 @RestController
-public class UserSecurityRestService {
+public class UserSecurityRestService extends BKRestService {
 
 	Logger logger = Logger.getLogger(UserSecurityRestService.class.getName());
 		
@@ -68,9 +68,11 @@ public class UserSecurityRestService {
 		
 	}
 	@RequestMapping(value="/services/changePassword" , method = RequestMethod.POST)
-	public LoginResponse changePassword(@RequestBody LoginRequest loginRequest ){
+	public LoginResponse changePassword(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId,@RequestBody LoginRequest loginRequest ){
 	
 		logger.info("Security Request " + loginRequest.email);
+		validateSecureToken(clientId, secureToken);
 		
 		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){

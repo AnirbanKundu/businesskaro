@@ -70,7 +70,7 @@ angular
             }
           }
         }
-
+        /*
         for(var i=0;i<$scope.user.summary.lookinfForSkill.length;i++){
           for(var j=0;j<$scope.industries.length;j++){
             if($scope.user.summary.lookinfForSkill[i] == $scope.industries[j].industryId){
@@ -79,6 +79,7 @@ angular
             }
           }
         }
+        */
         /*
         for(var i=0;i<$scope.states.length;i++){
           if($scope.states[i].stateName == $scope.state){

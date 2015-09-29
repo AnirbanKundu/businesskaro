@@ -145,4 +145,16 @@ angular
       return industryNames;
     }
   } 
+}])
+.filter('statefilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
+  return function(array){ 
+    var stateNames = ''
+    if(array){
+      for(var i=0;i<array.length;i++){
+        stateNames += LookUpService.getStateName(array[i]) + ','
+      }
+      stateNames = stateNames.substring(0, stateNames.lastIndexOf(','));
+      return stateNames;
+    }
+  } 
 }]);

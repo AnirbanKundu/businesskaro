@@ -280,6 +280,7 @@ public class UserPersonalInfoService {
 			summary.industrys = toSet(indId);
 		}
 
+		/*
 		List<BrgUsrLookingFor> usrLookingForList = summryEntity
 				.getBrgUsrLookingFors();
 		if (usrLookingForList != null) {
@@ -290,6 +291,7 @@ public class UserPersonalInfoService {
 			}
 			summary.lookinfForSkill = toSet(skillIds);
 		}
+		*/
 
 		return summary;
 	}
