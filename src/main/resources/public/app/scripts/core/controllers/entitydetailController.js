@@ -15,6 +15,7 @@ angular
     EntityService.getEntityDetailData({'entityType':$scope.entityType,'entityId':$scope.entityId}).then(function(data){
     	$scope.entityResult = data;
     	console.log('Data in entity detail:',$scope.entityResult);
+    	$scope.connectMessage='';
     	//Get Related Entity details
     	if($scope.entityType!='GOIPOLICY'){
     		if($scope.entityType=='USER'){
@@ -57,5 +58,23 @@ angular
         version    : 'v2.3' // or v2.0, v2.1, v2.0
       });
     },1000);
+
+    $scope.connect = function(connectMessage){
+    	$http({
+              url: '/services/communicate',
+              method: 'POST',
+              isArray: false,
+              data: { "toId" : $scope.entityResult.userId || $scope.entityResult.summary.userId,
+                  "message" : connectMessage,
+                  "entityType" : $scope.entityType,
+                  "entityId" : $scope.entityId
+                  },
+              cache : false
+        }).then(function(data){
+
+        },function(error){
+
+        });
+    }
 
   }]);

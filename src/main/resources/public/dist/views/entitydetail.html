@@ -200,12 +200,12 @@
 							<h5>Reach out directly:</h5>
 						</div>
 						<div class="col-md-12">
-							<textarea class="form-control" ng-model="user.summary.aboutMe"></textarea>
+							<textarea class="form-control" ng-model="connectMessage"></textarea>
 						</div>
 						<br/>
 						<div class="col-md-12" style="padding:20px;">
 							<div class="pull-right">
-								<button class="btn btn-primary btn-sm">Connect</button>
+								<button class="btn btn-primary btn-sm" ng-click="connect(connectMessage);">Connect</button>
 							</div>							
 							
 						</div>

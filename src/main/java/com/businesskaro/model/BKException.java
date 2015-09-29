@@ -12,7 +12,8 @@ public class BKException extends RuntimeException{
 		BUSSINESS_VALIDATION,
 		USER_AUTH_FAIL,
 		ENTITY_NOT_FOUND,
-		USER_ALREADY_EXIST
+		USER_ALREADY_EXIST,
+		EXTERNAL_ERRROR
 	};
 	
 	public Type errorType;

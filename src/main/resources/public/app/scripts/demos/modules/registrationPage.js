@@ -249,6 +249,7 @@ angular
       UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
         $rootScope.newUser=false;
         $rootScope.profileCreated=1;
+        $scope.firstLogin = null;
         //CALL THE TAGENTRY
         var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
         $http({
