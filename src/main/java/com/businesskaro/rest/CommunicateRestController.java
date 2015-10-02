@@ -11,8 +11,10 @@ import com.businesskaro.entity.TblUserPassword;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.mail.CommunicateMail;
 import com.businesskaro.model.BKException;
+import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.Communicate;
 import com.businesskaro.rest.dto.CommunicateRequest;
+import com.businesskaro.service.UserPersonalInfoService;
 
 @RestController
 public class CommunicateRestController extends BKRestService{
@@ -23,21 +25,26 @@ public class CommunicateRestController extends BKRestService{
 	@Autowired
 	TblUserPasswordRepo userDao;
 	
+	@Autowired
+	UserPersonalInfoService service;
+	
 	@RequestMapping(value="/services/communicate" , method = RequestMethod.POST)
 	public void sendMail(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody CommunicateRequest request){		
 		try{
 			Integer userId = validateSecureToken(clientId, secureToken);
-			TblUserPassword fromUser = userDao.findOne(userId);
-			TblUserPassword toUser = userDao.findOne(request.toId);			
+			TblUserPassword fromUserEmail = userDao.findOne(userId);
+			TblUserPassword toUserEmail = userDao.findOne(request.toId);	
+			BKUserProfileSummary fromUser = service.getUserPersonalSummary(userId);
+			BKUserProfileSummary toUser = service.getUserPersonalSummary(request.toId);	
 			Communicate communicate = new Communicate();
 			communicate.entityId = request.entityId;
 			communicate.entityType = request.entityType;
 			communicate.message = request.message;
-			communicate.fromEmailAddress = fromUser.getUsrName();
-			communicate.fromName = fromUser.getUsrName();
-			communicate.toEmailAddress = toUser.getUsrName();
-			communicate.toName = toUser.getUsrName();			
+			communicate.fromEmailAddress = fromUserEmail.getUsrName();
+			communicate.fromName = fromUser.firstName;
+			communicate.toEmailAddress = toUserEmail.getUsrName();
+			communicate.toName = toUser.firstName;			
 			try {
 				mail.send(communicate);
 			} catch (Exception e) {

@@ -1,6 +1,6 @@
 Some text has _TEST_ in it
 <html>
 <body>
-<img url="http://sljlkjsdlj/dfdfdf"/>
+<img url="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg"/>
 dlfdkjflkdjfjl _TEST1_ 
 

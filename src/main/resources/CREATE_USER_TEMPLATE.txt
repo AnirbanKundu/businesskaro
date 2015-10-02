@@ -3,7 +3,7 @@
 <body style=\"margin:0;padding:0;\">
 <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%;margin:20px 30px 30px 30px;\">
 <tr style=\"height:87px;\"><td style=\"width:100%;height:62px;\"><img src="cid:bkHeader" alt="Business karo Header"></td></tr><tr><td>
-<img src="https://res.cloudinary.com/difyxhuza/image/upload/v1442199782/cylpqv5adbci6vilq44j.jpg"></img>
+<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg"></img>
 #test_text
 
 <p style="font-size:0.83em;">Please do not reply to this email.  This is an automated message. This email contains BusinessKaro Confidential information. If you have received this email in error, please immediately delete it from your inbox. If you need help or support, please contact admin@bk.com. Thank you. </p>
