@@ -59,8 +59,15 @@ public class OfferRestService extends BKRestService{
 	public OfferRequest getOfferDetails(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){		
 		try{
-			validateSecureToken(clientId, secureToken);
-			return service.getDetails(offerId);
+			Integer userId = validateSecureToken(clientId, secureToken);
+			OfferRequest result = service.getDetails(offerId);
+			
+			if(result.userId!=userId){
+				throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
+			} else{
+				return result;
+			}
+			 
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 		}

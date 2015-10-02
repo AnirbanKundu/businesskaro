@@ -10,7 +10,7 @@ angular
     if($scope.id !== undefined){    	
     	$timeout(function(){
     		$http({
-    	          url : '/services/request/detail/'+ $scope.id,
+    	          url : '/services/offer/detail/'+ $scope.id,
     	          method: 'GET'
     	        }).then(function(response){
     	        	var data = response.data;
