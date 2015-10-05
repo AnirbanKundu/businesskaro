@@ -6,6 +6,7 @@ angular
     $scope.id= $route.current.params.id;
     console.log("Offer COntroller: "+$scope.id);
     $scope.waiting = true;
+    $scope.isSaveClicked = false;
     
     if($scope.id !== undefined){    	
     	$timeout(function(){
@@ -60,8 +61,64 @@ angular
       $scope.waiting = false;
     }
     
-    $scope.reg_form = {};
-    $scope.form = {};
+    //$scope.reg_form = {};
+    //$scope.form = {};
+    $scope.formControl = {
+      isTitleValid:true,
+      isIndustryValid:true,
+      isIntendedAudienceValid:true,
+      isTargetLocationValid:true
+    };
+    $scope.$watch('formControl',function(newval,oldval){
+      if(newval && newval!=oldval){
+        //validate(newval,{'title':$scope.offerTitle, 'industry':$scope.selectedIndustries.selected, 'audience':$scope.selectedAudience.selected,'state':$scope.selectedStates.selected})
+      }
+    },true);
+
+    $scope.checkValidation = function(prop,value){
+      if($scope.formControl.hasOwnProperty(prop)){
+        if(value){
+          $scope.formControl[prop] =  true;
+        }
+        else{
+          $scope.formControl[prop] =  false;  
+        }        
+      }
+    }
+
+    $scope.$watch('offerTitle',function(newval,oldval){
+        $scope.checkValidation('isTitleValid', newval);    
+    }); 
+
+    $scope.$watch('selectedIndustries',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isIndustryValid', newval.selected[0]);    
+      }      
+    },true);
+    $scope.$watch('selectedAudience',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isIntendedAudienceValid', newval.selected[0]);    
+      }      
+    },true);
+    $scope.$watch('selectedStates',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isTargetLocationValid', newval.selected[0]);    
+      }      
+    },true);
+
+    $scope.provideColor = function(value){
+      if($scope.isSaveClicked){
+        if(value){
+            return{
+                'border': '1px solid green'
+            } 
+        }else{
+            return{
+                'border': '1px solid red'
+            }
+        }
+      }        
+    }
 
     $scope.checking = false;
     $scope.checked = false;
@@ -96,10 +153,6 @@ angular
     
     $http.get('utilservices/industries').success(function(response) {
       $scope.industries = response;
-    });
-    
-    $scope.$watch('selectedIndustries',function(newval,oldval){
-    	console.log('selected industriess',newval);    
     });
     
     $('.fileinput').bind('change.bs.fileinput', function(file){ 
@@ -178,37 +231,50 @@ angular
       $scope.save =  function(){
     		var state=[];
         var tags = [];
-        $scope.waiting = true;
-    		for(var i=0;i<$scope.selectedStates.selected.length;i++){
-    			state.push($scope.selectedStates.selected[i].stateId);
+        $scope.isSaveClicked = true;
+        var isFormValid = true;
+        for (var property in $scope.formControl) {
+            if ($scope.formControl.hasOwnProperty(property)) {
+                if($scope.formControl[property] == false){
+                  isFormValid = false;
+                }                
+            }
+        }
+        if(!isFormValid){
+          return;
+        }
+        else{
+          $scope.waiting = true;
+        for(var i=0;i<$scope.selectedStates.selected.length;i++){
+          state.push($scope.selectedStates.selected[i].stateId);
           tags.push($scope.states[i].stateName);
-    		}
-    		var industries=[];
-    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
-    			industries.push($scope.selectedIndustries.selected[i].industryId);
+        }
+        var industries=[];
+        for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+          industries.push($scope.selectedIndustries.selected[i].industryId);
           tags.push($scope.selectedIndustries.selected[i].industryName);
-    		}
-    		var intAudience = [];
-    		for(var i=0;i<$scope.selectedAudience.selected.length;i++){
-    			intAudience.push($scope.selectedAudience.selected[i].targAudId);
-    		}
-    		console.log($scope.questionAnswer);
-    		if($scope.id !== undefined){
-    			$http({
-    	              url: '/services/offer',
-    	              method: 'PUT',
-    	              isArray: false,
-    	              data: { 
-    	            	  "id" : $scope.id,
-    	            	  "title" : $scope.offerTitle,
-    	                  "description" : $scope.offerDescription,
-    	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : intAudience[0],
-    	                  "trgtLocation" : state,
-    	                  "imgUrl" :$scope.imageUrl
-    	                  },
-    	              cache : false}).then(function(response){
-    	            	  //$window.location.href = '/#/myoffers';
+        }
+        var intAudience = [];
+        for(var i=0;i<$scope.selectedAudience.selected.length;i++){
+          intAudience.push($scope.selectedAudience.selected[i].targAudId);
+        }
+        console.log($scope.questionAnswer);
+        if($scope.id !== undefined){
+          $http({
+                    url: '/services/offer',
+                    method: 'PUT',
+                    isArray: false,
+                    data: { 
+                      "id" : $scope.id,
+                      "title" : $scope.offerTitle,
+                        "description" : $scope.offerDescription,
+                        "trgtIndustry" : industries,
+                        "intdAudience" : intAudience[0],
+                        "trgtLocation" : state,
+                        "imgUrl" :$scope.imageUrl
+                        },
+                    cache : false}).then(function(response){
+                      //$window.location.href = '/#/myoffers';
                       $scope.waiting = false;
                       var tagEntity = { "entityId" : $scope.id, "entityType" : "OFFER", "tags" : tags }
                       $http({
@@ -220,24 +286,24 @@ angular
                       },function(error){
                         console.log('TAG Entity error',error);
                       });
-    	              }, function(response){
-    	            	  //$window.location.href = '/#/myoffers';
-    	              });
-    			
-    		} else{
-    			$http({
-    	              url: '/services/offer',
-    	              method: 'POST',
-    	              isArray: false,
-    	              data: { "title" : $scope.offerTitle,
-    	                  "description" : $scope.offerDescription,
-    	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : intAudience[0],
-    	                  "trgtLocation" : state,
-    	                  "imgUrl" :$scope.imageUrl,
-    	                  
-    	                  },
-    	              cache : false}).then(function(response){
+                    }, function(response){
+                      //$window.location.href = '/#/myoffers';
+                    });
+          
+        } else{
+          $http({
+                    url: '/services/offer',
+                    method: 'POST',
+                    isArray: false,
+                    data: { "title" : $scope.offerTitle,
+                        "description" : $scope.offerDescription,
+                        "trgtIndustry" : industries,
+                        "intdAudience" : intAudience[0],
+                        "trgtLocation" : state,
+                        "imgUrl" :$scope.imageUrl,
+                        
+                        },
+                    cache : false}).then(function(response){
                       $scope.waiting = false;
                       var tagEntity = { "entityId" : response.data, "entityType" : "OFFER", "tags" : tags }
                       $http({
@@ -249,11 +315,13 @@ angular
                       },function(error){
                         console.log('TAG Entity error',error);
                       });
-    	            	  //$window.location.href = '/#/myoffers';
-    	              }, function(response){
-    	            	  //$window.location.href = '/#/myoffers';
-    	              });
-    		}
+                      //$window.location.href = '/#/myoffers';
+                    }, function(response){
+                      //$window.location.href = '/#/myoffers';
+                    });
+        }
+        }
+        
     	  
       };
   }]);

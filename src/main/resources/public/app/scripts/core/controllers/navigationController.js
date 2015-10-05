@@ -28,21 +28,21 @@ angular
       iconClasses: '',
       separator: true
     }, {
-      label: 'Search Provider',
+      label: 'Search Users',
       iconClasses: 'fa fa-users',
-      url: '#/search/Provider/'
-    }, {
+      url: '#/search/user_profile/IT%20Software,West%20Bengal'
+    }, /*{
       label: 'Search Entrepreneur',
       iconClasses: 'fa fa-users',
-      url: '#/search/Entrepreneur/'
-    }, {
+      url: '#/search/Entrepreneur/IT%20Software,West%20Bengal'
+    },*/ {
       label: 'Search Offers',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/search/Offer/'
+      url: '#/search/Offer/IT%20Software,West%20Bengal'
     }, {
       label: 'Search Request',
       iconClasses: 'glyphicon glyphicon-search',
-      url: '#/search/Request/'
+      url: '#/search/Request/IT%20Software,West%20Bengal'
     }, {
       label: 'Create',
       iconClasses: 'fa fa-home',

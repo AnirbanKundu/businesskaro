@@ -3,7 +3,22 @@ angular
   .controller('RegistrationPageController', ['$rootScope', '$scope', '$timeout' , '$log', '$http', 'LookUpService', 'UserAuthentication', '$route', function($rootScope, $scope, $timeout, $log, $http, LookUpService, UserAuthentication,$route) {
     'use strict';
     $scope.reg_form = {};
-    $scope.form = {};
+    $scope.isSaveClicked = false;
+    $scope.formControl = {
+      isfirstNameValid:true,
+      islastNameValid:true,
+      isaboutMeValid:true,
+      isprofessionValid:true,
+      isageGroupValid:true,
+      iseducatonValid:true,
+      isexperienceValid:true,
+      isstateValid:true,
+      iscompanyUrlValid:true,
+      isIndustryValid:true,
+      isFBUrlValid:true,
+      istwitterUrlValid:true,
+      islinkedinUrlValid:true   
+    };
     var message = $route.current.params.message;
     if(message && message ==='firstLogin'){
       $scope.firstLogin = message;
@@ -70,36 +85,11 @@ angular
             }
           }
         }
-        /*
-        for(var i=0;i<$scope.user.summary.lookinfForSkill.length;i++){
-          for(var j=0;j<$scope.industries.length;j++){
-            if($scope.user.summary.lookinfForSkill[i] == $scope.industries[j].industryId){
-              $scope.lookingfor.selected.push($scope.industries[j]);
-              break;
-            }
-          }
-        }
-        */
-        /*
-        for(var i=0;i<$scope.states.length;i++){
-          if($scope.states[i].stateName == $scope.state){
-            $scope.selectedStates.selected = $scope.states[i];
-            break;
-          }
-        }
-        */
-
-        //$scope.selectedIndustries.selected = $scope.user.summary.industrys;
         if(data.data.newUser){
           $scope.newUser = true;
           $rootScope.newUser=true;
           $rootScope.profileCreated=0;
         }
-        //$scope.selectedAgeId=0;
-        //$scope.selectedEducationId=0;
-        //$scope.selectedProfessionId = 0;
-        //$scope.selectedStateId = 0;
-        //$scope.selectedExperienceId = 0;
         if($scope.user.details.imageUrl){
           var imagePath = $scope.user.details.imageUrl;
           var widgetFileInput = $('.fileinput').fileinput();
@@ -113,16 +103,6 @@ angular
         }
       }
       $scope.waiting = false;
-      /*
-      else if(data && data.newuser){
-        $scope.newUser = true;
-        $scope.selectedAgeId=0;
-        $scope.selectedEducationId=0;
-        $scope.selectedProfessionId = 0;
-        $scope.selectedStateId = 0;
-        $scope.selectedExperienceId = 0;        
-      }
-      */
     },function(error){
       if(error.type==='ENTITY_NOT_FOUND'){
         $rootScope.profileCreated=0;
@@ -137,11 +117,41 @@ angular
     $scope.isUploadCalled=false;
     $scope.actualImageName = "";
     //***********************
-    $scope.$watch('selectedIndustries',function(newval,oldval){
-    	console.log('selected industriess',newval);    
-    });
-
-
+    $scope.checkValidation = function(prop,value){
+      if($scope.formControl.hasOwnProperty(prop)){
+        if(value){
+          $scope.formControl[prop] =  true;
+        }
+        else{
+          $scope.formControl[prop] =  false;  
+        }        
+      }
+    }
+    $scope.provideColor = function(value){
+      if($scope.isSaveClicked){
+        if(value){
+            return{
+                'border': '1px solid green'
+            } 
+        }else{
+            return{
+                'border': '1px solid red'
+            }
+        }
+      }        
+    }
+    $scope.$watch('formControl',function(newval,oldval){
+      if(newval && newval!=oldval){
+      }
+    },true);
+    $scope.$watch('selectedIndustries',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isIndustryValid', newval.selected[0]);    
+      }      
+    },true);
+    $scope.$watch('offerTitle',function(newval,oldval){
+        $scope.checkValidation('isTitleValid', newval);
+    },true);
 
 
     /*********** End of all loop ups ***********/    
@@ -227,81 +237,57 @@ angular
     $scope.saveUserInfo = function(){
       $scope.user.summary.lookinfForSkill = [];
       $scope.user.summary.industrys = [];
-      var tags = [];
-      for(var i=0; i<$scope.lookingfor.selected.length;i++){
-        $scope.user.summary.lookinfForSkill.push($scope.lookingfor.selected[i].industryId);
+      var tags = [], isFormValid = true;
+      $scope.isSaveClicked = false;
+      for (var property in $scope.formControl) {
+          if ($scope.formControl.hasOwnProperty(property)) {
+              if($scope.formControl[property] == false){
+                isFormValid = false;
+              }                
+          }
       }
-      for(var i=0;i<$scope.states.length;i++){
-        if($scope.states[i].stateId == $scope.user.details.stateId){
-          $scope.user.summary.stateName = $scope.states[i].stateName;
-          tags.push($scope.states[i].stateName);
-          break;
-        }        
-      }
-
-      for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
-        $scope.user.summary.industrys.push($scope.selectedIndustries.selected[i].industryId);
-        tags.push($scope.selectedIndustries.selected[i].industryName);
-      }
-      if($scope.user.summary.userType ==='E'){
-        $scope.user.summary.companyUrl = "";
-      }
-      $scope.waiting = true;
-      UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
-        $rootScope.newUser=false;
-        $rootScope.profileCreated=1;
-        $scope.firstLogin = null;
-        //CALL THE TAGENTRY
-        var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
-        $http({
-          url: 'services/tag',
-          method: 'POST',
-          data: tagEntity
-        }).then(function(response){
-          $scope.waiting = false;
-        },function(error){
-          console.log('TAG Entity error',error);
-        });
-      },function(data){
-        console.log('error'); 
-      });
-      /*
-      $scope.selectedAgeId=0;
-      $scope.selectedEducationId=0;
-      $scope.selectedProfessionId = 0;
-      $scope.selectedStateId = 0;
-      $scope.selectedExperienceId = 0;  
-
-      var userDetail = {
-          "ageGroupId": $scope.selectedAgeId, 
-          "educatonId": $scope.selectedEducationId , 
-          "stateId" : $scope.selectedStateId, 
-          "experienceId" : $scope.selectedExperienceId,
-          "professionalId" : $scope.selectedProfessionId,
-          "faceBookUrl" : $scope.faceBookUrl,
-          "linkedInUrl" : $scope.linkedInUrl,
-          "twiterURL" : $scope.twiterURL,
-          "imageUrl": $scope.imageUrl
-      },
-      summaryDetail = {
-        "firstName": "anirban",
-        "lastName": "kundu",
-        "stateName": "WB",
-        "cityName": "CAL",
-
-
-      } 
-      */
-    }
-
-    $scope.checkAvailability = function() {
-      if ($scope.reg_form.username.$dirty === false) {
+      if(!isFormValid){
         return;
       }
-      $scope.checking = true;
-      $timeout(function() {
-        $scope.checking = false;
-        $scope.checked = true;
-      }, 500);
-    };
+      else{
+        for(var i=0; i<$scope.lookingfor.selected.length;i++){
+          $scope.user.summary.lookinfForSkill.push($scope.lookingfor.selected[i].industryId);
+        }
+        for(var i=0;i<$scope.states.length;i++){
+          if($scope.states[i].stateId == $scope.user.details.stateId){
+            $scope.user.summary.stateName = $scope.states[i].stateName;
+            tags.push($scope.states[i].stateName);
+            break;
+          }        
+        }
+
+        for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+          $scope.user.summary.industrys.push($scope.selectedIndustries.selected[i].industryId);
+          tags.push($scope.selectedIndustries.selected[i].industryName);
+        }
+        if($scope.user.summary.userType ==='E'){
+          $scope.user.summary.companyUrl = "";
+        }
+        $scope.waiting = true;
+        UserAuthentication.saveUserDetailProfile($scope.user).then(function(data){
+          $rootScope.newUser=false;
+          $rootScope.profileCreated=1;
+          $scope.firstLogin = null;
+          //CALL THE TAGENTRY
+          var tagEntity = { "entityId" : data.data.summary.userId, "entityType" : "USER_PROFILE", "tags" : tags }
+          $http({
+            url: 'services/tag',
+            method: 'POST',
+            data: tagEntity
+          }).then(function(response){
+            $scope.waiting = false;
+          },function(error){
+            console.log('TAG Entity error',error);
+          });
+        },function(data){
+          console.log('error'); 
+        });
+      }      
+    }
+
   }]);

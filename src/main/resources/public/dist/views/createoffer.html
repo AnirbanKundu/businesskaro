@@ -31,13 +31,13 @@
 								</div>
 							</div>
 							<div class="col-sm-8">
-								<label class="">Title</label> <br /> 
-								<input type="text" class="form-control input-sm" ng-model="offerTitle">
+								<label class="">Title</label><br /> 
+								<input type="text" class="form-control input-sm" ng-model="offerTitle" ng-style="provideColor(formControl.isTitleValid)" maxlength="50">
 							</div>
 							<br/> <br/>
 							<div class="col-sm-8" style="margin-top: 25px;">
 								<label class="">Description</label> <br />
-								<textarea class="form-control" ng-model="offerDescription"></textarea>
+								<textarea class="form-control" ng-model="offerDescription" maxlength="250"></textarea>
 							</div>
 						</div>
 						<div class="col-sm-12">
@@ -54,10 +54,13 @@
 									<div class="col-sm-10">
 										<ui-select multiple ng-model="selectedIndustries.selected"
 											close-on-select="false" style="width: 400px;"
-											title="Select your profession"> <ui-select-match
-											placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
-										<ui-select-choices repeat="iterator in industries">
-										<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
+											title="Select your profession"
+											ng-style="provideColor(formControl.isIndustryValid)"> 
+											<ui-select-match
+											placeholder="Select or search your profession in the list..."
+											>{{$select.selected[$index].industryName}}</ui-select-match>
+											<ui-select-choices repeat="iterator in industries">
+											<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
 
 									</div>
 								</div>
@@ -66,7 +69,7 @@
 									<div class="col-sm-6">
 									 	<ui-select multiple ng-model="selectedAudience.selected"
 											close-on-select="false" style="width: 400px;"
-											title="Select intended audience"> 
+											ng-style="provideColor(formControl.isIntendedAudienceValid)"> 
 											<ui-select-match placeholder="Select or search intended audience">{{$select.selected[$index].targAudDispVal}}</ui-select-match>
 											<ui-select-choices repeat="iterator in intendedAudience">
 												<span ng-bind-html="iterator.targAudDispVal"></span> 
@@ -79,7 +82,8 @@
 									<div class="col-sm-6">
 									 	<ui-select multiple ng-model="selectedStates.selected"
 											close-on-select="false" style="width: 400px;"
-											title="Select your state"> <ui-select-match
+											ng-style="provideColor(formControl.isTargetLocationValid)"> 
+											<ui-select-match
 											placeholder="Select or search state">{{$select.selected[$index].stateName}}</ui-select-match>
 										<ui-select-choices repeat="iterator in states">
 										<span ng-bind-html="iterator.stateName"></span> </ui-select-choices> </ui-select>

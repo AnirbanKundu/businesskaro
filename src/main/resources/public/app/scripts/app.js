@@ -111,7 +111,7 @@ angular
       .when('#', {
         templateUrl: 'views/index.html', 
       })
-      .when('/changepwd',{
+      .when('/changepassword',{
         templateUrl: 'views/changepassword.html',
         auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
             var userInfo = authenticationSvc.getToken();       
@@ -125,9 +125,6 @@ angular
       })
       .when('/resetpassword',{
         templateUrl: 'views/resetpassword.html'
-      })
-      .when('/contactus',{
-        templateUrl: 'views/contactus.html'
       })
       .otherwise({
         redirectTo: '/'

@@ -49,19 +49,19 @@
 			                <div class="col-sm-4">
 			                	<label class="">First Name</label>
 			                	<br/>
-			                	<input type="text" class="form-control input-sm" ng-model="user.summary.firstName">
+			                	<input type="text" class="form-control input-sm" ng-model="user.summary.firstName" ng-style="provideColor(formControl.isfirstNameValid)" maxlength="50">
 			                </div>
 			                <div class="col-sm-4">
 			                	<label class="">Last Name</label>
 			                	<br/>
-			                	<input type="text" class="form-control input-sm" ng-model="user.summary.lastName">
+			                	<input type="text" class="form-control input-sm" ng-model="user.summary.lastName" ng-style="provideColor(formControl.islastNameValid)" maxlength="50">
 			                </div>
 			                <br/>
 			                <br/>
 			                <div class="col-sm-8" style="margin-top:25px;">
 			                	<label class="">About Me</label>
 			                	<br/>
-			                	<textarea class="form-control" ng-model="user.summary.aboutMe"></textarea>
+			                	<textarea class="form-control" ng-model="user.summary.aboutMe" ng-style="provideColor(formControl.isaboutMeValid)" maxlength="250"></textarea>
 			                </div>
 		                </div>
 		                <div class="col-sm-12">
@@ -71,18 +71,18 @@
 							<div class="panel-loading" ng-if="waiting">
 		                        <div class="panel-loader-circular"></div>
 		                    </div>
-						    <form action="" name="form.reg_form" class="form-horizontal row-border">
+						    <form action="" class="form-horizontal row-border">
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">Profession</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="user.details.professionalId">
+					                    <select class="form-control input-sm" ng-model="user.details.professionalId" ng-style="provideColor(formControl.isprofessionValid)">
 					                		<option value="0">Select your Profession</option>
 					                		<option ng:repeat="prof in professions" value="{{prof.profession_id}}">{{prof.profession_name}}</option>
 					                	</select>	
 					                </div>
 					                <label class="col-sm-2 control-label">Age Group</label>
 					                <div class="col-sm-4">
-					                	<select class="form-control input-sm" ng-model="user.details.ageGroupId">
+					                	<select class="form-control input-sm" ng-model="user.details.ageGroupId" ng-style="provideColor(formControl.isageGroupValid)">
 					                		<option value="0">Select you age group</option>
 					                		<option ng:repeat="age in ageGroup" value="{{age.ageId}}">{{age.displAge}}</option>
 					                	</select>					                    
@@ -91,14 +91,14 @@
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">Education</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="user.details.educatonId">
+					                    <select class="form-control input-sm" ng-model="user.details.educatonId" ng-style="provideColor(formControl.iseducatonValid)">
 					                		<option value="0">Select you education</option>
 					                		<option ng:repeat="edu in educations" value="{{edu.eductnId}}">{{edu.eductnName}}</option>
 					                	</select>
 					                </div>
 					                <label class="col-sm-2 control-label">Work Experience</label>
 					                <div class="col-sm-4">
-					                	<select class="form-control input-sm" ng-model="user.details.experienceId">
+					                	<select class="form-control input-sm" ng-model="user.details.experienceId" ng-style="provideColor(formControl.isexperienceValid)">
 					                		<option value="0">Select you Experience</option>
 					                		<option value="1">0-5 yrs</option>
 					                		<option value="3">5-10 yrs</option>	
@@ -110,7 +110,7 @@
 					            <div class="form-group">					            	
 					                <label class="col-sm-2 control-label">State name</label>
 					                <div class="col-sm-4">
-					                    <select class="form-control input-sm" ng-model="user.details.stateId">
+					                    <select class="form-control input-sm" ng-model="user.details.stateId" ng-style="provideColor(formControl.isstateValid)">
 					                		<option ng:repeat="s in states" value="{{s.stateId}}">{{s.stateName}}</option>				                		
 					                	</select>
 					                </div>
@@ -144,9 +144,11 @@
 					                <div class="col-sm-12" ng-show="user.summary.userType !=='E'">
 						                <label class="col-sm-4 control-label">Enter your company name</label>
 					                    <div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" data-ng-maxlength="5" ng-model="user.summary.companyUrl">     
+						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" maxlength="150" ng-model="user.summary.companyUrl" ng-style="provideColor(formControl.iscompanyUrlValid)">     
+						                	<!--
 						                	<span class="help-block" ng-show="form.reg_form.maxlength.$error.required && form.reg_form.maxlength.$dirty">This field is required</span>
-                            				<span class="help-block" ng-show="form.reg_form.maxlength.$error.maxlength && form.reg_form.maxlength.$dirty">Value must be 6 characters or less</span>              
+                            				<span class="help-block" ng-show="form.reg_form.maxlength.$error.maxlength && form.reg_form.maxlength.$dirty">Value must be 6 characters or less</span>  
+                            				-->            
 						                </div>
 						            </div>
 						            
@@ -154,7 +156,7 @@
 					            <div class="form-group">
 					            	<label class="col-sm-2 control-label">I am aware of</label>
 					            	<div class="col-sm-10">
-					            		<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 400px;" title="Select your profession">
+					            		<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 400px;" ng-style="provideColor(formControl.isIndustryValid)">
 										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
 										    <ui-select-choices repeat="iterator in industries">
 										      <span ng-bind-html="iterator.industryName"></span>
@@ -166,19 +168,19 @@
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My FaceBook page</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm" ng-model="user.details.faceBookUrl">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.faceBookUrl" maxlength="100" ng-style="provideColor(formControl.isFBUrlValid)">                   
 						           	</div>
 					            </div>
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My Twitter handle</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm" ng-model="user.details.twiterURL">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.twiterURL" maxlength="100" ng-style="provideColor(formControl.istwitterUrlValid)">                   
 						           	</div>
 					            </div> 
 					            <div class="form-group">
 					            	<label class="col-sm-4 control-label">My LinkedIn profile</label>
 					            	<div class="col-sm-6 input-sm">
-						                	<input type="text" class="form-control input-sm" ng-model="user.details.linkedInUrl">                   
+						                	<input type="text" class="form-control input-sm" ng-model="user.details.linkedInUrl" maxlength="100" ng-style="provideColor(formControl.islinkedinUrlValid)">                   
 						           	</div>
 					            </div> 
 					            <!--  

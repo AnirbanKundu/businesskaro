@@ -98,7 +98,7 @@
 									<tbody>
 										<tr>
 											<td style="border-top: 0">Submitted by</td>
-											<td style="border-top: 0"><a href="#">{{userDetail.userName}}</a></td>
+											<td style="border-top: 0"><a href="#">{{userDetail.firstName}}&nbsp;{{userDetail.lastName}}</a></td>
 										</tr>
 										<tr>
 											<td style="border-top: 0">Company</td>
@@ -146,7 +146,7 @@
 										</div>
 										<div class="col-xs-12">
 											<h5>Target Location</h5>
-											<span>{{entityResult.trgtLocation}}</span>
+											<span>{{entityResult.trgtLocation | statefilter}}</span>
 										</div>
 										<div class="col-xs-12">
 											<h5>Specific Need</h5>

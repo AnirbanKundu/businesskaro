@@ -6,6 +6,67 @@ angular
 	    $scope.id = $route.current.params.id;
 	    console.log("Request COntroller: "+$scope.id);
 	    $scope.waiting = true;
+	    $scope.isSaveClicked = false;
+
+	    /********** VALIDATION ************/
+	    $scope.formControl = {
+	      isTitleValid:true,
+	      isIndustryValid:true,
+	      isIntendedAudienceValid:true,
+	      isTargetLocationValid:true
+	    };
+	    $scope.$watch('formControl',function(newval,oldval){
+      if(newval && newval!=oldval){
+        //validate(newval,{'title':$scope.offerTitle, 'industry':$scope.selectedIndustries.selected, 'audience':$scope.selectedAudience.selected,'state':$scope.selectedStates.selected})
+      }
+    },true);
+
+    $scope.checkValidation = function(prop,value){
+      if($scope.formControl.hasOwnProperty(prop)){
+        if(value){
+          $scope.formControl[prop] =  true;
+        }
+        else{
+          $scope.formControl[prop] =  false;  
+        }        
+      }
+    }
+
+    $scope.$watch('requestTitle',function(newval,oldval){
+        $scope.checkValidation('isTitleValid', newval);    
+    }); 
+
+    $scope.$watch('selectedIndustries',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isIndustryValid', newval.selected[0]);    
+      }      
+    },true);
+    $scope.$watch('selectedAudience',function(newval,oldval){      
+      if(newval!=null && newval){
+        $scope.checkValidation('isIntendedAudienceValid', newval);    
+      }      
+    },true);
+    $scope.$watch('selectedStates',function(newval,oldval){      
+      if(newval!=null && newval.selected){
+        $scope.checkValidation('isTargetLocationValid', newval.selected[0]);    
+      }      
+    },true);
+
+    $scope.provideColor = function(value){
+      if($scope.isSaveClicked){
+        if(value){
+            return{
+                'border': '1px solid green'
+            } 
+        }else{
+            return{
+                'border': '1px solid red'
+            }
+        }
+      }        
+    }
+
+	    /*********** END VALIDATION ***********/
 
 	    LookUpService.getStates().then(function(data){
 	        $scope.states = data;
@@ -82,87 +143,96 @@ angular
 	    $scope.selectedStateId = 0;
 	    
 	    /*********** Get all Lookup values *********/
-
-	    
-	    $scope.$watch('selectedIndustries',function(newval,oldval){
-	    	console.log('selected industriess',newval);    
-	    });
 	      
 	      $scope.save =  function(){
     		var state=[];
     		var tags = [];
-    		for(var i=0;i<$scope.selectedStates.selected.length;i++){
-    			state.push($scope.selectedStates.selected[i].stateId);
-    			tags.push($scope.states[i].stateName);
-    		}
-    		var industries=[];
-    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
-    			industries.push($scope.selectedIndustries.selected[i].industryId);
-    			tags.push($scope.selectedIndustries.selected[i].industryName);
-    		}
-    		$scope.waiting = true;
-    		
-    		if($scope.id !== undefined){
-    			$http({
-    	              url: '/services/request',
-    	              method: 'PUT',
-    	              isArray: false,
-    	              data: { 
-    	            	  "id" : $scope.id,
-    	            	  "title" : $scope.requestTitle,
-    	                  "description" : $scope.requestDescription,
-    	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : $scope.selectedAudience,
-    	                  "trgtLocation" : state,
-    	                  "imgUrl" :$scope.imageUrl
-    	                  },
-    	              cache : false}).then(function(response){
-    	            	  //$window.location.href = '/#/myrequests';
-    	            	  $scope.waiting = false;
-    	            	  var tagEntity = { "entityId" : $scope.id, "entityType" : "REQUEST", "tags" : tags }
-	                      $http({
-	                        url: 'services/tag',
-	                        method: 'POST',
-	                        data: tagEntity
-	                      }).then(function(response){
-	                        $scope.waiting = false;
-	                      },function(error){
-	                        console.log('TAG Entity error',error);
-	                      });
-    	              }, function(response){
-    	            	  $window.location.href = '/#/myrequests';
-    	              });
-    		      
-    		} else{
-    			$http({
-    	              url: '/services/request',
-    	              method: 'POST',
-    	              isArray: false,
-    	              data: { "title" : $scope.requestTitle,
-    	                  "description" : $scope.requestDescription,
-    	                  "trgtIndustry" : industries,
-    	                  "intdAudience" : $scope.selectedAudience,
-    	                  "trgtLocation" : state,
-    	                  "imgUrl" :$scope.imageUrl,
-    	                  },
-    	              cache : false}).then(function(response){
-    	            	  //$window.location.href = '/#/myrequests';
-    	            	  $scope.waiting = false;
-    	            	  var tagEntity = { "entityId" : response.data, "entityType" : "REQUEST", "tags" : tags }
-	                      $http({
-	                        url: 'services/tag',
-	                        method: 'POST',
-	                        data: tagEntity
-	                      }).then(function(response){
-	                        $scope.waiting = false;
-	                      },function(error){
-	                        console.log('TAG Entity error',error);
-	                      });
-    	              }, function(response){
-    	            	  $window.location.href = '/#/myrequests';
-    	              });
-    		      };
-    		}
+    		$scope.isSaveClicked = true;
+    		var isFormValid = true;
+	        for (var property in $scope.formControl) {
+	            if ($scope.formControl.hasOwnProperty(property)) {
+	                if($scope.formControl[property] == false){
+	                  isFormValid = false;
+	                }                
+	            }
+	        }
+	        if(!isFormValid){
+	          return;
+	        }
+	        else{
+	        	for(var i=0;i<$scope.selectedStates.selected.length;i++){
+	    			state.push($scope.selectedStates.selected[i].stateId);
+	    			tags.push($scope.states[i].stateName);
+	    		}
+	    		var industries=[];
+	    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
+	    			industries.push($scope.selectedIndustries.selected[i].industryId);
+	    			tags.push($scope.selectedIndustries.selected[i].industryName);
+	    		}
+	    		$scope.waiting = true;
+	    		
+	    		if($scope.id !== undefined){
+	    			$http({
+	    	              url: '/services/request',
+	    	              method: 'PUT',
+	    	              isArray: false,
+	    	              data: { 
+	    	            	  "id" : $scope.id,
+	    	            	  "title" : $scope.requestTitle,
+	    	                  "description" : $scope.requestDescription,
+	    	                  "trgtIndustry" : industries,
+	    	                  "intdAudience" : $scope.selectedAudience,
+	    	                  "trgtLocation" : state,
+	    	                  "imgUrl" :$scope.imageUrl
+	    	                  },
+	    	              cache : false}).then(function(response){
+	    	            	  //$window.location.href = '/#/myrequests';
+	    	            	  $scope.waiting = false;
+	    	            	  var tagEntity = { "entityId" : $scope.id, "entityType" : "REQUEST", "tags" : tags }
+		                      $http({
+		                        url: 'services/tag',
+		                        method: 'POST',
+		                        data: tagEntity
+		                      }).then(function(response){
+		                        $scope.waiting = false;
+		                      },function(error){
+		                        console.log('TAG Entity error',error);
+		                      });
+	    	              }, function(response){
+	    	            	  $window.location.href = '/#/myrequests';
+	    	              });
+	    		      
+	    		} else{
+	    			$http({
+	    	              url: '/services/request',
+	    	              method: 'POST',
+	    	              isArray: false,
+	    	              data: { "title" : $scope.requestTitle,
+	    	                  "description" : $scope.requestDescription,
+	    	                  "trgtIndustry" : industries,
+	    	                  "intdAudience" : $scope.selectedAudience,
+	    	                  "trgtLocation" : state,
+	    	                  "imgUrl" :$scope.imageUrl,
+	    	                  },
+	    	              cache : false}).then(function(response){
+	    	            	  //$window.location.href = '/#/myrequests';
+	    	            	  $scope.waiting = false;
+	    	            	  var tagEntity = { "entityId" : response.data, "entityType" : "REQUEST", "tags" : tags }
+		                      $http({
+		                        url: 'services/tag',
+		                        method: 'POST',
+		                        data: tagEntity
+		                      }).then(function(response){
+		                        $scope.waiting = false;
+		                      },function(error){
+		                        console.log('TAG Entity error',error);
+		                      });
+	    	              }, function(response){
+	    	            	  $window.location.href = '/#/myrequests';
+	    	              });
+	    		      };
+		        }    		
+    	}
     	  
 	      
 	  }]);

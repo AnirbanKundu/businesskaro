@@ -19,7 +19,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Title</label>
 									<div class="col-sm-8">
-										<input type="text" class="form-control input-sm" ng-model="requestTitle">
+										<input type="text" class="form-control input-sm" ng-model="requestTitle" ng-style="provideColor(formControl.isTitleValid)">
 									</div>
 									
 								</div>
@@ -35,7 +35,9 @@
 									<div class="col-sm-10">
 										<ui-select multiple ng-model="selectedIndustries.selected"
 											close-on-select="false" style="width: 400px;"
-											title="Select your profession"> <ui-select-match
+											title="Select your profession"
+											ng-style="provideColor(formControl.isIndustryValid)"> 
+											<ui-select-match
 											placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
 										<ui-select-choices repeat="iterator in industries">
 										<span ng-bind-html="iterator.industryName"></span> </ui-select-choices> </ui-select>
@@ -52,8 +54,9 @@
 												<span ng-bind-html="iterator.targAudDispVal"></span> 
 											</ui-select-choices> 
 											</ui-select>-->
-											<select class="form-control input-sm" ng-model="selectedAudience">
-					                		<option value="0">Select your Profession</option>
+											<select class="form-control input-sm" ng-model="selectedAudience"
+											ng-style="provideColor(formControl.isIntendedAudienceValid)">
+					                		<option value="0">Select your Audience</option>
 					                		<option ng:repeat="iterator in intendedAudience" value="{{iterator.targAudId}}">{{iterator.targAudDispVal}}</option>
 					                	</select>
 					                </div>
@@ -63,7 +66,9 @@
 									<div class="col-sm-6">
 									 	<ui-select multiple ng-model="selectedStates.selected"
 											close-on-select="false" style="width: 400px;"
-											title="Select your state"> <ui-select-match
+											title="Select your state"
+											ng-style="provideColor(formControl.isTargetLocationValid)"> 
+											<ui-select-match
 											placeholder="Select or search state">{{$select.selected[$index].stateName}}</ui-select-match>
 										<ui-select-choices repeat="iterator in states">
 										<span ng-bind-html="iterator.stateName"></span> </ui-select-choices> </ui-select>

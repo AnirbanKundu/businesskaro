@@ -116,7 +116,7 @@ angular
     }
 
     
-
+    $scope.searchType = $scope.searchType.toUpperCase();
     //services/tag/entity?keyword=JAVA&entityType=ALL ; services/tag/entity?keywords ; appdata/tagentity.json
     $http({
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
