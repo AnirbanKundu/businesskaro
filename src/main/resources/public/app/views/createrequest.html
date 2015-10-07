@@ -92,19 +92,19 @@
 								<div class="col-sm-6" style="padding-top:10px;">
 				                    <div class="radio-inline">
 				                      <label>
-				                        <input type="radio" ng-attr-name="{{$index}}_type" value="Y" ng-model="question.type">
+				                        <input type="radio" ng-attr-name="{{$index}}_type" value="Y" ng-model="question.value">
 				                        Yes
 				                      </label>
 				                    </div>
 				                    <div class="radio-inline">
 				                      <label>
-				                        <input type="radio" ng-attr-name="{{$index}}_type" value="N" ng-model="question.type">
+				                        <input type="radio" ng-attr-name="{{$index}}_type" value="N" ng-model="question.value">
 				                        No
 				                      </label>
 				                    </div>
 				                    <div class="radio-inline" ng-if="question.responseTyp === 'NOT_SURE'">
 				                      <label>
-				                        <input type="radio" ng-attr-name="{{$index}}_type"  value="NS" ng-model="question.type">
+				                        <input type="radio" ng-attr-name="{{$index}}_type"  value="NS" ng-model="question.value">
 				                        Not Sure
 				                      </label>
 				                    </div>	

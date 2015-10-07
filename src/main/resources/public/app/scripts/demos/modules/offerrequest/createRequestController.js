@@ -75,10 +75,13 @@ angular
 	      });
 	    LookUpService.getQuestions('R').then(function(data){
 	        $scope.questions = data;
+	        for(var i=0;i<$scope.questions.length;i++){
+	        	$scope.questions[i].value = "N";
+	        }
 	      },function(error){
 	      	console.log('In questions http');
 	        $log.log(error);
-	      });
+	    });
 	    LookUpService.getIntAudience().then(function(data){
 	        $scope.intendedAudience = data;
 	      },function(error){
@@ -117,8 +120,12 @@ angular
 	    	                }
 	    	            }
     	            }
-    	            for(var i=0;i<data.questionList.length;i++){
-    	            	//Loop through the Question and set the value
+    	            for(var i=0;i<$scope.questions.length;i++){
+    	            	for(var j=0;j<data.questionList.length;j++){
+    	            		if(data.questionList[j].questionId==$scope.questions[i].questId){
+    	            			$scope.questions[i].value = data.questionList[j].response;
+    	            		}
+    	            	}
     	            }    	            
 	    	        $scope.selectedAudience = data.intdAudience;
 	    	        $scope.waiting = false;
@@ -169,6 +176,14 @@ angular
 	    			industries.push($scope.selectedIndustries.selected[i].industryId);
 	    			tags.push($scope.selectedIndustries.selected[i].industryName);
 	    		}
+	    		var questions = [];
+	    		for(var i=0;i<$scope.questions.length;i++){
+	    			var q = {
+	    						questionId:$scope.questions[i].questId,
+	    						response: $scope.questions[i].value
+	    					}
+					questions.push(q);
+	    		}
 	    		$scope.waiting = true;
 	    		
 	    		if($scope.id !== undefined){
@@ -183,7 +198,8 @@ angular
 	    	                  "trgtIndustry" : industries,
 	    	                  "intdAudience" : $scope.selectedAudience,
 	    	                  "trgtLocation" : state,
-	    	                  "imgUrl" :$scope.imageUrl
+	    	                  "imgUrl" :$scope.imageUrl,
+	    	                  "questionList":questions
 	    	                  },
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';
@@ -213,6 +229,7 @@ angular
 	    	                  "intdAudience" : $scope.selectedAudience,
 	    	                  "trgtLocation" : state,
 	    	                  "imgUrl" :$scope.imageUrl,
+	    	                  "questionList":questions
 	    	                  },
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';
