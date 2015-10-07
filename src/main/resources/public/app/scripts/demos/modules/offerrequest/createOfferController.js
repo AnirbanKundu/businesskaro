@@ -7,6 +7,44 @@ angular
     console.log("Offer COntroller: "+$scope.id);
     $scope.waiting = true;
     $scope.isSaveClicked = false;
+        $scope.checking = false;
+    $scope.checked = false;
+    $scope.user = {};
+    $scope.selectedAgeId=0;
+    $scope.selectedEducationId=0;
+    $scope.selectedProfessionId = 0;
+    $scope.selectedStateId = 0;
+    
+    /*********** Get all Lookup values *********/
+    LookUpService.getStates().then(function(data){
+        $scope.states = data;
+      },function(error){
+        $log.log(error);
+      });
+      LookUpService.getQuestions('O').then(function(data){
+          $scope.questions = data;
+          for(var i=0;i<$scope.questions.length;i++){
+            $scope.questions[i].value = "N";
+          }
+        },function(error){
+          console.log('In questions http');
+          $log.log(error);
+      });
+    LookUpService.getIntAudience().then(function(data){
+        $scope.intendedAudience = data;
+      },function(error){
+        $log.log(error);
+      });
+    
+    $scope.selectedIndustries = { "selected": [] };
+    $scope.selectedStates = { "selected": [] };
+    $scope.lookingfor = { "selected": [] };
+    $scope.selectedAudience = { "selected": [] };
+    $scope.industries = [];
+    
+    $http.get('utilservices/industries').success(function(response) {
+      $scope.industries = response;
+    });
     
     if($scope.id !== undefined){    	
     	$timeout(function(){
@@ -120,40 +158,7 @@ angular
       }        
     }
 
-    $scope.checking = false;
-    $scope.checked = false;
-    $scope.user = {};
-    $scope.selectedAgeId=0;
-    $scope.selectedEducationId=0;
-    $scope.selectedProfessionId = 0;
-    $scope.selectedStateId = 0;
-    
-    /*********** Get all Lookup values *********/
-    LookUpService.getStates().then(function(data){
-        $scope.states = data;
-      },function(error){
-        $log.log(error);
-      });
-    LookUpService.getQuestions('O').then(function(data){
-        $scope.questions = data;
-      },function(error){
-        $log.log(error);
-      });
-    LookUpService.getIntAudience().then(function(data){
-        $scope.intendedAudience = data;
-      },function(error){
-        $log.log(error);
-      });
-    
-    $scope.selectedIndustries = { "selected": [] };
-    $scope.selectedStates = { "selected": [] };
-    $scope.lookingfor = { "selected": [] };
-    $scope.selectedAudience = { "selected": [] };
-    $scope.industries = [];
-    
-    $http.get('utilservices/industries').success(function(response) {
-      $scope.industries = response;
-    });
+
     
     $('.fileinput').bind('change.bs.fileinput', function(file){ 
         if(file && file.target.value!==undefined){
@@ -258,7 +263,14 @@ angular
         for(var i=0;i<$scope.selectedAudience.selected.length;i++){
           intAudience.push($scope.selectedAudience.selected[i].targAudId);
         }
-        console.log($scope.questionAnswer);
+        var questions = [];
+        for(var i=0;i<$scope.questions.length;i++){
+          var q = {
+                questionId:$scope.questions[i].questId,
+                response: $scope.questions[i].value
+              }
+          questions.push(q);
+        }
         if($scope.id !== undefined){
           $http({
                     url: '/services/offer',
@@ -271,7 +283,8 @@ angular
                         "trgtIndustry" : industries,
                         "intdAudience" : intAudience[0],
                         "trgtLocation" : state,
-                        "imgUrl" :$scope.imageUrl
+                        "imgUrl" :$scope.imageUrl,
+                        "questionList":questions
                         },
                     cache : false}).then(function(response){
                       //$window.location.href = '/#/myoffers';
@@ -301,6 +314,7 @@ angular
                         "intdAudience" : intAudience[0],
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
+                        "questionList":questions
                         
                         },
                     cache : false}).then(function(response){

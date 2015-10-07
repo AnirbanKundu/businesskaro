@@ -119,7 +119,7 @@ angular
     //***********************
     $scope.checkValidation = function(prop,value){
       if($scope.formControl.hasOwnProperty(prop)){
-        if(value){
+        if(value && value!="0"){
           $scope.formControl[prop] =  true;
         }
         else{
@@ -140,6 +140,70 @@ angular
         }
       }        
     }
+    $scope.$watch('user.summary.firstName',function(newval,oldval){
+      $scope.checkValidation('isfirstNameValid', newval);   
+    });
+    $scope.$watch('user.summary.lastName',function(newval,oldval){
+      $scope.checkValidation('islastNameValid', newval);   
+    });
+    $scope.$watch('user.summary.aboutMe',function(newval,oldval){
+      $scope.checkValidation('isaboutMeValid', newval);   
+    });
+    $scope.$watch('user.details.professionalId',function(newval,oldval){
+      $scope.checkValidation('isprofessionValid', newval);   
+    });
+    $scope.$watch('user.details.ageGroupId',function(newval,oldval){
+      $scope.checkValidation('isageGroupValid', newval);   
+    });
+    $scope.$watch('user.details.educatonId',function(newval,oldval){
+      $scope.checkValidation('iseducatonValid', newval);   
+    });
+    $scope.$watch('user.details.experienceId',function(newval,oldval){
+      $scope.checkValidation('isexperienceValid', newval);   
+    });
+    $scope.$watch('user.details.stateId',function(newval,oldval){
+      $scope.checkValidation('isstateValid', newval);   
+    });
+    $scope.$watch('user.summary.companyUrl',function(newval,oldval){
+      if($scope.user.summary.userType!='E'){
+        $scope.checkValidation('iscompanyUrlValid', newval);   
+      }      
+    });
+    $scope.$watch('user.details.faceBookUrl',function(newval,oldval){
+      if(newval){
+        if(!validateURL(newval,"facebook")){
+          $scope.checkValidation('isFBUrlValid', null); 
+        }else{
+          $scope.checkValidation('isFBUrlValid', "fb"); 
+        }  
+
+      }else{
+        $scope.checkValidation('isFBUrlValid', "fb"); 
+      }        
+    });
+    $scope.$watch('user.details.twiterURL',function(newval,oldval){
+      if(newval){
+        if(!validateURL(newval,"twitter")){
+          $scope.checkValidation('istwitterUrlValid', null);   
+        }else{
+          $scope.checkValidation('istwitterUrlValid', "tw"); 
+        }      
+      }else{
+        $scope.checkValidation('istwitterUrlValid', "tw"); 
+      }
+      
+    });
+    $scope.$watch('user.details.linkedInUrl',function(newval,oldval){
+      if(newval){
+        if(!validateURL(newval,"linkedin")){
+          $scope.checkValidation('islinkedinUrlValid', null);   
+        }else{
+          $scope.checkValidation('islinkedinUrlValid', "ln"); 
+        }      
+      }else{
+        $scope.checkValidation('islinkedinUrlValid', "ln"); 
+      }
+    });
     $scope.$watch('formControl',function(newval,oldval){
       if(newval && newval!=oldval){
       }
@@ -149,10 +213,16 @@ angular
         $scope.checkValidation('isIndustryValid', newval.selected[0]);    
       }      
     },true);
-    $scope.$watch('offerTitle',function(newval,oldval){
-        $scope.checkValidation('isTitleValid', newval);
-    },true);
 
+    function validateURL(textval,type){
+      var urlregex = new RegExp(
+            "^(http|https|ftp)\://([a-zA-Z0-9\.\-]+(\:[a-zA-Z0-9\.&amp;%\$\-]+)*@)*((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\?\'\\\+&amp;%\$#\=~_\-]+))*$");
+      if(textval.toUpperCase().indexOf(type)!==-1){
+        return urlregex.test(textval);
+      }else{
+        return false;
+      }
+    }
 
     /*********** End of all loop ups ***********/    
     
@@ -238,7 +308,7 @@ angular
       $scope.user.summary.lookinfForSkill = [];
       $scope.user.summary.industrys = [];
       var tags = [], isFormValid = true;
-      $scope.isSaveClicked = false;
+      $scope.isSaveClicked = true;
       for (var property in $scope.formControl) {
           if ($scope.formControl.hasOwnProperty(property)) {
               if($scope.formControl[property] == false){
