@@ -80,6 +80,11 @@ public class OfferRequestService {
 		
 		entity = reqOfferRepo.save(entity);
 		
+		List<BrgUsrReqrIndustry> result = bgrUsrReqIndustryRepo.findByTblUsrReqOffer(entity);
+		if(result.size()>0){
+			bgrUsrReqIndustryRepo.delete(result);
+		}
+		
 		if(model.trgtIndustry!=null){
 			for (Integer indusId : model.trgtIndustry) {
 				LkpIndustry indEntity = userIndRepo.findOne(indusId);
@@ -90,6 +95,11 @@ public class OfferRequestService {
 					bgrUsrReqIndustryRepo.save(industry);
 				}
 			}
+		}
+		
+		List<BrgUsrReqrState> result1 = brgUsrReqState.findByTblUsrReqOffer(entity);
+		if(result.size()>0){
+			brgUsrReqState.delete(result1);
 		}
 		
 		if(model.trgtLocation!=null){
