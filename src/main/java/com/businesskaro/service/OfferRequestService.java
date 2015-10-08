@@ -119,6 +119,11 @@ public class OfferRequestService {
 			}
 		}
 		
+		List<BrgUsrReqOfferQuestion> qaResult = brgQuestionRepo.findByTblUsrReqOffer(entity);
+		if(qaResult.size()>0){
+			brgQuestionRepo.delete(qaResult);
+		}
+		
 		if(model.questionList!=null){
 			for(Questions q : model.questionList){
 				LkpQuestion questionLkpEntity = questionRepo.findOne(q.questionId);
