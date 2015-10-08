@@ -195,7 +195,7 @@ public class OfferRequestService {
 		for(BrgUsrReqOfferQuestion quest:fromTable.getBrgUsrReqOfferQuestions()){
 			Questions question = new Questions();
 			question.questionId = quest.getLkpQuestion().getQuestId();
-			question.response = quest.getLkpQuestion().getResponseTyp();
+			question.response = quest.getResponse();
 			questions.add(question);
 		}
 		result.questionList = questions;

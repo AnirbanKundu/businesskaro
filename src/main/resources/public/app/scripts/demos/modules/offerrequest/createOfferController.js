@@ -232,6 +232,17 @@ angular
               return response.data;
             });
       };
+
+      $scope.delete = function(){
+        $http({
+          url: '/services/offer/'+$scope.id,
+            method: 'DELETE'
+        }).then(function(){
+          $window.location.href = '/#/myoffers'; 
+        },function(error){
+          console.log('Cannot delete request',error);
+        });
+      };
       
       $scope.save =  function(){
     		var state=[];
@@ -319,6 +330,7 @@ angular
                         },
                     cache : false}).then(function(response){
                       $scope.waiting = false;
+                      $scope.id = response.data;
                       var tagEntity = { "entityId" : response.data, "entityType" : "OFFER", "tags" : tags }
                       $http({
                         url: 'services/tag',
