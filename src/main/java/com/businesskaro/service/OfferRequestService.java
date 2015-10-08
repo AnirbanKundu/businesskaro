@@ -12,12 +12,14 @@ import com.businesskaro.entity.BrgUsrReqOfferQuestion;
 import com.businesskaro.entity.BrgUsrReqrIndustry;
 import com.businesskaro.entity.BrgUsrReqrState;
 import com.businesskaro.entity.LkpIndustry;
+import com.businesskaro.entity.LkpQuestion;
 import com.businesskaro.entity.LkpState;
 import com.businesskaro.entity.TblUsrReqOffer;
 import com.businesskaro.entity.UserPersonalInfoSummary;
 import com.businesskaro.entity.repo.BrgUsrReqOfferQuestionRepo;
 import com.businesskaro.entity.repo.BrgUsrReqrIndustryRepo;
 import com.businesskaro.entity.repo.BrgUsrReqrStateRepo;
+import com.businesskaro.entity.repo.QuestionRepo;
 import com.businesskaro.entity.repo.StateRepo;
 import com.businesskaro.entity.repo.TblUsrReqOfferRepo;
 import com.businesskaro.entity.repo.UserInductryRepo;
@@ -33,7 +35,10 @@ public class OfferRequestService {
 	TblUsrReqOfferRepo reqOfferRepo;
 	
 	@Autowired
-	BrgUsrReqOfferQuestionRepo questionRepo;
+	BrgUsrReqOfferQuestionRepo brgQuestionRepo;
+	
+	@Autowired
+	QuestionRepo questionRepo;
 	
 	@Autowired
 	UserInductryRepo userIndRepo;
@@ -98,7 +103,7 @@ public class OfferRequestService {
 		}
 		
 		List<BrgUsrReqrState> result1 = brgUsrReqState.findByTblUsrReqOffer(entity);
-		if(result.size()>0){
+		if(result1.size()>0){
 			brgUsrReqState.delete(result1);
 		}
 		
@@ -113,6 +118,20 @@ public class OfferRequestService {
 				}
 			}
 		}
+		
+		if(model.questionList!=null){
+			for(Questions q : model.questionList){
+				LkpQuestion questionLkpEntity = questionRepo.findOne(q.questionId);
+				if(questionLkpEntity!=null){
+					BrgUsrReqOfferQuestion qa = new BrgUsrReqOfferQuestion();
+					qa.setLkpQuestion(questionLkpEntity);
+					qa.setResponse(q.response);
+					qa.setTblUsrReqOffer(entity);
+					brgQuestionRepo.save(qa);
+				}
+			}
+		}
+		
 		return entity.getReqOffrId();
 	}
 
@@ -167,10 +186,12 @@ public class OfferRequestService {
 		result.trgtLocation = usrStatesIds;
 		
 		List<Questions> questions = new ArrayList<Questions>();
+		
 		for(BrgUsrReqOfferQuestion quest:fromTable.getBrgUsrReqOfferQuestions()){
 			Questions question = new Questions();
 			question.questionId = quest.getLkpQuestion().getQuestId();
 			question.response = quest.getLkpQuestion().getResponseTyp();
+			questions.add(question);
 		}
 		result.questionList = questions;
 		result.imgUrl = fromTable.getImageUrl();
