@@ -19,6 +19,7 @@ public class BrgTopicsIndustry implements Serializable {
 
 	@Id
 	@Column(name="POLICY_INDUS_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int policyIndusId;
 
 	//bi-directional many-to-one association to TblPolicy
