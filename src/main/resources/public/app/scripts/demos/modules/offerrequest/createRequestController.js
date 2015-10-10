@@ -150,6 +150,17 @@ angular
 	    $scope.selectedStateId = 0;
 	    
 	    /*********** Get all Lookup values *********/
+
+    	$scope.delete = function(){
+    		$http({
+    			url: '/services/request/'+$scope.id,
+	    	    method: 'DELETE'
+    		}).then(function(){
+    			$window.location.href = '/#/requests';
+    		},function(error){
+    			console.log('Cannot delete request',error);
+    		});
+    	}
 	      
 	      $scope.save =  function(){
     		var state=[];
@@ -234,12 +245,14 @@ angular
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';
 	    	            	  $scope.waiting = false;
+	    	            	  $scope.id = response.data;
 	    	            	  var tagEntity = { "entityId" : response.data, "entityType" : "REQUEST", "tags" : tags }
 		                      $http({
 		                        url: 'services/tag',
 		                        method: 'POST',
 		                        data: tagEntity
 		                      }).then(function(response){
+
 		                        $scope.waiting = false;
 		                      },function(error){
 		                        console.log('TAG Entity error',error);
