@@ -102,6 +102,9 @@ angular
           }]
         }
       })
+      .when('/goipolicy',{
+        templateUrl: 'views/form-goi.html'
+      })
       .when('/login',{
         templateUrl: 'views/login.html'
       })

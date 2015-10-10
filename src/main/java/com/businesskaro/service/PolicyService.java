@@ -109,14 +109,14 @@ public class PolicyService {
 		policy.policyType = tblPolicy.getPolicyType();
 		policy.id = tblPolicy.getPolicyId();
 		
-		policy.industrys = new ArrayList<Integer>();
-		for(BrgTopicsIndustry brgIndu : tblPolicy.getBrgTopicsIndustries()){
-			policy.industrys.add(brgIndu.getLkpIndustry().getIndustryId());
+		policy.industrys = new int[tblPolicy.getBrgTopicsIndustries().size()];
+		for(int j=0;j<tblPolicy.getBrgTopicsIndustries().size();j++){
+			policy.industrys[j] = tblPolicy.getBrgTopicsIndustries().get(j).getLkpIndustry().getIndustryId();
 		}
 		
-		policy.states = new ArrayList<Integer>();
-		for(BrgTopicsState brgState : tblPolicy.getBrgTopicsStates()){
-			policy.states.add(brgState.getLkpState().getStateId());
+		policy.states = new int[tblPolicy.getBrgTopicsStates().size()];
+		for(int i=0;i<tblPolicy.getBrgTopicsStates().size();i++){
+			policy.states[i] = tblPolicy.getBrgTopicsStates().get(i).getLkpState().getStateId();
 		}
 		
 		return policy;
