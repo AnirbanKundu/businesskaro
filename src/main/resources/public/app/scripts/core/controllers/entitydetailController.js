@@ -1,5 +1,5 @@
 angular
-  .module('theme.core.entitydetail_controller', [])
+  .module('theme.core.entitydetail_controller', ['theme.core.search_controller'])
   .controller('EntityDetailController', ['$scope', '$http', '$route', '$state', '$log', '$timeout', 'EntityService','LookUpService', function($scope, $http, $route, $state, $log, $timeout, EntityService,LookUpService) {
     'use strict';
 
@@ -8,9 +8,20 @@ angular
     $scope.entityResult = {};
     $scope.userDetail = {};
     LookUpService.getIndustries().then(function(data){
-        $scope.industries = data;
     },function(error){
         $log.log(error);
+    });
+    LookUpService.getAgeGroup().then(function(data){ 
+    },function(error){
+      $log.log(error); 
+    });
+    LookUpService.getEducations().then(function(data){
+    },function(error){
+      $log.log(error);
+    });
+    LookUpService.getProfession().then(function(data){
+    },function(error){
+      $log.log(error);
     });
     EntityService.getEntityDetailData({'entityType':$scope.entityType,'entityId':$scope.entityId}).then(function(data){
     	$scope.entityResult = data;
@@ -38,6 +49,31 @@ angular
     		}
     		else{
     			//GET USER Details
+          var questionType='';
+          $scope.questions = [];
+          if($scope.entityType=='OFFER'){
+            questionType='O';
+          }
+          else{
+            questionType='R';
+          }
+          LookUpService.getQuestions(questionType).then(function(data){
+              for(var i=0;i<data.length;i++){
+                for(var j=0;j<$scope.entityResult.questionList.length;i++){
+                  if(data[i].questId==$scope.entityResult.questionList[j].questionId){
+                    var q = {
+                      questId: data[i].questId,
+                      response : $scope.entityResult.questionList[j].response
+                    };
+                    $scope.questions.push(q);
+                    break;
+                  }
+                }
+              }
+            },function(error){
+              console.log('In questions http');
+              $log.log(error);
+          });
     			EntityService.getRelatedUserDetail({'userId':$scope.entityResult.userId}).then(function(data){
     				$scope.userDetail = data;
     			},function(error){

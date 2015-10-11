@@ -115,8 +115,19 @@ angular
       console.log('Tags selected are:', $scope.selectedTag);
     }
 
+    $scope.loadMoreData = function(){
+      var searchData = $scope.returnPagedData($scope.searchResults,$scope.searchResults.length);
+      for(var i=0;i<searchData.length;i++){
+        $scope.searchResults.push(searchData[i]);
+      }
+      $timeout(function(){
+          var arrToMakeCalls =  sliceArrayAndRemove($scope.searchResults);
+          makeAJAXCall(arrToMakeCalls);
+      },50);
+    }
     
     $scope.searchType = $scope.searchType.toUpperCase();
+    $scope.isSearchButtonVisible = false;
     //services/tag/entity?keyword=JAVA&entityType=ALL ; services/tag/entity?keywords ; appdata/tagentity.json
     $http({
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
@@ -125,6 +136,7 @@ angular
            
         $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
         $scope.searchResults = $scope.returnPagedData($scope.searchResults,0);
+        $scope.isSearchButtonVisible = ($scope.searchResults.length < $scope.MasterSerachResult); 
         $timeout(function(){
           var arrToMakeCalls =  sliceArrayAndRemove($scope.searchResults);
           makeAJAXCall(arrToMakeCalls);
@@ -133,28 +145,114 @@ angular
         console.log('Error in delete');
     });
 
+    $scope.showDetails=function(result,$event){      
+      $event.preventDefault();
+      $location.path('/entitydetail/'+result.entityType+'/'+ result.entityId);
+
+    };
+
 }])
 .filter('industryfilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
-  return function(array){ 
+  return function(array,type){ 
     var industryNames = ''
     if(array){
       for(var i=0;i<array.length;i++){
         industryNames += LookUpService.getIndustryName(array[i]) + ','
       }
       industryNames = industryNames.substring(0, industryNames.lastIndexOf(','));
+      if(type){
+        industryNames = industryNames.length > 65 ? industryNames.substring(0,65) + '...' : industryNames;
+      }
       return industryNames;
     }
   } 
 }])
 .filter('statefilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
-  return function(array){ 
+  return function(array,type){ 
     var stateNames = ''
     if(array){
       for(var i=0;i<array.length;i++){
         stateNames += LookUpService.getStateName(array[i]) + ','
       }
       stateNames = stateNames.substring(0, stateNames.lastIndexOf(','));
+      if(type){
+        stateNames = stateNames.length > 65 ? stateNames.substring(0,65) + '...' : stateNames;
+      }
       return stateNames;
+    }
+  } 
+}])
+.filter('maxlengthfilter',['$filter',function statefilter(){
+  return function(value,length){ 
+    var stateNames = ''
+    if(value){
+      if(value.length<=length){
+        return value;
+      }else{
+        return value.substring(0,length) + '...'
+      }
+    }
+  } 
+}])
+.filter('educationfilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
+  return function(array){ 
+    var educationNames = '', Arr = [];
+    
+    if(array){
+      if(array.constructor !== Array){
+        Arr.push(array)
+      }
+      for(var i=0;i<Arr.length;i++){
+        educationNames += LookUpService.getEducationName(Arr[i]) + ','
+      }
+      educationNames = educationNames.substring(0, educationNames.lastIndexOf(','));
+      return educationNames;
+    }
+  } 
+}])
+.filter('ageGroupfilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
+  return function(array){ 
+    var ageGroupNames = '', Arr = [];
+    if(array){
+      if(array.constructor !== Array){
+        Arr.push(array)
+      }  
+      for(var i=0;i<Arr.length;i++){
+        ageGroupNames += LookUpService.getAgeGroupName(Arr[i]) + ','
+      }
+      ageGroupNames = ageGroupNames.substring(0, ageGroupNames.lastIndexOf(','));
+      return ageGroupNames;
+    }
+  } 
+}])
+.filter('professionfilter',['$filter','LookUpService',function datefilter($filter,LookUpService){
+  return function(array){ 
+    var professionNames = '', Arr = [];
+    if(array){
+      if(array.constructor !== Array){
+        Arr.push(array)
+      }
+      for(var i=0;i<Arr.length;i++){
+        professionNames += LookUpService.getProfessionName(Arr[i]) + ','
+      }
+      professionNames = professionNames.substring(0, professionNames.lastIndexOf(','));
+      return professionNames;
+    }
+  } 
+}])
+.filter('userTypefilter',['$filter',function datefilter($filter){
+  return function(value){ 
+    var userType='';
+    if(value){
+      if(value==='E'){
+        return 'Entrepreneur';
+      }
+      else if(value==='P'){
+        return 'Provider';
+      }
+      else{
+        return 'Entrepreneur & Provider';
+      }
     }
   } 
 }]);

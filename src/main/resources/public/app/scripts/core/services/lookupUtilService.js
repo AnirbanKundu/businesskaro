@@ -151,6 +151,29 @@ angular.module('theme.core.services')
       return serached.stateName;
     }
   };
+  var _getProfessionName = function(profId){//{profession_id:profId}
+    if(professions){
+      var serached =  _.find(professions, function(p){
+        if(p.profession_id == profId){
+          return p;
+        }
+        
+      });
+      return serached.profession_name;
+    }
+  };
+  var _getAgeGroupName = function(ageId){
+    if(ageGroup){
+      var serached =  _.findWhere(ageGroup, {ageId:ageId});
+      return serached.displAge;
+    }
+  };
+  var _getEducationName = function(educationId){
+    if(educationGroup){
+      var serached =  _.findWhere(educationGroup, {eductnId:educationId});
+      return serached.eductnName;
+    }
+  };
   return {
     getAgeGroup: _getAgeGroup,
     getEducations : _getEducations,
@@ -160,6 +183,9 @@ angular.module('theme.core.services')
     getIntAudience: _getIntAudience,
     getIndustries : _getIndustries,
     getIndustryName : _getIndustryName,
-    getStateName : _getStateName
+    getStateName : _getStateName,
+    getProfessionName:_getProfessionName,
+    getAgeGroupName: _getAgeGroupName,
+    getEducationName:_getEducationName
   };
 }]);

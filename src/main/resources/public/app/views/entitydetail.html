@@ -37,9 +37,7 @@
 						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
 
 						<div class="user-detail">
-							<h2 class="user-name">{{entityResult.summary.firstName}}&nbsp;{{entityResult.summary.lastName}}</h2>
-							<h6 class="user-info">About</h6>
-							<p>{{entityResult.summary.aboutMe}}</p>
+							<h2 class="user-name">{{entityResult.summary.firstName}}&nbsp;{{entityResult.summary.lastName}}</h2>							
 							<div class="table-responsive">
 								<h6 class="user-info">Details</h6>
 								<table class="table table-condensed m0">
@@ -55,25 +53,23 @@
 										
 										<tr>
 											<td>Education</td>
-											<td>{{entityResult.details.educatonId}}</td>
+											<td>{{entityResult.details.educatonId | educationfilter}}</td>
 										</tr>
 										<tr>
 											<td>Profession</td>
-											<td>{{entityResult.details.professionalId}}</td>
+											<td>{{entityResult.details.professionalId | professionfilter}}</td>
 										</tr>
 										<tr>
 											<td>Status</td>
-											<td>{{entityResult.summary.userType}}</td>
+											<td>{{entityResult.summary.userType | userTypefilter}}</td>
 										</tr>
 										<tr>
 											<td>Social</td>
 											<td>
-												<a href="#" class="btn btn-xs"><i class="fa fa-skype"></i></a>
-												<a href="#" class="btn btn-xs"><i class="fa fa-facebook"></i></a>
-												<a href="#" class="btn btn-xs"><i class="fa fa-twitter"></i></a>
-												<a href="#" class="btn btn-xs"><i class="fa fa-dribbble"></i></a>
-												<a href="#" class="btn btn-xs"><i class="fa fa-tumblr"></i></a>
-												<a href="#" class="btn btn-xs"><i class="fa fa-linkedin"></i></a>
+
+												<a ng-href="{{entityResult.details.faceBookUrl}}" class="btn btn-xs" ng-if="entityResult.details.faceBookUrl"><i class="fa fa-facebook" ></i></a>
+												<a ng-href="{{entityResult.details.twiterURL}}" ng-if="entityResult.details.twiterURL" class="btn btn-xs"><i class="fa fa-twitter"></i></a>
+												<a ng-href="{{entityResult.details.linkedInUrl}}" ng-if="entityResult.details.linkedInUrl" class="btn btn-xs"><i class="fa fa-linkedin"></i></a>
 											</td>
 										</tr>
 									</tbody>
@@ -127,7 +123,32 @@
 			<div class="col-sm-8 entity-detail" >
 				<div class="row">
 					<tabset panel-tabs="true" panel-class="panel-default">
-						<tab heading="{{entityType}} Detail">
+						<tab heading="{{entityType}} Detail" ng-if="entityType=='USER'">
+							
+							<div class="row">
+								<div class="col-md-12 mb">
+									<div class="row">
+										<div class="col-xs-12">
+											<h5 class="user-info">About</h5>
+											<p>{{entityResult.summary.aboutMe}}</p>
+										</div>
+										<div class="col-xs-12">
+											<h5>Industry Details</h5>
+											<span>{{entityResult.summary.industrys | industryfilter}}</span>
+										</div>		
+										<div class="col-xs-12">
+											<h5>Location</h5>
+											<span>{{entityResult.summary.stateName}},{{entityResult.summary.cityName}}</span>
+										</div>
+										<div class="col-xs-12">
+											<h5>Age Group</h5>
+											<span>{{entityResult.details.ageGroupId | ageGroupfilter}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</tab>
+						<tab heading="{{entityType}} Detail" ng-if="entityType!='USER'">
 							
 							<div class="row">
 								<div class="col-md-12 mb">
@@ -146,7 +167,7 @@
 										</div>
 										<div class="col-xs-12">
 											<h5>Target Location</h5>
-											<span>{{entityResult.trgtLocation | statefilter}}</span>
+											<span>{{entityResult.trgtLocation}}</span>
 										</div>
 										<div class="col-xs-12">
 											<h5>Specific Need</h5>
@@ -219,7 +240,7 @@
 					tags
 				</div>
 			</div>
-			<div class="panel">
+			<div class="panel" style="padding:20px;">
 				<div class="col-md-12">
 					<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button"></div>
 				</div>

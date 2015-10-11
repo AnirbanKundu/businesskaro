@@ -216,12 +216,19 @@ public class OfferRequestService {
 		result.title = fromTable.getReqOffrTitle();
 		result.intdAudience = fromTable.getTargAudienceId();
 		
+		
+		
 		int[] usrStatesIds = new int[fromTable.getBrgUsrReqrStates().size()];
 		for(int j=0;j<fromTable.getBrgUsrReqrStates().size();j++){
-			usrStatesIds[j] = fromTable.getBrgUsrReqrStates().get(j).getReqrIndus();
+			usrStatesIds[j] = fromTable.getBrgUsrReqrStates().get(j).getLkpState().getStateId();		
 		}
 		result.trgtLocation = usrStatesIds;
 		
+		int[] offerReqIndustryIds = new int[fromTable.getBrgUsrReqrIndustries().size()];
+		for(int j=0;j<fromTable.getBrgUsrReqrIndustries().size();j++){
+			offerReqIndustryIds[j] = fromTable.getBrgUsrReqrIndustries().get(j).getLkpIndustry().getIndustryId();
+		}
+		result.trgtIndustry=offerReqIndustryIds;
 		// Change imageURL to send the thumb nail
 		if(fromTable.getImageUrl()!=null){
 			String url = fromTable.getImageUrl();

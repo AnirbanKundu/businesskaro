@@ -9,8 +9,9 @@ angular
 	    	$scope.offers = [];
 	    	$scope.waiting = false;
 	    });
-	  $scope.openRequest = function(offer){
-		  $window.location.href = '/#/createrequest?id='+offer.id;
+	  $scope.openRequest = function(request){
+	  	$location.url('/createrequest?id='+request.id);	
+		  //$window.location.href = '/createrequest/id/'+offer.id;
 	  }
 	  $scope.createRequest=function(){
 	  	$location.path('/createrequest'); 

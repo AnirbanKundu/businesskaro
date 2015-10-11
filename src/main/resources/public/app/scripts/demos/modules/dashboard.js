@@ -1,7 +1,7 @@
 angular.module('theme.demos.dashboard', [
     'angular-skycons',
-    'theme.demos.forms',
-    'theme.demos.tasks',
+    //'theme.demos.forms',
+    //'theme.demos.tasks',
     'theme.core.services'
   ])
   .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', '$state', 'LookUpService',function($scope, $timeout, $window,$http, $location,$theme, $state, LookUpService) {
