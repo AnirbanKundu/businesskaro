@@ -101,7 +101,44 @@ public class PolicyService {
 		if(tblPolicy == null){
 			throw new BKException("Entity Not found with given id", "000", Type.ENTITY_NOT_FOUND);
 		}
+		return mapper(tblPolicy);
 		
+	}
+
+	public void deletePolicy(Integer id) {
+		
+		TblPolicy tblPolicy = policyRepo.findOne(id);
+		
+		List<BrgTopicsIndustry> bgrList = brgTopicsIndustryRepo.findByTblPolicy(tblPolicy);
+		if(bgrList != null && bgrList.size() > 0){
+			brgTopicsIndustryRepo.delete(bgrList);
+		}
+		
+		List<BrgTopicsState> brgStateList = brgTopicsStateRepo.findByTblPolicy(tblPolicy);
+		if(brgStateList != null && brgStateList.size() > 0){
+			brgTopicsStateRepo.delete(brgStateList);
+		}
+		
+		policyRepo.delete(id);
+		
+	}
+
+	public List<Policy> getPolicies() {
+		Iterable<TblPolicy> tblPolicies = policyRepo.findAll();
+		
+		if(tblPolicies == null){
+			throw new BKException("Entity Not found with given id", "000", Type.ENTITY_NOT_FOUND);
+		}
+		
+		List<Policy> result = new ArrayList<Policy>();
+		for(TblPolicy tblPolicy : tblPolicies){
+			result.add(mapper(tblPolicy));
+		}
+		
+		return result;
+	}
+	
+	private Policy mapper(TblPolicy tblPolicy){
 		Policy policy = new Policy();
 		policy.imageUrl = tblPolicy.getImageUrl();
 		policy.policyDesc = tblPolicy.getPolicyDesc();
@@ -122,23 +159,5 @@ public class PolicyService {
 		}
 		
 		return policy;
-	}
-
-	public void deletePolicy(Integer id) {
-		
-		TblPolicy tblPolicy = policyRepo.findOne(id);
-		
-		List<BrgTopicsIndustry> bgrList = brgTopicsIndustryRepo.findByTblPolicy(tblPolicy);
-		if(bgrList != null && bgrList.size() > 0){
-			brgTopicsIndustryRepo.delete(bgrList);
-		}
-		
-		List<BrgTopicsState> brgStateList = brgTopicsStateRepo.findByTblPolicy(tblPolicy);
-		if(brgStateList != null && brgStateList.size() > 0){
-			brgTopicsStateRepo.delete(brgStateList);
-		}
-		
-		policyRepo.delete(id);
-		
 	}
 }
