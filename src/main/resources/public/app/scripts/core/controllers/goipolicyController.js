@@ -262,7 +262,7 @@ angular
                   cache : false}).then(function(response){
                     //$window.location.href = '/#/myoffers';
                     $scope.waiting = false;
-                    var tagEntity = { "entityId" : $scope.id, "entityType" : "GOIPOLICY", "tags" : tags }
+                    var tagEntity = { "entityId" : $scope.id, "entityType" : "GOVT_POLICY", "tags" : tags }
                     $http({
                       url: 'services/tag',
                       method: 'POST',
@@ -290,8 +290,8 @@ angular
                       },
                   cache : false}).then(function(response){
                     $scope.waiting = false;
-                    $scope.id = response.data;
-                    var tagEntity = { "entityId" : response.data, "entityType" : "GOIPOLICY", "tags" : tags }
+                    $scope.id = response.data.id;
+                    var tagEntity = { "entityId" : response.data.id, "entityType" : "GOVT_POLICY", "tags" : tags }
                     $http({
                       url: 'services/tag',
                       method: 'POST',

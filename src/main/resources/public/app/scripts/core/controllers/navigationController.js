@@ -14,7 +14,7 @@ angular
     {
       label: 'Policy',
       iconClasses: 'glyphicon glyphicon-file',
-      url: '#/goipolicy'
+      url:'#/search/GOVT_POLICY/IT%20Software,West%20Bengal'
     },
     /*
     {

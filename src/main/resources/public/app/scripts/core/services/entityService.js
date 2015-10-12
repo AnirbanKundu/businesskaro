@@ -14,7 +14,7 @@ angular.module('theme.core.services')
       url = '/services/request/summary/'+options.entityId;
     }
     else{
-      //NEWS
+      url = '/services/policy/'+options.entityId;
     }
 
     $http({
@@ -41,7 +41,7 @@ angular.module('theme.core.services')
       url = '/services/request/detail/'+options.entityId;
     }
     else{
-      //NEWS
+      url = '/services/policy/'+options.entityId;
     }
 
     $http({

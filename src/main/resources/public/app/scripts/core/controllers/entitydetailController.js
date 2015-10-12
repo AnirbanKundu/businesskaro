@@ -33,7 +33,7 @@ angular
     	console.log('Data in entity detail:',$scope.entityResult);
     	$scope.connectMessage='';
     	//Get Related Entity details
-    	if($scope.entityType!='GOIPOLICY'){
+    	if($scope.entityType!='GOVT_POLICY'){
     		if($scope.entityType=='USER'){
     			$http({
 		          url : '/services/offer/user/'+ $scope.entityResult.summary.userId,

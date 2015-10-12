@@ -86,8 +86,9 @@
 
     }
     .search-results:hover { 
-      opacity:0.5;
+      /*opacity:0.5;
       transition: 1s ease bottom !important;
+      */
       cursor: pointer;
     }
 </style>
@@ -137,11 +138,11 @@
         <div class="col-md-12" ng-if="result.entityType == 'GOVT_POLICY'" panel-class="panel-warning">
             <div class="ribbon-wrapper-green">
                 <div class="ribbon-green">
-                    <span>Government News</span>
+                    <span>Govt. News</span>
                     <span ng-if="!result.data">Loading...</span>
                 </div>
             </div>
-            <div class="panel panel-widget widget-userfocus search-results" style="background-color:##05a7cf;">
+            <div class="panel panel-widget widget-userfocus search-results"  style="background-color:#05a7cf;">
                 <div class="widget-body">
                     <div class="panel-loading" ng-if="!result.data">
                         <div class="panel-loader-dots"></div>
@@ -178,7 +179,7 @@
                                     <span>States Linked</span>
                                 </td>
                                 <td>
-                                    <span>{{result.data.trgtLocation | statefilter:'ellipse'}}</span>
+                                    <span>{{result.data.states | statefilter:'ellipse'}}</span>
                                 </td>
                             </tr>                    
                         </tbody>

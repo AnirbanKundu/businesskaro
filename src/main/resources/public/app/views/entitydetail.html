@@ -17,20 +17,23 @@
 </div>
 <div class="container-fluid" >
 	<div class="row">
-		<div class="col-md-9" ng-if="entityType=='GOIPolicy'">
+		<div class="col-md-9" ng-if="entityType=='GOVT_POLICY'">
 				<div class="panel panel-default panel-profile">
 					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:500px;overflow-y:auto;">
-						<h3>The news title must come over here. </h3>
-						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
+						<h3>{{entityResult.policyTitle}}</h3>
+						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">						
 						<hr/>
+						<div>
+							<span>Last Updated:</span><span>27th September 2015</span>
+						</div>
 
 						<p style="padding:20px;text-align:justify;">
-							Some News Content to be put here. Actually will come from database. 
+							{{entityResult.policyDesc}} 
 						</p>
 					</div>
 				</div>
 		</div>
-		<div class="col-md-9" ng-if="entityType!='GOIPolicy'">
+		<div class="col-md-9" ng-if="entityType!='GOVT_POLICY'">
 			<div class="col-sm-4">
 				<div class="panel panel-default panel-profile" ng-if="entityType=='USER'">
 					<div class="panel-body user-profile">
@@ -247,7 +250,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row panel">		
+	<div class="row panel" style="display:none;">		
 		<div class="col-md-12">
 			Related Entity
 		</div>

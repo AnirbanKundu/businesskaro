@@ -155,7 +155,7 @@ angular
       }else if(result.entityType=='REQUEST'){
         entityType='REQUEST'
       }else{
-        entityType= 'GOIPolicy'
+        entityType= 'GOVT_POLICY'
       }
       $location.path('/entitydetail/'+entityType+'/'+ result.entityId);
 
