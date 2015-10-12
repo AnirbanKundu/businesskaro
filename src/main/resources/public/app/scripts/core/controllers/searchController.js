@@ -147,7 +147,17 @@ angular
 
     $scope.showDetails=function(result,$event){      
       $event.preventDefault();
-      $location.path('/entitydetail/'+result.entityType+'/'+ result.entityId);
+      var entityType;
+      if(result.entityType==='USER_PROFILE'){
+        entityType='USER'
+      }else if(result.entityType=='OFFER'){
+        entityType='OFFER'
+      }else if(result.entityType=='REQUEST'){
+        entityType='REQUEST'
+      }else{
+        entityType= 'GOIPolicy'
+      }
+      $location.path('/entitydetail/'+entityType+'/'+ result.entityId);
 
     };
 
@@ -237,6 +247,20 @@ angular
       }
       professionNames = professionNames.substring(0, professionNames.lastIndexOf(','));
       return professionNames;
+    }
+  } 
+}]) 
+.filter('audiencefilter',['$filter',function audiencefilter($filter){
+  return function(value){ 
+    var professionNames = '';
+    if(value){
+      if(value==1){
+        return '10-100';
+      }else if(value==2){
+        return '101-1000';
+      }else{
+        return '1001-10000';
+      }
     }
   } 
 }])

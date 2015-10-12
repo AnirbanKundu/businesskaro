@@ -49,7 +49,7 @@ angular
     if($scope.id !== undefined){    	
     	$timeout(function(){
     		$http({
-    	          url : '/services/offer/detail/'+ $scope.id,
+    	          url : '/services/offer/detailinedit/'+ $scope.id,
     	          method: 'GET'
     	        }).then(function(response){
     	        	var data = response.data;

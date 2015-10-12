@@ -38,7 +38,7 @@ angular.module('theme.core.services')
       url = '/services/offer/detail/'+options.entityId;
     }
     else if(options.entityType==='REQUEST'){
-      url = '/services/request/summary/'+options.entityId;
+      url = '/services/request/detail/'+options.entityId;
     }
     else{
       //NEWS

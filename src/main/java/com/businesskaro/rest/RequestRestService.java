@@ -69,6 +69,18 @@ public class RequestRestService extends BKRestService{
 		try{
 			Integer userId = validateSecureToken(clientId, secureToken);
 			OfferRequest result = service.getDetails(requestId);
+			return result;
+			 
+		} catch(Exception e){
+			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
+		}
+	}
+	@RequestMapping(value="/services/request/detailinedit/{requestId}" , method = RequestMethod.GET)
+	public OfferRequest getRequestDetailsInEdit(@PathVariable("requestId") Integer requestId, @RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId){
+		try{
+			Integer userId = validateSecureToken(clientId, secureToken);
+			OfferRequest result = service.getDetails(requestId);
 			
 			if(result.userId!=userId){
 				throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);

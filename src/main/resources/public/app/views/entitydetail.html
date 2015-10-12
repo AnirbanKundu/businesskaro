@@ -163,17 +163,17 @@
 										</div>
 										<div class="col-xs-12">
 											<h5>Intended Audience</h5>
-											<span>TBD</span>
+											<span>{{entityResult.intdAudience | audiencefilter}}</span>
 										</div>
 										<div class="col-xs-12">
 											<h5>Target Location</h5>
-											<span>{{entityResult.trgtLocation}}</span>
+											<span>{{entityResult.trgtLocation | statefilter}}</span>
 										</div>
 										<div class="col-xs-12">
 											<h5>Specific Need</h5>
-											<div><span>Are you looking for finance</span>:<span>YES</span></div>
-											<div><span>Are you looking for finance</span>:<span>YES</span></div>
-											<div><span>Are you looking for finance</span>:<span>YES</span></div>
+											<div ng-repeat="q in questions">
+												<span>{{q.questTxt}}</span>:<span>{{q.response}}</span>
+											</div>
 										</div> 
 									</div>
 								</div>

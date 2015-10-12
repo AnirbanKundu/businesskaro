@@ -7,6 +7,11 @@ angular
     $scope.entityId = $route.current.params.entityId;
     $scope.entityResult = {};
     $scope.userDetail = {};
+    LookUpService.getStates().then(function(data){
+
+    },function(error){
+        $log.log(error);
+    });
     LookUpService.getIndustries().then(function(data){
     },function(error){
         $log.log(error);
@@ -62,7 +67,8 @@ angular
                 for(var j=0;j<$scope.entityResult.questionList.length;i++){
                   if(data[i].questId==$scope.entityResult.questionList[j].questionId){
                     var q = {
-                      questId: data[i].questId,
+                      questId:data[i].questId,
+                      questTxt:data[i].questTxt,
                       response : $scope.entityResult.questionList[j].response
                     };
                     $scope.questions.push(q);

@@ -98,7 +98,7 @@ angular
 	    
 	    if($scope.id !== undefined){
 	    	$http({
-		          url : '/services/request/detail/'+ $scope.id,
+		          url : '/services/request/detailinedit/'+ $scope.id,
 		          method: 'GET'
 		        }).then(function(response){
 		        	var data = response.data;
