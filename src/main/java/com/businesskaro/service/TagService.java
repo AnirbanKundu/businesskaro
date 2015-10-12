@@ -1,6 +1,7 @@
 package com.businesskaro.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class TagService {
 			entityTag.setTagId(tagEntity.getTagId());
 			entityTag.setEntityType(request.entityType.toString());
 			entityTag.setEntityId(request.entityId);
+			entityTag.setCreatedDate(new Date());
 			tagEntityRepo.save(entityTag);
 		}
 	}
