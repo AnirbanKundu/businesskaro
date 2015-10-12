@@ -1,5 +1,7 @@
 package com.businesskaro.model;
 
+import java.util.Date;
+
 public class Policy {
 	
 	public Integer id;
@@ -9,4 +11,7 @@ public class Policy {
 	public String imageUrl;
 	public int[]  industrys;
 	public int[]  states;	
+	
+	public Date createDate;
+	public Date updateDate;
 }
