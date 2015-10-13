@@ -82,6 +82,15 @@
     .slide.ng-hide {
       bottom: -30px;
     }
+    .search-results{
+
+    }
+    .search-results:hover { 
+      /*opacity:0.5;
+      transition: 1s ease bottom !important;
+      */
+      cursor: pointer;
+    }
 </style>
 <!--
 <div id="page-heading">
@@ -123,9 +132,62 @@
     </div>
     <div class="row">
         <div class="col-md-9">
-                <div class="row" style="margin-top:30px;">
-      <div class="col-md-4" ng-repeat="result in searchResults">
+      <div class="row" style="margin-top:30px;">
+      <div class="col-md-4" ng-repeat="result in searchResults" ng-click="showDetails(result,$event);" ng-if="result.data">
 
+        <div class="col-md-12" ng-if="result.entityType == 'GOVT_POLICY'" panel-class="panel-warning">
+            <div class="ribbon-wrapper-green">
+                <div class="ribbon-green">
+                    <span>Govt. News</span>
+                    <span ng-if="!result.data">Loading...</span>
+                </div>
+            </div>
+            <div class="panel panel-widget widget-userfocus search-results"  style="background-color:#05a7cf;">
+                <div class="widget-body">
+                    <div class="panel-loading" ng-if="!result.data">
+                        <div class="panel-loader-dots"></div>
+                    </div>
+                    <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" />
+                    <img ng-if="!result.data.imgUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png"/>
+                    <span class="name">{{result.data.policyTitle}}</span>
+                </div>
+                <div class="widget-footer">
+                    <!--<p>
+                        {{result.data.aboutMe}}
+                    </p>-->
+                    <div class="table-responsive">
+                    <table class="table table-condensed m0">
+                        <tbody>
+                            <tr>
+                                <td style="height:60;">
+                                    <span>Description:</span>
+                                </td>
+                                <td>
+                                    <span>{{result.data.policyDesc | maxlengthfilter : 65}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Industry</span>
+                                </td>
+                                <td style="height:60px;">
+                                    {{result.data.industrys | industryfilter : 'ellipse' }}                                      
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>States Linked</span>
+                                </td>
+                                <td>
+                                    <span>{{result.data.states | statefilter:'ellipse'}}</span>
+                                </td>
+                            </tr>                    
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12" ng-if="result.entityType == 'USER_PROFILE'" panel-class="panel-warning">
             <div class="ribbon-wrapper-green">
                 <div class="ribbon-green">
@@ -135,7 +197,7 @@
                     <span ng-if="!result.data">Loading...</span>
                 </div>
             </div>
-            <div class="panel panel-widget widget-userfocus">
+            <div class="panel panel-widget widget-userfocus search-results">
                 <div class="widget-body">
                     <div class="panel-loading" ng-if="!result.data">
                         <div class="panel-loader-dots"></div>
@@ -145,7 +207,7 @@
                     <span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
                     <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
                 </div>
-                <div class="widget-footer" ng-mouseenter="show = true" ng-mouseleave="show = false">
+                <div class="widget-footer">
                     <!--<p>
                         {{result.data.aboutMe}}
                     </p>-->
@@ -156,34 +218,33 @@
                                 <td>
                                     <span>Profession:</span>
                                 </td>
-                                <td>
+                                <td style="height:60px;">
                                     <span>{{result.data.aboutMe}}</span>
                                     
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="height:60px;">
                                     <span>Industry aware of:</span>
                                 </td>
                                 <td>
-                                    <span>Agriculture, IT Software, Audit, Fianance, Labor</span>
+                                    {{result.data.industrys | industryfilter}}  
                                     
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <span>Looking for:</span>
+                                    Company Name
                                 </td>
-                                <td>
-                                    <span>Agriculture, IT Software, Audit, Fianance, Labor</span>
-                                    
+                                <td style="height:26px;">
+                                    {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
                         </tbody>
                         <tbody ng-if="result.data.userType==='P' || result.data.userType==='B'">
                             <tr>
                                 <td>Profession</td>
-                                <td>
+                                <td style="height:60px;">
                                     {{result.data.aboutMe}}                          
                                 </td>
                             </tr>
@@ -191,23 +252,19 @@
                                 <td>
                                     Industry I support
                                 </td>
-                                <td>
-                                    {{result.data.industrys | industryfilter}}                                 
+                                <td style="height:60px;">
+                                    {{result.data.industrys | industryfilter: 'ellipse' }}                                 
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     Company Name
                                 </td>
-                                <td>
+                                <td style="height:26px;">
                                     {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
                         </tbody>
-                        <div ng-show="show" ng-mouseenter="show = true" ng-mouseleave="show = false" class="slide">
-
-                            <a ng-href="#/entitydetail/User/{{result.entityId}}" ng-if="result.data">View Details..</a>
-                        </div>
                     </table>
                     </div>
                 </div>
@@ -222,7 +279,7 @@
                         <span ng-if="!result.data">Loading...</span>
                     </div>
                 </div>
-                <div class="panel panel-widget widget-userfocus" style="background-color:#60bd68;">
+                <div class="panel panel-widget widget-userfocus search-results" style="background-color:#60bd68;">
                     <div class="widget-body" style="padding-top:0">
                     <!--
                         <div class="panel-loading" ng-if="!result.data">
@@ -239,9 +296,11 @@
                         <img ng-if="!result.data.imgUrl && result.entityType==='REQUEST'" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442656507/application_images/request.png"/>
 
                         <div>Posted By:</div><div class="name">{{result.data.userName}}</div>
-                        <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
+                        <!--
+                        <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span> 
+                        -->
                     </div>
-                    <div class="widget-footer" ng-mouseenter="show = true" ng-mouseleave="show = false">
+                    <div class="widget-footer">
                         <table class="table">
                             <tbody ng-if="result.data">
                                 <tr>
@@ -265,22 +324,32 @@
                                     <td>
                                         <span>Target Industry</span>
                                     </td>
-                                    <td>
-                                        <span>{{result.data.trgtIndustry | industryfilter}}   </span>
+                                    <td style="height:60px;">
+                                        <span>{{result.data.trgtIndustry | industryfilter : 'ellipse'}}   </span>
                                         
                                     </td>
                                 </tr>
-                            </tbody>
-                            <div ng-show="show" ng-mouseenter="show = true" ng-mouseleave="show = false" class="slide">  
-                                <a ng-href="#/entitydetail/Offer/{{result.entityId}}" ng-if="result.data">View Details..</a>                              
-                            </div>
+                                <tr>
+                                    <td>
+                                        <span>States valid in:</span>
+                                    </td>
+                                    <td style="height:60px;">
+                                        <span>{{result.data.trgtLocation | statefilter: 'ellipse' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>                            
                         </table>
                     </div>
                 </div>
             </div>
         </div> 
     </div> <!-- Main row -->
-        </div>
+    <div class="row" style="margin-bottom:25px;"> <!--searchLength + pageSize < masterLength-->      
+      <div class="col-sm-8 col-sm-offset-6">
+        <button class="btn btn-success" ng-click="loadMoreData()" ng-if="MasterSerachResult.length!=0">    Load More    <i class="fa fa-arrow-right"></i></button>
+      </div>
+    </div>
+  </div>
         <div class="col-md-3">
             <div class="row">
                 <div class="panel panel-widget" style="padding:20px;">

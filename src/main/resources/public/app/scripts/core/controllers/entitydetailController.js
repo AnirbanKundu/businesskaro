@@ -1,6 +1,6 @@
 angular
   .module('theme.core.entitydetail_controller', ['theme.core.search_controller'])
-  .controller('EntityDetailController', ['$scope', '$http', '$route', '$state', '$log', '$timeout', 'EntityService','LookUpService', function($scope, $http, $route, $state, $log, $timeout, EntityService,LookUpService) {
+  .controller('EntityDetailController', ['$scope', '$http', '$route', '$state', '$timeout', '$log', 'EntityService','LookUpService', function($scope, $http, $route, $state, $timeout, $log, EntityService,LookUpService) {
     'use strict';
 
     $scope.entityType = $route.current.params.type.toUpperCase();
@@ -30,13 +30,31 @@ angular
     });
     EntityService.getEntityDetailData({'entityType':$scope.entityType,'entityId':$scope.entityId}).then(function(data){
     	$scope.entityResult = data;
+      $scope.relatedTags=[];
+
+
     	console.log('Data in entity detail:',$scope.entityResult);
     	$scope.connectMessage='';
     	//Get Related Entity details
     	if($scope.entityType!='GOVT_POLICY'){
     		if($scope.entityType=='USER'){
+          $timeout(function(){
+            for(var i=0;i<$scope.entityResult.summary.industrys.length;i++){
+              var industryName = LookUpService.getIndustryName($scope.entityResult.summary.industrys[i]);
+              var t = {
+                name: industryName,
+                url : '#/search/ALL' + '/' + industryName
+              }
+              $scope.relatedTags.push(t);
+            }
+            var s = {
+              name: $scope.entityResult.summary.stateName,
+              url : '#/search/ALL' + '/' + ',' + $scope.entityResult.summary.stateName
+            }
+            $scope.relatedTags.push(s);
+          },500);
     			$http({
-		          url : '/services/offer/user/'+ $scope.entityResult.summary.userId,
+		          url : '/services/offer/',
 		          method: 'GET'
 		        }).then(function(response){
 		        	$scope.offers = response.data;
@@ -44,7 +62,7 @@ angular
 
 		        });
 		        $http({
-		          url : '/services/request/user/'+ $scope.entityResult.summary.userId,
+		          url : '/services/request/',
 		          method: 'GET'
 		        }).then(function(response){
 		        	$scope.requests = response.data;

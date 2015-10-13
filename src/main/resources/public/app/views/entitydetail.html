@@ -184,7 +184,7 @@
 						</tab>
 						<tab heading="Offers posted by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
-								<li class="timeline-danger" ng-repeat="o in offers">
+								<li class="timeline-info" ng-repeat="o in offers">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
 									<div class="timeline-body">
 										<div class="timeline-header">											
@@ -192,7 +192,7 @@
 										</div>
 										<div class="timeline-content">
 											<h3>{{o.title}}</h3>
-											<p>{{o.description}}</p>
+											<p>{{o.description | maxlengthfilter : 65}}</p>
 										</div>
 									</div>
 								</li>
@@ -201,7 +201,7 @@
 						
 						<tab heading="Requests Raised by User" ng-if="entityType=='USER'">
 							<ul class="timeline">
-								<li class="timeline-danger" ng-repeat="r in requests">
+								<li class="timeline-info" ng-repeat="r in requests">
 									<div class="timeline-icon"><i class="fa fa-pencil"></i></div>
 									<div class="timeline-body">
 										<div class="timeline-header">
@@ -209,7 +209,7 @@
 										</div>
 										<div class="timeline-content">
 											<h3>{{r.title}}</h3>
-											<p>{{r.description}}</p>
+											<p>{{r.description | maxlengthfilter : 65}}</p>
 										</div>
 									</div>
 								</li>
@@ -224,7 +224,7 @@
 							<h5>Reach out directly:</h5>
 						</div>
 						<div class="col-md-12">
-							<textarea class="form-control" ng-model="connectMessage"></textarea>
+							<textarea class="form-control" ng-model="connectMessage" maxlength="250"></textarea>
 						</div>
 						<br/>
 						<div class="col-md-12" style="padding:20px;">
@@ -238,9 +238,14 @@
 			</div>
 		</div>
 		<div class="col-md-3">
-			<div class="panel">
+			<div class="panel" style="padding:20px;">
 				<div class="col-md-12">
-					tags
+					Related tags
+					<div class="row">
+						<div ng-repeat="t in relatedTags" style="display:inline-block;">
+							<a ng-href="{{t.url}}" class="btn btn-default btn-xs" style="margin:5px;">{{t.name}}</a>&nbsp;					
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="panel" style="padding:20px;">
