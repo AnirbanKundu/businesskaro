@@ -14,6 +14,7 @@ import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.Communicate;
 import com.businesskaro.rest.dto.CommunicateRequest;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.UserPersonalInfoService;
 
 @RestController
@@ -28,11 +29,14 @@ public class CommunicateRestController extends BKRestService{
 	@Autowired
 	UserPersonalInfoService service;
 	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 	@RequestMapping(value="/services/communicate" , method = RequestMethod.POST)
 	public void sendMail(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody CommunicateRequest request){		
 		try{
-			Integer userId = validateSecureToken(clientId, secureToken);
+			Integer userId = validateSecureToken(secureTokenUtil, clientId, secureToken);
 			TblUserPassword fromUserEmail = userDao.findOne(userId);
 			TblUserPassword toUserEmail = userDao.findOne(request.toId);	
 			BKUserProfileSummary fromUser = service.getUserPersonalSummary(userId);

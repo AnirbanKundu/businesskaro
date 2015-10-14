@@ -8,11 +8,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.ShortBufferException;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.businesskaro.model.BKException;
+import com.businesskaro.model.BKException.Type;
+
+@Component
 public class SecureTokenUtil {
 
 	private static final String TOKEN_SEP = "_._";
@@ -21,7 +29,10 @@ public class SecureTokenUtil {
 	
 	private static final Logger logger = Logger.getLogger(SecureTokenUtil.class);
 	
-	public static Integer validateSecureToken(String clientId, String secureToken)
+	@Autowired
+	SecureTokenCache tokenCache;
+	
+	public  Integer validateSecureToken(String clientId, String secureToken)
 			throws Exception {
 		boolean isValid =true;
 		try{
@@ -52,10 +63,14 @@ public class SecureTokenUtil {
 					String userIdStr = tokenizer.nextToken();
 					logger.debug("User Id in Token :" + userIdStr);
 					if(userIdStr == null){
-						throw new Exception("Securetoken is not valid / Expired");
+						throw new BKException("Securetoken is not valid / Expired","000",Type.USER_AUTH_FAIL);
 					}
 					
-					return Integer.parseInt(userIdStr);
+					isValid = tokenCache.isTokenValid(secureToken);
+					
+					if(isValid){
+						return Integer.parseInt(userIdStr);
+					}
 					
 				}
 			}else{
@@ -68,13 +83,13 @@ public class SecureTokenUtil {
 		
 		if(! isValid){
 			logger.error("Secure token is not valid.");
-			throw new Exception("Securetoken is not valid / Expired");
+			throw new BKException("Securetoken is not valid / Expired","000",Type.USER_AUTH_FAIL);
 		}
 		
 		return null;
 	}
 
-	public static String generateSecurityToken(String newGuid, Integer userId)
+	public String generateSecurityToken(String newGuid, Integer userId)
 			throws InvalidKeyException, ShortBufferException,
 			IllegalBlockSizeException, BadPaddingException,
 			UnsupportedEncodingException, Exception {
@@ -82,7 +97,13 @@ public class SecureTokenUtil {
 		Calendar cal = new GregorianCalendar();
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		String tokenEndLife = fomratTotokenDateFormat(cal.getTime());
-		return encFactory.Encrypt(newGuid + TOKEN_SEP + tokenEndLife + TOKEN_SEP + userId.toString());
+		String secureToken = encFactory.Encrypt(newGuid + TOKEN_SEP + tokenEndLife + TOKEN_SEP + userId.toString());
+		tokenCache.addToken(secureToken);
+		return secureToken;
+	}
+	
+	public void inValidateSecureToken(String secureToken){
+		tokenCache.removeToken(secureToken);
 	}
 
 	private static String fomratTotokenDateFormat(Date date) {

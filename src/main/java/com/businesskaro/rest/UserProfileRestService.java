@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.BkUserProfile;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.UserPersonalInfoService;
 
 @RestController
@@ -19,12 +20,15 @@ public class UserProfileRestService extends BKRestService {
 	
 	@Autowired
 	UserPersonalInfoService service;
+	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
 
 	@RequestMapping(value="/services/userProfile" , method = RequestMethod.POST)
 	public BkUserProfile createUserProfile(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody BkUserProfile bkUserProfile){
 		
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		
 		bkUserProfile.details.userId = userId;
 		bkUserProfile.summary.userId = userId;
@@ -36,7 +40,7 @@ public class UserProfileRestService extends BKRestService {
 	public BkUserProfile updateUserProfile(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody BkUserProfile bkUserProfile){
 		
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		bkUserProfile.details.userId = userId;
 		bkUserProfile.summary.userId = userId;
 		
@@ -48,7 +52,7 @@ public class UserProfileRestService extends BKRestService {
 			@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId ){
 		
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		
 		return service.getUserPersonalInfo(userId);
 	}
@@ -63,7 +67,7 @@ public class UserProfileRestService extends BKRestService {
 	public BKUserProfileSummary getUserProfileSummaryById(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
 		try{
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return service.getUserPersonalSummary(userId);
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
@@ -74,7 +78,7 @@ public class UserProfileRestService extends BKRestService {
 	public BkUserProfile getUserProfileDetails( 
 			@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId ){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		return service.getUserPersonalInfo(userId);
 	}
 	@RequestMapping(value="/services/userProfile/details/{userId}" , method = RequestMethod.GET)
@@ -82,7 +86,7 @@ public class UserProfileRestService extends BKRestService {
 			@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
 		try{
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return service.getUserPersonalInfo(userId);
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.Policy;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.PolicyService;
 
 @RestController
@@ -20,11 +21,15 @@ public class PolicyRestService extends BKRestService {
 	@Autowired
 	PolicyService policyService;
 	
+
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 	@RequestMapping(value="/services/policy" , method = RequestMethod.POST)
 	public Policy createPolicy(@RequestBody Policy policy,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return policyService.createPolicy(policy);
 		} catch (Exception e) {
 			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
@@ -35,7 +40,7 @@ public class PolicyRestService extends BKRestService {
 	public Policy updatePolicy(@RequestBody Policy policy,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return policyService.createPolicy(policy);
 		} catch (Exception e) {
 			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
@@ -46,7 +51,7 @@ public class PolicyRestService extends BKRestService {
 	public List<Policy> getPolicy(@PathVariable("policyId") Integer id,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return policyService.getPolicies();
 		} catch (Exception e) {
 			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
@@ -57,7 +62,7 @@ public class PolicyRestService extends BKRestService {
 	public void deletePolicy(@PathVariable("policyId") Integer id,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			policyService.deletePolicy(id);
 		} catch (Exception e) {
 			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);

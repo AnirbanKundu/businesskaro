@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.OfferRequest;
 import com.businesskaro.model.OfferRequestEnum;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.OfferRequestService;
 
 @RestController
@@ -22,10 +23,13 @@ public class OfferRestService extends BKRestService{
 	@Autowired
 	OfferRequestService service;
 	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.POST)
 	public Integer createOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		offer.userId = userId;
 		offer.createDate = new Date();
 		offer.updateDate = new Date();
@@ -35,7 +39,7 @@ public class OfferRestService extends BKRestService{
 	@RequestMapping(value="/services/offer" , method = RequestMethod.PUT)
 	public void updateOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		offer.userId = userId;
 		offer.updateDate = new Date();
 		
@@ -45,7 +49,7 @@ public class OfferRestService extends BKRestService{
 	@RequestMapping(value="/services/offer" , method = RequestMethod.GET)
 	public List<OfferRequest> getOffers(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		return service.getAll(userId, OfferRequestEnum.OFFER);
 	}
 	
@@ -59,7 +63,7 @@ public class OfferRestService extends BKRestService{
 	public OfferRequest getOfferDetails(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){		
 		try{
-			Integer userId = validateSecureToken(clientId, secureToken);
+			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(offerId);
 			return result;
 		} catch(Exception e){
@@ -72,7 +76,7 @@ public class OfferRestService extends BKRestService{
 	public OfferRequest getOfferDetailsInEdit(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){		
 		try{
-			Integer userId = validateSecureToken(clientId, secureToken);
+			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(offerId);
 			
 			if(result.userId!=userId){
@@ -90,7 +94,7 @@ public class OfferRestService extends BKRestService{
 	@RequestMapping(value="/services/offer/{offerId}" , method = RequestMethod.DELETE)
 	public void deleteOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("offerId") Integer offerId){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		if(userId!=null){
 			service.delete(offerId);
 		}
@@ -101,7 +105,7 @@ public class OfferRestService extends BKRestService{
 	public List<OfferRequest> getOffersByUser(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
 		try{
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return service.getOfferByUserId(userId, OfferRequestEnum.OFFER);
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);

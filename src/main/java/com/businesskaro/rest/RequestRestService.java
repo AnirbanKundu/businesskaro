@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.OfferRequest;
 import com.businesskaro.model.OfferRequestEnum;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.OfferRequestService;
 
 @RestController
@@ -22,10 +23,13 @@ public class RequestRestService extends BKRestService{
 	@Autowired
 	OfferRequestService service;
 	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 	@RequestMapping(value="/services/request" , method = RequestMethod.POST)
 	public Integer createRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@RequestBody OfferRequest request){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		request.userId = userId;
 		request.createDate = new Date();
 		request.updateDate = new Date();
@@ -35,7 +39,7 @@ public class RequestRestService extends BKRestService{
 	@RequestMapping(value="/services/request" , method = RequestMethod.PUT)
 	public void updateRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@RequestBody OfferRequest request){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		request.userId = userId;
 		request.updateDate = new Date();
 		service.createorUpdate(request,OfferRequestEnum.REQUEST);
@@ -44,14 +48,14 @@ public class RequestRestService extends BKRestService{
 	@RequestMapping(value="/services/request" , method = RequestMethod.GET)
 	public List<OfferRequest> getRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		return service.getAll(userId, OfferRequestEnum.REQUEST);
 	}
 	
 	@RequestMapping(value="/services/request/{requestId}" , method = RequestMethod.DELETE)
 	public void deleteRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("requestId") Integer requestId){
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		if(userId!=null){
 			service.delete(requestId);
 		}
@@ -67,7 +71,7 @@ public class RequestRestService extends BKRestService{
 	public OfferRequest getRequestDetails(@PathVariable("requestId") Integer requestId, @RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try{
-			Integer userId = validateSecureToken(clientId, secureToken);
+			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(requestId);
 			return result;
 			 
@@ -79,7 +83,7 @@ public class RequestRestService extends BKRestService{
 	public OfferRequest getRequestDetailsInEdit(@PathVariable("requestId") Integer requestId, @RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try{
-			Integer userId = validateSecureToken(clientId, secureToken);
+			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(requestId);
 			
 			if(result.userId!=userId){
@@ -97,7 +101,7 @@ public class RequestRestService extends BKRestService{
 	public List<OfferRequest> getRequestByUser(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
 		try{
-			validateSecureToken(clientId, secureToken);
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return service.getOfferByUserId(userId, OfferRequestEnum.OFFER);
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);

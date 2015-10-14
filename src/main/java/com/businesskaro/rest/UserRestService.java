@@ -18,6 +18,7 @@ import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUser;
 import com.businesskaro.rest.dto.ResetPasswordRequest;
 import com.businesskaro.security.EncryptionUtil;
+import com.businesskaro.security.SecureTokenUtil;
 
 @RestController
 public class UserRestService extends BKRestService {
@@ -30,6 +31,9 @@ public class UserRestService extends BKRestService {
 	
 	@Autowired
 	NewUserEmailSender email;
+	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
 
 	/*****
 	 * REST END POINT TO CREATE NEW USER
@@ -91,7 +95,7 @@ public class UserRestService extends BKRestService {
 		logger.info("Secure Token " + secureToken);
 		logger.info("Client Id  " + clientId);
 		
-		Integer userId = validateSecureToken(clientId, secureToken);
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 		
 		logger.info("User Id  " + userId);
 		

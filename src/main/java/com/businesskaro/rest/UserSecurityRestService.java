@@ -35,6 +35,9 @@ public class UserSecurityRestService extends BKRestService {
 	@Autowired
 	ResetPasswordEmail mailService;
 	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 
 	@RequestMapping(value="/services/login" , method = RequestMethod.POST)
 	public LoginResponse login(@RequestBody LoginRequest loginRequest ){
@@ -55,7 +58,7 @@ public class UserSecurityRestService extends BKRestService {
 			try {
 				String newGuid = BKGuid.getNextGuid();
 				LoginResponse response = new LoginResponse();
-				response.secureToken =  SecureTokenUtil.generateSecurityToken(newGuid, userPswd.getUsrId());
+				response.secureToken =  secureTokenUtil.generateSecurityToken(newGuid, userPswd.getUsrId());
 				response.clientId = newGuid;
 				response.profileCreated = userPswd.getProfileCreated();
 				return response;
@@ -67,12 +70,25 @@ public class UserSecurityRestService extends BKRestService {
 		}
 		
 	}
+	
+	
+	@RequestMapping(value="/services/logout" , method = RequestMethod.POST)
+	public void changePassword(@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId ){
+	
+		
+		validateSecureToken(secureTokenUtil,clientId, secureToken);
+		
+		secureTokenUtil.inValidateSecureToken(secureToken);
+		
+	}
+	
 	@RequestMapping(value="/services/changePassword" , method = RequestMethod.POST)
 	public LoginResponse changePassword(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@RequestBody LoginRequest loginRequest ){
 	
 		logger.info("Security Request " + loginRequest.email);
-		validateSecureToken(clientId, secureToken);
+		validateSecureToken(secureTokenUtil,clientId, secureToken);
 		
 		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){
