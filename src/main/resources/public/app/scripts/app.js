@@ -129,6 +129,9 @@ angular
       .when('/resetpassword',{
         templateUrl: 'views/resetpassword.html'
       })
+      .when('/contactus',{
+        templateUrl: 'views/contactus.html'
+      })
       .otherwise({
         redirectTo: '/'
       });

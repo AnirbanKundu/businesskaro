@@ -12,9 +12,33 @@ body {
 	padding-top: @navbar-height;
 	@media (max-width: 520px) {
 		padding-top: @navbar-height !important;
+        .arrowdet{display:none;} 
 	}
 	&.static-header {padding-top: 0!important;}
 }
+
+/*mahesh Style */
+.aside{
+padding-left: 25px;
+font-size:15px;
+}
+.fta{
+font-size:15px;
+}
+.phn{
+padding-top:10px;
+padding-left:10px;
+font-size:15px; 
+}
+.phn a{
+padding-left:10px;
+}
+address{
+line-height: 2;
+    padding-top: 20px;
+    }
+
+/*mahesh Style */
 
 #wrapper 				{display:table;width: 100%; table-layout: fixed; overflow: auto; height: 100%; position: relative;}
 #layout-static 			{display: table-row; height: 100%;}
@@ -58,11 +82,32 @@ footer					{background: @body-bg;}
 
 .banner-header{
 	background: transparent url("http://res.cloudinary.com/difyxhuza/image/upload/v1441264302/application_images/bk_banner_background.jpg") no-repeat;
-	height: 350px;
+	/*height: 350px;  */
+   /* height:270px;  */
+    height:auto; 
     margin-left: -20px;
     margin-right: -20px;
     margin-top: -20px;
     margin-bottom: 20px;
+    padding-bottom:55px;
+}
+.text-center{
+text-align:center;
+text-transform: capitalize;
+}
+
+.how-it-work{
+ background-color:#ccc;
+     height:auto;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    padding-bottom:55px;
+    text-align: center; vertical-align: middle;
+}
+.how-it-work img{
+vertical-align: middle; 
 }
 
 
@@ -80,6 +125,7 @@ footer					{background: @body-bg;}
 
 	body {padding-top: 80px;}
 	.infobar, #sidebar {top: 50px;}
+    .arrowdet{display:none;}
 }
 
 /* Headerbar */
@@ -101,9 +147,11 @@ footer					{background: @body-bg;}
 /* Footer */
 
 footer {
-	background: @body-bg;
-	color: @gray;
-
+	/*background: @body-bg;
+	color: @gray;  */
+  
+    background:#37444e;  
+    color: #fff;
 	padding: 5px 20px; 
 	position: absolute;
 	left: 0;
@@ -115,11 +163,14 @@ footer {
 
 	>div.clearfix {
 		font-size: @font-size-mini;
-		color: @gray-darker;
+		/*color: @gray-darker;     */
+        color:#fff;
 		a {
-			color: @gray-darker;
+			/*color: @gray-darker;   */
+            color:#fff;
 			&:hover {
-				color: lighten(@gray-darker, 20%);
+				/*color: lighten(@gray-darker, 20%); */
+                color: lighten(#ccc, 20%);
 				text-decoration: none !important;
 			}
 		}
@@ -175,6 +226,7 @@ footer {
 	body.show-sidebar #sidebar {
 		width: 240px;
 	}
+    .arrowdet{display:none;} 
 }
 
 //Login page
@@ -204,6 +256,7 @@ footer {
 	.focusedform {
 		.verticalcenter {width: 380px;}
 	}
+    .arrowdet{display:none;} 
 }
 
 
@@ -313,6 +366,7 @@ footer {
 	#horizontal-navbar .navbar-nav li {
 		&.active a:before {border-color: transparent !important;} // Removes arrow in small screen
 	}
+    .arrowdet{display:none;} 
 }
 
 nav.navbar {
@@ -347,6 +401,7 @@ nav.navbar {
 			}
 		}
 	}
+    
 }
 
 .large-icons-nav #top-nav > li > ul {
@@ -358,6 +413,7 @@ nav.navbar {
 		top: 0px !important;
 		padding-left: 20px !important;
 	}
+    .arrowdet{display:none;}
 }
 #top-nav {
 	li > ul {

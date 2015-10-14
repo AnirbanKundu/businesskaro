@@ -86,5 +86,20 @@ angular.module('theme.demos.dashboard', [
     $http.get('utilservices/industries').success(function(response) {
       $scope.industries = response;
     });
+
+    //CarouselController
+    $scope.myInterval = 5000;
+    var slides = $scope.slides = [];
+    var images = ['crusal1.jpg', 'crusal2.jpg', 'crusal3.jpg', 'crusal4.jpg', 'crusal5.jpg'];
+    var title = ['First', 'Second', 'Third','Fourth','Fifth'];  
+    $scope.addSlide = function() {
+      slides.push({
+        image: '../../assets/img/' + images[slides.length],
+        text: title[slides.length]
+      });
+    };
+    for (var i = 0; i < 5; i++) {
+      $scope.addSlide();
+    }
     
   }]);

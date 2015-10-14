@@ -71,7 +71,23 @@ angular
 		        });
     		}
     		else{
-    			//GET USER Details
+    			
+          $timeout(function(){
+            for(var i=0;i<$scope.entityResult.summary.industrys.length;i++){
+              var industryName = LookUpService.getIndustryName($scope.entityResult.summary.industrys[i]);
+              var t = {
+                name: industryName,
+                url : '#/search/ALL' + '/' + industryName
+              }
+              $scope.relatedTags.push(t);
+            }
+            var s = {
+              name: $scope.entityResult.summary.stateName,
+              url : '#/search/ALL' + '/' + ',' + $scope.entityResult.summary.stateName
+            }
+            $scope.relatedTags.push(s);
+          },500);
+
           var questionType='';
           $scope.questions = [];
           if($scope.entityType=='OFFER'){
@@ -105,7 +121,26 @@ angular
     			});
     		}
     	}
-
+      else{
+        $timeout(function(){
+            for(var i=0;i<$scope.entityResult.industrys.length;i++){
+              var industryName = LookUpService.getIndustryName($scope.entityResult.industrys[i]);
+              var t = {
+                name: industryName,
+                url : '#/search/ALL' + '/' + industryName
+              }
+              $scope.relatedTags.push(t);
+            }
+            for(var i=0;i<$scope.entityResult.states.length;i++){
+              var stateName = LookUpService.getIndustryName($scope.entityResult.states[i]);
+              var s = {
+                name: stateName,
+                url : '#/search/ALL' + '/' + ',' + stateName
+              }
+              $scope.relatedTags.push(s);
+            }
+        },500);
+      }
     },function(error){
     	console.log('Error now');
     });
