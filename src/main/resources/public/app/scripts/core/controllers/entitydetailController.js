@@ -159,7 +159,7 @@ angular
               url: '/services/communicate',
               method: 'POST',
               isArray: false,
-              data: { "toId" : $scope.entityResult.userId || $scope.entityResult.summary.userId,
+              data: { "toId" : 52,//$scope.entityResult.userId || $scope.entityResult.summary.userId,
                   "message" : connectMessage,
                   "entityType" : $scope.entityType,
                   "entityId" : $scope.entityId

@@ -21,6 +21,7 @@ angular
       //console.log('$route is', $route);
     });
     $scope.logIn = function(){
+
       var apphistory = UserAuthentication.getuserRoutes();
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
@@ -63,33 +64,63 @@ angular
     });
     $scope.email= '';
     $scope.password = '';
-    $scope.register = function(){
-      var apphistory = UserAuthentication.getuserRoutes(); 
-      //console.log($scope.loginForm.password);
-      //console.log($scope.loginForm.email);
-      UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-          UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-              $scope.$emit('loginsuccess', data);
-              $location.path('/userprofile/firstLogin'); 
-            },function(error){
+    $scope.repeatpassword = '';
+    $scope.isrpwdError = false;
+    $scope.serverMessage = '';
 
-            });
-            //$scope.$emit('loginsuccess', data);
-            //$scope.serverMessage = '';
-
-        //$scope.$emit('loginsuccess', data);
-        //$scope.serverMessage = '';
-        /*if(apphistory[0]==='/signupform'){
-          //console.log('History is',history);
-          $location.path('/'); 
+    $scope.$watch('repeatpassword',function(newval,oldval){
+      if(newval){
+        if(newval!==$scope.password){
+          $scope.signupform.$setValidity('repeatpassword',false,$scope.signupform);
+          $scope.isrpwdError = true;
+          //$scope.signupform.repeatpassword.$error = true;
+          //$scope.signupform.repeatpassword.$setValidity('repeatpassword',true,$scope.signupform);
+        }else{
+          $scope.signupform.$setValidity('repeatpassword',true,$scope.signupform);
+          $scope.isrpwdError = false;
+          //$scope.signupform.repeatpassword.$error = false;
+          //$scope.signupform.repeatpassword.$setValidity('repeatpassword',false,$scope.signupform);
         }
-        else{
-          $location.path(apphistory[0]);  
-        }  */       
-      },function(error){
-        $scope.showServerMessage = 'Your username or password was not correct';
+      }
 
-      });
+    });
+
+    $scope.register = function($event){
+      $event.preventDefault();
+      $scope.showServerMessage = '';
+      if($scope.email || $scope.password || $scope.repeatpassword){
+        var apphistory = UserAuthentication.getuserRoutes(); 
+        //console.log($scope.loginForm.password);
+        //console.log($scope.loginForm.email);
+        UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
+            UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
+                $scope.$emit('loginsuccess', data);
+                $location.path('/userprofile/firstLogin'); 
+              },function(error){
+
+              });
+              //$scope.$emit('loginsuccess', data);
+              //$scope.serverMessage = '';
+
+          //$scope.$emit('loginsuccess', data);
+          //$scope.serverMessage = '';
+          /*if(apphistory[0]==='/signupform'){
+            //console.log('History is',history);
+            $location.path('/'); 
+          }
+          else{
+            $location.path(apphistory[0]);  
+          }  */       
+        },function(error){
+          if(error.data.type ==='USER_ALREADY_EXIST'){
+            $scope.showServerMessage = 'Email id has already been registered.';
+          }else{
+            $scope.showServerMessage = 'Unknow error. Please try again.';
+          }
+          
+
+        });
+      }
     };
 
   }])
