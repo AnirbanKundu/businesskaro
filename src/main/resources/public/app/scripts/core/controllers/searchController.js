@@ -66,6 +66,9 @@ angular
         },
         function(data){ 
           $log.log('Error');
+          if(arr.length>0){
+            shiftArray(arr);
+          }
         });
       }            
     };
@@ -91,8 +94,8 @@ angular
     $scope.returnPagedData = function(data, pagenumber){
       var searchLength = $scope.searchResults.length;
       var masterLength = $scope.MasterSerachResult.length;
-      if(searchLength + pageSize < masterLength){
-        return $scope.MasterSerachResult.splice(0,searchLength+pageSize);
+      if(masterLength > pageSize){
+        return $scope.MasterSerachResult.splice(0,pageSize);
       }
       else{
         return $scope.MasterSerachResult.splice(0,masterLength);
@@ -121,8 +124,8 @@ angular
         $scope.searchResults.push(searchData[i]);
       }
       $timeout(function(){
-          var arrToMakeCalls =  sliceArrayAndRemove($scope.searchResults);
-          makeAJAXCall(arrToMakeCalls);
+          //var arrToMakeCalls =  sliceArrayAndRemove($scope.searchResults);
+          makeAJAXCall(searchData);
       },50);
     }
     
@@ -133,8 +136,10 @@ angular
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
         method: 'GET'
       }).then(function(response){   
-           
-        $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data));
+        //var data = _.sortBy(stooges, 'name');   
+        $scope.MasterSerachResult = angular.fromJson(angular.toJson(response.data.sort(function(a, b) {
+            return b.createdDate - a.createdDate
+        })));
         $scope.searchResults = $scope.returnPagedData($scope.searchResults,0);
         $scope.isSearchButtonVisible = ($scope.searchResults.length < $scope.MasterSerachResult); 
         $timeout(function(){
