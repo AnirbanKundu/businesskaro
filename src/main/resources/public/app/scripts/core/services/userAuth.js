@@ -63,8 +63,8 @@ angular.module('theme.core.services')
 
   var _logOut = function(){
     return $http({
-      url: '/',
-      method: 'GET'
+      url: '/services/logout',
+      method: 'POST'
     }).then(function(response){
       if($window && $window.localStorage){
         if($window.localStorage['bk_userInfo']){

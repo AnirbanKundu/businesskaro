@@ -159,10 +159,11 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     else{
       $rootScope.loggedIn='called';
       $scope.isLoggedIn = false;
-      UserAuthentication.getUserDetails().then(function(data){
-        //console.log('User details are', data);
+      UserAuthentication.getUserDetails().then(function(response){
+        console.log('User details are', response);
         $scope.isLoggedIn = true;
         $rootScope.loggedIn = 'loggedin';
+        $rootScope.UserDetail = response.data;
       },
       function(error){
         console.log('error', error);
@@ -171,11 +172,15 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     }    
 
     $scope.logOut = function() {
-      UserAuthentication.logOut();
-      $scope.isLoggedIn = false;
-      setTimeout(function(){
-        //$location.path('/');
-      },50);
+      UserAuthentication.logOut().then(function(){
+        $scope.isLoggedIn = false;
+        setTimeout(function(){
+          $location.path('/');
+        },50);
+      },function(){
+
+      });
+      
     };
     $scope.logIn = function() {
       //  Raise an event. 

@@ -175,7 +175,7 @@
 										<div class="col-xs-12">
 											<h5>Specific Need</h5>
 											<div ng-repeat="q in questions">
-												<span>{{q.questTxt}}</span>:<span>{{q.response}}</span>
+												<span>{{q.questTxt}}</span>:<span>{{q.response | questionfilter}}</span>
 											</div>
 										</div> 
 									</div>

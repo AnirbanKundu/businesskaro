@@ -89,7 +89,11 @@
 
 	<div class="navbar-header pull-left" >		
 		<!--<span class="businesskaro-logo"></span>  -->
-	    <span class="businesskaro-logo-header"><img src="assets/img/bk_logo.png" style="height: 30px; margin-top: 10px; margin-bottom: 10px;" alt="" /></span>
+	    <span class="businesskaro-logo-header">
+	    	<a href="#/">
+	    		<img src="assets/img/bk_logo.png" style="height: 30px; margin-top: 10px; margin-bottom: 10px;" alt="" />
+    		</a>
+    	</span>
 	</div>
 	<!--
 	<div id="search-inline"
@@ -110,7 +114,8 @@
 		<a href="#/login" style="font-size: 14px"><i class="fa fa-sign-in"></i> Log in</a>
 	  </li>
 	  <li class="dropdown" ng-show="isLoggedIn" dropdown>
-		<a href class="dropdown-toggle username" dropdown-toggle><img src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442702349/application_images/2000px-User_icon_2.svg.jpg" alt="User" /></a>
+
+		<a href class="dropdown-toggle username" dropdown-toggle><span>{{UserDetail.userName}}</span><img src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442702349/application_images/2000px-User_icon_2.svg.jpg" alt="User" /></a>
 		<ul class="dropdown-menu animated userinfo arrow">
 		  <li class="userlinks">
 			<ul class="dropdown-menu">

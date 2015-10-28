@@ -14,7 +14,7 @@ angular.module('theme.core.services')
       url = '/services/request/summary/'+options.entityId;
     }
     else{
-      url = '/services/policy/'+options.entityId;
+      url = '/services/policysummary/'+options.entityId;
     }
 
     $http({

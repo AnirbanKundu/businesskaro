@@ -73,19 +73,22 @@ angular
     		else{
     			
           $timeout(function(){
-            for(var i=0;i<$scope.entityResult.summary.industrys.length;i++){
-              var industryName = LookUpService.getIndustryName($scope.entityResult.summary.industrys[i]);
+            for(var i=0;i<$scope.entityResult.trgtIndustry.length;i++){
+              var industryName = LookUpService.getIndustryName($scope.entityResult.trgtIndustry[i]);
               var t = {
                 name: industryName,
                 url : '#/search/ALL' + '/' + industryName
               }
               $scope.relatedTags.push(t);
             }
-            var s = {
-              name: $scope.entityResult.summary.stateName,
-              url : '#/search/ALL' + '/' + ',' + $scope.entityResult.summary.stateName
+            for(var i=0;i<$scope.entityResult.trgtLocation.length;i++){
+              var stateName = LookUpService.getStateName($scope.entityResult.trgtLocation[i]);
+              var s = {
+                name: stateName,
+                url : '#/search/ALL' + '/' + ',' + stateName
+              }
+              $scope.relatedTags.push(s);
             }
-            $scope.relatedTags.push(s);
           },500);
 
           var questionType='';
@@ -98,7 +101,7 @@ angular
           }
           LookUpService.getQuestions(questionType).then(function(data){
               for(var i=0;i<data.length;i++){
-                for(var j=0;j<$scope.entityResult.questionList.length;i++){
+                for(var j=0;j<$scope.entityResult.questionList.length;j++){
                   if(data[i].questId==$scope.entityResult.questionList[j].questionId){
                     var q = {
                       questId:data[i].questId,

@@ -269,6 +269,20 @@ angular
     }
   } 
 }])
+.filter('questionfilter',['$filter',function questionfilter($filter){
+  return function(value){ 
+    var response = '';
+    if(value){
+      if(value=='N'){
+        return 'No';
+      }else if(value=='Y'){
+        return 'Yes';
+      }else{
+        return 'Not Sure';
+      }
+    }
+  } 
+}])
 .filter('userTypefilter',['$filter',function datefilter($filter){
   return function(value){ 
     var userType='';

@@ -106,7 +106,15 @@ angular
         templateUrl: 'views/form-goi.html'
       })
       .when('/login',{
-        templateUrl: 'views/login.html'
+        templateUrl: 'views/login.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo){
+              $location.path('#/')
+            }
+          }]
+        }
       })
       .when('/signupform',{
         templateUrl: 'views/signupform.html'
