@@ -161,9 +161,10 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       $scope.isLoggedIn = false;
       UserAuthentication.getUserDetails().then(function(response){
         console.log('User details are', response);
-        $scope.isLoggedIn = true;
-        $rootScope.loggedIn = 'loggedin';
-        $rootScope.UserDetail = response.data;
+        //$scope.isLoggedIn = true;
+        //$rootScope.loggedIn = 'loggedin';
+        $scope.$emit('loginsuccess', response.data);
+        //$rootScope.UserDetail = response.data;
       },
       function(error){
         console.log('error', error);
@@ -174,6 +175,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     $scope.logOut = function() {
       UserAuthentication.logOut().then(function(){
         $scope.isLoggedIn = false;
+        $rootScope.UserDetail = {};
         setTimeout(function(){
           $location.path('/');
         },50);
@@ -189,6 +191,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
     $rootScope.$on('loginsuccess',function(event,data){
       $rootScope.profileCreated = data.profileCreated;
       $scope.isLoggedIn = true;
+      $rootScope.UserDetail = data;
     });
 
     //

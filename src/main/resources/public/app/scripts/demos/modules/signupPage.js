@@ -88,7 +88,7 @@ angular
     $scope.register = function($event){
       $event.preventDefault();
       $scope.showServerMessage = '';
-      if($scope.email || $scope.password || $scope.repeatpassword){
+      if($scope.email && $scope.password && $scope.repeatpassword){
         var apphistory = UserAuthentication.getuserRoutes(); 
         //console.log($scope.loginForm.password);
         //console.log($scope.loginForm.email);
