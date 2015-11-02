@@ -167,22 +167,22 @@
             <panel panel-class="panel-sky" heading="Contact Request"> 
                 <form action="" class="form-horizontal row-border">
                     <div class="form-group">
-                            <input name="name" type="text" required placeholder="Name *" ng-model="validateDemoForm.required" class="form-control">
+                            <input name="name" type="text" required placeholder="Name *" ng-model="contactusForm.contacterName" class="form-control">
                     </div>
                     <div class="form-group">
-                            <input name="email" type="text" data-type="email" placeholder="Email *"  required ng-model="validateDemoForm.email" class="form-control">
+                            <input name="email" type="text" data-type="email" placeholder="Email *"  required ng-model="contactusForm.email" class="form-control">
                     </div>
                     <div class="form-group">
-                           <input name="digits" type="number" placeholder="Mobile No." required ng-model="validateDemoForm.digits" class="form-control">    
+                           <input name="digits" type="number" placeholder="Mobile No." required ng-model="contactusForm.mobile" class="form-control">    
                     </div>
                     <div class="form-group">
-                            <input type="sub" required placeholder="Subject *"  class="form-control" >   
+                            <input type="sub" required placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" >   
                     </div>
                     <div class="form-group">
-                           <textarea name="description" placeholder="Message" class="form-control"></textarea>       
+                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control"></textarea>       
                     </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="submitValidationForm()" >Submit</button>
+                            <button class="btn-primary btn" ng-click="contactus()" >Submit</button>
                             <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
                 </form>

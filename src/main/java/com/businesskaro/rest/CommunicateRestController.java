@@ -13,6 +13,7 @@ import com.businesskaro.mail.CommunicateMail;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.Communicate;
+import com.businesskaro.model.ContactUs;
 import com.businesskaro.rest.dto.CommunicateRequest;
 import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.UserPersonalInfoService;
@@ -58,5 +59,14 @@ public class CommunicateRestController extends BKRestService{
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 		}
 		
+	}
+	
+	@RequestMapping(value="/services/contactus" , method = RequestMethod.POST)
+	public void sendMail(@RequestBody ContactUs request){		
+		try {
+			mail.contactUs(request);
+		} catch (Exception e) {
+			throw new BKException("Error sending email" , "001" , BKException.Type.INTERNAL_ERRROR);
+		}
 	}
 }
