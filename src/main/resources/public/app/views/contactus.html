@@ -52,8 +52,11 @@
                     <div class="form-group">
                            <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control"></textarea>       
                     </div>
+                    <div ng-if="alert">
+                      <p class="text-danger">{{alert.msg}}</p>
+                    </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="contactus()" >Submit</button>
+                            <button class="btn-primary btn" ng-click="contactus($event)" >Submit</button>
                             <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
                 </form>

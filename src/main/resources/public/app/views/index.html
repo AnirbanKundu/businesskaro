@@ -15,7 +15,7 @@
         <div class="col-md-12" style="margin-top:55px;">
 
             <div class="col-md-2">
-                <img src="assets/img/search.jpg" class="img-rounded ng-scope" alt="Find Freelancer" style="width: 60%; float: right;" />
+                <img src="assets/img/search.png" class="img-rounded ng-scope" alt="Find Freelancer" style="width: 60%; float: right;" />
             </div>
             <div class="col-md-5">
               <h1 style="color:white">Welcome to the Entrepreneural Diaspora...</h1>
@@ -181,8 +181,11 @@
                     <div class="form-group">
                            <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control"></textarea>       
                     </div>
+                    <div ng-if="alert">
+                      <p class="text-danger">{{alert.msg}}</p>
+                    </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="contactus()" >Submit</button>
+                            <button class="btn-primary btn" ng-click="contactus($event)" >Submit</button>
                             <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
                 </form>

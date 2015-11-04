@@ -1,10 +1,11 @@
 angular
   .module('theme.core.contactus_controller', [])
-  .controller('ContactUsController', ['$scope', '$filter', function($scope, $filter) {
+  .controller('ContactUsController', ['$scope', '$filter', '$http',function($scope, $filter,$http) {
     'use strict';
     $scope.contactusForm={};
     
-    $scope.contactus = function(){
+    $scope.contactus = function($event){
+      $event.preventDefault();
     	$http({
             url: 'services/contactus',
             method: 'POST',
@@ -17,7 +18,8 @@ angular
             }
           }).then(function(response){
             $scope.message = 'success';
-            $scope.alert = { type: 'success', msg: 'Email sent succesfully'};
+            $scope.alert = { type: 'success', msg: 'Email sent succesfully. You would be contacted shortly.'};
+            $scope.contactusForm = {};
 
           },function(error){
             $scope.alert = { type: 'alert', msg: 'Email was not sent. Try again.'};
