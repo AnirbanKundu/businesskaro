@@ -6,6 +6,9 @@
 		<div class="panel-body">
 			<h2 class="text-center" style="margin-bottom: 25px;">Sign Up</h2>
 			<form action="#" class="form-horizontal" style="margin-bottom: 0px !important;" name="signupform" novalidate>
+				<div class="panel-loading" ng-if="waiting" style="z-index:10;">
+                    <div class="panel-loader-circular"></div>
+                </div>
 				<div>
 					<span class="text-danger" ng-show="!signupform.email.hasFocus && signupform.email.hasVisited && signupform.email.$error.email">Not a valid email.</span>
             		<span class="text-danger" ng-show="!signupform.email.hasFocus && signupform.email.hasVisited && signupform.email.$error.required">Email field is required.</span>

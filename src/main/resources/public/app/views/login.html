@@ -10,6 +10,9 @@
 			<h4 class="text-center" style="margin-bottom: 25px;">Log in to get started or <a href="#/signupform">Sign Up</a></h4>
 			<span ng-show="showServerMessage.length>0">{{showServerMessage}}</span>
 			<form action="#" class="form-horizontal" name="form.loginForm" onsubmit="return false;">
+				<div class="panel-loading" ng-if="waiting" style="z-index:1;">
+                    <div class="panel-loader-circular"></div>
+                </div>
 				<div class="form-group">
 					<label for="email" class="control-label col-sm-4" style="text-align: left;">Email</label>
 					<div class="col-sm-8">

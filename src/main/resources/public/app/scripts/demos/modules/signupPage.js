@@ -15,30 +15,36 @@ angular
     $scope.loginForm.email = '';
     $scope.loginForm.password = '';
     $scope.serverMessage = '';
+    $scope.waiting = false;
 
     var lastRoute = $route.current;
     $scope.$on('$locationChangeSuccess', function() {
       //console.log('$route is', $route);
     });
     $scope.logIn = function(){
-
+      $scope.waiting = true;
       var apphistory = UserAuthentication.getuserRoutes();
       //console.log($scope.loginForm.password);
       //console.log($scope.loginForm.email);
       UserAuthentication.signInUser({email:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
         //$rootScope.profileCreated = data.profileCreated;
-        $scope.$emit('loginsuccess', data);
-        $scope.serverMessage = '';
-        if(apphistory[0]==='/login'){
-          //console.log('History is',history);
-          $location.path('/'); 
-        }
-        else{
-          $location.path(apphistory[0]);  
-        }         
+        UserAuthentication.getUserDetails().then(function(){
+          $scope.waiting = false;
+          $scope.$emit('loginsuccess', data);
+          $scope.serverMessage = '';
+          if(apphistory[0]==='/login'){
+            //console.log('History is',history);
+            $location.path('/'); 
+          }
+          else{
+            $location.path(apphistory[0]);  
+          }
+        },function(){
+            //Error
+        });                 
       },function(error){
         $scope.showServerMessage = 'Your username or password was not correct';
-
+        $scope.waiting = false;
       });
     };
     $scope.$on('$routeChangeStart', function() {
@@ -57,7 +63,6 @@ angular
 
   }])
   .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
-    console.log('In NewSignUpController');
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
       $theme.set('fullscreen', false);
@@ -67,6 +72,7 @@ angular
     $scope.repeatpassword = '';
     $scope.isrpwdError = false;
     $scope.serverMessage = '';
+    $scope.waiting = false;
 
     $scope.$watch('repeatpassword',function(newval,oldval){
       if(newval){
@@ -87,8 +93,10 @@ angular
 
     $scope.register = function($event){
       $event.preventDefault();
+      
       $scope.showServerMessage = '';
       if($scope.email && $scope.password && $scope.repeatpassword){
+        $scope.waiting = true;
         var apphistory = UserAuthentication.getuserRoutes(); 
         //console.log($scope.loginForm.password);
         //console.log($scope.loginForm.email);
@@ -110,14 +118,15 @@ angular
           }
           else{
             $location.path(apphistory[0]);  
-          }  */       
+          }  */
+          $scope.waiting = false;       
         },function(error){
+          $scope.waiting = false;
           if(error.data.type ==='USER_ALREADY_EXIST'){
             $scope.showServerMessage = 'Email id has already been registered.';
           }else{
             $scope.showServerMessage = 'Unknow error. Please try again.';
-          }
-          
+          }        
 
         });
       }
@@ -125,12 +134,13 @@ angular
 
   }])
   .controller('RestPasswordController', ['$scope', '$theme', '$http', '$window',function($scope, $theme, $http, $window) {
-    console.log('In Password Reset Controller');
+    $scope.waiting = false;    
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
       $theme.set('fullscreen', false);
     });
     $scope.reset = function(){
+      $scope.waiting = true; 
     	console.log('In reset'+$scope.resetEmail);
     	$http({
             url: 'services/resetPassword',
@@ -139,7 +149,10 @@ angular
           	  "email":$scope.resetEmail
             }
           }).then(function(response){
+            $scope.waiting = false;    
         	  $window.location.href = '/#/login';
+          },function(){
+            $scope.waiting = false;
           });
     	
     }

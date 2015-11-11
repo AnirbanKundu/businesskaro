@@ -4,7 +4,7 @@ angular.module('theme.demos.dashboard', [
     //'theme.demos.tasks',
     'theme.core.services'
   ])
-  .controller('DashboardController', ['$scope', '$timeout', '$window', '$http' , '$location', '$theme', '$state', 'LookUpService',function($scope, $timeout, $window,$http, $location,$theme, $state, LookUpService) {
+  .controller('DashboardController', ['$scope', '$timeout', '$log', '$window', '$http' , '$location', '$theme', '$state', 'LookUpService',function($scope, $timeout, $log, $window,$http, $location,$theme, $state, LookUpService) {
     'use strict';
     var moment = $window.moment;
     var _ = $window._;
@@ -71,13 +71,18 @@ angular.module('theme.demos.dashboard', [
     }
     
     $scope.contactusForm={};
+
+    $scope.resetValidationForm = function($event){
+      $event.preventDefault();
+      $scope.contactusForm = {};
+    };
     
     $scope.contactus = function($event){      
       $event.preventDefault();
     	$http({
             url: 'services/contactus',
-            method: 'POST',
-            data: {
+            method:'POST',
+            data:{
           	  "name":$scope.contactusForm.contacterName,
           	  "email":$scope.contactusForm.email,
           	  "mobileNo":$scope.contactusForm.mobile,
@@ -88,7 +93,6 @@ angular.module('theme.demos.dashboard', [
             $scope.message = 'success';
             $scope.alert = { type: 'success', msg: 'Email sent succesfully. You would be contacted shortly.'};
             $scope.contactusForm = {};
-
           },function(error){
             $scope.alert = { type: 'alert', msg: 'Email was not sent. Try again.'};
           });

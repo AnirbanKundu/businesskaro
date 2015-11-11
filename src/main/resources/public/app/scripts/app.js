@@ -124,15 +124,17 @@ angular
       })
       .when('/changepassword',{
         templateUrl: 'views/changepassword.html',
-        auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
-            var userInfo = authenticationSvc.getToken();       
-            if (userInfo) {
-              return $q.when(userInfo);
-            } else {
-              console.log('current location', $location);
-              return $q.reject({ authenticated: false , visitedroute: $location.url() });
-            }
-        }]
+        resolve:{
+            auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+                var userInfo = authenticationSvc.getToken();       
+                if (userInfo) {
+                  return $q.when(userInfo);
+                } else {
+                  console.log('current location', $location);
+                  return $q.reject({ authenticated: false , visitedroute: $location.url() });
+                }
+            }]
+        }        
       })
       .when('/resetpassword',{
         templateUrl: 'views/resetpassword.html'

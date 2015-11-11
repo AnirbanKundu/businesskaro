@@ -15,7 +15,7 @@
         <div class="col-md-12" style="margin-top:55px;">
 
             <div class="col-md-2">
-                <img src="assets/img/search.jpg" class="img-rounded ng-scope" alt="Find Freelancer" style="width: 60%; float: right;" />
+                <img src="assets/img/search.png" class="img-rounded ng-scope" alt="Find your business need" style="width: 60%; float: right;" />
             </div>
             <div class="col-md-5">
               <h1 style="color:white">Welcome to the Entrepreneural Diaspora...</h1>
@@ -64,28 +64,28 @@
            <div class="col-md-8 col-md-offset-2" >
             <h1>How It Works?</h1>
              <div class="col-md-2">  
-               <img src="assets/img/get_link.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="120" height="120">
+               <img src="assets/img/get_link.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="100" height="100">
                <h4 class="p-none text-center">Start Deal</h4>
             </div>
             <div class="col-md-1 arrowdet">
             <i class="glyphicon glyphicon-chevron-right" style="font-size: 30px; vertical-align: middle;margin-top: 45px;"></i>
             </div>
             <div class="col-md-2">  
-               <img src="assets/img/post_project.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="120" height="120">
+               <img src="assets/img/post_project.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="100" height="100">
                <h4 class="p-none text-center">Post your project within minutes</h4>
             </div>
             <div class="col-md-1 arrowdet">
             <i class="glyphicon glyphicon-chevron-right" style="font-size: 30px; vertical-align: middle;margin-top: 45px;"></i>
             </div>
             <div class="col-md-2">  
-               <img src="assets/img/select_vendor.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="120" height="120">
+               <img src="assets/img/select_vendor.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="100" height="100">
                <h4 class="p-none text-center">Selected Vendors bid for your project</h4>
             </div>
             <div class="col-md-1 arrowdet">
             <i class="glyphicon glyphicon-chevron-right" style="font-size: 30px;margin-top: 45px;"></i>    
             </div>
             <div class="col-md-2">
-               <img src="assets/img/compare.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="120" height="120">
+               <img src="assets/img/compare.png" class="img-circle ng-scope" alt="Scarlett Johannson" style="margin: 5px 5px 10px;" width="100" height="100">
                <h4 class="p-none text-center">Compare quotes &amp; select Vendor</h4>
             </div>
         </div>
@@ -107,7 +107,7 @@
           <div class="col-md-4">
               <panel panel-class="panel-midnightblue" heading="Want to know GOI policy?">
                  
-                            <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
+                            <p style="text-align: justify;"> <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
               </panel>
           </div>
 
@@ -167,23 +167,26 @@
             <panel panel-class="panel-sky" heading="Contact Request"> 
                 <form action="" class="form-horizontal row-border">
                     <div class="form-group">
-                            <input name="name" type="text" required placeholder="Name *" ng-model="validateDemoForm.required" class="form-control">
+                            <input name="name" type="text" required placeholder="Name *" ng-model="contactusForm.contacterName" class="form-control">
                     </div>
                     <div class="form-group">
-                            <input name="email" type="text" data-type="email" placeholder="Email *"  required ng-model="validateDemoForm.email" class="form-control">
+                            <input name="email" type="text" data-type="email" placeholder="Email *"  required ng-model="contactusForm.email" class="form-control">
                     </div>
                     <div class="form-group">
-                           <input name="digits" type="number" placeholder="Mobile No." required ng-model="validateDemoForm.digits" class="form-control">    
+                           <input name="digits" type="number" placeholder="Mobile No." required ng-model="contactusForm.mobile" class="form-control">    
                     </div>
                     <div class="form-group">
-                            <input type="sub" required placeholder="Subject *"  class="form-control" >   
+                            <input type="sub" required placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" >   
                     </div>
                     <div class="form-group">
-                           <textarea name="description" placeholder="Message" class="form-control"></textarea>       
+                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control"></textarea>       
+                    </div>
+                    <div ng-if="alert">
+                      <p class="text-danger">{{alert.msg}}</p>
                     </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="submitValidationForm()" >Submit</button>
-                            <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
+                            <button class="btn-primary btn" ng-click="contactus($event)">Submit</button>
+                            <button class="btn-default btn" ng-click="resetValidationForm($event)">Reset</button>
                     </div>
                 </form>
             </panel>

@@ -3,6 +3,11 @@ angular
   .controller('ContactUsController', ['$scope', '$filter', '$http',function($scope, $filter,$http) {
     'use strict';
     $scope.contactusForm={};
+
+    $scope.resetValidationForm = function($event){
+      $event.preventDefault();
+      $scope.contactusForm = {};
+    };
     
     $scope.contactus = function($event){
       $event.preventDefault();
