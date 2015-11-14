@@ -1,6 +1,6 @@
 angular.module('theme.core.services')
 .config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.interceptors.push(['$q','$window', function ($q,$window) {
+    $httpProvider.interceptors.push(['$q','$window','$location', function ($q,$window,$location) {
         return {
             // optional method
             'request': function (config) {
@@ -26,6 +26,12 @@ angular.module('theme.core.services')
             'responseError': function (rejection) {
                 if (rejection.status === 401) {
                     //Handle Errors
+                }
+                else if (rejection.status === 400){
+                    if(rejection.data.type=='USER_AUTH_FAIL'){
+                        $location.path('/login'); 
+                    }
+                    console.log('Error');
                 }
                 // handle error
                 return $q.reject(rejection);

@@ -28,9 +28,9 @@ angular
       //console.log($scope.loginForm.email);
       UserAuthentication.signInUser({email:$scope.loginForm.email, password:$scope.loginForm.password}).then(function(data){
         //$rootScope.profileCreated = data.profileCreated;
-        UserAuthentication.getUserDetails().then(function(){
+        UserAuthentication.getUserDetails().then(function(response){
           $scope.waiting = false;
-          $scope.$emit('loginsuccess', data);
+          $scope.$emit('loginsuccess', response.data);
           $scope.serverMessage = '';
           if(apphistory[0]==='/login'){
             //console.log('History is',history);
