@@ -1,22 +1,33 @@
+/*
+ * Author: Nagendra 
+ * Created Date: 23-Feb-2016
+ */
+
+
+
 package com.businesskaro.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * The persistent class for the tbl_user_password database table.
- *     @NamedQuery(name="Country.findByName",query="SELECT c FROM Country c WHERE c.name = :name"),
- */
 @Entity
-@Table(name="tbl_user_password")
+@Table(name="tbl_unregistered_user_password")
 
 @NamedQueries({
-	@NamedQuery(name="TblUserPassword.findAll", query="SELECT t FROM TblUserPassword t")	
-}) 
-
-public class TblUserPassword implements Serializable {
+	@NamedQuery(name="TblUnregisteredUserPassword.findAll", query="SELECT t FROM TblUnregisteredUserPassword t"),
+	//@NamedQuery(name="TblUnregisteredUserPassword.findByName", query = "SELECT p FROM TblUnregisteredUserPassword p WHERE p.usr_salt = ?1")
+	@NamedQuery(query = "Select e from TblUnregisteredUserPassword e where e.usr_salt = :id", name = "queryUserSalt")
+})
+public class TblUnregisteredUserPassword implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -54,7 +65,7 @@ public class TblUserPassword implements Serializable {
 		this.profileCreated = profileCreated;
 	}
 
-	public TblUserPassword() {
+	public TblUnregisteredUserPassword() {
 	}
 
 	public int getUsrId() {
@@ -112,5 +123,4 @@ public class TblUserPassword implements Serializable {
 	public void setUsrSalt(String usrSalt) {
 		this.usrSalt = usrSalt;
 	}
-
 }
