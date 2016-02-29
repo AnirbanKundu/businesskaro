@@ -105,6 +105,9 @@ angular
       .when('/goipolicy',{
         templateUrl: 'views/form-goi.html'
       })
+      .when('/userprofile/validate/:registeredToken/email',{
+        templateUrl: 'views/validateregistereduser.html'
+      })
       .when('/login',{
         templateUrl: 'views/login.html',
         resolve: {

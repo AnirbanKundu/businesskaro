@@ -157,4 +157,32 @@ angular
     	
     }
 
+  }])
+  .controller('ValidateRegisteredUser', ['$scope', '$theme', '$http', '$window', '$timeout', '$route',function($scope, $theme, $http, $window, $timeout,$route) {
+    $scope.registeredToken= $route.current.params.registeredToken;
+    $scope.waiting = false;  
+    $timeout(function(){
+      $scope.waiting = true;  
+    },1000) ;
+    $theme.set('fullscreen', true);
+    $scope.$on('$destroy', function() {
+      $theme.set('fullscreen', false);
+    });  
+
+    init = function(){      
+      $http({
+          url: '/services/uservalidate/'+ $scope.registeredToken,
+            method: 'GET',
+          }).then(function(response){
+            $scope.waiting = false;    
+            //$window.location.href = '#/';
+          },function(){
+            $scope.waiting = false;
+          });           
+    }  
+    /*
+      For Javascript the method needs to be defined and then called. Else will get an JS error
+    */
+    init();
+
   }]);

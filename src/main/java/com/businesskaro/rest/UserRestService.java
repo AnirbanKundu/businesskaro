@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,12 @@ public class UserRestService extends BKRestService {
 	/*****
 	 * REST END POINT TO CREATE NEW USER
 	 *********/
+	@RequestMapping(value="/services/uservalidate/{registeredToken}" , method = RequestMethod.GET)
+	public void validateUser(@PathVariable("registeredToken") String registeredToken){		
+		System.out.println(registeredToken + " token received");
+		
+	}
+	
 	@RequestMapping(value="/services/user" , method = RequestMethod.POST)
 	public void createUser(@RequestBody BKUser user){
 		logger.info("Create User for " + user);
