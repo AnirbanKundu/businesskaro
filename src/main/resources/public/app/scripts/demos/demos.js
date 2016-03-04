@@ -1,5 +1,5 @@
 angular
-  .module('theme.demos', [
+  .module('theme.demos', [ 
     //'oc.lazyLoad',
     //'theme.demos.calendar',
     //'theme.demos.canvas_charts',

@@ -23,9 +23,14 @@ import javax.persistence.TemporalType;
 @Table(name="tbl_unregistered_user_password")
 
 @NamedQueries({
-	@NamedQuery(name="TblUnregisteredUserPassword.findAll", query="SELECT t FROM TblUnregisteredUserPassword t"),
+	//@NamedQuery(name="TblUnregisteredUserPassword.findAll", query="SELECT t FROM TblUnregisteredUserPassword t"),
+	//@NamedQuery(name="Country.findByName",query="SELECT c FROM Country c WHERE c.name = :name"),
+	//@NamedQuery(name="TblUnregisteredUserPassword.findAll", query="t FROM TblUnregisteredUserPassword t"),
+	//@NamedQuery(name="TblUnregisteredUserPassword.findByUsrSalt", query="DELETE FROM TblUnregisteredUserPassword t where t.usr_salt=?"),
+	
+	
 	//@NamedQuery(name="TblUnregisteredUserPassword.findByName", query = "SELECT p FROM TblUnregisteredUserPassword p WHERE p.usr_salt = ?1")
-	@NamedQuery(query = "Select e from TblUnregisteredUserPassword e where e.usr_salt = :id", name = "queryUserSalt")
+	//@NamedQuery(query = "Select e from TblUnregisteredUserPassword e where e.usr_salt = :userSalt", name = "queryUserSalt")
 })
 public class TblUnregisteredUserPassword implements Serializable{
 	private static final long serialVersionUID = 1L;

@@ -14,7 +14,6 @@ import com.businesskaro.entity.TblUnregisteredUserPassword;
 
 public interface TblUnregisteredUserPasswordRepo extends CrudRepository<TblUnregisteredUserPassword, Integer> {
 	List<TblUnregisteredUserPassword> findByUsrName(String usrname);
-	// @Query("SELECT p FROM TblUnregisteredUserPassword p WHERE p.usrsalt = usrsalt")
-	 //public List<TblUnregisteredUserPassword> find(@Param("usrsalt") String lastName);
 	public List<TblUnregisteredUserPassword> findByUsrSalt(String usrsalt);
+	//public List<TblUnregisteredUserPassword> deleteUsersByUsrSalt(String usrsalt);
 }

@@ -20,7 +20,24 @@ public class NewUserEmailSender extends AbstractEmailNotification{
 		loadEmailTokens();
 		sendEmail("CREATE_USER_TEMPLATE.txt");
 	}
-
+	
+	/* Added by Nagendra 1-Mar-2016 */
+	public void sendEmailAndURL(String toEmailAddress,String url) throws Exception {
+		
+		this.toAddress = toEmailAddress;
+		this.subject = "Welcome to Business Karo";
+		this.fromAddress = "admin@businesskaro.com";
+		
+		loadEmailTokens(url);
+		//registrationLink();
+		sendEmail("CREATE_USER_TEMPLATE.txt");
+	}
+	private void loadEmailTokens(String url) {
+		emailTokens = new HashMap<String, String>();
+		emailTokens.put("#test_text", "Welcome to businesskaro.com. You have succesfully registered.");		
+		emailTokens.put("#activatation_link", "Please click the URL to login to the application: "+url);
+	}
+	/* Added by Nagendra */
 	private void loadEmailTokens() {
 		emailTokens = new HashMap<String, String>();
 		emailTokens.put("#test_text", "Welcome to businesskaro.com. You have succesfully registered.");

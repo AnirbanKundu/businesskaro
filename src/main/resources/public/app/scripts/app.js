@@ -106,7 +106,24 @@ angular
         templateUrl: 'views/form-goi.html'
       })
       .when('/userprofile/validate/:registeredToken/email',{
-        templateUrl: 'views/validateregistereduser.html'
+          templateUrl: 'views/validateregistereduser.html',
+          //Written by anirban
+          /*resolve: {
+              params:['']
+          }*/
+          //Written by nagendra
+         /* resolve: {
+            auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+                if (userInfo) {
+                    return $q.when(userInfo);
+                } else {
+                    return $q.reject({ authenticated: false , visitedroute: $location.url() });
+                }
+            }]
+            }
+            */
+
       })
       .when('/login',{
         templateUrl: 'views/login.html',
@@ -120,7 +137,7 @@ angular
         }
       })
       .when('/signupform',{
-        templateUrl: 'views/signupform.html'
+          templateUrl: 'views/signupform.html'
       })
       .when('#', {
         templateUrl: 'views/index.html', 

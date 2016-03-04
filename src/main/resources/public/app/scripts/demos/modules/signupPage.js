@@ -122,10 +122,10 @@ angular
           $scope.waiting = false;       
         },function(error){
           $scope.waiting = false;
-          if(error.data.type ==='USER_ALREADY_EXIST'){
-            $scope.showServerMessage = 'Email id has already been registered.';
+          if(error.data.type ==='null'){
+            $scope.showServerMessage = 'Email id has already been registered. (test)';
           }else{
-            $scope.showServerMessage = 'Unknow error. Please try again.';
+            $scope.showServerMessage = 'Unknow error. Please try again. (Test)';
           }        
 
         });
@@ -177,8 +177,21 @@ angular
             $scope.waiting = false;    
             //$window.location.href = '#/';
           },function(){
-            $scope.waiting = false;
-          });           
+              $scope.waiting = false;
+          },
+          /*function(error){
+              $scope.waiting = false;
+              if (error.data.type === 'Method Not Allowed') {
+                  $scope.showServerMessage = 'User has already been registered.';
+              }else{
+                  $scope.showServerMessage = 'Unknow error. Please try again.';
+              }
+          });    
+          */
+          function(error){
+              $scope.showServerMessage = 'User has already been registered.';
+              $scope.waiting = false;
+          }
     }  
     /*
       For Javascript the method needs to be defined and then called. Else will get an JS error
