@@ -16,7 +16,7 @@
      -->
       <tr>
          <td style="padding: 20px 0 30px 0;font-size:0.90em;" >
-          #activatation_link
+          <span>Please click <a href="#activatation_link">here</a> to activate your account.</span>
          </td>
        </tr>     
        <tr>

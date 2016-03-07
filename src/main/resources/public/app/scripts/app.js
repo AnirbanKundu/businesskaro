@@ -105,7 +105,7 @@ angular
       .when('/goipolicy',{
         templateUrl: 'views/form-goi.html'
       })
-      .when('/userprofile/validate/:registeredToken/email',{
+      .when('/userprofile/validate/:registeredToken/email/:guid',{
           templateUrl: 'views/validateregistereduser.html',
           //Written by anirban
           /*resolve: {

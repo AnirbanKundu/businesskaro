@@ -35,7 +35,7 @@ public class NewUserEmailSender extends AbstractEmailNotification{
 	private void loadEmailTokens(String url) {
 		emailTokens = new HashMap<String, String>();
 		emailTokens.put("#test_text", "Welcome to businesskaro.com. You have succesfully registered.");		
-		emailTokens.put("#activatation_link", "Please click the URL to login to the application: "+url);
+		emailTokens.put("#activatation_link", ""+url);
 	}
 	/* Added by Nagendra */
 	private void loadEmailTokens() {

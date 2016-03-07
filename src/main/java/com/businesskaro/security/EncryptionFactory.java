@@ -56,7 +56,7 @@ public class EncryptionFactory {
 		}
 		catch(Exception e)
 		{
-			logger.error("Failed to initialize EncryptionFactory", e);
+			logger.error("Failed to initialize EncryptionFactory", e); 
 		}
 	}
 	

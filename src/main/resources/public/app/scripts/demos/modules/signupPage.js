@@ -73,60 +73,37 @@ angular
     $scope.isrpwdError = false;
     $scope.serverMessage = '';
     $scope.waiting = false;
-
     $scope.$watch('repeatpassword',function(newval,oldval){
       if(newval){
         if(newval!==$scope.password){
           $scope.signupform.$setValidity('repeatpassword',false,$scope.signupform);
           $scope.isrpwdError = true;
-          //$scope.signupform.repeatpassword.$error = true;
-          //$scope.signupform.repeatpassword.$setValidity('repeatpassword',true,$scope.signupform);
+          
         }else{
           $scope.signupform.$setValidity('repeatpassword',true,$scope.signupform);
           $scope.isrpwdError = false;
-          //$scope.signupform.repeatpassword.$error = false;
-          //$scope.signupform.repeatpassword.$setValidity('repeatpassword',false,$scope.signupform);
+          
         }
       }
-
     });
-
     $scope.register = function($event){
       $event.preventDefault();
-      
+      $scope.userRegistered = false;
       $scope.showServerMessage = '';
       if($scope.email && $scope.password && $scope.repeatpassword){
         $scope.waiting = true;
         var apphistory = UserAuthentication.getuserRoutes(); 
-        //console.log($scope.loginForm.password);
-        //console.log($scope.loginForm.email);
         UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-            UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-                $scope.$emit('loginsuccess', data);
-                $location.path('/userprofile/firstLogin'); 
-              },function(error){
-
-              });
-              //$scope.$emit('loginsuccess', data);
-              //$scope.serverMessage = '';
-
-          //$scope.$emit('loginsuccess', data);
-          //$scope.serverMessage = '';
-          /*if(apphistory[0]==='/signupform'){
-            //console.log('History is',history);
-            $location.path('/'); 
-          }
-          else{
-            $location.path(apphistory[0]);  
-          }  */
-          $scope.waiting = false;       
+          $scope.waiting = false;    
+          $scope.email = $scope.password = $scope.repeatpassword ="";
+          $scope.showServerMessage = "A registration email has been sent. Please click on the link sent to register."
         },function(error){
           $scope.waiting = false;
-          if(error.data.type ==='null'){
-            $scope.showServerMessage = 'Email id has already been registered. (test)';
+          if(error.data.type ==='USER_ALREADY_EXIST'){
+            $scope.showServerMessage = 'Email id has already been registered with.';
           }else{
-            $scope.showServerMessage = 'Unknow error. Please try again. (Test)';
-          }        
+            $scope.showServerMessage = 'Unknow error. Please try again.';
+          }         
 
         });
       }
@@ -158,8 +135,9 @@ angular
     }
 
   }])
-  .controller('ValidateRegisteredUser', ['$scope', '$theme', '$http', '$window', '$timeout', '$route',function($scope, $theme, $http, $window, $timeout,$route) {
-    $scope.registeredToken= $route.current.params.registeredToken;
+  .controller('ValidateRegisteredUser', ['$scope', '$theme', '$http', '$window', '$timeout', '$route','$location', function($scope, $theme, $http, $window, $timeout,$route, $location) {
+    $scope.registeredToken = $route.current.params.registeredToken;
+    $scope.guid = $route.current.params.guid;
     $scope.waiting = false;  
     $timeout(function(){
       $scope.waiting = true;  
@@ -171,28 +149,31 @@ angular
 
     init = function(){      
       $http({
-          url: '/services/uservalidate/'+ $scope.registeredToken,
-            method: 'GET',
-          }).then(function(response){
-            $scope.waiting = false;    
-            //$window.location.href = '#/';
-          },function(){
-              $scope.waiting = false;
-          },
-          /*function(error){
-              $scope.waiting = false;
-              if (error.data.type === 'Method Not Allowed') {
-                  $scope.showServerMessage = 'User has already been registered.';
-              }else{
-                  $scope.showServerMessage = 'Unknow error. Please try again.';
-              }
-          });    
+        url: '/services/uservalidate/'+ $scope.registeredToken + '/email/'+ $scope.guid,
+          method: 'GET',
+        }).then(function(response){
+          $scope.waiting = false;  
+          var userInfo = {
+            secureToken: response.data.secureToken,
+            clientId: response.data.clientId
+          }; 
+          $window.localStorage["bk_userInfo"] = JSON.stringify(userInfo);
+          userInfo.profileCreated = response.data.profileCreated;
+          $scope.$emit('loginsuccess', userInfo);
+          $location.path('/userprofile/firstLogin');  
+          //$window.location.href = '#/';
+          /*
+          UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
+              $scope.$emit('loginsuccess', data);
+              $location.path('/userprofile/firstLogin'); 
+            },function(error){
+          });
           */
-          function(error){
-              $scope.showServerMessage = 'User has already been registered.';
-              $scope.waiting = false;
-          }
-    }  
+        },function(error){
+            $scope.showServerMessage = 'User has already been registered.';
+            $scope.waiting = false;
+        });
+      }  
     /*
       For Javascript the method needs to be defined and then called. Else will get an JS error
     */

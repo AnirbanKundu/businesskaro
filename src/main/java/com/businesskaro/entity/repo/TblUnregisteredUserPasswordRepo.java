@@ -15,5 +15,4 @@ import com.businesskaro.entity.TblUnregisteredUserPassword;
 public interface TblUnregisteredUserPasswordRepo extends CrudRepository<TblUnregisteredUserPassword, Integer> {
 	List<TblUnregisteredUserPassword> findByUsrName(String usrname);
 	public List<TblUnregisteredUserPassword> findByUsrSalt(String usrsalt);
-	//public List<TblUnregisteredUserPassword> deleteUsersByUsrSalt(String usrsalt);
 }
