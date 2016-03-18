@@ -1,5 +1,7 @@
 package com.businesskaro.rest;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -7,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.businesskaro.entity.TblEmailAudit;
 import com.businesskaro.entity.TblUserPassword;
+import com.businesskaro.entity.repo.TblEmailAuditRepo;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.mail.CommunicateMail;
 import com.businesskaro.model.BKException;
@@ -33,6 +37,9 @@ public class CommunicateRestController extends BKRestService{
 	@Autowired
 	SecureTokenUtil secureTokenUtil;
 	
+	@Autowired
+	TblEmailAuditRepo emailAuditRepo;
+	
 	@RequestMapping(value="/services/communicate" , method = RequestMethod.POST)
 	public void sendMail(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody CommunicateRequest request){		
@@ -49,9 +56,23 @@ public class CommunicateRestController extends BKRestService{
 			communicate.fromEmailAddress = fromUserEmail.getUsrName();
 			communicate.fromName = fromUser.firstName;
 			communicate.toEmailAddress = toUserEmail.getUsrName();
-			communicate.toName = toUser.firstName;			
+			communicate.toName = toUser.firstName;
+			
+			TblEmailAudit emailAudit = new TblEmailAudit();
+			emailAudit.setEmailContent(request.message);
+			emailAudit.setEmailSentDate(new Date());
+			emailAudit.setEmailSubject("Email sent for"+ " "+ request.entityType);
+			emailAudit.setEntityId(Integer.parseInt(request.entityId));
+			emailAudit.setEntityType(request.entityType);
+			emailAudit.setSentFrom(userId);
+			emailAudit.setSentFromEmail(fromUserEmail.getUsrEmail());
+			emailAudit.setSentTo(request.toId);
+			emailAudit.setSentToEmail(toUserEmail.getUsrEmail());
+			
 			try {
 				mail.send(communicate);
+				emailAuditRepo.save(emailAudit);
+				
 			} catch (Exception e) {
 				throw new BKException("User Not Authorized" , "001" , BKException.Type.EXTERNAL_ERRROR);
 			}
