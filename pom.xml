@@ -119,6 +119,7 @@
 				<buildDirectory>${project.build.directory}</buildDirectory> </systemPropertyVariables> 
 				</configuration> </plugin> -->
 		</plugins>
+		
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -126,6 +127,7 @@
 					<exclude>**/${uifoldername}/</exclude>
 				</excludes>
 			</resource>
-		</resources>		
+		</resources>
+			
 	</build>
 </project>

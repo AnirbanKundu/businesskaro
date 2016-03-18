@@ -13,7 +13,8 @@ public class BKException extends RuntimeException{
 		USER_AUTH_FAIL,
 		ENTITY_NOT_FOUND,
 		USER_ALREADY_EXIST,
-		EXTERNAL_ERRROR
+		EXTERNAL_ERRROR,
+		USER_AUTHENTICATION_FAIL
 	};
 	
 	public Type errorType;

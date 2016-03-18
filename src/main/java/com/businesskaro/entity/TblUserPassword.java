@@ -45,6 +45,19 @@ public class TblUserPassword implements Serializable {
 	
 	@Column(name="PROFILE_CREATED")
 	private int profileCreated;
+	
+	/*
+	@Column(name="USR_TYPE")
+	private String userType;
+	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	*/
 
 	public int getProfileCreated() {
 		return profileCreated;

@@ -30,7 +30,8 @@ angular
     'theme.demos.request',
     'theme.demos.myoffer',
     'theme.demos.myrequest',
-    'theme.demos.chngpwd'
+    'theme.demos.chngpwd',
+    'theme.demos.myuser'
   ]);
   /*
   .directive('img', ['$timeout', function ($t) {
