@@ -13,6 +13,6 @@ public interface TagEntityRepo extends CrudRepository<TagEntity, Integer> {
 
 	List<TagEntity> findAllByTagId(Integer id);
 
-	List<TagEntity> findAllByTagIdAndEntityType(Integer id, String entityType);
+	List<TagEntity> findAllByTagIdAndEntityType (Integer id, String entityType);
 
 }

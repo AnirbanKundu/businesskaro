@@ -3,7 +3,7 @@ angular
   .controller('UserManagementController', ['$rootScope','$scope', '$http', '$location','$modal','$log', function ($rootScope, $scope, $http, $location,$modal,$log) {
 
       $scope.waiting = true;
-      $http.get('/manageUsers').success(function (response) {
+      $http.get('/admin/manageUsers').success(function (response) {
           $scope.users = response;         
           $scope.waiting = false;
       }).error(function () {
@@ -41,7 +41,7 @@ angular
     $scope.user = existinguser;
     $scope.saveUser = function(user){
       $http({
-        url: '/manageUsers',
+        url: '/admin/manageUsers',
         method: 'POST',
         data: user,
         cache : false
