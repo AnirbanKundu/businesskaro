@@ -59,3 +59,43 @@ angular
     }
 
 }]);
+
+
+
+
+//Email Management
+
+angular
+.module('theme.demos.myuser', ['ui.bootstrap'])
+.controller('EmailManagementController', ['$rootScope','$scope', '$http', '$location','$modal','$log', function ($rootScope, $scope, $http, $location,$modal,$log) {
+
+    $scope.waiting = false;
+    $scope.getEntityEmails = function(){
+       $scope.waiting = true;
+      $http.get('/manageEmail/'+$scope.selectedEntityType).success(function (response) {
+        $scope.emails = response;         
+        $scope.waiting = false;
+      }).error(function () {
+          $scope.emails = [];
+          $scope.waiting = false;
+      });
+    }
+   
+
+    /* this code accept user and display on modal */
+    
+   /*$scope.editUser=function(user){
+     var modalInstance = $modal.open({
+          animation: true,
+          templateUrl: 'views/edituser.html',
+          controller: 'EditUserController',
+          scope: $scope,
+          resolve: {
+            existinguser: function () {
+              return user;
+            }
+          }
+     });*/
+         //end open      
+   //}//end editUser
+}]);

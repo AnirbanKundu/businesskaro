@@ -26,6 +26,7 @@ public class OfferRestService extends BKRestService{
 	@Autowired
 	SecureTokenUtil secureTokenUtil;
 	
+	//@Secured(AuthoritiesConstants.USER)
 	@RequestMapping(value="/services/offer" , method = RequestMethod.POST)
 	public Integer createOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
@@ -35,6 +36,7 @@ public class OfferRestService extends BKRestService{
 		offer.updateDate = new Date();
 		return service.createorUpdate(offer, OfferRequestEnum.OFFER);
 	}
+	
 	
 	@RequestMapping(value="/services/offer" , method = RequestMethod.PUT)
 	public void updateOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 

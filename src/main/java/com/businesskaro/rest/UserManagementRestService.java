@@ -36,8 +36,8 @@ public class UserManagementRestService extends BKRestService {
 			Integer userId = validateSecureToken(secureTokenUtil, clientId,
 					secureToken);
 			TblUserManagement loggedInUser = managementRepo.findOne(userId);
-			// if(loggedInUser.getUsrType().equals("ADMIN")){ // Uncomment
-			if (loggedInUser.getUsrType().equals("USER")) { // Comment
+			 if(loggedInUser.getUsrType().equals("ADMIN")){ // Uncomment
+			//if (loggedInUser.getUsrType().equals("USER")) { // Comment
 				List<TblUserManagement> userMgmt = managementRepo.findAll();
 				List<TblUserManagement> toRemove = new ArrayList<TblUserManagement>();
 				for(TblUserManagement a: userMgmt){

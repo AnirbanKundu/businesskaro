@@ -1,7 +1,9 @@
 package com.businesskaro.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -20,6 +22,7 @@ public class TblUserPassword implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="USR_ID")
 	private int usrId;
 
