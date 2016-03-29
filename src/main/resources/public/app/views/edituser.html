@@ -4,6 +4,9 @@
     <div class="modal-body ng-scope">
        <!-- form start  -->
        <form role="form" id="form" name="form">
+        <div ng-if="message">
+            <alert type="{{alert.type}}"><span ng-bind-html="alert.msg | safe_html"></alert>
+        </div>
         <!-- User Name -->
         <div class="form-group">
           <label for="name">Name</label>
