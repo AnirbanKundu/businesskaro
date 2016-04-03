@@ -101,20 +101,23 @@ public class CommunicateRestController extends BKRestService{
 			if(list != null && list.size() < 0){
 				throw new BKException("User Already Exist", "001", BKException.Type.USER_ALREADY_EXIST);
 			}
-			try {
-				if(list.size()<=5)
+			System.out.println("email limit:"+list.size());
+			
+			if(list.size()<=5)
+			{
+				try
 				{
 					mail.send(communicate);
 					emailAuditRepo.save(emailAudit);
 				}
-				else
-				{
-					throw new BKException("Email sending limit exceeded" , "001" , BKException.Type.BUSSINESS_VALIDATION);
+				catch(Exception e){
+					
 				}
-				//Written by nagendra--END
-			} catch (Exception e) {
-				throw new BKException("User Not Authorized" , "001" , BKException.Type.EXTERNAL_ERRROR);
 			}
+			else
+			{
+				throw new BKException("Email sending limit exceeded" , "001" , BKException.Type.BUSSINESS_VALIDATION);
+			}			
 		} catch(BKException e){
 			throw e;
 		}

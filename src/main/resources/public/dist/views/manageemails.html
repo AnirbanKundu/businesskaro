@@ -47,7 +47,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="email in emails" style="cursor: pointer;">
+            <tr ng-repeat="email in emails" style="cursor: pointer;" ng-click="showEmail(email)">
               <td align="left" data-title="Title"><i>{{email.sentFromEmail}}</i></td>
               <td>{{email.sentToEmail}}</td>
               <td>{{email.entityType}}</td>

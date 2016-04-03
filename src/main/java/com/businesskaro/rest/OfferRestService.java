@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.businesskaro.entity.TblUserManagement;
+import com.businesskaro.entity.repo.TblUserManagementRepo;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.OfferRequest;
 import com.businesskaro.model.OfferRequestEnum;
@@ -20,6 +22,9 @@ import com.businesskaro.service.OfferRequestService;
 @RestController
 public class OfferRestService extends BKRestService{
 
+	@Autowired
+	private TblUserManagementRepo managementRepo;
+	
 	@Autowired
 	OfferRequestService service;
 	
@@ -40,7 +45,10 @@ public class OfferRestService extends BKRestService{
 	public void updateOffer(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody OfferRequest offer){
 		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
-		offer.userId = userId;
+		if(offer.userId==0){
+			offer.userId = userId;
+		}
+		
 		offer.updateDate = new Date();
 		
 		service.createorUpdate(offer, OfferRequestEnum.OFFER);
@@ -74,12 +82,19 @@ public class OfferRestService extends BKRestService{
 	
 	@RequestMapping(value="/services/offer/detailinedit/{offerId}" , method = RequestMethod.GET)
 	public OfferRequest getOfferDetailsInEdit(@PathVariable("offerId") Integer offerId, @RequestHeader("SECURE_TOKEN") String secureToken, 
-			@RequestHeader("CLIENT_ID") String clientId){		
+			@RequestHeader("CLIENT_ID") String clientId){	
 		try{
 			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(offerId);
-			
-			if(result.userId!=userId){
+			TblUserManagement loggedInUser = managementRepo.findOne(userId);	
+			boolean userAuthorized = false;
+			if(result.userId==userId){
+				userAuthorized = true;
+			}			
+			if(loggedInUser.getUsrType().equals("ADMIN")){
+				userAuthorized = true;
+			}			
+			if(!userAuthorized ){
 				throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 			} else{
 				return result;

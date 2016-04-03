@@ -54,6 +54,7 @@ angular
     	        }).then(function(response){
     	        	var data = response.data;
     	          $scope.offerTitle=data.title;
+                $scope.userId = data.userId;
     	          $scope.offerDescription=data.description;
     	          if(data.imgUrl){
     		          var imagePath = data.imgUrl;
@@ -92,6 +93,7 @@ angular
     	          
     	        },function(error){
     	          console.log('Error in pulling the offer data');
+                $scope.waiting = false;
     	        })
     	},1000);    	
     }
@@ -295,7 +297,8 @@ angular
                         "intdAudience" : intAudience[0],
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
-                        "questionList":questions
+                        "questionList":questions,
+                        "userId" : $scope.userId
                         },
                     cache : false}).then(function(response){
                       //$window.location.href = '/#/myoffers';

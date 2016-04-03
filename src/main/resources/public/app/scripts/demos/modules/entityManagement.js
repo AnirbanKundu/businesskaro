@@ -42,33 +42,21 @@ angular
     }
       
     $scope.editEntity=function(e){
-       var modalInstance = $modal.open({
-            animation: true,
-            templateUrl: 'views/editentity.html',
-            controller: 'EditEntityController',
-            scope: $scope,
-            resolve: {
-              selectedEntity: function () {
-                return e;
-              }
-            }
-       });//end open      
+      var url = '';
+      if($scope.selectedEntity==='OFFER'){
+        url = '/createoffer/'+e.entityid;
+      }
+      else if($scope.selectedEntity==='REQUEST'){
+        url = '/createrequest/'+e.entityid;
+      }
+      else if($scope.selectedEntity==='POLICY'){
+        url = '/goipolicy/'+e.entityid;
+      }else{
+        //do nothing.
+      }
+      if($scope.selectedEntity!=='SELECT'){
+        $location.url(url);  
+      }
+       
     }//end editUser
-}]);
-
-
-angular
-.module('theme.demos.adminmanage')
-.controller('EditEntityController',['$rootScope', '$scope','selectedEntity','$location','$modalInstance', '$http', function ($rootScope, $scope, selectedEntity,$location,$modalInstance,$http) {
-    
-    $scope.entity = selectedEntity;
-    $scope.saveUser = function(user){
-      
-    }
-
-    $scope.close=function()
-    {
-       $modalInstance.dismiss('cancel');
-    }
-
 }]);

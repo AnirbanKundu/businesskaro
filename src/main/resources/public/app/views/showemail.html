@@ -1,0 +1,37 @@
+<div class="modal-header">
+          <h3 class="modal-title">Show Email</h3>
+        </div>
+    <div class="modal-body ng-scope">
+       <!-- form start  -->
+       <form role="form" id="form" name="form">        
+        <!-- Sent From Email -->
+        <div class="form-group">
+          <label for="name">Sent From Email</label>
+          <input type="text" class="form-control" id="sentfromemail" ng-model="email.sentFromEmail" disabled />
+        </div>
+        <!-- Sent To Email -->
+        <div class="form-group">
+          <label for="name">Sent To Email</label>
+          <input type="text" class="form-control" id="senttoemail" ng-model="email.sentToEmail" disabled />
+        </div>
+        <!-- Entity Type -->
+        <div class="form-group">
+          <label for="name">Entity Type</label>
+          <input type="text" class="form-control" id="entitytype" ng-model="email.entityType" disabled />
+        </div>
+        <!-- Email Subject -->
+        <div class="form-group">
+          <label for="name">Email Subject</label>
+          <input type="text" class="form-control" id="emailsubject" ng-model="email.emailSubject" disabled />
+        </div>
+        <!-- Email Content -->
+        <div class="form-group">
+          <label for="name">Email Content</label>          
+          <textarea rows="4" cols="50" id="emailcontext" ng-model="email.emailContent" class="form-control" disabled></textarea>          
+        </div>
+      </form>
+      </div>
+       <!-- form end -->
+       <div class="modal-footer">
+          <button class="btn btn-warning" type="button" ng-click="close()">Cancel</button>
+        </div>

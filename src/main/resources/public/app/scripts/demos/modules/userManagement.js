@@ -75,5 +75,31 @@ angular
           $scope.emails = [];
           $scope.waiting = false;
       });
-    }   
+    }//END GETTING EMAIL
+    
+    $scope.showEmail=function(email){
+        var modalInstance = $modal.open({
+             animation: true,
+             templateUrl: 'views/showemail.html',
+             controller: 'ShowEmailController',
+             scope: $scope,
+             resolve: {
+               showEmail: function () {
+                 return email;
+               }
+             }
+        });//end open      
+      }//end showEntity
+}]);
+
+//Show Email
+angular
+.module('theme.demos.myuser')
+.controller('ShowEmailController',['$rootScope', '$scope','showEmail','$location','$modalInstance', function ($rootScope, $scope, showEmail,$location,$modalInstance) {
+    $scope.email = showEmail;   
+    $scope.close=function()
+    {
+       $modalInstance.dismiss('cancel');
+    }
+
 }]);

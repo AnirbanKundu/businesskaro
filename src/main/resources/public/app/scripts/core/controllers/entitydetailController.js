@@ -7,6 +7,9 @@ angular
     $scope.entityId = $route.current.params.entityId;
     $scope.entityResult = {};
     $scope.userDetail = {};
+    $scope.serverMessage = '';
+    //$scope.waiting = false;
+    
     LookUpService.getStates().then(function(data){
 
     },function(error){
@@ -29,15 +32,15 @@ angular
       $log.log(error);
     });
     EntityService.getEntityDetailData({'entityType':$scope.entityType,'entityId':$scope.entityId}).then(function(data){
-    	$scope.entityResult = data;
+      $scope.entityResult = data;
       $scope.relatedTags=[];
 
 
-    	console.log('Data in entity detail:',$scope.entityResult);
-    	$scope.connectMessage='';
-    	//Get Related Entity details
-    	if($scope.entityType!='GOVT_POLICY'){
-    		if($scope.entityType=='USER'){
+      console.log('Data in entity detail:',$scope.entityResult);
+      $scope.connectMessage='';
+      //Get Related Entity details
+      if($scope.entityType!='GOVT_POLICY'){
+        if($scope.entityType=='USER'){
           $timeout(function(){
             for(var i=0;i<$scope.entityResult.summary.industrys.length;i++){
               var industryName = LookUpService.getIndustryName($scope.entityResult.summary.industrys[i]);
@@ -53,25 +56,25 @@ angular
             }
             $scope.relatedTags.push(s);
           },500);
-    			$http({
-		          url : '/services/offer/',
-		          method: 'GET'
-		        }).then(function(response){
-		        	$scope.offers = response.data;
-		        },function(error){
+          $http({
+              url : '/services/offer/',
+              method: 'GET'
+            }).then(function(response){
+              $scope.offers = response.data;
+            },function(error){
 
-		        });
-		        $http({
-		          url : '/services/request/',
-		          method: 'GET'
-		        }).then(function(response){
-		        	$scope.requests = response.data;
-		        },function(error){
+            });
+            $http({
+              url : '/services/request/',
+              method: 'GET'
+            }).then(function(response){
+              $scope.requests = response.data;
+            },function(error){
 
-		        });
-    		}
-    		else{
-    			
+            });
+        }
+        else{
+          
           $timeout(function(){
             for(var i=0;i<$scope.entityResult.trgtIndustry.length;i++){
               var industryName = LookUpService.getIndustryName($scope.entityResult.trgtIndustry[i]);
@@ -117,13 +120,13 @@ angular
               console.log('In questions http');
               $log.log(error);
           });
-    			EntityService.getRelatedUserDetail({'userId':$scope.entityResult.userId}).then(function(data){
-    				$scope.userDetail = data;
-    			},function(error){
-    				console.log('Error now',error);
-    			});
-    		}
-    	}
+          EntityService.getRelatedUserDetail({'userId':$scope.entityResult.userId}).then(function(data){
+            $scope.userDetail = data;
+          },function(error){
+            console.log('Error now',error);
+          });
+        }
+      }
       else{
         $timeout(function(){
             for(var i=0;i<$scope.entityResult.industrys.length;i++){
@@ -145,7 +148,7 @@ angular
         },500);
       }
     },function(error){
-    	console.log('Error now');
+      console.log('Error now');
     });
 
     $timeout(function(){
@@ -158,7 +161,7 @@ angular
     },1000);
 
     $scope.connect = function(connectMessage){
-    	$http({
+      $http({
               url: '/services/communicate',
               method: 'POST',
               isArray: false,
@@ -169,9 +172,11 @@ angular
                   },
               cache : false
         }).then(function(data){
-
+           $scope.waiting = false;
+           $scope.showServerMessage = "Email sent successfully."
         },function(error){
-
+          $scope.showServerMessage = "Email sending limit exceeded. You can send 5 emails in a day"
+            //console.log('TAG Entity error',error);
         });
     }
 

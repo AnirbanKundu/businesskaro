@@ -226,12 +226,16 @@
 						<div class="col-md-12">
 							<textarea class="form-control" ng-model="connectMessage" maxlength="250"></textarea>
 						</div>
-						<br/>
+						<br/>				
+						
+						
 						<div class="col-md-12" style="padding:20px;">
+							<div class="pull-left">
+								<span ng-show="showServerMessage.length>0">{{showServerMessage}}</span>
+							</div>
 							<div class="pull-right">
 								<button class="btn btn-primary btn-sm" ng-click="connect(connectMessage);">Connect</button>
-							</div>							
-							
+							</div>
 						</div>
 					</div>
 				</div>

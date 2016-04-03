@@ -102,6 +102,7 @@ angular
 		          method: 'GET'
 		        }).then(function(response){
 		        	var data = response.data;
+		        	$scope.userId = data.userId;
 		        	$scope.requestTitle=data.title;
 			        $scope.requestDescription=data.description;			        
 			        for(var i=0;i<data.trgtIndustry.length;i++){
@@ -210,7 +211,8 @@ angular
 	    	                  "intdAudience" : $scope.selectedAudience,
 	    	                  "trgtLocation" : state,
 	    	                  "imgUrl" :$scope.imageUrl,
-	    	                  "questionList":questions
+	    	                  "questionList":questions,
+	    	                  "userId" : $scope.userId
 	    	                  },
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';

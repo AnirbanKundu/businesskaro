@@ -17,6 +17,9 @@ import com.businesskaro.model.OfferRequestEnum;
 import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.OfferRequestService;
 
+import com.businesskaro.entity.TblUserManagement;
+import com.businesskaro.entity.repo.TblUserManagementRepo;
+
 @RestController
 public class RequestRestService extends BKRestService{
 
@@ -25,6 +28,9 @@ public class RequestRestService extends BKRestService{
 	
 	@Autowired
 	SecureTokenUtil secureTokenUtil;
+	
+	@Autowired
+	TblUserManagementRepo managementRepo;
 	
 	@RequestMapping(value="/services/request" , method = RequestMethod.POST)
 	public Integer createRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
@@ -40,7 +46,9 @@ public class RequestRestService extends BKRestService{
 	public void updateRequest(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId,@RequestBody OfferRequest request){
 		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
-		request.userId = userId;
+		if(request.userId==0){
+			request.userId = userId;
+		}
 		request.updateDate = new Date();
 		service.createorUpdate(request,OfferRequestEnum.REQUEST);
 	}
@@ -85,13 +93,19 @@ public class RequestRestService extends BKRestService{
 		try{
 			Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
 			OfferRequest result = service.getDetails(requestId);
-			
-			if(result.userId!=userId){
+			TblUserManagement loggedInUser = managementRepo.findOne(userId);	
+			boolean userAuthorized = false;
+			if(result.userId==userId){
+				userAuthorized = true;
+			}			
+			if(loggedInUser.getUsrType().equals("ADMIN")){
+				userAuthorized = true;
+			}				
+			if(!userAuthorized ){
 				throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 			} else{
 				return result;
-			}
-			 
+			}			 
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 		}
