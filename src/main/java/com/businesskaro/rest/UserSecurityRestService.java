@@ -61,6 +61,7 @@ public class UserSecurityRestService extends BKRestService {
 				response.secureToken =  secureTokenUtil.generateSecurityToken(newGuid, userPswd.getUsrId());
 				response.clientId = newGuid;
 				response.profileCreated = userPswd.getProfileCreated();
+				
 				return response;
 			}  catch (Exception e) {
 				throw new BKException("Unknown Error while generating secure token" , "000" , BKException.Type.INTERNAL_ERRROR);

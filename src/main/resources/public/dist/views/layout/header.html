@@ -134,6 +134,22 @@
 		  </li>
 		</ul>
 	  </li>
+		<!-- Admin Management -->
+		<li class="dropdown" ng-show="isLoggedIn" dropdown ng-if="UserDetail && UserDetail.userType==='ADMIN'">
+		<a href class="dropdown-toggle" dropdown-toggle><span>User Management</span></a>
+		<ul class="dropdown-menu animated userinfo arrow">
+		  <li class="userlinks">
+			<ul class="dropdown-menu">
+			  <li><a href="#/admin/manageemails">Manage Emails <i class="pull-right glyphicon glyphicon-pencil"></i></a></li>			  
+			  <li class="divider"></li>
+			  <li><a href="#/admin/manageusers">Manage Users <i class="pull-right glyphicon glyphicon-stats"></i></a></li>
+			  <li><a href="#/admin/manageentities">Manage Request/Offer/Policy<i class="pull-right glyphicon glyphicon-list-alt"></i></a></li>			  
+			</ul>
+		  </li>
+		</ul>
+	  </li>
+
+	  
 	  <!--
 	  <li class="dropdown hidden-xs" dropdown ng-controller="MessagesController" ng-show="isLoggedIn">
 		<a href class="dropdown-toggle" dropdown-toggle>

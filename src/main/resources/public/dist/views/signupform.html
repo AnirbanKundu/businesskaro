@@ -55,6 +55,17 @@
 						</div>
 					</div>
 				</div> 
+				<!-- added by nagendra -->	 			
+				<div
+                vc-recaptcha
+                theme="'light'"
+                key="model.key"
+                on-create="setWidgetId(widgetId)"
+                on-success="setResponse(response)"
+                on-expire="cbExpiration()"
+            ></div>
+				
+				<!-- added by nagendra -->
 				<div class="panel-footer">
 					<div class="pull-right">
 						<button class="btn btn-success" ng-click="register($event)" ng-disabled="signupform.$invalid">Sign up</button>

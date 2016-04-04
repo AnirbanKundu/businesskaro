@@ -8,6 +8,7 @@ public class BKUser {
 	public String email;
 	public String phoneNo;
 	public String randomSalt;
+	public String userType;
 	
 	
 	@Override

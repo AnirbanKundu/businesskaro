@@ -160,7 +160,7 @@ angular.module('theme.core.main_controller', ['theme.core.services'])
       $rootScope.loggedIn='called';
       $scope.isLoggedIn = false;
       UserAuthentication.getUserDetails().then(function(response){
-        console.log('User details are', response);
+        //console.log('User details are', response);
         //$scope.isLoggedIn = true;
         //$rootScope.loggedIn = 'loggedin';
         $scope.$emit('loginsuccess', response.data);

@@ -49,6 +49,17 @@ public class TblUserPassword implements Serializable {
 	@Column(name="PROFILE_CREATED")
 	private int profileCreated;
 	
+	@Column(name="USR_TYPE" ,columnDefinition="Varchar(50) default 'USER'")
+	private String usrType;
+
+    public String getUsrType() {
+		return usrType;
+	}
+
+	public void setUsrType(String usrType) {
+		this.usrType = usrType;
+	}
+	
 	/*
 	@Column(name="USR_TYPE")
 	private String userType;

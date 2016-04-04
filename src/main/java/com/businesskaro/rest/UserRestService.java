@@ -186,6 +186,7 @@ public class UserRestService extends BKRestService {
 		user.email = userPswd.getUsrEmail();
 		user.id = userPswd.getUsrId();
 		user.userName = userPswd.getUsrName();
+		user.userType = userPswd.getUsrType();
 	
 		
 		return user;  

@@ -1,6 +1,7 @@
 angular
   .module('theme.demos.signup_page', [
-    'theme.core.services'
+    'theme.core.services',
+    'vcRecaptcha'
   ])
   .controller('SignupPageController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
     'use strict';
@@ -62,7 +63,7 @@ angular
     };
 
   }])
-  .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route) {
+  .controller('NewSignUpController', ['$rootScope', '$scope', '$theme', '$timeout', 'UserAuthentication', '$location','$route','vcRecaptchaService', function($rootScope,$scope, $theme, $timeout, UserAuthentication, $location, $route,vcRecaptchaService) {
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
       $theme.set('fullscreen', false);
@@ -86,6 +87,40 @@ angular
         }
       }
     });
+    //captcha
+    $scope.response = null;
+    $scope.widgetId = null;
+
+    if($location.host() ==='localhost'){
+      $scope.model = {
+        key: '6LcoNhwTAAAAAB504XGyp-X1g1EaCpjfiio2qn_H'
+      };
+    }else{
+      $scope.model = {
+        key:'6Lf8RxwTAAAAANN5wFDzArq5lZLCs5HVNUFOoTUc'
+      };
+    }
+
+    $scope.setResponse = function (response) {
+        console.info('Response available');
+
+        $scope.response = response;
+    };
+
+    $scope.setWidgetId = function (widgetId) {
+        console.info('Created widget ID: %s', widgetId);
+
+        $scope.widgetId = widgetId;
+    };
+
+    $scope.cbExpiration = function() {
+        console.info('Captcha expired. Resetting response object');
+        vcRecaptchaService.reload($scope.widgetId);
+        $scope.response = null;
+     };
+    //captcha
+    
+    
     $scope.register = function($event){
       $event.preventDefault();
       $scope.userRegistered = false;
@@ -96,6 +131,10 @@ angular
         UserAuthentication.registerUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
           $scope.waiting = false;    
           $scope.email = $scope.password = $scope.repeatpassword ="";
+          //added by nagendra --CAPTCHA
+          vcRecaptchaService.reload($scope.widgetId);
+          //added by nagendra --CAPTCHA
+          
           $scope.showServerMessage = "A registration email has been sent. Please click on the link sent to register."
         },function(error){
           $scope.waiting = false;
@@ -107,6 +146,31 @@ angular
 
         });
       }
+      
+      
+     
+
+      /**
+       * SERVER SIDE VALIDATION
+       *
+       * You need to implement your server side validation here.
+       * Send the reCaptcha response to the server and use some of the server side APIs to validate it
+       * See https://developers.google.com/recaptcha/docs/verify
+       */
+      /*
+      var valid;
+      console.log('sending the captcha response to the server', $scope.response);
+
+      if (valid) {
+          console.log('Success');
+      } else {
+          console.log('Failed validation');
+
+          // In case of a failed validation you need to reload the captcha
+          // because each response can be checked just once
+          vcRecaptchaService.reload($scope.widgetId);
+      }
+      */
     };
 
   }])
@@ -118,20 +182,20 @@ angular
     });
     $scope.reset = function(){
       $scope.waiting = true; 
-    	console.log('In reset'+$scope.resetEmail);
-    	$http({
+      console.log('In reset'+$scope.resetEmail);
+      $http({
             url: 'services/resetPassword',
             method: 'POST',
             data: {
-          	  "email":$scope.resetEmail
+              "email":$scope.resetEmail
             }
           }).then(function(response){
             $scope.waiting = false;    
-        	  $window.location.href = '/#/login';
+            $window.location.href = '/#/login';
           },function(){
             $scope.waiting = false;
           });
-    	
+      
     }
 
   }])
