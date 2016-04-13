@@ -1,7 +1,22 @@
+<style>
+.panel-heading-custom h2{
+	    color: #a2acb3;
+    height: 100%;
+    width: auto;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 0 5px;
+    position: relative;
+    margin: 0;
+    line-height: 20px;
+    cursor: text;
+    text-transform: uppercase;
+}
+</style>
 <div id="page-heading">
 	<ol class="breadcrumb">
 		<li><a href="#/">Dashboard</a></li>
-		<li>Create Offer</li>
+		<li>Create Policy</li>
 	</ol>
 </div>
 <div class="container-fluid" ng-controller="GOIPolicyController">
@@ -75,6 +90,16 @@
 										<span ng-bind-html="iterator.stateName"></span> </ui-select-choices> </ui-select>
 					                </div>
 								</div>
+								<!-- added by nagendra -->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Is Featured?</label>
+									<div class="col-sm-6" ng-init="isFeatured.value='false'" >
+									 	<input name="isFeatured" type="radio" ng-model="isFeatured" value="1">True 
+            							&nbsp;<input name="isFeatured" type="radio" ng-model="isFeatured" value="0">False
+					                </div>
+								</div>
+
+
 							</form>
 						</div>
 						<div class="col-sm-12">
@@ -98,19 +123,5 @@
 	</div>
 
 </div>
-<style>
-.panel-heading-custom h2{
-	    color: #a2acb3;
-    height: 100%;
-    width: auto;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 5px 0 5px;
-    position: relative;
-    margin: 0;
-    line-height: 20px;
-    cursor: text;
-    text-transform: uppercase;
-}
-</style>
+
 <!-- container-fluid -->

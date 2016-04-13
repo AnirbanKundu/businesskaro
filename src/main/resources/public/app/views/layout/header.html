@@ -126,7 +126,9 @@
 			  -->			  
 			  <li class="divider"></li>
 			  <li><a href="#/myoffers">My Offers <i class="pull-right glyphicon glyphicon-stats"></i></a></li>
-			  <li><a href="#/myrequests">My Requests<i class="pull-right glyphicon glyphicon-list-alt"></i></a></li>			  
+			  <li><a href="#/myrequests">My Requests<i class="pull-right glyphicon glyphicon-list-alt"></i></a></li>			
+			  <!-- added by nagendra -->
+			  <li ng-if="UserDetail && UserDetail.userType==='ADMIN'||UserDetail && UserDetail.userType==='PUBLISHER'"><a href="#/mypolicies">My Policies<i class="pull-right glyphicon glyphicon-list-alt"></i></a></li>
 			  <li class="divider"></li>
 			  <li><a href="#/changepassword">Change Password<i class="pull-right glyphicon glyphicon-credit-card"></i></a></li>
 			  <li><a href="#" class="text-right" ng-click="logOut();$event.stopPropagation()">Sign Out</a></li>

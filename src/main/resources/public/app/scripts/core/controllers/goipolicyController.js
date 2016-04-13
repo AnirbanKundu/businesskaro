@@ -5,7 +5,7 @@ angular
   
   $scope.id= $route.current.params.id;
   console.log("Offer COntroller: "+$scope.id);
-  $scope.waiting = true;
+  $scope.waiting = false;
   $scope.isSaveClicked = false;
       $scope.checking = false;
   $scope.checked = false;
@@ -29,62 +29,54 @@ angular
   $http.get('utilservices/industries').success(function(response) {
     $scope.industries = response;
   });
-  
-  if($scope.id !== undefined){    	
-  	$timeout(function(){
-  		$http({
-  	          url : '/services/offer/detail/'+ $scope.id,
-  	          method: 'GET'
-  	        }).then(function(response){
-  	        	var data = response.data;
-  	          $scope.offerTitle=data.title;
-  	          $scope.offerDescription=data.description;
-  	          if(data.imgUrl){
-  		          var imagePath = data.imgUrl;
-  		          var widgetFileInput = $('.fileinput').fileinput();
-  		          widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
-  		          if(imagePath){ 
-  		            widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
-  		            $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
-  		            $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
-  		            console.log('actualImageName is :',$scope.actualImageName);
-  		          }          
-  		        }
-  	          for(var i=0;i<data.trgtIndustry.length;i++){
-  	              for(var j=0;j<$scope.industries.length;j++){
-  	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
-  	                  $scope.selectedIndustries.selected.push($scope.industries[j]);
-  	                  break;
-  	                }
-  	              }
-  	            }
-  	          for(var i=0;i<data.trgtLocation.length;i++){
-  	              for(var j=0;j<$scope.states.length;j++){
-  	                if(data.trgtLocation[i] == $scope.states[j].stateId){
-  	                  $scope.selectedStates.selected.push($scope.states[j]);
-  	                  break;
-  	                }
-  	              }
-  	            }
-  	          for(var i=0;i<$scope.intendedAudience.length;i++){
-  	        	  if($scope.intendedAudience[i].targAudId === data.intdAudience){
-  	        		  $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
-  	        	  }
-  	          }
+    if($scope.id !== undefined){      
+    $timeout(function(){
+      $http({
+              url : '/services/policy/'+ $scope.id,
+              method: 'GET'
+            }).then(function(response){
+              var data = response.data;
+              $scope.offerTitle=data.policyTitle;
+              $scope.offerDescription=data.policyDesc;
+              $scope.isFeatured = data.isFeatured;
+              if(data.imageUrl){
+                var imagePath = data.imageUrl;
+                var widgetFileInput = $('.fileinput').fileinput();
+                widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
+                if(imagePath){ 
+                  widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
+                  $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
+                  $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
+                  console.log('actualImageName is :',$scope.actualImageName);
+                }          
+              }
+              for(var i=0;i<data.industrys.length;i++){
+                  for(var j=0;j<$scope.industries.length;j++){
+                    if(data.industrys[i] == $scope.industries[j].industryId){
+                      $scope.selectedIndustries.selected.push($scope.industries[j]);
+                      break;
+                    }
+                  }
+                }
+              for(var i=0;i<data.states.length;i++){
+                  for(var j=0;j<$scope.states.length;j++){
+                    if(data.states[i] == $scope.states[j].stateId){
+                      $scope.selectedStates.selected.push($scope.states[j]);
+                      break;
+                    }
+                  }
+                }
               $scope.waiting = false;
-  	          
-  	          
-  	        },function(error){
-  	          console.log('Error in pulling the offer data');
-  	        })
-  	},1000);    	
+              
+              
+            },function(error){
+              console.log('Error in pulling the offer data');
+            })
+    },1000);      
   }
   else{
     $scope.waiting = false;
   }
-  
-  //$scope.reg_form = {};
-  //$scope.form = {};
   $scope.formControl = {
     isTitleValid:true,
     isIndustryValid:true,
@@ -220,7 +212,7 @@ angular
     };
     
     $scope.save =  function(){
-  		var state=[];
+      var state=[];
       var tags = [];
       $scope.isSaveClicked = true;
       var isFormValid = true;
@@ -257,7 +249,8 @@ angular
                       "policyDesc" : $scope.offerDescription,
                       "industrys" : industries,
                       "states" : state,
-                      "imgUrl" :$scope.imageUrl,
+                      "imageUrl" :$scope.imageUrl,
+                      "isFeatured":parseInt($scope.isFeatured)                     
                       },
                   cache : false}).then(function(response){
                     //$window.location.href = '/#/myoffers';
@@ -285,8 +278,8 @@ angular
                       "policyDesc" : $scope.offerDescription,
                       "industrys" : industries,
                       "states" : state,
-                      "imgUrl" :$scope.imageUrl
-                      
+                      "imageUrl" : $scope.imageUrl,
+                      "isFeatured": parseInt($scope.isFeatured)
                       },
                   cache : false}).then(function(response){
                     $scope.waiting = false;
@@ -308,6 +301,6 @@ angular
       }
       }
       
-  	  
+      
     };
 }]);

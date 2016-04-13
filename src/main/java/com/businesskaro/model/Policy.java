@@ -11,7 +11,8 @@ public class Policy {
 	public String imageUrl;
 	public int[]  industrys;
 	public int[]  states;	
-	
+	public int isFeatured=0;
+	public int userId;	
 	public Date createDate;
 	public Date updateDate;
 }

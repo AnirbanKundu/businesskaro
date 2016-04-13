@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.businesskaro.entity.TblPolicy;
+import com.businesskaro.entity.TblPolicySingleEntity;
+import com.businesskaro.entity.TblUserManagement;
+import com.businesskaro.entity.repo.TblPolicyRepo;
+import com.businesskaro.entity.repo.TblPolicySingleEntityRepo;
+import com.businesskaro.entity.repo.TblUserManagementRepo;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.Policy;
 import com.businesskaro.security.SecureTokenUtil;
@@ -21,7 +27,14 @@ public class PolicyRestService extends BKRestService {
 	@Autowired
 	PolicyService policyService;
 	
-
+	@Autowired
+	TblUserManagementRepo managementRepo;
+	@Autowired
+	TblPolicyRepo policyRepo;
+	
+	@Autowired
+	TblPolicySingleEntityRepo policySERepo;
+	
 	@Autowired
 	SecureTokenUtil secureTokenUtil;
 	
@@ -29,10 +42,12 @@ public class PolicyRestService extends BKRestService {
 	public Policy createPolicy(@RequestBody Policy policy,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
+			Integer userId = validateSecureToken(secureTokenUtil, clientId,secureToken);
 			validateSecureToken(secureTokenUtil,clientId, secureToken);
+			policy.userId = userId;
 			return policyService.createPolicy(policy);
-		} catch (Exception e) {
-			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
+		} catch (BKException e) {
+			throw e;
 		}
 	}
 	
@@ -40,13 +55,55 @@ public class PolicyRestService extends BKRestService {
 	public Policy updatePolicy(@RequestBody Policy policy,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
+			Integer userId = validateSecureToken(secureTokenUtil, clientId,secureToken);
 			validateSecureToken(secureTokenUtil,clientId, secureToken);
+			policy.userId = userId;
 			return policyService.createPolicy(policy);
 		} catch (Exception e) {
-			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
+			throw e;
 		}
 	}
-	
+	//ADDED HERE -START
+	//get all policies
+	@RequestMapping(value = "/services/getAllPolicies", method = RequestMethod.GET)
+	public List<TblPolicySingleEntity> getAllPolicies(
+			@RequestHeader("SECURE_TOKEN") String secureToken,
+			@RequestHeader("CLIENT_ID") String clientId)
+	{
+		List<TblPolicySingleEntity> allPolicies=null;
+		try {
+			Integer userId = validateSecureToken(secureTokenUtil, clientId, secureToken);
+			TblUserManagement loggedInUser = managementRepo.findOne(userId);			
+			
+			 if(loggedInUser.getUsrType().equals("ADMIN")){ 	
+				allPolicies = policySERepo.findAllByUsrId(userId);	 			
+			} 
+			else if(loggedInUser.getUsrType().equals("PUBLISHER")){ 	
+					allPolicies = policySERepo.findAllByUsrId(userId);					
+			}else {
+				throw new BKException("User not an admin/publisher", "403",BKException.Type.IN_VALID_USER);
+			}
+		} catch (BKException ex) {
+			throw ex;
+		}		
+		return allPolicies;
+	}
+	//get all isfeatured policies
+	@RequestMapping(value = "/services/getAllIsFeaturedPolicies", method = RequestMethod.GET)
+	public List<TblPolicySingleEntity> getAllIsFeaturedPolicies()
+	{
+		List<TblPolicySingleEntity> allPolicies=null;
+		try 
+		{			
+			allPolicies = policySERepo.findAllByIsFeatured(1);
+			return allPolicies;
+		} 
+		catch (BKException ex) {
+			throw new BKException("User not an admin/publisher", "403",BKException.Type.IN_VALID_USER);
+		}		
+		
+	}
+	//ADDED HERE -END
 	@RequestMapping(value="/services/policies" , method = RequestMethod.GET)
 	public List<Policy> getPolicy(@PathVariable("policyId") Integer id,@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId){

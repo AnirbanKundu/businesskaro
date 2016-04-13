@@ -102,8 +102,34 @@ angular
           }]
         }
       })
-      .when('/goipolicy',{
-        templateUrl: 'views/form-goi.html'
+      //written by nagendra
+       .when('/mypolicies',{
+        templateUrl: 'views/mypolicies.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
+      })             
+      .when('/goipolicy/:id?',{
+        templateUrl: 'views/form-goi.html',
+        resolve: {
+          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+            var userInfo = authenticationSvc.getToken();       
+            if (userInfo) {
+              return $q.when(userInfo);
+            } else {
+              console.log('current location', $location);
+              return $q.reject({ authenticated: false , visitedroute: $location.url() });
+            }
+          }]
+        }
       })
       .when('/userprofile/validate/:registeredToken/email/:guid',{
           templateUrl: 'views/validateregistereduser.html',

@@ -32,7 +32,9 @@ angular
     'theme.demos.myrequest',
     'theme.demos.chngpwd',
     'theme.demos.myuser',
-    'theme.demos.adminmanage'
+    'theme.demos.adminmanage',
+    'theme.demos.mypolicy'
+    
   ]);
   /*
   .directive('img', ['$timeout', function ($t) {

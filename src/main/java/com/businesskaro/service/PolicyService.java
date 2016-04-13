@@ -53,6 +53,9 @@ public class PolicyService {
 		tblPolicy.setPolicyTitle(policy.policyTitle);
 		tblPolicy.setPolicyType(policy.policyType);
 		tblPolicy.setImageUrl(policy.imageUrl);
+		tblPolicy.setIsFeatured(policy.isFeatured);
+		tblPolicy.setUsrId(policy.userId);
+		
 		
 		tblPolicy = policyRepo.save(tblPolicy);
 		

@@ -13,7 +13,15 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tbl_policies")
-@NamedQuery(name = "TblPolicy.findAll", query = "SELECT t FROM TblPolicy t")
+
+@NamedQueries
+(
+    {
+        @NamedQuery(name="TblPolicy.getPolicyByFeature", query="SELECT t FROM TblPolicy t where t.isFeatured = :isFeatured"),
+        @NamedQuery(name = "TblPolicy.findAll", query = "SELECT t FROM TblPolicy t")
+    }
+)
+
 public class TblPolicy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,14 +41,39 @@ public class TblPolicy implements Serializable {
 	@Column(name = "LAST_UPD")
 	private Date lastUpd;
 
-	@Column(name = "POLICY_DESC")
+	//ALTERED HERE
+	@Column(name = "POLICY_DESC", columnDefinition="TEXT")
 	private String policyDesc;
+
+	public int getIsFeatured() {
+		return isFeatured;
+	}
+
+	public void setIsFeatured(int isFeatured) {
+		this.isFeatured = isFeatured;
+	}
+
+	public int getUsrId() {
+		return usrId;
+	}
+
+	public void setUsrId(int usrId) {
+		this.usrId = usrId;
+	}
 
 	@Column(name = "POLICY_TITLE")
 	private String policyTitle;
 
 	@Column(name = "POLICY_TYPE")
 	private String policyType;
+	
+	//ADDED HERE
+	@Column(name="IS_FEATURED")
+	private int	isFeatured;
+	
+	
+	@Column(name="USR_ID") 
+	private int usrId;
 
 	// bi-directional many-to-one association to BrgTopicsIndustry
 	@OneToMany(mappedBy = "tblPolicy")
