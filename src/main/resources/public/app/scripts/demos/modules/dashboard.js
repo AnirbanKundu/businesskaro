@@ -79,15 +79,15 @@ angular.module('theme.demos.dashboard', [
     
     $scope.contactus = function($event){      
       $event.preventDefault();
-    	$http({
+      $http({
             url: 'services/contactus',
             method:'POST',
             data:{
-          	  "name":$scope.contactusForm.contacterName,
-          	  "email":$scope.contactusForm.email,
-          	  "mobileNo":$scope.contactusForm.mobile,
-          	  "subject":$scope.contactusForm.subject,
-          	  "message":$scope.contactusForm.message
+              "name":$scope.contactusForm.contacterName,
+              "email":$scope.contactusForm.email,
+              "mobileNo":$scope.contactusForm.mobile,
+              "subject":$scope.contactusForm.subject,
+              "message":$scope.contactusForm.message
             }
           }).then(function(response){
             $scope.message = 'success';
@@ -100,8 +100,8 @@ angular.module('theme.demos.dashboard', [
 
     $scope.refreshTags = function(value) {
      if(value=="" || value==undefined ){
-    	 return;
-     }	
+       return;
+     }  
       var params = {keyword: value};
       return $http.get(
         'services/tag/names?',
@@ -129,5 +129,15 @@ angular.module('theme.demos.dashboard', [
     for (var i = 0; i < 5; i++) {
       $scope.addSlide();
     }
+    
+  //isFeatured policies--written by nagendra
+    $http.get('/services/getAllIsFeaturedPolicies').success(function(response) {
+        $scope.policies = response;         
+        $scope.waiting = false;
+    }).error(function () {
+        $scope.policies = [];
+        $scope.waiting = false;
+    });   
+    
     
   }]);

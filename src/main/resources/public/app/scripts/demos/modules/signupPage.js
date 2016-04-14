@@ -175,7 +175,8 @@ angular
 
   }])
   .controller('RestPasswordController', ['$scope', '$theme', '$http', '$window',function($scope, $theme, $http, $window) {
-    $scope.waiting = false;    
+    $scope.waiting = false;
+    $scope.serverMessage = '';    
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
       $theme.set('fullscreen', false);
@@ -190,10 +191,12 @@ angular
               "email":$scope.resetEmail
             }
           }).then(function(response){
-            $scope.waiting = false;    
-            $window.location.href = '/#/login';
+            $scope.waiting = false;  
+            $scope.showServerMessage = 'Your temporary password has been emailed. Please use that password to login.';  
+            //$window.location.href = '/#/login';
           },function(){
             $scope.waiting = false;
+            //$scope.showServerMessage = ''
           });
       
     }

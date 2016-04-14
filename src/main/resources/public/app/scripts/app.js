@@ -9,6 +9,11 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/index.html'
+       //added by nagendra  
+        //controller: 'FeaturedPolicyController',
+        //added by nagendra
+          
+          
       })
       .when('/entitydetail/:type/:entityId',{
         templateUrl: 'views/entitydetail.html',

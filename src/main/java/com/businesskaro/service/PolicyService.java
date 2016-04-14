@@ -150,7 +150,7 @@ public class PolicyService {
 		policy.id = tblPolicy.getPolicyId();
 		policy.createDate = tblPolicy.getCreateDt();
 		policy.updateDate = tblPolicy.getLastUpd();
-		
+		policy.isFeatured = tblPolicy.getIsFeatured();		
 		policy.industrys = new int[tblPolicy.getBrgTopicsIndustries().size()];
 		for(int j=0;j<tblPolicy.getBrgTopicsIndustries().size();j++){
 			policy.industrys[j] = tblPolicy.getBrgTopicsIndustries().get(j).getLkpIndustry().getIndustryId();

@@ -5,7 +5,9 @@
 <!--     </ol> -->
 <!-- </div> -->
 <style type="text/css">
-    
+    .panel .panel-body {
+      padding-top: 0px
+    }
 </style>
 <div class="container-fluid" ng-controller="DashboardController">
     <!--<div class="row" style="margin-top: -20px;padding-top: 0;margin-left: 25%;">  
@@ -93,44 +95,14 @@
      </div>
     <div class="row">
         <div class="col-md-9">
-          <div class="col-md-4">
-              <panel panel-class="panel-warning" heading="Why do business?" class="background-color:#fbb258;">
-                 <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
-              </panel>
-          </div>  
-          <div class="col-md-4">  
-              <panel panel-class="panel-danger" heading="Need Assistance?">
-                 
-                            <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
-              </panel>
-          </div>
-          <div class="col-md-4">
-              <panel panel-class="panel-midnightblue" heading="Want to know GOI policy?">
-                 
-                            <p style="text-align: justify;"> <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
-              </panel>
-          </div>
-
-          <div class="col-md-4">
-              <panel panel-class="panel-toyo" heading="Search Entrepreneurs">
-                
-                            <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
-              </panel>
-          </div>
-          <div class="col-md-4">
-              <panel panel-class="panel-purple" heading="Business News">
-
-              
-                            <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
-              </panel>
-          </div>
-           <div class="col-md-4">
-              <panel panel-class="panel-primary" heading="Business News">
-                  <!-- <panel-controls>
-                     <button class="button-icon"><i class="glyphicon glyphicon-plus-sign"></i></button> 
-                  </panel-controls>    -->
-              
-                  <p style="text-align: justify;" > <img src="assets/img/sample.jpg" class="img-rounded ng-scope" alt="Scarlett Johannson" style="margin: 0px 5px 10px;float: left;" width="120" height="120"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum vel voluptatem eum distinctio quod deserunt ipsum veniam rem natus consequatur explicabo, numquam, aperiam eligendi ex corporis inventore a deleniti voluptate aliquid atque. Illum animi debitis illo! Facilis consectetur, magnam vel quas ad quo nam a voluptatem numquam tempora adipisci explicabo. Repellat veritatis itaque iste quae iusto provident fugit architecto deleniti. <a href="#">Read More..</a></p>
+          <div class="col-md-4" ng-repeat="p in policies">
+              <panel panel-class="panel-purple" heading="{{p.policyTitle}}">              
+                <p style="text-align: justify;height: 180px;overflow-y: hidden;"> <img ng-src="{{p.imageUrl}}" class="img-rounded ng-scope" alt="BusinessKaro" style="margin: 0px 5px 10px;float: left;" width="120" height="120">
+                <span>{{p.policyDesc}}</span>
+                </p>
+                <p>
+                  <a href="#">Read More..</a>
+                </p>
               </panel>
           </div>
           
