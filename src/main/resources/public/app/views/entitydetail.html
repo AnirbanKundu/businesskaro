@@ -231,6 +231,8 @@
 						
 						<div class="col-md-12" style="padding:20px;">
 							<div class="pull-left">
+								<alert type="{{alert.type}}" ng-if="alert.msg"><span ng-bind-html="alert.msg | safe_html"></alert>
+
 								<span ng-show="showServerMessage.length>0">{{showServerMessage}}</span>
 							</div>
 							<div class="pull-right">

@@ -72,10 +72,14 @@ public class CommunicateRestController extends BKRestService{
 			}			
 			Integer userId = validateSecureToken(secureTokenUtil, clientId, secureToken);
 			TblUserPassword fromUserEmail = userDao.findOne(userId);
-			
-			request.toId = 2; // for the sake of testing. This needs to be removed.
-			TblUserPassword toUserEmail = userDao.findOne(request.toId);	
 			BKUserProfileSummary fromUser = service.getUserPersonalSummary(userId);
+			if(fromUser==null){
+				throw new BKException("User has not entered personal details" , "001" , BKException.Type.ENTITY_NOT_FOUND); 
+			}
+			
+			//request.toId = 2; // for the sake of testing. This needs to be removed.
+			TblUserPassword toUserEmail = userDao.findOne(request.toId);	
+			
 			BKUserProfileSummary toUser = service.getUserPersonalSummary(request.toId);	
 			Communicate communicate = new Communicate();
 			communicate.entityId = request.entityId;
@@ -95,8 +99,7 @@ public class CommunicateRestController extends BKRestService{
 			emailAudit.setSentFrom(userId);
 			emailAudit.setSentFromEmail(fromUserEmail.getUsrEmail());
 			emailAudit.setSentTo(request.toId);
-			emailAudit.setSentToEmail(toUserEmail.getUsrEmail());
-			//Written by nagendra--START			
+			emailAudit.setSentToEmail(toUserEmail.getUsrEmail());		
 			List<TblEmailAudit> list = emailAuditRepo.findAllBySentFromAndEmailSentDate(userId,todayDate);			
 			if(list != null && list.size() < 0){
 				throw new BKException("User Already Exist", "001", BKException.Type.USER_ALREADY_EXIST);

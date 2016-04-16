@@ -141,15 +141,17 @@ public class OfferRequestService {
 	}
 
 	public List<OfferRequest> getAll(Integer userId, OfferRequestEnum offer) {
-		UserPersonalInfoSummary userSummary = userInfoSummary.findOne(userId);
-		
-		Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumryAndReqOffrTyp(userSummary,offer.name());
-		
 		List<OfferRequest> result = new ArrayList<OfferRequest>();
-		for(TblUsrReqOffer offerReq : usrObjs ){
-			result.add(mapperForList(offerReq));
+		UserPersonalInfoSummary userSummary = userInfoSummary.findOne(userId);
+		if(userSummary!=null){
+			Iterable<TblUsrReqOffer> usrObjs = reqOfferRepo.findAllByTblUserPersInfoSumryAndReqOffrTyp(userSummary,offer.name());
+			for(TblUsrReqOffer offerReq : usrObjs ){
+				result.add(mapperForList(offerReq));
+			}			
 		}
 		return result;
+		
+		
 	}
 
 	public void delete(Integer offerId) {

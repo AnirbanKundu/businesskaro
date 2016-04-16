@@ -24,13 +24,9 @@ angular
                 return user;
               }
             }
-       });//end open      
-     }//end editUser
-}]);
-
-
-angular
-.module('theme.demos.myuser')
+       });    
+     }
+}])
 .controller('EditUserController',['$rootScope', '$scope','existinguser','$location','$modalInstance', '$http', function ($rootScope, $scope, existinguser,$location,$modalInstance,$http) {
     // $scope.user = {
     //   usrId : existinguser.usrId,
@@ -58,25 +54,23 @@ angular
        $modalInstance.dismiss('cancel');
     }
 
-}]);
-
-//Email Management
-angular
-.module('theme.demos.myuser', ['ui.bootstrap'])
+}])
 .controller('EmailManagementController', ['$rootScope','$scope', '$http', '$location','$modal','$log', function ($rootScope, $scope, $http, $location,$modal,$log) {
 
     $scope.waiting = false;
+    $scope.selectedEntityType = "0";
     $scope.getEntityEmails = function(){
-       $scope.waiting = true;
-      $http.get('/manageEmail/'+$scope.selectedEntityType).success(function (response) {
-        $scope.emails = response;         
-        $scope.waiting = false;
-      }).error(function () {
-          $scope.emails = [];
+      if($scope.selectedEntityType!=="0"){
+        $scope.waiting = true;
+        $http.get('/manageEmail/'+$scope.selectedEntityType).success(function (response) {
+          $scope.emails = response;         
           $scope.waiting = false;
-      });
-    }//END GETTING EMAIL
-    
+        }).error(function () {
+            $scope.emails = [];
+            $scope.waiting = false;
+        });
+      }      
+    }//END GETTING EMAIL    
     $scope.showEmail=function(email){
         var modalInstance = $modal.open({
              animation: true,
@@ -90,11 +84,7 @@ angular
              }
         });//end open      
       }//end showEntity
-}]);
-
-//Show Email
-angular
-.module('theme.demos.myuser')
+}])
 .controller('ShowEmailController',['$rootScope', '$scope','showEmail','$location','$modalInstance', function ($rootScope, $scope, showEmail,$location,$modalInstance) {
     $scope.email = showEmail;   
     $scope.close=function()

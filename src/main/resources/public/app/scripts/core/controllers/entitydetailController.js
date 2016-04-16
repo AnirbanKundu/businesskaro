@@ -173,10 +173,16 @@ angular
               cache : false
         }).then(function(data){
            $scope.waiting = false;
-           $scope.showServerMessage = "Email sent successfully."
+           //$scope.showServerMessage = "Email sent successfully."
+           $scope.alert = { type: 'success', msg: '<strong>Email</strong> sent successfully.'};
         },function(error){
-          $scope.showServerMessage = "Email sending limit exceeded. You can send 5 emails in a day"
-            //console.log('TAG Entity error',error);
+          if(error.data.type==='ENTITY_NOT_FOUND'){
+            $scope.alert = { type: 'danger', msg: 'You need to enter you personal details to send emails.'};
+            $scope.showServerMessage = "error2"
+          }else{
+            $scope.alert = { type: 'danger', msg: 'Email sending limit exceeded. You can send 5 emails in a day.'};
+            $scope.showServerMessage = "error"
+          }
         });
     }
 

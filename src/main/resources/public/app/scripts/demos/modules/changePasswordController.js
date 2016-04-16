@@ -26,10 +26,12 @@ angular
           }).then(function(response){
         	  //$window.location.href = '/#/login';
             $scope.message = 'success';
+            $scope.oldPassword = $scope.newPassword = $scope.cNewpassword = '';
             $scope.alert = { type: 'success', msg: '<strong>Password</strong> changed successfully.'};
 
           },function(error){
-            $scope.alert = { type: 'alert', msg: '<strong>Password</strong> was not updated. Try again.'};
+            $scope.message = 'error';
+            $scope.alert = { type: 'danger', msg: '<strong>Password</strong> was not updated. Try again.'};
           });
   	  }
   }]);

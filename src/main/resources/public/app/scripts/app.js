@@ -21,7 +21,7 @@ angular
           auth: ['$q', 'UserAuthentication', '$location', '$rootScope', function($q, authenticationSvc, $location, $rootScope) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
-              if($rootScope.profileCreated ===0){
+              if(!$rootScope.profileCreated || $rootScope.profileCreated ===0){
                 $location.url('/userprofile/filldetails')
                 return false;
               }
@@ -54,12 +54,15 @@ angular
         templateUrl: 'views/createoffer.html',
         controller: 'CreateOfferController',
         resolve: {
-          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+          auth: ['$q', 'UserAuthentication', '$location', '$rootScope', function($q, authenticationSvc, $location, $rootScope) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
+              if(!$rootScope.profileCreated || $rootScope.profileCreated ===0){
+                $location.url('/userprofile/filldetails')
+                return false;
+              }
               return $q.when(userInfo);
             } else {
-              console.log('current location', $location);
               return $q.reject({ authenticated: false , visitedroute: $location.url() });
             }
           }]
@@ -68,12 +71,15 @@ angular
       .when('/createrequest/:id?',{
         templateUrl: 'views/createrequest.html',
         resolve: {
-          auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
+          auth: ['$q', 'UserAuthentication', '$location', '$rootScope', function($q, authenticationSvc, $location, $rootScope) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
+              if(!$rootScope.profileCreated || $rootScope.profileCreated ===0){
+                $location.url('/userprofile/filldetails')
+                return false;
+              }
               return $q.when(userInfo);
             } else {
-              console.log('current location', $location);
               return $q.reject({ authenticated: false , visitedroute: $location.url() });
             }
           }]
@@ -161,7 +167,7 @@ angular
         resolve: {
           auth: ['$q', 'UserAuthentication', '$location', function($q, authenticationSvc, $location) {
             var userInfo = authenticationSvc.getToken();       
-            if (userInfo){
+            if (userInfo && userInfo.clientId && userInfo.secureToken){
               $location.path('#/')
             }
           }]

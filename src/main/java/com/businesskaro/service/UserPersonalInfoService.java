@@ -245,6 +245,9 @@ public class UserPersonalInfoService {
 	private BKUserProfileSummary summryMapper(
 			UserPersonalInfoSummary summryEntity) {
 		BKUserProfileSummary summary = new BKUserProfileSummary();
+		if(summryEntity == null){
+			return null;
+		}
 
 		summary.aboutMe = summryEntity.getAboutMe();
 		summary.cityName = summryEntity.getCityName();

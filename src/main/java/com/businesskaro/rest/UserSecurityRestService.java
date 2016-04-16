@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.businesskaro.entity.TblUserManagement;
 import com.businesskaro.entity.TblUserPassword;
+import com.businesskaro.entity.repo.TblUserManagementRepo;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.mail.ResetPasswordEmail;
 import com.businesskaro.model.BKException;
@@ -37,6 +39,9 @@ public class UserSecurityRestService extends BKRestService {
 	
 	@Autowired
 	SecureTokenUtil secureTokenUtil;
+	
+	@Autowired
+	private TblUserManagementRepo managementRepo;
 	
 
 	@RequestMapping(value="/services/login" , method = RequestMethod.POST)
@@ -67,14 +72,14 @@ public class UserSecurityRestService extends BKRestService {
 				throw new BKException("Unknown Error while generating secure token" , "000" , BKException.Type.INTERNAL_ERRROR);
 			}
 		}else{
-			throw new BKException("Invalid User" , "000" , BKException.Type.IN_VALID_USER);
+			throw new BKException("Passwords do not match" , "401" , BKException.Type.USER_AUTH_FAIL);
 		}
 		
 	}
 	
 	
 	@RequestMapping(value="/services/logout" , method = RequestMethod.POST)
-	public void changePassword(@RequestHeader("SECURE_TOKEN") String secureToken, 
+	public void logout(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId ){
 	
 		
@@ -89,24 +94,31 @@ public class UserSecurityRestService extends BKRestService {
 			@RequestHeader("CLIENT_ID") String clientId,@RequestBody LoginRequest loginRequest ){
 	
 		logger.info("Security Request " + loginRequest.email);
-		validateSecureToken(secureTokenUtil,clientId, secureToken);
 		
-		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
-		if(userPswdEntitys.size() == 0){
-			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+		Integer userId = validateSecureToken(secureTokenUtil,clientId, secureToken);
+		TblUserManagement loggedInUser = managementRepo.findOne(userId);
+		
+		if(!loggedInUser.getUsrName().equalsIgnoreCase(loginRequest.email)){
+			throw new BKException("Invalid User" , "403" , BKException.Type.IN_VALID_USER);
 		}
-		
-		TblUserPassword userPswd = userPswdEntitys.get(0);
-		String decryptedPassword = EncryptionUtil.decode(userPswd.getUsrPassword(), userPswd.getUsrSalt()); //Fetch the encrypted password and SALT from DB
-		System.out.println("Decrypted password is :" + decryptedPassword);
-		
-		if(loginRequest.password.equals(decryptedPassword)){
-			String encryptedPassword = EncryptionUtil.encode(loginRequest.newPassword, userPswd.getUsrSalt()); //Save this value in DB along with the SALT
-			userPswd.setUsrPassword(encryptedPassword);
-			userPswd.setLastUpd(new Date());
-			userDao.save(userPswd);
-		}else{
-			throw new BKException("Invalid User" , "000" , BKException.Type.IN_VALID_USER);
+		else{		
+			List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
+			if(userPswdEntitys.size() == 0){
+				throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+			}
+			
+			TblUserPassword userPswd = userPswdEntitys.get(0);
+			String decryptedPassword = EncryptionUtil.decode(userPswd.getUsrPassword(), userPswd.getUsrSalt()); //Fetch the encrypted password and SALT from DB
+			System.out.println("Decrypted password is :" + decryptedPassword);
+			
+			if(loginRequest.password.equals(decryptedPassword)){
+				String encryptedPassword = EncryptionUtil.encode(loginRequest.newPassword, userPswd.getUsrSalt()); //Save this value in DB along with the SALT
+				userPswd.setUsrPassword(encryptedPassword);
+				userPswd.setLastUpd(new Date());
+				userDao.save(userPswd);
+			}else{
+				throw new BKException("Invalid User" , "400" , BKException.Type.IN_VALID_USER);
+			}
 		}
 		
 		return null;
