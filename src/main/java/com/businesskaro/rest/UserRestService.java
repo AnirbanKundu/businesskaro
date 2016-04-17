@@ -70,6 +70,8 @@ public class UserRestService extends BKRestService {
 	    		userPswd.setUsrSalt(list.get(0).getUsrSalt());
 	    		userPswd.setCreateDt(new Date());
 	    		userPswd.setLastUpd(new Date());
+	    		userPswd.setProfileCreated(0);
+	    		userPswd.setUsrType("USER");
 	    		userPswd = userDao.save(userPswd);
     		//Delete this record from temp table
    		 	//unregisteredUserDao.deleteUsersByUsrSalt(registeredToken);
@@ -187,8 +189,7 @@ public class UserRestService extends BKRestService {
 		user.id = userPswd.getUsrId();
 		user.userName = userPswd.getUsrName();
 		user.userType = userPswd.getUsrType();
-	
-		
+		user.profileCreated = userPswd.getProfileCreated();		
 		return user;  
 	}
 	

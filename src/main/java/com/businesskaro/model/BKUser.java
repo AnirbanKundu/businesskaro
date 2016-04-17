@@ -9,6 +9,7 @@ public class BKUser {
 	public String phoneNo;
 	public String randomSalt;
 	public String userType;
+	public int profileCreated;
 	
 	
 	@Override

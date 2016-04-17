@@ -20,10 +20,6 @@ public class TblUserPasswordProfile implements Serializable {
 	private int usrId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="CREATE_DT")
-	private Date createDt;
-
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="LAST_UPD")
 	private Date lastUpd;
 
@@ -36,14 +32,6 @@ public class TblUserPasswordProfile implements Serializable {
 
 	public void setUsrId(int usrId) {
 		this.usrId = usrId;
-	}
-
-	public Date getCreateDt() {
-		return createDt;
-	}
-
-	public void setCreateDt(Date createDt) {
-		this.createDt = createDt;
 	}
 
 	public Date getLastUpd() {

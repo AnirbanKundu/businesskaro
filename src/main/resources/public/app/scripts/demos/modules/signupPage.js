@@ -205,7 +205,8 @@ angular
   .controller('ValidateRegisteredUser', ['$scope', '$theme', '$http', '$window', '$timeout', '$route','$location', function($scope, $theme, $http, $window, $timeout,$route, $location) {
     $scope.registeredToken = $route.current.params.registeredToken;
     $scope.guid = $route.current.params.guid;
-    $scope.waiting = false;  
+    $scope.waiting = false;
+    $scope.showServerMessage = 'You will soon be redirected ..... Please wait .....';  
     $timeout(function(){
       $scope.waiting = true;  
     },1000) ;
@@ -228,14 +229,6 @@ angular
           userInfo.profileCreated = response.data.profileCreated;
           $scope.$emit('loginsuccess', userInfo);
           $location.path('/userprofile/firstLogin');  
-          //$window.location.href = '#/';
-          /*
-          UserAuthentication.signInUser({userName:$scope.email, password:$scope.password, email:$scope.email}).then(function(data){
-              $scope.$emit('loginsuccess', data);
-              $location.path('/userprofile/firstLogin'); 
-            },function(error){
-          });
-          */
         },function(error){
             $scope.showServerMessage = 'User has already been registered.';
             $scope.waiting = false;

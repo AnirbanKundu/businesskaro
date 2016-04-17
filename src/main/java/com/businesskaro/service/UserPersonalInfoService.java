@@ -125,6 +125,7 @@ public class UserPersonalInfoService {
 			TblUserPasswordProfile arg = new TblUserPasswordProfile();
 			arg.setUsrId(summaryEntiy.getUsrId());
 			arg.setProfileCreated(1);
+			arg.setLastUpd(new Date());			
 			tblUserPasswordProfileRepo.save(arg);
 			System.out.println("SUCCESS in  UPDATING TBL PWD ");
 		}		
