@@ -10,6 +10,7 @@ public class AdminEntitySearch {
 	public Date createDate;
 	public Date updateDate;	
 	public Integer usercreatedId;
+	public String name;
 	
 	@Override
 	public String toString() {
@@ -17,8 +18,10 @@ public class AdminEntitySearch {
 				+ entitytitle + ", entitydescription=" + entitydescription
 				+ ", isVerified=" + isVerified + ", createDate=" + createDate
 				+ ", updateDate=" + updateDate + ", usercreatedId="
-				+ usercreatedId + "]";
-	} 
+				+ usercreatedId + ", name=" + name + "]";
+	}
+	
+	 
 	
 	
 }

@@ -44,6 +44,7 @@ public class CustomRepository {
 							entity.entitydescription = rs
 									.getString("n_req_offr_descr");
 							entity.usercreatedId = rs.getInt("n_usr_id");
+							entity.name = rs.getString("n_fst_name") + " " + rs.getString("n_lst_name");
 							System.out.println(entity.toString());
 							return entity;
 						}
@@ -51,7 +52,7 @@ public class CustomRepository {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(
-					"Error occurs while executing unison.forecast procedure");
+					"Error occurs while executing procedure");
 		} finally {
 		}
 		return adminSearch;
