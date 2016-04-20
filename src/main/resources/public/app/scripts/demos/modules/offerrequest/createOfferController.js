@@ -46,56 +46,56 @@ angular
       $scope.industries = response;
     });
     
-    if($scope.id !== undefined){    	
-    	$timeout(function(){
-    		$http({
-    	          url : '/services/offer/detailinedit/'+ $scope.id,
-    	          method: 'GET'
-    	        }).then(function(response){
-    	        	var data = response.data;
-    	          $scope.offerTitle=data.title;
+    if($scope.id !== undefined){      
+      $timeout(function(){
+        $http({
+                url : '/services/offer/detailinedit/'+ $scope.id,
+                method: 'GET'
+              }).then(function(response){
+                var data = response.data;
+                $scope.offerTitle=data.title;
                 $scope.userId = data.userId;
-    	          $scope.offerDescription=data.description;
-    	          if(data.imgUrl){
-    		          var imagePath = data.imgUrl;
-    		          var widgetFileInput = $('.fileinput').fileinput();
-    		          widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
-    		          if(imagePath){ 
-    		            widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
-    		            $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
-    		            $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
-    		            console.log('actualImageName is :',$scope.actualImageName);
-    		          }          
-    		        }
-    	          for(var i=0;i<data.trgtIndustry.length;i++){
-    	              for(var j=0;j<$scope.industries.length;j++){
-    	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
-    	                  $scope.selectedIndustries.selected.push($scope.industries[j]);
-    	                  break;
-    	                }
-    	              }
-    	            }
-    	          for(var i=0;i<data.trgtLocation.length;i++){
-    	              for(var j=0;j<$scope.states.length;j++){
-    	                if(data.trgtLocation[i] == $scope.states[j].stateId){
-    	                  $scope.selectedStates.selected.push($scope.states[j]);
-    	                  break;
-    	                }
-    	              }
-    	            }
-    	          for(var i=0;i<$scope.intendedAudience.length;i++){
-    	        	  if($scope.intendedAudience[i].targAudId === data.intdAudience){
-    	        		  $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
-    	        	  }
-    	          }
+                $scope.offerDescription=data.description;
+                if(data.imgUrl){
+                  var imagePath = $scope.imageUrl = data.imgUrl;
+                  var widgetFileInput = $('.fileinput').fileinput();
+                  widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
+                  if(imagePath){ 
+                    widgetFileInput.find('.thumbnail').append('<img src="' +imagePath+ '">');
+                    $scope.userImageId = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length).split('.')[0];    
+                    $scope.actualImageName = imagePath.substring(imagePath.lastIndexOf('/')+1, imagePath.length);
+                    console.log('actualImageName is :',$scope.actualImageName);
+                  }          
+                }
+                for(var i=0;i<data.trgtIndustry.length;i++){
+                    for(var j=0;j<$scope.industries.length;j++){
+                      if(data.trgtIndustry[i] == $scope.industries[j].industryId){
+                        $scope.selectedIndustries.selected.push($scope.industries[j]);
+                        break;
+                      }
+                    }
+                  }
+                for(var i=0;i<data.trgtLocation.length;i++){
+                    for(var j=0;j<$scope.states.length;j++){
+                      if(data.trgtLocation[i] == $scope.states[j].stateId){
+                        $scope.selectedStates.selected.push($scope.states[j]);
+                        break;
+                      }
+                    }
+                  }
+                for(var i=0;i<$scope.intendedAudience.length;i++){
+                  if($scope.intendedAudience[i].targAudId === data.intdAudience){
+                    $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
+                  }
+                }
                 $scope.waiting = false;
-    	          
-    	          
-    	        },function(error){
-    	          console.log('Error in pulling the offer data');
+                
+                
+              },function(error){
+                console.log('Error in pulling the offer data');
                 $scope.waiting = false;
-    	        })
-    	},1000);    	
+              })
+      },1000);      
     }
     else{
       $scope.waiting = false;
@@ -206,7 +206,7 @@ angular
           method: 'GET'
         }).then(function(data){
           $scope.ImageId = "";
-          $scope.ImageUrl = "";
+          //$scope.ImageUrl = "";
           $scope.imageUrl = "";
         },function(error){
           console.log('Error in delete');
@@ -227,7 +227,7 @@ angular
           }).then(function(response){
               $scope.imageUrl = response.data.url;
               $scope.ImageId = response.data.publicId;
-              $scope.ImageUrl = response.data.url;
+              //$scope.ImageUrl = response.data.url;
               return response.data;
             }, function(response){
                 alert("Error loading file... Please try again.");
@@ -247,7 +247,7 @@ angular
       };
       
       $scope.save =  function(){
-    		var state=[];
+        var state=[];
         var tags = [];
         $scope.isSaveClicked = true;
         var isFormValid = true;
@@ -309,9 +309,12 @@ angular
                         method: 'POST',
                         data: tagEntity
                       }).then(function(response){
+                        $scope.message = 'success';
                         $scope.waiting = false;
+                         $scope.alert = { type: 'success', msg: '<strong>Offer</strong> updated successfully.'};
                       },function(error){
-                        console.log('TAG Entity error',error);
+                        $scope.message = 'error';
+                        $scope.alert = { type: 'danger', msg: '<strong>Offer</strong> was not updated. Try again.'};
                       });
                     }, function(response){
                       //$window.location.href = '/#/myoffers';
@@ -340,9 +343,12 @@ angular
                         method: 'POST',
                         data: tagEntity
                       }).then(function(response){
-                        $scope.waiting = false;
+                        $scope.message = 'success';
+                          $scope.waiting = false;
+                           $scope.alert = { type: 'success', msg: '<strong>Offer</strong> saved successfully.'};
                       },function(error){
-                        console.log('TAG Entity error',error);
+                          $scope.message = 'error';
+                          $scope.alert = { type: 'danger', msg: '<strong>Offer</strong> was not saved. Try again.'};
                       });
                       //$window.location.href = '/#/myoffers';
                     }, function(response){
@@ -351,6 +357,6 @@ angular
         }
         }
         
-    	  
+        
       };
   }]);

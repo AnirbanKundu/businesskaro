@@ -350,14 +350,42 @@ angular
             method: 'POST',
             data: tagEntity
           }).then(function(response){
+            $scope.message = 'success';
             $scope.waiting = false;
+            $scope.alert = { type: 'success', msg: '<strong>User profile</strong> saved successfully.'};
           },function(error){
-            console.log('TAG Entity error',error);
+            $scope.message = 'error';
+            $scope.alert = { type: 'danger', msg: '<strong>Password</strong> was not updated. Try again.'};
           });
         },function(data){
           console.log('error'); 
         });
       }      
     }
+
+    //written by nagendra
+     $scope.resetForm = function() {      
+      $scope.user.summary.firstName = '';
+      $scope.user.summary.lastName = '';
+      $scope.user.summary.aboutMe = '';
+      $scope.user.details.ageGroupId = '';
+      $scope.user.details.educatonId = '';
+      $scope.user.details.professionalId = '';
+      $scope.user.details.experienceId = '';
+      $scope.user.details.stateId = '';
+      $scope.user.summary.cityName = '';
+      $scope.user.summary.userType = '';
+      $scope.user.summary.companyUrl = '';
+      $scope.selectedIndustries.selected = '';
+      $scope.user.details.faceBookUrl = '';
+      $scope.user.details.twiterURL = '';
+      $scope.user.details.linkedInUrl = '';
+    };
+
+
+
+
+
+
 
   }]);

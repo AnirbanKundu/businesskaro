@@ -16,6 +16,9 @@
 					<h2>Enter your personal details</h2>
 					
 				</div>
+				<div ng-if="message">
+					<alert type="{{alert.type}}"><span ng-bind-html="alert.msg | safe_html"></alert>
+				</div>
 				<div ng-if="firstLogin">
 					<alert type="{{alert.type}}"><span ng-bind-html="alert.msg | safe_html"></alert>
 				</div>
@@ -47,21 +50,21 @@
 								</div>							
 			                </div>
 			                <div class="col-sm-4">
-			                	<label class="">First Name</label>
+			                	<label class="">*First Name</label>
 			                	<br/>
 			                	<input type="text" class="form-control input-sm" ng-model="user.summary.firstName" ng-style="provideColor(formControl.isfirstNameValid)" maxlength="50">
 			                </div>
 			                <div class="col-sm-4">
-			                	<label class="">Last Name</label>
+			                	<label class="">*Last Name</label>
 			                	<br/>
 			                	<input type="text" class="form-control input-sm" ng-model="user.summary.lastName" ng-style="provideColor(formControl.islastNameValid)" maxlength="50">
 			                </div>
 			                <br/>
 			                <br/>
 			                <div class="col-sm-8" style="margin-top:25px;">
-			                	<label class="">About Me</label>
+			                	<label class="">*About Me</label>
 			                	<br/>
-			                	<textarea class="form-control" ng-model="user.summary.aboutMe" ng-style="provideColor(formControl.isaboutMeValid)" maxlength="250"></textarea>
+			                	<textarea class="form-control" ng-model="user.summary.aboutMe" ng-style="provideColor(formControl.isaboutMeValid)" maxlength="5000"></textarea>
 			                </div>
 		                </div>
 		                <div class="col-sm-12">
@@ -73,14 +76,14 @@
 		                    </div>
 						    <form action="" class="form-horizontal row-border">
 					            <div class="form-group">					            	
-					                <label class="col-sm-2 control-label">Profession</label>
+					                <label class="col-sm-2 control-label">*Profession</label>
 					                <div class="col-sm-4">
 					                    <select class="form-control input-sm" ng-model="user.details.professionalId" ng-style="provideColor(formControl.isprofessionValid)">
 					                		<option value="0">Select your Profession</option>
 					                		<option ng:repeat="prof in professions" value="{{prof.profession_id}}">{{prof.profession_name}}</option>
 					                	</select>	
 					                </div>
-					                <label class="col-sm-2 control-label">Age Group</label>
+					                <label class="col-sm-2 control-label">*Age Group</label>
 					                <div class="col-sm-4">
 					                	<select class="form-control input-sm" ng-model="user.details.ageGroupId" ng-style="provideColor(formControl.isageGroupValid)">
 					                		<option value="0">Select you age group</option>
@@ -89,17 +92,17 @@
 					                </div>
 					            </div>
 					            <div class="form-group">					            	
-					                <label class="col-sm-2 control-label">Education</label>
+					                <label class="col-sm-2 control-label">*Education</label>
 					                <div class="col-sm-4">
 					                    <select class="form-control input-sm" ng-model="user.details.educatonId" ng-style="provideColor(formControl.iseducatonValid)">
-					                		<option value="0">Select you education</option>
+					                		<option value="0">Select your education</option>
 					                		<option ng:repeat="edu in educations" value="{{edu.eductnId}}">{{edu.eductnName}}</option>
 					                	</select>
 					                </div>
-					                <label class="col-sm-2 control-label">Work Experience</label>
+					                <label class="col-sm-2 control-label">*Work Experience</label>
 					                <div class="col-sm-4">
 					                	<select class="form-control input-sm" ng-model="user.details.experienceId" ng-style="provideColor(formControl.isexperienceValid)">
-					                		<option value="0">Select you Experience</option>
+					                		<option value="0">Select your Experience</option>
 					                		<option value="1">0-5 yrs</option>
 					                		<option value="3">5-10 yrs</option>	
 					                		<option value="4">10-25 yrs</option>
@@ -108,19 +111,20 @@
 					                </div>
 					            </div>
 					            <div class="form-group">					            	
-					                <label class="col-sm-2 control-label">State name</label>
+					                <label class="col-sm-2 control-label">*State name</label>
 					                <div class="col-sm-4">
 					                    <select class="form-control input-sm" ng-model="user.details.stateId" ng-style="provideColor(formControl.isstateValid)">
+					                    	<option value="0">Select your State</option>
 					                		<option ng:repeat="s in states" value="{{s.stateId}}">{{s.stateName}}</option>				                		
 					                	</select>
 					                </div>
-					                <label class="col-sm-2 control-label">City name</label>
+					                <label class="col-sm-2 control-label">*City name</label>
 					                <div class="col-sm-4">
 					                	<input type="text" class="form-control input-sm" ng-model="user.summary.cityName">			                    
 					                </div>
 					            </div>
 					            <div class="form-group">
-					                <label class="col-sm-3 control-label">What you aspire to be ?</label>
+					                <label class="col-sm-3 control-label">*What you aspire to be ?</label>
 					                <div class="col-sm-6">
 					                    <div class="radio-inline">
 					                      <label>
@@ -142,7 +146,7 @@
 					                    </div>	
 					                </div>
 					                <div class="col-sm-12" ng-show="user.summary.userType !=='E'">
-						                <label class="col-sm-4 control-label">Enter your company name</label>
+						                <label class="col-sm-4 control-label">*Enter your company name</label>
 					                    <div class="col-sm-6 input-sm">
 						                	<input type="text" class="form-control input-sm" placeholder="Maximum 50 characters" maxlength="150" ng-model="user.summary.companyUrl" ng-style="provideColor(formControl.iscompanyUrlValid)">     
 						                	<!--
@@ -154,7 +158,7 @@
 						            
 					            </div>	
 					            <div class="form-group">
-					            	<label class="col-sm-2 control-label">I am aware of</label>
+					            	<label class="col-sm-2 control-label">*I am aware of</label>
 					            	<div class="col-sm-10">
 					            		<ui-select multiple ng-model="selectedIndustries.selected" close-on-select="false" style="width: 400px;" ng-style="provideColor(formControl.isIndustryValid)">
 										    <ui-select-match placeholder="Select or search your profession in the list...">{{$select.selected[$index].industryName}}</ui-select-match>
@@ -215,7 +219,7 @@
 		      		<div class="col-sm-6 col-sm-offset-3">
 		      			<div class="btn-toolbar">
 			      			<button class="btn-primary btn" ng-click="saveUserInfo()">Save</button>
-			      			<button class="btn-default btn">Reset</button>
+			      			<button class="btn-default btn" ng-click="resetForm()">Reset</button>
 		      			</div>
 		      		</div>
 		      	</div>

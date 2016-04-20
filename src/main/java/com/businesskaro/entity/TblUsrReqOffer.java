@@ -38,7 +38,7 @@ public class TblUsrReqOffer implements Serializable {
 	@Column(name="LAST_UPD")
 	private Date lastUpd;
 
-	@Column(name="REQ_OFFR_DESC")
+	@Column(name="REQ_OFFR_DESC",columnDefinition="TEXT")
 	private String reqOffrDesc;
 
 	@Column(name="REQ_OFFR_TITLE")

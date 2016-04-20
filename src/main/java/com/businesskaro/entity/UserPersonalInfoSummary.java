@@ -20,7 +20,7 @@ public class UserPersonalInfoSummary implements Serializable {
 	@Column(name="USR_ID")
 	private int usrId;
 
-	@Column(name="ABOUT_ME")
+	@Column(name="ABOUT_ME",columnDefinition="TEXT")
 	private String aboutMe;
 
 	@Column(name="CITY_NAME")

@@ -223,9 +223,12 @@ angular
 		                        method: 'POST',
 		                        data: tagEntity
 		                      }).then(function(response){
-		                        $scope.waiting = false;
+		                        $scope.message = 'success';
+                        		$scope.waiting = false;
+                         		$scope.alert = { type: 'success', msg: '<strong>Request</strong> updated successfully.'};
 		                      },function(error){
-		                        console.log('TAG Entity error',error);
+		                      	$scope.message = 'error';
+		                        $scope.alert = { type: 'danger', msg: '<strong>Request</strong> was not updated. Try again.'};
 		                      });
 	    	              }, function(response){
 	    	            	  $window.location.href = '/#/myrequests';
@@ -254,10 +257,12 @@ angular
 		                        method: 'POST',
 		                        data: tagEntity
 		                      }).then(function(response){
-
-		                        $scope.waiting = false;
+								$scope.message = 'success';
+                          		$scope.waiting = false;
+                           		$scope.alert = { type: 'success', msg: '<strong>Request</strong> saved successfully.'};
 		                      },function(error){
-		                        console.log('TAG Entity error',error);
+		                      	$scope.message = 'error';
+		                        $scope.alert = { type: 'danger', msg: '<strong>Request</strong> was not saved. Try again.'};
 		                      });
 	    	              }, function(response){
 	    	            	  $window.location.href = '/#/myrequests';

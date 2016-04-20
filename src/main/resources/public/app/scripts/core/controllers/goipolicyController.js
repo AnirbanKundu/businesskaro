@@ -40,7 +40,7 @@ angular
               $scope.offerDescription=data.policyDesc;
               $scope.isFeatured = data.isFeatured;
               if(data.imageUrl){
-                var imagePath = data.imageUrl;
+                var imagePath = $scope.imageUrl = data.imageUrl;
                 var widgetFileInput = $('.fileinput').fileinput();
                 widgetFileInput.addClass('fileinput-exists').removeClass('fileinput-new');
                 if(imagePath){ 
@@ -171,7 +171,7 @@ angular
         method: 'GET'
       }).then(function(data){
         $scope.ImageId = "";
-        $scope.ImageUrl = "";
+        //$scope.ImageUrl = "";
         $scope.imageUrl = "";
       },function(error){
         console.log('Error in delete');
@@ -192,7 +192,7 @@ angular
         }).then(function(response){
             $scope.imageUrl = response.data.url;
             $scope.ImageId = response.data.publicId;
-            $scope.ImageUrl = response.data.url;
+            //$scope.ImageUrl = response.data.url;
             return response.data;
           }, function(response){
               alert("Error loading file... Please try again.");
@@ -261,9 +261,12 @@ angular
                       method: 'POST',
                       data: tagEntity
                     }).then(function(response){
-                      $scope.waiting = false;
+                     $scope.message = 'success';
+                        $scope.waiting = false;
+                         $scope.alert = { type: 'success', msg: '<strong>Policy</strong> updated successfully.'};
                     },function(error){
-                      console.log('TAG Entity error',error);
+                      $scope.message = 'error';
+                     $scope.alert = { type: 'danger', msg: '<strong>Policy</strong> was not updated. Try again.'};
                     });
                   }, function(response){
                     //$window.location.href = '/#/myoffers';
@@ -290,9 +293,12 @@ angular
                       method: 'POST',
                       data: tagEntity
                     }).then(function(response){
-                      $scope.waiting = false;
+                      $scope.message = 'success';
+                          $scope.waiting = false;
+                           $scope.alert = { type: 'success', msg: '<strong>Policy</strong> saved successfully.'};
                     },function(error){
-                      console.log('TAG Entity error',error);
+                      $scope.message = 'error';
+                      $scope.alert = { type: 'danger', msg: '<strong>Policy</strong> was not saved. Try again.'};
                     });
                     //$window.location.href = '/#/myoffers';
                   }, function(response){

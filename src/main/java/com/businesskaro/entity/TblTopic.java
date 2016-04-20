@@ -30,7 +30,7 @@ public class TblTopic implements Serializable {
 	@Column(name="LAST_UPD")
 	private Date lastUpd;
 
-	@Column(name="TOPIC_DESC")
+	@Column(name="TOPIC_DESC",columnDefinition="TEXT")
 	private String topicDesc;
 
 	@Column(name="TOPIC_TITLE")
