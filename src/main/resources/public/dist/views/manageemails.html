@@ -23,6 +23,9 @@
           <div class="col-sm-4">
             <button ng-click="getEntityEmails();" class="btn btn-primary">Get Data</button>
           </div>
+          <div id="searchBoxes">
+          Global Search Filter :<input type="text" ng-model="globalSearch.$" /><br />        
+        </div>
       </div>
   </div>
   
@@ -48,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="email in emails" style="cursor: pointer;" ng-click="showEmail(email)">
+            <tr ng-repeat="email in emails | filter:globalSearch" style="cursor: pointer;" ng-click="showEmail(email)">
               <td align="left" data-title="Title"><i>{{email.sentFromEmail}}</i></td>
               <td>{{email.sentToEmail}}</td>
               <td>{{email.entityType}}</td>

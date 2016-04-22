@@ -14,6 +14,7 @@ angular
     $scope.selectedEducationId=0;
     $scope.selectedProfessionId = 0;
     $scope.selectedStateId = 0;
+    $scope.createDate = new Date();
     
     /*********** Get all Lookup values *********/
     LookUpService.getStates().then(function(data){
@@ -56,6 +57,7 @@ angular
                 $scope.offerTitle=data.title;
                 $scope.userId = data.userId;
                 $scope.offerDescription=data.description;
+                $scope.createDate = data.createDate;
                 if(data.imgUrl){
                   var imagePath = $scope.imageUrl = data.imgUrl;
                   var widgetFileInput = $('.fileinput').fileinput();
@@ -88,6 +90,13 @@ angular
                     $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
                   }
                 }
+                for(var i=0;i<$scope.questions.length;i++){
+                  for(var j=0;j<data.questionList.length;j++){
+                    if(data.questionList[j].questionId==$scope.questions[i].questId){
+                      $scope.questions[i].value = data.questionList[j].response;
+                    }
+                  }
+                } 
                 $scope.waiting = false;
                 
                 
@@ -298,7 +307,8 @@ angular
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
                         "questionList":questions,
-                        "userId" : $scope.userId
+                        "userId" : $scope.userId,
+                        "createDate":$scope.createDate
                         },
                     cache : false}).then(function(response){
                       //$window.location.href = '/#/myoffers';
@@ -331,7 +341,8 @@ angular
                         "intdAudience" : intAudience[0],
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
-                        "questionList":questions
+                        "questionList":questions,
+                        "createDate":$scope.createDate
                         
                         },
                     cache : false}).then(function(response){

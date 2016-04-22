@@ -7,6 +7,7 @@ angular
 	    console.log("Request COntroller: "+$scope.id);
 	    $scope.waiting = true;
 	    $scope.isSaveClicked = false;
+	    $scope.createDate = new Date();
 
 	    /********** VALIDATION ************/
 	    $scope.formControl = {
@@ -104,7 +105,8 @@ angular
 		        	var data = response.data;
 		        	$scope.userId = data.userId;
 		        	$scope.requestTitle=data.title;
-			        $scope.requestDescription=data.description;			        
+			        $scope.requestDescription=data.description;	
+			        $scope.createDate = data.createDate;		        
 			        for(var i=0;i<data.trgtIndustry.length;i++){
     	              for(var j=0;j<$scope.industries.length;j++){
     	                if(data.trgtIndustry[i] == $scope.industries[j].industryId){
@@ -212,7 +214,8 @@ angular
 	    	                  "trgtLocation" : state,
 	    	                  "imgUrl" :$scope.imageUrl,
 	    	                  "questionList":questions,
-	    	                  "userId" : $scope.userId
+	    	                  "userId" : $scope.userId,
+	    	                  "createDate":$scope.createDate
 	    	                  },
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';
@@ -245,7 +248,8 @@ angular
 	    	                  "intdAudience" : $scope.selectedAudience,
 	    	                  "trgtLocation" : state,
 	    	                  "imgUrl" :$scope.imageUrl,
-	    	                  "questionList":questions
+	    	                  "questionList":questions,
+	    	                  "createDate":$scope.createDate
 	    	                  },
 	    	              cache : false}).then(function(response){
 	    	            	  //$window.location.href = '/#/myrequests';

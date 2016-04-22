@@ -1,6 +1,12 @@
+<style>
+  .summary-ellipse {
+    white-space: nowrap;
+    overflow: hidden;    
+    text-overflow: ellipsis; 
+}</style>
 <div id="page-heading">
 	<ol class="breadcrumb">
-		<li><a href="#/">Dashboard</a></li>
+		<li><a href="#/">Dashboard</a></li>		
 		<li class="active">My Policies</li>
 	</ol>
 </div>
@@ -19,7 +25,7 @@
 				<div class="panel-loading" ng-if="waiting">
                     <div class="panel-loader-circular"></div>
                 </div>
-				<table class="table table-striped">
+				<table class="table table-striped" style="table-layout:fixed;">
 					<thead>
 						<tr>
 							<th style="padding-right: 100px">Title</th>
@@ -32,10 +38,10 @@
 						<tr>
 						</tr>
 						<tr ng-repeat="policy in policies" ng-click="editPolicy(policy)" style="cursor: pointer;">
-							<td align="left" data-title="Title"><i>{{policy.policyTitle}}</i></td>
-							<td data-title="Description">{{policy.policyDesc}}</td>						
-							<td data-title="Updated Date">{{policy.lastUpd}}</td>
-							<td data-title="Created Date">{{policy.createDt}}</td>
+							<td align="left"><i>{{policy.policyTitle}}</i></td>
+							<td data-title="Description" class="summary-ellipse">{{policy.policyDesc}}</td>				
+							<td data-title="Updated Date" >{{policy.lastUpd | date:"MM/dd/yyyy" }}</td>
+							<td data-title="Created Date">{{policy.createDt | date:"MM/dd/yyyy"}}</td>
 						</tr>
 					</tbody>
 					<tbody ng-if="policies!=undefined && policies.length===0">
