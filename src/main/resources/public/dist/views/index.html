@@ -25,19 +25,27 @@
             </div>
 
             <div class="col-md-3">
-            <ui-select allow-clear ng-model="selectedIndustries.selected" theme="bootstrap" reset-search-input="true">
+              <!-- <ui-select allow-clear ng-model="selectedIndustries.selected" theme="bootstrap" reset-search-input="true">
                 <ui-select-match placeholder="Search your industry">{{$select.selected.industryName}}</ui-select-match>
                 <ui-select-choices repeat="iterator in industries | filter: $select.search">
                   <span ng-bind-html="iterator.industryName | highlight: $select.search"></span>                        
                 </ui-select-choices>
-              </ui-select>
+              </ui-select> -->
+                  <select class="form-control input-sm" ng-model="selectedIndustry" style="width:250px;">  
+                    <option value="SELECT">Please select your industry to search</option>
+                    <option ng:repeat="i in industries" value="{{i.industryName}}">{{i.industryName}}</option>
+                  </select>
               <br/>
-               <ui-select allow-clear ng-model="selectedStates.selected" theme="bootstrap" reset-search-input="true">
+               <!-- <ui-select allow-clear ng-model="selectedStates.selected" theme="bootstrap" reset-search-input="true">
                 <ui-select-match placeholder="Search state you are looking for..">{{$select.selected.stateName}}</ui-select-match>
                 <ui-select-choices repeat="iterator in states | filter: $select.search">
                   <span ng-bind-html="iterator.stateName | highlight: $select.search"></span>                        
                 </ui-select-choices>
-              </ui-select>
+              </ui-select> -->
+              <select class="form-control input-sm" ng-model="selectedState" style="width:250px;">
+                <option value="SELECT">Please select your state to search</option>
+                <option ng:repeat="s in states" value="{{s.stateName}}">{{s.stateName}}</option>                           
+              </select>
               <br/>
               <button class="btn btn-orange" style="width:100px;" ng-click="searchTags()">Search</button>
             </div>

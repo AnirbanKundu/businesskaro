@@ -14,12 +14,12 @@ angular
 
     LookUpService.getIndustries().then(function(data){
         $scope.industries = data;
-        for(var i=0;i<$scope.industries.length;i++){
-          if($scope.industries[i].industryName == $scope.industry){
-            $scope.selectedIndustries.selected = $scope.industries[i];
-            break;
-          }
-        }
+        // for(var i=0;i<$scope.industries.length;i++){
+        //   if($scope.industries[i].industryName == $scope.industry){
+        //     $scope.selectedIndustries.selected = $scope.industries[i];
+        //     break;
+        //   }
+        // }
     },function(error){
         $log.log(error);
     });
@@ -27,12 +27,12 @@ angular
     $scope.selectedStates = { "selected": [] };
     LookUpService.getStates().then(function(data){
         $scope.states = data;
-        for(var i=0;i<$scope.states.length;i++){
-        if($scope.states[i].stateName == $scope.state){
-          $scope.selectedStates.selected = $scope.states[i];
-          break;
-        }
-      }
+        // for(var i=0;i<$scope.states.length;i++){
+        //   if($scope.states[i].stateName == $scope.state){
+        //     $scope.selectedStates.selected = $scope.states[i];
+        //     break;
+        //   }
+        // }
       },function(error){
         $log.log(error);
     });

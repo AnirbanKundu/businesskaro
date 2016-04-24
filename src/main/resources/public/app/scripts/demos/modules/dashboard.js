@@ -15,8 +15,16 @@ angular.module('theme.demos.dashboard', [
     });
     $scope.selectedTag = { "selected": [] };
     $scope.selectedValues = undefined;
-    $scope.selectedIndustries = { "selected": [] };
-    $scope.selectedStates = { "selected": [] };
+    //$scope.selectedIndustries = { "selected": [] };
+    //$scope.selectedStates = { "selected": [] };
+    $scope.industries = [];
+    $scope.selectedIndustry = "SELECT";
+    $scope.selectedState = "SELECT";
+    LookUpService.getIndustries().then(function(data){
+        $scope.industries = data;
+    },function(error){
+        $log.log(error);
+    });
     LookUpService.getStates().then(function(data){
         $scope.states = data;
       },function(error){
@@ -53,8 +61,8 @@ angular.module('theme.demos.dashboard', [
 
     $scope.searchTags = function(){
       var keywords='',
-      industry = $scope.selectedIndustries.selected.industryName,
-      state = $scope.selectedStates.selected.stateName;
+      industry = $scope.selectedIndustry,//$scope.selectedIndustries.selected.industryName,
+      state = $scope.selectedState;//$scope.selectedStates.selected.stateName;
 
       if(industry){
         keywords = industry+',';
@@ -63,11 +71,16 @@ angular.module('theme.demos.dashboard', [
         keywords += state + ',';
       }      
       keywords = keywords.substring(0, keywords.lastIndexOf(','));
-      $timeout(function(){
-        $location.path('/search/ALL/'+keywords);
-      },100)
-      
-      //console.log('Tags selected are:', $scope.selectedTag);
+
+      var validForm = true;
+      if($scope.selectedIndustry==='SELECT'|| $scope.selectedState==='SELECT'){
+        validForm  = false;
+      }
+      if(validForm){
+        $timeout(function(){
+          $location.path('/search/ALL/'+keywords);
+        },100)
+      }
     }
     
     $scope.contactusForm={};
@@ -110,10 +123,6 @@ angular.module('theme.demos.dashboard', [
         $scope.tags = response.data;
       });
     };
-    $scope.industries = [];
-    $http.get('utilservices/industries').success(function(response) {
-      $scope.industries = response;
-    });
 
     //CarouselController
     $scope.myInterval = 5000;

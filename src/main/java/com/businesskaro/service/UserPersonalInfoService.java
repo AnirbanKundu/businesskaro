@@ -141,7 +141,12 @@ public class UserPersonalInfoService {
 					userSkillRepo.save(userSkill);
 				}
 			}
-
+		
+		List<BrgUsrIndustry> brgUsrIndList =  brgUsrIndustryRepo.findByTblUserPersInfoSumry(summaryEntiy);
+		if(brgUsrIndList != null &&  brgUsrIndList.size() >0){
+			brgUsrIndustryRepo.delete(brgUsrIndList);
+		}
+		
 		if (summary.industrys != null)
 			for (Integer indusId : summary.industrys) {
 				LkpIndustry indEntity = userIndRepo.findOne(indusId);
