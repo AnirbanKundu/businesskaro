@@ -7,7 +7,7 @@
 <div class="container-fluid" ng-controller="EntityManagementController">
 	<div class="row">
 		<div class="col-sm-4 pull-left">
-			<h3>Manage Users for Application</h3>
+			<h3>Manage Entities for Application</h3>
 		</div>
 	</div>
 	<div class="row" style="margin-bottom:20px;">
@@ -32,7 +32,7 @@
 				Select State
 				 <select class="form-control input-sm" ng-model="selectedState" style="width:250px;">
 				 	<option value="SELECT">{{SELECT}}</option>
-            		<option ng:repeat="s in states" value="{{s.stateName}}">{{s.stateName}}</option>				                		
+            		<option ng:repeat="s in states" value="{{s.stateId}}">{{s.stateName}}</option>				                		
             	</select>
 			</div>	
 		</div>	
