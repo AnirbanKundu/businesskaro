@@ -82,8 +82,8 @@
     .slide.ng-hide {
       bottom: -30px;
     }
-    .search-results{
-
+    .search-results .widget-body{
+      padding:0 !important; 
     }
     .search-results:hover { 
       /*opacity:0.5;
@@ -143,7 +143,7 @@
     </div>
     <div class="row">
         <div class="col-md-9">
-      <div class="row" style="margin-top:30px;">
+      <div class="row" style="">
       <div class="col-md-4" ng-repeat="result in searchResults" ng-click="showDetails(result,$event);" ng-if="result.data">
 
         <div class="col-md-12" ng-if="result.entityType == 'GOVT_POLICY'" panel-class="panel-warning">
@@ -159,7 +159,7 @@
                         <div class="panel-loader-dots"></div>
                     </div>
                     <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" />
-                    <img ng-if="!result.data.imgUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png"/>
+                    <img ng-if="!result.data.imgUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png" style="height:98px;"/>
                     <span class="name">{{result.data.policyTitle}}</span>
                 </div>
                 <div class="widget-footer">
@@ -182,7 +182,7 @@
                                     <span>Industry</span>
                                 </td>
                                 <td style="height:60px;">
-                                    {{result.data.industrys | industryfilter : 'ellipse' }}                                      
+                                    {{result.data.industrys | industryfilter : 'ellipse' | maxlengthfilter : 65 }}                                      
                                 </td>
                             </tr>
                             <tr>
@@ -190,7 +190,7 @@
                                     <span>States Linked</span>
                                 </td>
                                 <td>
-                                    <span>{{result.data.states | statefilter:'ellipse'}}</span>
+                                    <span>{{result.data.states | statefilter:'ellipse' | maxlengthfilter : 45}}</span>
                                 </td>
                             </tr>                    
                         </tbody>
@@ -230,7 +230,7 @@
                                     <span>Profession:</span>
                                 </td>
                                 <td style="height:60px;">
-                                    <span>{{result.data.aboutMe}}</span>
+                                    <span>{{result.data.aboutMe | maxlengthfilter : 20}}</span>
                                     
                                 </td>
                             </tr>
@@ -291,17 +291,8 @@
                     </div>
                 </div>
                 <div class="panel panel-widget widget-userfocus search-results" style="background-color:#60bd68;">
-                    <div class="widget-body" style="padding-top:0">
-                    <!--
-                        <div class="panel-loading" ng-if="!result.data">
-                            <div class="panel-loader-dots"></div>
-                        </div>
-                        -->
-                        <!--<div>
-                          {{ result.data | json }}
-                        </div>-->
-
-                        <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" />
+                    <div class="widget-body">
+                        <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" style="height:90px;" />
                         <img ng-if="!result.data.imgUrl && result.entityType==='OFFER'" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png"/>
 
                         <img ng-if="!result.data.imgUrl && result.entityType==='REQUEST'" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442656507/application_images/request.png"/>
@@ -315,27 +306,27 @@
                         <table class="table">
                             <tbody ng-if="result.data">
                                 <tr>
-                                    <td>
+                                    <td style="width:50px;">
                                         <span class="">Title</span>
                                     </td>
                                     <td>
-                                        <span>{{result.data.title}} </span>
+                                        <span>{{result.data.title | maxlengthfilter : 30}} </span>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="width:50px;height:50px;">
                                         <span>Description</span>
                                     </td>
                                     <td>
-                                        <span>{{result.data.description}}</span>
+                                        <span>{{result.data.description | maxlengthfilter : 50}}</span>
                                         
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td style="width:50px;">
                                         <span>Target Industry</span>
                                     </td>
-                                    <td style="height:60px;">
+                                    <td style="height:50px;">
                                         <span>{{result.data.trgtIndustry | industryfilter : 'ellipse'}}   </span>
                                         
                                     </td>
@@ -344,8 +335,8 @@
                                     <td>
                                         <span>States valid in:</span>
                                     </td>
-                                    <td style="height:60px;">
-                                        <span>{{result.data.trgtLocation | statefilter: 'ellipse' }}</span>
+                                    <td style="height:30px;">
+                                        <span>{{result.data.trgtLocation | statefilter: 'ellipse' | maxlengthfilter : 28 }}</span>
                                     </td>
                                 </tr>
                             </tbody>                            
