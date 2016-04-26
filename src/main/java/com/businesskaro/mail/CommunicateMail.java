@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
 import com.businesskaro.model.Communicate;
 import com.businesskaro.model.ContactUs;
+
+
 
 @Service
 public class CommunicateMail extends AbstractEmailNotification{
@@ -15,7 +18,7 @@ public class CommunicateMail extends AbstractEmailNotification{
 	private String subject;
 	private Map<String, String> emailTokens;
 	
-	public void contactUs(ContactUs contactus) throws Exception{
+	public void contactUs(ContactUs contactus) throws Exception{		
 		this.toAddress="anirban.kundu1981@gmail.com";
 		this.fromAddress=contactus.email;
 		this.subject = contactus.subject;

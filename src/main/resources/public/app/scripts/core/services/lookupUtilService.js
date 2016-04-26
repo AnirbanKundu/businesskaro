@@ -1,7 +1,7 @@
 angular.module('theme.core.services')
   .factory("LookUpService", ['$http','$q',function($http, $q) {
   'use strict';
-  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[], intAudience=[], industries = [];
+  var ageGroup = [], educationGroup = [], professions= [], questions=[], states=[],experiences=[], intAudience=[], industries = [];
   var _getAgeGroup = function(){
     var deferred = $q.defer(); 
     if(ageGroup && ageGroup.length>0){
@@ -67,58 +67,72 @@ angular.module('theme.core.services')
     return deferred.promise;
   }
   var _getQuestions = function(qustType){
-	  var deferred = $q.defer(); 
-	    if(questions && questions.length>0){
-	      deferred.resolve(questions);
-	    }
-	    else{
-	      $http({
-	        url: 'utilservices/questions/'+qustType,
-	        method: 'GET'
-	      }).then(function(response){    
-	        questions = response.data;  
-	        deferred.resolve(questions);
-	      },function(error){
-	        deferred.reject(error);
-	      });
-	    }    
-	    return deferred.promise;
+    var deferred = $q.defer(); 
+      if(questions && questions.length>0){
+        deferred.resolve(questions);
+      }
+      else{
+        $http({
+          url: 'utilservices/questions/'+qustType,
+          method: 'GET'
+        }).then(function(response){    
+          questions = response.data;  
+          deferred.resolve(questions);
+        },function(error){
+          deferred.reject(error);
+        });
+      }    
+      return deferred.promise;
   };
   var _getState = function(){
-	  var deferred = $q.defer(); 
-	    if(states && states.length>0){
-	      deferred.resolve(states);
-	    }
-	    else{
-	      $http({
-	        url: 'utilservices/states/',
-	        method: 'GET'
-	      }).then(function(response){    
-	    	  states = response.data;  
-	        deferred.resolve(states);
-	      },function(error){
-	        deferred.reject(error);
-	      });
-	    }    
-	    return deferred.promise;
+    var deferred = $q.defer(); 
+      if(states && states.length>0){
+        deferred.resolve(states);
+      }
+      else{
+        $http({
+          url: 'utilservices/states/',
+          method: 'GET'
+        }).then(function(response){    
+          states = response.data;  
+          deferred.resolve(states);
+        },function(error){
+          deferred.reject(error);
+        });
+      }    
+      return deferred.promise;
   };
+  //written by nagendra --START//experiences
+  var _getExperience = function(){
+    var deferred = $q.defer();
+      $http({
+          url: 'utilservices/experiences/',
+          method: 'GET'
+        }).then(function(response){
+          deferred.resolve(response.data);
+        },function(error){
+          deferred.reject(error);
+        });   
+      return deferred.promise;
+  };
+  //Written by nagendra --END
   var _getIntAudience = function(){
-	  var deferred = $q.defer(); 
-	    if(intAudience && intAudience.length>0){
-	      deferred.resolve(intAudience);
-	    }
-	    else{
-	      $http({
-	        url: 'utilservices/intendedAudience/',
-	        method: 'GET'
-	      }).then(function(response){    
-	    	  intAudience = response.data;  
-	        deferred.resolve(intAudience);
-	      },function(error){
-	        deferred.reject(error);
-	      });
-	    }    
-	    return deferred.promise;
+    var deferred = $q.defer(); 
+      if(intAudience && intAudience.length>0){
+        deferred.resolve(intAudience);
+      }
+      else{
+        $http({
+          url: 'utilservices/intendedAudience/',
+          method: 'GET'
+        }).then(function(response){    
+          intAudience = response.data;  
+          deferred.resolve(intAudience);
+        },function(error){
+          deferred.reject(error);
+        });
+      }    
+      return deferred.promise;
   };
   var _getIndustries = function(){
     var deferred = $q.defer(); 
@@ -186,6 +200,7 @@ angular.module('theme.core.services')
     getStateName : _getStateName,
     getProfessionName:_getProfessionName,
     getAgeGroupName: _getAgeGroupName,
-    getEducationName:_getEducationName
+    getEducationName:_getEducationName,
+    getExperiences:_getExperience
   };
 }]);

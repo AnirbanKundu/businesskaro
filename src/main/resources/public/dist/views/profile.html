@@ -103,10 +103,7 @@
 					                <div class="col-sm-4">
 					                	<select class="form-control input-sm" ng-model="user.details.experienceId" ng-style="provideColor(formControl.isexperienceValid)">
 					                		<option value="0">Select your Experience</option>
-					                		<option value="1">0-5 yrs</option>
-					                		<option value="3">5-10 yrs</option>	
-					                		<option value="4">10-25 yrs</option>
-					                		<option value="5">25+ yrs</option>			
+					                		<option ng:repeat="exp in experiences" value="{{exp.experienceId}}">{{exp.experDisplVal}}</option>					                			
 					                	</select>
 					                </div>
 					            </div>

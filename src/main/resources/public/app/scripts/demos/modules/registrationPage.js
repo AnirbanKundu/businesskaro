@@ -70,6 +70,13 @@ angular
       },function(error){
         $log.log(error);
     });
+    
+    //Written by nagendra
+    LookUpService.getExperiences().then(function(data){
+        $scope.experiences = data;
+      },function(error){
+        $log.log(error);
+    });
 
     
     UserAuthentication.getUserDetailProfile().then(function(data){

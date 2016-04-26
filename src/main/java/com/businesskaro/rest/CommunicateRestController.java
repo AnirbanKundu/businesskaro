@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -18,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.entity.TblEmailAudit;
 import com.businesskaro.entity.TblUserManagement;
 import com.businesskaro.entity.TblUserPassword;
-import com.businesskaro.entity.repo.CustomRepository;
 import com.businesskaro.entity.repo.TblEmailAuditRepo;
 import com.businesskaro.entity.repo.TblUserManagementRepo;
 import com.businesskaro.entity.repo.TblUserPasswordRepo;
 import com.businesskaro.mail.CommunicateMail;
-import com.businesskaro.model.AdminEntitySearch;
 import com.businesskaro.model.BKException;
 import com.businesskaro.model.BKUserProfileSummary;
 import com.businesskaro.model.Communicate;
@@ -48,19 +47,20 @@ public class CommunicateRestController extends BKRestService{
 	SecureTokenUtil secureTokenUtil;
 	
 	@Autowired
-	TblEmailAuditRepo emailAuditRepo;
-	
+	TblEmailAuditRepo emailAuditRepo;	
 
 	@Autowired
 	TblUserManagementRepo managementRepo;
-
 	
+	@Autowired 
+	private ApplicationContext ctx;	
 
 	
 	@RequestMapping(value="/services/communicate" , method = RequestMethod.POST)
 	public void sendMail(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId, @RequestBody CommunicateRequest request){		
-		try{		
+		try{	
+			int emailLimit = Integer.parseInt(ctx.getEnvironment().getProperty("mail_limit"));
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");			
 			String todayString=dateFormat.format(new Date());	
 			Date todayDate=new Date();
@@ -106,7 +106,7 @@ public class CommunicateRestController extends BKRestService{
 			}
 			System.out.println("email limit:"+list.size());
 			
-			if(list.size()<=5)
+			if(list.size()<=emailLimit)
 			{
 				try
 				{

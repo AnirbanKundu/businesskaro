@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.entity.AgeGroup;
 import com.businesskaro.entity.Education;
+import com.businesskaro.entity.LkpExperience;
 import com.businesskaro.entity.LkpIndustry;
 import com.businesskaro.entity.LkpQuestion;
 import com.businesskaro.entity.LkpState;
@@ -50,7 +51,7 @@ class LookupUtilService {
 	QuestionRepo questionsRepo;
 	
 	@Autowired
-	StateRepo stateRepo;
+	StateRepo stateRepo;	
 	
 	@Autowired
 	IntendedAudienceRepo audienceRepo;
@@ -79,6 +80,12 @@ class LookupUtilService {
     @ResponseStatus(HttpStatus.CREATED)
     public Iterable<LkpState> getAllStates() throws Exception {   
     	 return stateRepo.findAll();
+    }
+    //Written by Nagendra
+    @RequestMapping(value="/utilservices/experiences", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Iterable<LkpExperience> getAllExperience() throws Exception {   
+    	 return experienceRepo.findAll();
     }
     @RequestMapping(value="/utilservices/intendedAudience", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.CREATED)
