@@ -40,7 +40,7 @@ angular
     $scope.selectedIndustries = { "selected": [] };
     $scope.selectedStates = { "selected": [] };
     $scope.lookingfor = { "selected": [] };
-    $scope.selectedAudience = { "selected": [] };
+    $scope.selectedAudience = 0;      
     $scope.industries = [];
     
     $http.get('utilservices/industries').success(function(response) {
@@ -84,12 +84,7 @@ angular
                         break;
                       }
                     }
-                  }
-                for(var i=0;i<$scope.intendedAudience.length;i++){
-                  if($scope.intendedAudience[i].targAudId === data.intdAudience){
-                    $scope.selectedAudience.selected.push($scope.intendedAudience[i]);
-                  }
-                }
+                  }               
                 for(var i=0;i<$scope.questions.length;i++){
                   for(var j=0;j<data.questionList.length;j++){
                     if(data.questionList[j].questionId==$scope.questions[i].questId){
@@ -97,6 +92,7 @@ angular
                     }
                   }
                 } 
+                $scope.selectedAudience = data.intdAudience;
                 $scope.waiting = false;
                 
                 
@@ -281,10 +277,7 @@ angular
           industries.push($scope.selectedIndustries.selected[i].industryId);
           tags.push($scope.selectedIndustries.selected[i].industryName);
         }
-        var intAudience = [];
-        for(var i=0;i<$scope.selectedAudience.selected.length;i++){
-          intAudience.push($scope.selectedAudience.selected[i].targAudId);
-        }
+       
         var questions = [];
         for(var i=0;i<$scope.questions.length;i++){
           var q = {
@@ -303,7 +296,7 @@ angular
                       "title" : $scope.offerTitle,
                         "description" : $scope.offerDescription,
                         "trgtIndustry" : industries,
-                        "intdAudience" : intAudience[0],
+                        "intdAudience" : $scope.selectedAudience,
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
                         "questionList":questions,
@@ -338,7 +331,7 @@ angular
                     data: { "title" : $scope.offerTitle,
                         "description" : $scope.offerDescription,
                         "trgtIndustry" : industries,
-                        "intdAudience" : intAudience[0],
+                        "intdAudience" : $scope.selectedAudience,
                         "trgtLocation" : state,
                         "imgUrl" :$scope.imageUrl,
                         "questionList":questions,

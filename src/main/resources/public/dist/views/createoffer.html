@@ -64,6 +64,7 @@
 
 									</div>
 								</div>
+								<!--
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Intended Audience</label>
 									<div class="col-sm-6">
@@ -75,6 +76,24 @@
 												<span ng-bind-html="iterator.targAudDispVal"></span> 
 											</ui-select-choices> 
 											</ui-select>
+					                </div>
+								</div>
+								-->
+								<div class="form-group">
+									<label class="col-sm-2 control-label">Intended Audience</label>
+									<div class="col-sm-6">
+									 	<!--<ui-select ng-model="selectedAudience.selected"
+											close-on-select="false" style="width: 400px;"
+											title="Select intended audience"> 
+											<ui-select-match placeholder="Select or search intended audience">{{$select.selected[$index].targAudDispVal}}</ui-select-match>
+											<ui-select-choices repeat="iterator in intendedAudience">
+												<span ng-bind-html="iterator.targAudDispVal"></span> 
+											</ui-select-choices> 
+											</ui-select>-->
+											<select class="form-control input-sm" ng-model="selectedAudience" ng-style="provideColor(formControl.isIntendedAudienceValid)">
+					                		<option value="0">Select your Audience</option>
+					                		<option ng:repeat="iterator in intendedAudience" value="{{iterator.targAudId}}">{{iterator.targAudDispVal}}</option>
+					                	</select>
 					                </div>
 								</div>
 								<div class="form-group">
