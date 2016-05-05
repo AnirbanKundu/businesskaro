@@ -133,6 +133,13 @@ public class PolicyRestService extends BKRestService {
 		return policyService.getPolicy(id);
 	}
 	
+	
+	//Written by nagendra
+	@RequestMapping(value="/services/policy/public/{policyId}" , method = RequestMethod.GET)
+	public Policy getPublicPolicyById(@PathVariable("policyId") Integer id){
+		return policyService.getPublicPolicy(id);		
+	}
+	
 	@RequestMapping(value="/services/policysummary/{policyId}" , method = RequestMethod.GET)
 	public Policy getPolicySummaryById(@PathVariable("policyId") Integer id){
 		return policyService.getPolicy(id);

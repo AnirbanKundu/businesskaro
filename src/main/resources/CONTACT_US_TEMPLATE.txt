@@ -13,8 +13,9 @@
   <tr><td style="padding-left:10px;"><br><b> Message:</b></td></tr>  
   <tr><td style="padding-left:10px;"><br> #message</td></tr>  
   <tr><td style="padding-left:10px;"><br><b>Sincerely,</b></td></tr>  
-  <tr><td style="padding-left:10px;"><br> #from_Name </td></tr>  
-  <tr><td style="padding-left:10px;">#mobile </td></tr> 
+  <tr><td style="padding-left:10px;">#from_Name </td></tr>
+  <tr><td style="padding-left:10px;">#mobile</td></tr>   
+  <tr><td style="padding-left:10px;">#from_Email</td></tr> 
   </table> 
 </body>
 </html>

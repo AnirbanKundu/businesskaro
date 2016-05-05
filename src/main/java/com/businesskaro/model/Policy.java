@@ -1,7 +1,6 @@
 package com.businesskaro.model;
 
 import java.util.Date;
-
 public class Policy {
 	
 	public Integer id;
@@ -15,4 +14,7 @@ public class Policy {
 	public int userId;	
 	public Date createDate;
 	public Date updateDate;
+	
+	public String industryName;
+	public String stateName; 
 }

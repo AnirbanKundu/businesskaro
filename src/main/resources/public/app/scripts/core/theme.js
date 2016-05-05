@@ -22,6 +22,7 @@ angular
     'theme.core.search_controller',
     'theme.core.entitydetail_controller',
     'theme.core.contactus_controller',
+    'theme.demos.featurednewscontroller'
     //'theme.core.notifications_controller'
     //,'theme.core.messages_controller',
   ]);

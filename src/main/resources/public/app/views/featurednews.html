@@ -1,0 +1,61 @@
+<style type="text/css">
+	.entity-detail{
+
+	}
+	.entity-detail .panel-body{
+		height: 400px;
+		overflow-y: auto;
+	}
+</style>
+<div ng-controller="FeaturedNewsController">
+<div id="page-heading">
+	<ol class="breadcrumb">
+		<li><a href="#/">Dashboard</a></li>		
+		<li class="active">Policy Detail </li>
+	</ol>
+</div>
+<div class="container-fluid" >
+	<div class="row">
+		<div class="col-md-9">
+				<div class="panel panel-default panel-profile">
+					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:500px;overflow-y:auto;">
+						<h3>{{policy.policyTitle}}</h3>
+						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">						
+						<hr/>
+						<div>
+							<span>Last Updated:</span><span>{{policy.updateDate| date:"MM/dd/yyyy"}}</span>
+						</div>
+
+						<p style="padding:20px;text-align:justify;">
+							{{policy.policyDesc}} 
+						</p>
+					</div>
+				</div>
+		</div>
+		<div class="col-md-3">
+			<div class="panel" style="padding:20px;">
+				<div class="col-md-12">
+					Related tags
+					<div class="row">
+						<div ng-repeat="t in relatedTags" style="display:inline-block;">
+							<a ng-href="{{t.url}}" class="btn btn-default btn-xs" style="margin:5px;">{{t.name}}</a>&nbsp;					
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel" style="padding:20px;">
+				<div class="col-md-12">						
+					<div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/" data-layout="box_count" data-mobile-iframe="true"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row panel" style="display:none;">		
+		<div class="col-md-12">
+			Related Entity
+		</div>
+	</div>
+
+
+</div> <!-- container-fluid -->
+</div>

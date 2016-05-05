@@ -3,10 +3,14 @@ package com.businesskaro.mail;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.businesskaro.model.Communicate;
 import com.businesskaro.model.ContactUs;
+
+
 
 
 
@@ -18,8 +22,11 @@ public class CommunicateMail extends AbstractEmailNotification{
 	private String subject;
 	private Map<String, String> emailTokens;
 	
-	public void contactUs(ContactUs contactus) throws Exception{		
-		this.toAddress="anirban.kundu1981@gmail.com";
+	@Autowired 
+	private ApplicationContext ctx;	
+	
+	public void contactUs(ContactUs contactus) throws Exception{
+		this.toAddress = ctx.getEnvironment().getProperty("mail_contactus_to");
 		this.fromAddress=contactus.email;
 		this.subject = contactus.subject;
 		loadContactUsTokens(contactus);
@@ -29,6 +36,7 @@ public class CommunicateMail extends AbstractEmailNotification{
 	private void loadContactUsTokens(ContactUs contactus) {
 		emailTokens = new HashMap<String, String>();
 		emailTokens.put("#from_Name", contactus.name);
+		emailTokens.put("#from_Email", contactus.email);
 		emailTokens.put("#message", contactus.message);
 		emailTokens.put("#subject", contactus.subject);
 		emailTokens.put("#mobile", contactus.mobileNo);

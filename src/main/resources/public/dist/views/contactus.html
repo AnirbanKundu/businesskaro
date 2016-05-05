@@ -40,8 +40,8 @@
                             <input name="name" type="text" placeholder="Name *" ng-model="contactusForm.contacterName" class="form-control" required/>
                     </div>
                     <div class="form-group">                        
-                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="email" required>
-              <span class="help-block" ng-show="form.email.$error.required && form.email.$dirty">Required</span>                                       
+                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="contactusForm.email" required>
+                    <span class="help-block" ng-show="form.email.$error.required && form.email.$dirty">Required</span>                                       
                     </div>
                     
                     <div class="form-group">
@@ -49,17 +49,17 @@
                            <span class="help-block" ng-show="form.mobile.$error.required && form.mobile.$dirty">Required</span>  
                     </div>
                     <div class="form-group">
-                            <input type="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" required />   
+                            <input type="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" maxlength="250" required />   
                     </div>
                     <div class="form-group">
-                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control"></textarea>       
+                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control" maxlength="500"></textarea>       
                     </div>
                     <div ng-if="alert">
                       <p class="text-danger">{{alert.msg}}</p>
                     </div>
                     <div class="btn-toolbar">
                             <button class="btn-primary btn" ng-click="contactus($event)" ng-disabled="!form.$valid" >Submit</button>
-                            <button class="btn-default btn" ng-click="resetValidationForm($event)">Reset</button>
+                            <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
                 </form>              
             </panel>

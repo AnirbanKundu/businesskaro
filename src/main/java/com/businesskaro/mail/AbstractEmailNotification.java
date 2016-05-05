@@ -61,7 +61,7 @@ public abstract class AbstractEmailNotification implements ResourceLoaderAware {
 			msg.setContent(multipart);
 			javaMailSender.send(msg);
 
-		} catch (Exception ex) {
+		} catch (Exception ex) { 
 			throw ex;
 		}
 	}

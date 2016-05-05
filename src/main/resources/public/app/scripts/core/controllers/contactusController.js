@@ -4,24 +4,30 @@ angular
     'use strict';
     $scope.contactusForm={};
 
-    $scope.resetValidationForm = function($event){
-      $event.preventDefault();
-      $scope.contactusForm = {};
-    };
+    $scope.resetValidationForm = function() {      
+      $scope.contactusForm.contacterName = '';
+      $scope.contactusForm.email = '';
+      $scope.contactusForm.mobile = '';
+      $scope.contactusForm.subject = '';
+      $scope.contactusForm.message = '';
+      };
+    
     
     $scope.contactus = function($event){
+      $scope.waiting = true;
       $event.preventDefault();
-    	$http({
+      $http({
             url: 'services/contactus',
             method: 'POST',
             data: {
-          	  "name":$scope.contactusForm.contacterName,
-          	  "email":$scope.contactusForm.email,
-          	  "mobileNo":$scope.contactusForm.mobile,
-          	  "subject":$scope.contactusForm.subject,
-          	  "message":$scope.contactusForm.message
+              "name":$scope.contactusForm.contacterName,
+              "email":$scope.contactusForm.email,
+              "mobileNo":$scope.contactusForm.mobile,
+              "subject":$scope.contactusForm.subject,
+              "message":$scope.contactusForm.message
             }
           }).then(function(response){
+          $scope.waiting = false;
             $scope.message = 'success';
             $scope.alert = { type: 'success', msg: 'Email sent succesfully. You would be contacted shortly.'};
             $scope.contactusForm = {};

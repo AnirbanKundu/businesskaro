@@ -14,6 +14,8 @@ import com.businesskaro.entity.LkpState;
 import com.businesskaro.entity.TblPolicy;
 import com.businesskaro.entity.repo.BrgTopicsIndustryRepo;
 import com.businesskaro.entity.repo.BrgTopicsStateRepo;
+import com.businesskaro.entity.repo.BrgUsrReqrIndustryRepo;
+import com.businesskaro.entity.repo.BrgUsrReqrStateRepo;
 import com.businesskaro.entity.repo.StateRepo;
 import com.businesskaro.entity.repo.TblPolicyRepo;
 import com.businesskaro.entity.repo.UserInductryRepo;
@@ -38,6 +40,18 @@ public class PolicyService {
 	
 	@Autowired
 	BrgTopicsStateRepo brgTopicsStateRepo;
+	
+	
+	//Added by nagendra --Start
+	
+	@Autowired
+	BrgUsrReqrIndustryRepo brgUsrReqrIndustryRepo;
+	
+	@Autowired
+	BrgUsrReqrStateRepo brgUsrReqrStateRepo;
+	
+	
+	//Added by nagendra --End
 	
 	public Policy createPolicy(Policy policy){
 		
@@ -107,6 +121,20 @@ public class PolicyService {
 		return mapper(tblPolicy);
 		
 	}
+	
+	//Written by nagendra
+	public Policy getPublicPolicy(Integer id){	
+		TblPolicy tblPolicy = policyRepo.findOne(id);
+		if(tblPolicy.getIsFeatured()==1)
+		{
+			return mapper(tblPolicy);
+		}		
+		else
+		{ 
+			throw new BKException("Policy not a featured policy, hence authentication failed", "403",BKException.Type.INTERNAL_ERRROR);
+		}		
+		//return policy;
+	}
 
 	public void deletePolicy(Integer id) {
 		
@@ -162,5 +190,5 @@ public class PolicyService {
 		}
 		
 		return policy;
-	}
+	}	
 }

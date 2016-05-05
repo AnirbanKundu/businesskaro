@@ -22,6 +22,14 @@ angular
     $scope.$on('$locationChangeSuccess', function() {
       //console.log('$route is', $route);
     });
+    //written by nagendra
+    $scope.reset=function()
+    {
+       $scope.loginForm.email= '';
+         $scope.loginForm.password = '';
+    };
+    
+    
     $scope.logIn = function(){
       $scope.waiting = true;
       var apphistory = UserAuthentication.getuserRoutes();
@@ -139,7 +147,7 @@ angular
         },function(error){
           $scope.waiting = false;
           if(error.data.type ==='USER_ALREADY_EXIST'){
-            $scope.showServerMessage = 'Email id has already been registered with.';
+            $scope.showServerMessage = 'The email address you have entered is already registered';
           }else{
             $scope.showServerMessage = 'Unknow error. Please try again.';
           }         

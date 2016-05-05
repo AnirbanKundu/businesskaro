@@ -83,12 +83,21 @@ angular.module('theme.demos.dashboard', [
       }
     }
     
-    $scope.contactusForm={};
-
-    $scope.resetValidationForm = function($event){
-      $event.preventDefault();
-      $scope.contactusForm = {};
-    };
+    $scope.contactusForm={};    
+    $scope.resetValidationForm = function() {      
+      $scope.contactusForm.contacterName = '';
+      $scope.contactusForm.email = '';
+      $scope.contactusForm.mobile = '';
+      $scope.contactusForm.subject = '';
+      $scope.contactusForm.message = '';
+      };
+    
+    
+    
+    
+    
+    
+    
     
     $scope.contactus = function($event){      
       $event.preventDefault();
@@ -149,4 +158,15 @@ angular.module('theme.demos.dashboard', [
     });   
     
     
+    
+    //public featured news
+    //written by nagendra
+   /* $scope.showDetails=function(id){         
+        $location.path('/public/'+'/featurednews/'+id);
+      };
+    */
+    $scope.linkClicked = function(id){
+        // your code here
+        $location.path('/public/featurednews/'+id);
+    };
   }]);

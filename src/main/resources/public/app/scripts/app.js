@@ -32,6 +32,11 @@ angular
           }]
         }
       })
+      
+      //Written by nagendra
+      .when('/public/featurednews/:entityId',{
+        templateUrl: 'views/featurednews.html'      
+      })
       .when('/search/:type/:keywords',{
         templateUrl: 'views/search.html'
       })
@@ -294,13 +299,18 @@ angular
     });
   }]);
 
-(function(){
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1628152447465336";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1625751014372724',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
 
-})();
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
