@@ -94,15 +94,15 @@
 </style>
 <!--
 <div id="page-heading">
-	<ol class="breadcrumb">
-		<li><a href="#/">Dashboard</a></li>
-		<li class="active">Search</li>
-	</ol>
-	<h1>Search Page</h1>
+  <ol class="breadcrumb">
+    <li><a href="#/">Dashboard</a></li>
+    <li class="active">Search</li>
+  </ol>
+  <h1>Search Page</h1>
 </div>
 -->
 <div class="container-fluid" ng-controller="SearchController">
-	<div class="row banner-header">    
+  <div class="row banner-header">    
         <div class="col-md-12" style="margin-top:55px;">
             <div class="col-md-2">
                 <img src="assets/img/search.png" class="img-rounded ng-scope" alt="Find your business need" style="width:60%;float:right;" />
@@ -120,7 +120,7 @@
                   <span ng-bind-html="iterator.industryName | highlight: $select.search"></span>                        
                 </ui-select-choices>
               </ui-select> -->
-              <select class="form-control input-sm" ng-model="industry" style="width:250px;">  
+              <select class="form-control input-sm" ng-model="selectedIndustry" style="width:250px;">  
                     <!-- <option value="SELECT">Please select your industry to search</option> -->
                     <option ng:repeat="i in industries" value="{{i.industryName}}">{{i.industryName}}</option>
               </select>
@@ -131,7 +131,7 @@
                   <span ng-bind-html="iterator.stateName | highlight: $select.search"></span>                        
                 </ui-select-choices>
               </ui-select> -->
-              <select class="form-control input-sm" ng-model="state" style="width:250px;">
+              <select class="form-control input-sm" ng-model="selectedState" style="width:250px;">
 <!--                 <option value="SELECT">Please select your state to search</option>
  -->                <option ng:repeat="s in states" value="{{s.stateName}}">{{s.stateName}}</option>                           
               </select>

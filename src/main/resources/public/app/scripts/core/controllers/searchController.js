@@ -6,33 +6,37 @@ angular
     $scope.show = false; 
     $scope.industries = [];
     $scope.selectedIndustries = { "selected": [] };
-    $rootScope.searchType = $scope.searchType = $route.current.params.type || 'all';
-    $rootScope.keywords = $scope.keywords = $route.current.params.keywords || 'all';
+    $rootScope.searchType = $scope.searchType = $route.current.params.type || 'ALL';
+    $rootScope.keywords = $scope.keywords = $route.current.params.keywords || 'ALL';
     $scope.industry = $scope.keywords.split(',')[0];
     $scope.state = $scope.keywords.split(',')[1];
 
-
+    //$scope.selectedIndustry='';
     LookUpService.getIndustries().then(function(data){
         $scope.industries = data;
-        // for(var i=0;i<$scope.industries.length;i++){
-        //   if($scope.industries[i].industryName == $scope.industry){
-        //     $scope.selectedIndustries.selected = $scope.industries[i];
-        //     break;
-        //   }
-        // }
+        $timeout(function(){
+          for(var i=0;i<$scope.industries.length;i++){
+            if($scope.industries[i].industryName == $scope.industry){
+              $scope.selectedIndustry = $scope.industries[i].industryName;
+              break;
+            }
+          }
+        },15);
     },function(error){
         $log.log(error);
     });
 
-    $scope.selectedStates = { "selected": [] };
+    $scope.selectedState = '';
     LookUpService.getStates().then(function(data){
         $scope.states = data;
-        // for(var i=0;i<$scope.states.length;i++){
-        //   if($scope.states[i].stateName == $scope.state){
-        //     $scope.selectedStates.selected = $scope.states[i];
-        //     break;
-        //   }
-        // }
+        $timeout(function(){
+          for(var i=0;i<$scope.states.length;i++){
+            if($scope.states[i].stateName == $scope.state){
+              $scope.selectedState = $scope.states[i].stateName;
+              break;
+            }
+          }
+        },10);
       },function(error){
         $log.log(error);
     });
@@ -57,8 +61,8 @@ angular
           $timeout(function(){
             var insertedElem = _.findWhere($scope.searchResults,{entityType:elm.entityType,entityId:elm.entityId});
             insertedElem.data = data;
-            $log.log('Arr data:', elm);
-            console.log('THE SCOPE ARRAY IS:',$scope.searchResults);
+            //$log.log('Arr data:', elm);
+            //console.log('THE SCOPE ARRAY IS:',$scope.searchResults);
           },10);          
           if(arr.length>0){
             shiftArray(arr);
@@ -103,19 +107,15 @@ angular
     };
 
     $scope.searchTags = function(){
-      var keywords='',
-      industry = $scope.selectedIndustries.selected.industryName;
-      var state = $scope.selectedStates.selected.stateName;;
-
-      if(industry){
-        keywords = industry+',';
+      var keywords='';
+      if($scope.selectedIndustry){
+        keywords = $scope.selectedIndustry+',';
       }
-      if(state){
-        keywords+= state+',';
+      if($scope.selectedState){
+        keywords+= $scope.selectedState+',';
       }
       keywords = keywords.substring(0, keywords.lastIndexOf(','));
-      $location.path('/search/ALL/'+keywords);
-      console.log('Tags selected are:', $scope.selectedTag);
+      $location.path('/search/'+ $rootScope.searchType + '/'+keywords);
     }
 
     $scope.loadMoreData = function(){

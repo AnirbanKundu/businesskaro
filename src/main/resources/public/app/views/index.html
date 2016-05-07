@@ -1,7 +1,16 @@
+<!-- <div id="page-heading"> -->
+<!--     <ol class="breadcrumb"> -->
+<!--         <li><a href="#/">Home</a></li> -->
+<!--         <li class="active">Dashboard</li> -->
+<!--     </ol> -->
+<!-- </div> -->
 <style type="text/css">
     .panel .panel-body {
       padding-top: 0px
-    }
+    }   
+.panel-midnightblue{
+  height:300px;
+}
 </style>
 <div class="container-fluid" ng-controller="DashboardController">
     <!--<div class="row" style="margin-top: -20px;padding-top: 0;margin-left: 25%;">  
@@ -98,13 +107,13 @@
     <div class="row">
         <div class="col-md-9">
           <div class="col-md-4" ng-repeat="p in policies">
-              <panel panel-class="panel-midnightblue" heading="{{p.policyTitle}}">              
+              <panel panel-class="panel-midnightblue" heading="{{p.policyTitle | maxlengthfilter : 35}}" >              
                 <p style="text-align: justify;height: 180px;overflow-y: hidden;"> <img ng-src="{{p.imageUrl}}" class="img-rounded ng-scope" alt="BusinessKaro" style="margin: 0px 5px 10px;float: left;" width="120" height="120">
-                <span>{{p.policyDesc}}</span>
+                <span>{{p.policyDesc | maxlengthfilter : 250}}</span>
                 </p>
                 <p>
-                 <!--  <a href="{{p.policyId}}" ng-click="$event.preventDefault(); linkClicked('{{p.policyId}}')">Read More..</a> -->
-                  <button class="btn btn-primary btn-sm mr10" ng-click="linkClicked(p.policyId)" style="margin-top: -5px;">Read More...</button>                 
+                    <a ng-click="linkClicked(p.policyId)">Read More..</a> 
+                  <!-- <button class="btn btn-primary btn-sm mr10" ng-click="linkClicked(p.policyId)" style="margin-top: -5px;">Read More...</button> -->                 
                 </p>
               </panel>
           </div>
