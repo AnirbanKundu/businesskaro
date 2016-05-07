@@ -197,7 +197,7 @@ angular
     }
   } 
 }])
-.filter('maxlengthfilter',['$filter',function statefilter(){
+.filter('maxlengthfilter',['$filter',function maxlengthfilter(){
   return function(value,length){ 
     var stateNames = ''
     if(value){

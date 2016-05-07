@@ -18,14 +18,9 @@
 	<div class="row">
 		<div class="col-md-9">
 				<div class="panel panel-default panel-profile">
-					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:500px;overflow-y:auto;">
+					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:700px;overflow-y:auto;">
 						<h3>{{policy.policyTitle}}</h3>
-						<span>{{policy.imageUrl}} AK </span>
-
-						<img ng-if="policy && policy.imageUrl!=null" ng-src="{{policy.imageUrl}}" alt="" class="img-responsive user-avatar">
-						<img ng-if="policy.imageUrl==null"src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
-
-						<!-- <img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">	 -->					
+						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">						
 						<hr/>
 						<div>
 							<span>Last Updated:</span><span>{{policy.updateDate| date:"MM/dd/yyyy"}}</span>
@@ -49,7 +44,7 @@
 				</div>
 			</div>
 			<div class="panel" style="padding:20px;">
-				<div class="col-md-12">						
+				<div class="col-md-12">							
 					<div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/" data-layout="box_count" data-mobile-iframe="true"></div>
 				</div>
 			</div>

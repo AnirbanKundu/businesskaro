@@ -147,7 +147,7 @@ angular
         },function(error){
           $scope.waiting = false;
           if(error.data.type ==='USER_ALREADY_EXIST'){
-            $scope.showServerMessage = 'The email address you have entered is already registered';
+            $scope.showServerMessage = 'The email address you have entered is already registered.';
           }else{
             $scope.showServerMessage = 'Unknow error. Please try again.';
           }         
@@ -200,13 +200,15 @@ angular
             }
           }).then(function(response){
             $scope.waiting = false;  
-            $scope.showServerMessage = 'Your temporary password has been emailed. Please use that password to login.';  
-            //$window.location.href = '/#/login';
-          },function(){
+            $scope.showServerMessage = 'Your temporary password has been emailed. Please use that password to login.';            
+          },function(error){
             $scope.waiting = false;
-            //$scope.showServerMessage = ''
-          });
-      
+            if(error.data.type ==='USER_AUTH_FAIL'){
+               $scope.showServerMessage = 'User email not found. Please enter a valid email';
+              }else{
+                $scope.showServerMessage = 'Unknow error. Please try again.';
+              }               
+          });      
     }
 
   }])

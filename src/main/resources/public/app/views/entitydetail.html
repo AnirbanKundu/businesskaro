@@ -20,12 +20,12 @@
 	<div class="row">
 		<div class="col-md-9" ng-if="entityType=='GOVT_POLICY'">
 				<div class="panel panel-default panel-profile">
-					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:500px;overflow-y:auto;">
+					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:700px;overflow-y:auto;">
 						<h3>{{entityResult.policyTitle}}</h3>
 						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">						
 						<hr/>
 						<div>
-							<span>Last Updated:</span><span>27th September 2015</span>
+							<span>Last Updated:</span><span>{{entityResult.updateDate| date:"MM/dd/yyyy"}}</span>
 						</div>
 
 						<p style="padding:20px;text-align:justify;">
@@ -38,7 +38,8 @@
 			<div class="col-sm-4">
 				<div class="panel panel-default panel-profile" ng-if="entityType=='USER'">
 					<div class="panel-body user-profile">
-						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">
+						<img ng-if="!entityResult.details.imageUrl" src="http://res.cloudinary.com/difyxhuza/image/upload/c_limit,h_200,w_150/v1441951746/m9gwnhnpmtwki0ho1pqb.png" alt="" class="img-responsive user-avatar">
+						<img ng-if="entityResult.details.imageUrl" ng-src="{{entityResult.details.imageUrl}}" class="img-responsive user-avatar"/>
 
 						<div class="user-detail">
 							<h2 class="user-name">{{entityResult.summary.firstName}}&nbsp;{{entityResult.summary.lastName}}</h2>							
@@ -227,9 +228,7 @@
 						<div class="col-md-12">
 							<textarea class="form-control" ng-model="connectMessage" maxlength="250"></textarea>
 						</div>
-						<br/>				
-						
-						
+						<br/>							
 						<div class="col-md-12" style="padding:20px;">
 							<div class="pull-left">
 								<alert type="{{alert.type}}" ng-if="alert.msg"><span ng-bind-html="alert.msg | safe_html"></alert>
@@ -256,8 +255,7 @@
 				</div>
 			</div>
 			<div class="panel" style="padding:20px;">
-				<div class="col-md-12">		
-					<h4>Click here--Test Data</h4>			
+				<div class="col-md-12">							
 					<div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/" data-layout="box_count" data-mobile-iframe="true"></div>
 				</div>
 			</div>

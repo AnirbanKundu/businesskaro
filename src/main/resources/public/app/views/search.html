@@ -149,7 +149,7 @@
         <div class="col-md-12" ng-if="result.entityType == 'GOVT_POLICY'" panel-class="panel-warning">
             <div class="ribbon-wrapper-green">
                 <div class="ribbon-green">
-                    <span>Govt. News</span>
+                    <span>News</span>
                     <span ng-if="!result.data">Loading...</span>
                 </div>
             </div>
@@ -158,9 +158,9 @@
                     <div class="panel-loading" ng-if="!result.data">
                         <div class="panel-loader-dots"></div>
                     </div>
-                    <img ng-if="result.data.imgUrl" ng-src="{{result.data.imgUrl}}" class="img-offer" />
-                    <img ng-if="!result.data.imgUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1442655518/application_images/offer.png" style="height:98px;"/>
-                    <span class="name">{{result.data.policyTitle}}</span>
+                    <img ng-if="result.data.imageUrl" ng-src="{{result.data.imageUrl}}" class="img-offer" />
+                    <img ng-if="!result.data.imageUrl" ng-src="https://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1462651317/mqqmly2ika0tsfw0s0vq.jpg" class="img-offer"/>
+                    <span class="name" style="height:55px;">{{result.data.policyTitle}}</span>
                 </div>
                 <div class="widget-footer">
                     <!--<p>
@@ -170,7 +170,7 @@
                     <table class="table table-condensed m0">
                         <tbody>
                             <tr>
-                                <td style="height:60;">
+                                <td style="height:60px;">
                                     <span>Description:</span>
                                 </td>
                                 <td>
@@ -181,7 +181,7 @@
                                 <td>
                                     <span>Industry</span>
                                 </td>
-                                <td style="height:60px;">
+                                <td style="height:50px;">
                                     {{result.data.industrys | industryfilter : 'ellipse' | maxlengthfilter : 65 }}                                      
                                 </td>
                             </tr>
@@ -213,7 +213,7 @@
                     <div class="panel-loading" ng-if="!result.data">
                         <div class="panel-loader-dots"></div>
                     </div>
-                    <img ng-src="{{result.data.imageUrl}}" class="img-circle img-user" ng-if="result.data.imageUrl"/>
+                    <!-- <img ng-src="{{result.data.imageUrl}}" class="img-circle img-user" ng-if="result.data.imageUrl"/> -->
                     <img ng-src="http://res.cloudinary.com/difyxhuza/image/upload/c_limit,h_100,w_150/v1441951746/m9gwnhnpmtwki0ho1pqb.png" class="img-circle img-user" ng-if="!result.data.imageUrl"/>
                     <span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
                     <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
@@ -230,7 +230,7 @@
                                     <span>Profession:</span>
                                 </td>
                                 <td style="height:60px;">
-                                    <span>{{result.data.aboutMe | maxlengthfilter : 20}}</span>
+                                    <span>{{result.data.aboutMe | maxlengthfilter : 50}}</span>
                                     
                                 </td>
                             </tr>
@@ -247,7 +247,7 @@
                                 <td>
                                     Company
                                 </td>
-                                <td style="height:26px;">
+                                <td style="height:52px;">
                                     {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
@@ -256,7 +256,7 @@
                             <tr>
                                 <td>Profession</td>
                                 <td style="height:60px;">
-                                    {{result.data.aboutMe}}                          
+                                    {{result.data.aboutMe | maxlengthfilter : 50}}                          
                                 </td>
                             </tr>
                             <tr>
@@ -271,7 +271,7 @@
                                 <td>
                                     Company
                                 </td>
-                                <td style="height:26px;">
+                                <td style="height:52px;">
                                     {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
