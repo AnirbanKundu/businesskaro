@@ -21,7 +21,7 @@ angular
           auth: ['$q', 'UserAuthentication', '$location', '$rootScope', function($q, authenticationSvc, $location, $rootScope) {
             var userInfo = authenticationSvc.getToken();       
             if (userInfo) {
-              if(!$rootScope.profileCreated || $rootScope.profileCreated ===0){
+              if(!userInfo.profileCreated || userInfo.profileCreated ===0){
                 $location.url('/userprofile/filldetails')
                 return false;
               }
@@ -38,7 +38,12 @@ angular
         templateUrl: 'views/featurednews.html'      
       })
       .when('/search/:type/:keywords',{
-        templateUrl: 'views/search.html'
+        templateUrl: 'views/search.html',
+        resolve: {
+            auth : ['$location',function($location){
+              console.log('Route matchs');
+            }]
+        }
       })
       .when('/userprofile/:message?',{
         templateUrl: 'views/profile.html',

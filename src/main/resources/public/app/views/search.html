@@ -160,7 +160,7 @@
                     </div>
                     <img ng-if="result.data.imageUrl" ng-src="{{result.data.imageUrl}}" class="img-offer" />
                     <img ng-if="!result.data.imageUrl" ng-src="https://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1462651317/mqqmly2ika0tsfw0s0vq.jpg" class="img-offer"/>
-                    <span class="name" style="height:55px;">{{result.data.policyTitle}}</span>
+                    <span class="name" style="height:53px;">{{result.data.policyTitle}}</span>
                 </div>
                 <div class="widget-footer">
                     <!--<p>
@@ -186,7 +186,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td style="height:40px;">
                                     <span>States Linked</span>
                                 </td>
                                 <td>
@@ -247,7 +247,7 @@
                                 <td>
                                     Company
                                 </td>
-                                <td style="height:52px;">
+                                <td style="height:50px;">
                                     {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
@@ -271,7 +271,7 @@
                                 <td>
                                     Company
                                 </td>
-                                <td style="height:52px;">
+                                <td style="height:50px;">
                                     {{result.data.companyUrl}}                                 
                                 </td>
                             </tr>
@@ -323,10 +323,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="width:50px;">
+                                    <td style="width:48px;">
                                         <span>Target Industry</span>
                                     </td>
-                                    <td style="height:50px;">
+                                    <td style="height:48px;">
                                         <span>{{result.data.trgtIndustry | industryfilter : 'ellipse'}}   </span>
                                         
                                     </td>

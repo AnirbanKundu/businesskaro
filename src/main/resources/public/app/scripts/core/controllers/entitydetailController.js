@@ -35,8 +35,6 @@ angular
       $scope.entityResult = data;
       $scope.relatedTags=[];
 
-
-      console.log('Data in entity detail:',$scope.entityResult);
       $scope.connectMessage='';
       //Get Related Entity details
       if($scope.entityType!='GOVT_POLICY'){
@@ -56,14 +54,17 @@ angular
             }
             $scope.relatedTags.push(s);
           },500);
-          $http({
-              url : '/services/offer/',
-              method: 'GET'
-            }).then(function(response){
-              $scope.offers = response.data;
-            },function(error){
+          $timeout(function(){
+              $http({
+                url : '/services/offer/',
+                method: 'GET'
+              }).then(function(response){
+                $scope.offers = response.data;
+              },function(error){
 
-            });
+              }); 
+          },20);
+          $timeout(function(){
             $http({
               url : '/services/request/',
               method: 'GET'
@@ -72,6 +73,7 @@ angular
             },function(error){
 
             });
+          },25);
         }
         else{
           
@@ -80,7 +82,7 @@ angular
               var industryName = LookUpService.getIndustryName($scope.entityResult.trgtIndustry[i]);
               var t = {
                 name: industryName,
-                url : '#/search/ALL' + '/' + industryName
+                url : '#/search/ALL' + '/' + encodeURIComponent(industryName)
               }
               $scope.relatedTags.push(t);
             }
@@ -88,7 +90,7 @@ angular
               var stateName = LookUpService.getStateName($scope.entityResult.trgtLocation[i]);
               var s = {
                 name: stateName,
-                url : '#/search/ALL' + '/' + ',' + stateName
+                url : '#/search/ALL' + '/' + ',' + encodeURIComponent(stateName)
               }
               $scope.relatedTags.push(s);
             }
@@ -133,7 +135,7 @@ angular
               var industryName = LookUpService.getIndustryName($scope.entityResult.industrys[i]);
               var t = {
                 name: industryName,
-                url : '#/search/ALL' + '/' + industryName
+                url : '#/search/ALL' + '/' + encodeURIComponent(industryName)
               }
               $scope.relatedTags.push(t);
             }
@@ -141,7 +143,7 @@ angular
               var stateName = LookUpService.getIndustryName($scope.entityResult.states[i]);
               var s = {
                 name: stateName,
-                url : '#/search/ALL' + '/' + ',' + stateName
+                url : '#/search/ALL' + '/' + ',' + encodeURIComponent(stateName)
               }
               $scope.relatedTags.push(s);
             }
@@ -165,7 +167,7 @@ angular
               url: '/services/communicate',
               method: 'POST',
               isArray: false,
-              data: { "toId" : 52,//$scope.entityResult.userId || $scope.entityResult.summary.userId,
+              data: { "toId" : $scope.entityResult.userId || $scope.entityResult.summary.userId,
                   "message" : connectMessage,
                   "entityType" : $scope.entityType,
                   "entityId" : $scope.entityId

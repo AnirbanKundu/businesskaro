@@ -11,7 +11,8 @@ angular.module('theme.core.services')
       }).then(function(response) {
       userInfo = {
         secureToken: response.data.secureToken,
-        clientId: response.data.clientId
+        clientId: response.data.clientId,
+        profileCreated: response.data.profileCreated
       };
       $window.localStorage["bk_userInfo"] = JSON.stringify(userInfo);
         userInfo.profileCreated = response.data.profileCreated;

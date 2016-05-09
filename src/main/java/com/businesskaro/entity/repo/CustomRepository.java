@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.businesskaro.entity.TagEntity;
 import com.businesskaro.model.AdminEntitySearch;
 
 @Configuration
@@ -56,6 +57,12 @@ public class CustomRepository {
 		} finally {
 		}
 		return adminSearch;
+	}
+	
+	public List<TagEntity> searchTag(String[] tagNames,	String entityType){
+		List<TagEntity> tagEntities = null;
+		
+		return tagEntities;
 	}
 
 }

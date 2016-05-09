@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.businesskaro.entity.Tag;
 import com.businesskaro.entity.TagEntity;
+import com.businesskaro.entity.repo.CustomRepository;
 import com.businesskaro.model.BKEntityType;
 import com.businesskaro.rest.dto.TagEntityRequest;
 import com.businesskaro.service.TagService;
@@ -20,6 +21,9 @@ public class TagRestService {
 
 	@Autowired
 	TagService tagService;
+	
+	@Autowired
+	CustomRepository customRepo;
 	
 	@RequestMapping(value="/services/tag", method = RequestMethod.POST)
 	public void createTag(@RequestBody TagEntityRequest request){
@@ -41,6 +45,12 @@ public class TagRestService {
 		}else{
 			return tagService.searchForTagNameAndEntityType(keywordArr, entityType.name());
 		}
+	}
+	
+	public List<TagEntity> searchTag1(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
+		String[] keywordArr = keywords.split(",");
+		System.out.println(keywordArr);		
+		return customRepo.searchTag(keywordArr, entityType.name());
 	}
 	
 	
