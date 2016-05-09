@@ -154,12 +154,11 @@ angular
     });
 
     $timeout(function(){
-      FB.init({
-        appId      : '1628152447465336',
-        status     : true,
-        xfbml      : true,
-        version    : 'v2.3' // or v2.0, v2.1, v2.0
-      });
+       FB.init({
+             appId      : '1611093962546498',
+             xfbml      : true,
+             version    : 'v2.6'
+           });
     },1000);
 
     $scope.connect = function(connectMessage){
@@ -183,7 +182,7 @@ angular
             $scope.showServerMessage = "error2"
           }else{
             $scope.alert = { type: 'danger', msg: 'Email sending limit exceeded. You can send 5 emails in a day.'};
-            $scope.showServerMessage = "error"
+            //$scope.showServerMessage = "error"
           }
         });
     }
