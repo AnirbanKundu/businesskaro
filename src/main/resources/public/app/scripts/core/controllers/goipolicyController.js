@@ -202,10 +202,10 @@ angular
 
     $scope.delete = function(){
       $http({
-        url: '/services/offer/'+$scope.id,
+        url: '/services/policy/'+$scope.id,
           method: 'DELETE'
       }).then(function(){
-        $window.location.href = '/#/myoffers'; 
+        $window.location.href = '/#/mypolicies'; 
       },function(error){
         console.log('Cannot delete request',error);
       });

@@ -47,11 +47,11 @@ public class TagRestService {
 		}
 	}
 	
-	public List<TagEntity> searchTag1(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
-		String[] keywordArr = keywords.split(",");
-		System.out.println(keywordArr);		
-		return customRepo.searchTag(keywordArr, entityType.name());
-	}
+//	public List<TagEntity> searchTag1(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
+//		String[] keywordArr = keywords.split(",");
+//		System.out.println(keywordArr);		
+//		return customRepo.searchTag(keywordArr, entityType.name());
+//	}
 	
 	
 	

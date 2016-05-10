@@ -110,8 +110,8 @@ public class PolicyRestService extends BKRestService {
 		try {
 			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			return policyService.getPolicies();
-		} catch (Exception e) {
-			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
+		} catch (BKException e) {
+			throw e;
 		}
 	}
 	
@@ -121,8 +121,8 @@ public class PolicyRestService extends BKRestService {
 		try {
 			validateSecureToken(secureTokenUtil,clientId, secureToken);
 			policyService.deletePolicy(id);
-		} catch (Exception e) {
-			throw new BKException("Unauthorized User" , "000" , BKException.Type.IN_VALID_USER);
+		} catch (BKException e) {
+			throw e;
 		}
 		 
 	}

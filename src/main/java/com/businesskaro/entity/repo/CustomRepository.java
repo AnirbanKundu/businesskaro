@@ -59,10 +59,34 @@ public class CustomRepository {
 		return adminSearch;
 	}
 	
-	public List<TagEntity> searchTag(String[] tagNames,	String entityType){
-		List<TagEntity> tagEntities = null;
-		
-		return tagEntities;
-	}
+//	public List<TagEntity> searchTag(final String tagNames,final String entityType) throws Exception{
+//		List<TagEntity> tagEntities = new ArrayList<TagEntity>();
+////		try {
+////			JdbcTemplate jdbcTemplate = new JdbcTemplate(datasource);
+////			tagEntities = jdbcTemplate.query("CALL Return_offer_details( ?,? )",
+////					new Object[] { tagNames, entityType}, new RowMapper<TagEntity>() {
+////
+////						@Override
+////						public TagEntity mapRow(ResultSet rs, int arg1)
+////								throws SQLException {
+////							TagEntity entity = new TagEntity();
+////							entity.setTagEntityId(rs.getInt("tag_entity_id"));
+////							entity.setCreatedDate(rs.getDate("created_date"));
+////							entity.setEntityType(rs.getString("entity_type"));
+////							entity.setTagId(rs.getInt("tag_id"));
+////							entity.setEntityId(rs.getInt("entity_id"));							
+////							System.out.println(entity.toString());
+////							return entity;
+////						}
+////						});
+////			
+////		}catch(Exception e){
+////			e.printStackTrace();
+////			throw new Exception("Error occurs while executing procedure");
+////		}finally{
+////			
+////		}
+//		return tagEntities;
+//	}
 
 }

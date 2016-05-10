@@ -136,8 +136,8 @@ angular.module('theme.demos.dashboard', [
     //CarouselController
     $scope.myInterval = 5000;
     var slides = $scope.slides = [];
-    var images = ['crusal1.jpg', 'crusal2.jpg', 'crusal3.jpg', 'crusal4.jpg', 'crusal5.jpg'];
-    var title = ['First', 'Second', 'Third','Fourth','Fifth'];  
+    var images = ['01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg'];
+    var title = ['', '', '','',''];  
     $scope.addSlide = function() {
       slides.push({
         image: '../../assets/img/' + images[slides.length],
