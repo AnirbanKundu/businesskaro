@@ -29,7 +29,24 @@ angular.module('theme.core.services')
                 }
                 else if (rejection.status === 400){
                     if(rejection.data.type=='USER_AUTH_FAIL'){
-                        $location.path('/login'); 
+                        $location.path('/login');
+                        if($window.localStorage && $window.localStorage['bk_userInfo']){
+                            var SECURE_TOKEN = JSON.parse($window.localStorage['bk_userInfo']).secureToken;
+                            var CLIENT_ID = JSON.parse($window.localStorage['bk_userInfo']).clientId;
+                            $.ajax({
+                                type:"POST",
+                                headers: { 'SECURE_TOKEN': SECURE_TOKEN, 'CLIENT_ID': CLIENT_ID},
+                                url: "/services/logout",
+                                success: function() {
+                                    $window.localStorage.removeItem('bk_userInfo');
+                                    $location.path('/login'); 
+                                },
+                                error : function(){
+                                    $window.localStorage.removeItem('bk_userInfo');
+                                    $location.path('/login');
+                                }
+                            });
+                        }  
                     }
                     console.log('Error');
                 }

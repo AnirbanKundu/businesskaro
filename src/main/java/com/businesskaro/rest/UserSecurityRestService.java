@@ -82,11 +82,13 @@ public class UserSecurityRestService extends BKRestService {
 	public void logout(@RequestHeader("SECURE_TOKEN") String secureToken, 
 			@RequestHeader("CLIENT_ID") String clientId ){
 	
-		
-		validateSecureToken(secureTokenUtil,clientId, secureToken);
-		
-		secureTokenUtil.inValidateSecureToken(secureToken);
-		
+		try{
+			validateSecureToken(secureTokenUtil,clientId, secureToken);
+		}catch(Exception ex){
+			logger.info("token exception");
+		}finally{
+			secureTokenUtil.inValidateSecureToken(secureToken);
+		}
 	}
 	
 	@RequestMapping(value="/services/changePassword" , method = RequestMethod.POST)
