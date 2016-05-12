@@ -7,11 +7,11 @@ angular
     $scope.industries = [];
     $scope.selectedIndustries = { "selected": [] };
     $rootScope.searchType = $scope.searchType = $route.current.params.type || 'ALL';
-    $rootScope.keywords = $scope.keywords = $route.current.params.keywords || 'ALL';
+    $rootScope.keywords = $scope.keywords = $route.current.params.keywords || 'ALL,ALL';
     $scope.industry = $scope.keywords.split(',')[0];
     $scope.state = $scope.keywords.split(',')[1];
 
-    //$scope.selectedIndustry='';
+    $scope.selectedIndustry='ALL';
     LookUpService.getIndustries().then(function(data){
         $scope.industries = data;
         $timeout(function(){
@@ -26,7 +26,7 @@ angular
         $log.log(error);
     });
 
-    $scope.selectedState = '';
+    $scope.selectedState = 'ALL';
     LookUpService.getStates().then(function(data){
         $scope.states = data;
         $timeout(function(){
@@ -131,7 +131,6 @@ angular
     
     $scope.searchType = $scope.searchType.toUpperCase();
     $scope.isSearchButtonVisible = false;
-    //services/tag/entity?keyword=JAVA&entityType=ALL ; services/tag/entity?keywords ; appdata/tagentity.json
     $http({
         url : 'services/tag/entity?keywords='+$scope.keywords+'&entityType='+$scope.searchType,
         method: 'GET'
@@ -280,6 +279,13 @@ angular
       }else{
         return 'Not Sure';
       }
+    }
+  } 
+}])
+.filter('capitalizeFirstLetterfilter',['$filter',function capitalizeFirstLetter($filter){
+  return function(value){ 
+    if(value){
+      return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
     }
   } 
 }])

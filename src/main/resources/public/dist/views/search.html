@@ -121,7 +121,7 @@
                 </ui-select-choices>
               </ui-select> -->
               <select class="form-control input-sm" ng-model="selectedIndustry" style="width:250px;">  
-                    <!-- <option value="SELECT">Please select your industry to search</option> -->
+                    <option value="ALL">ALL</option>
                     <option ng:repeat="i in industries" value="{{i.industryName}}">{{i.industryName}}</option>
               </select>
               <br/>
@@ -132,8 +132,8 @@
                 </ui-select-choices>
               </ui-select> -->
               <select class="form-control input-sm" ng-model="selectedState" style="width:250px;">
-<!--                 <option value="SELECT">Please select your state to search</option>
- -->                <option ng:repeat="s in states" value="{{s.stateName}}">{{s.stateName}}</option>                           
+                <option value="ALL">ALL</option>
+                <option ng:repeat="s in states" value="{{s.stateName}}">{{s.stateName}}</option>
               </select>
               <br/>
               <button class="btn btn-orange" style="width:100px;" ng-click="searchTags()">Search</button>
@@ -174,7 +174,7 @@
                                     <span>Description:</span>
                                 </td>
                                 <td>
-                                    <span>{{result.data.policyDesc | maxlengthfilter : 65}}</span>
+                                    <span>{{result.data.policyDesc | maxlengthfilter : 65 | capitalizeFirstLetterfilter }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -182,7 +182,7 @@
                                     <span>Industry</span>
                                 </td>
                                 <td style="height:50px;">
-                                    {{result.data.industrys | industryfilter : 'ellipse' | maxlengthfilter : 65 }}                                      
+                                    {{result.data.industrys | industryfilter : 'ellipse' | maxlengthfilter : 65 | capitalizeFirstLetterfilter}}                                      
                                 </td>
                             </tr>
                             <tr>
@@ -309,11 +309,11 @@
                                     <td style="width:50px;">
                                         <span class="">Title</span>
                                     </td>
-                                    <td>
-                                        <span>{{result.data.title | maxlengthfilter : 30}} </span>
+                                    <td style="height:50px;">
+                                        <span>{{result.data.title | maxlengthfilter : 80}} </span>
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td style="width:50px;height:50px;">
                                         <span>Description</span>
                                     </td>
@@ -321,12 +321,12 @@
                                         <span>{{result.data.description | maxlengthfilter : 50}}</span>
                                         
                                     </td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td style="width:48px;">
                                         <span>Target Industry</span>
                                     </td>
-                                    <td style="height:48px;">
+                                    <td style="height:55px;">
                                         <span>{{result.data.trgtIndustry | industryfilter : 'ellipse'}}   </span>
                                         
                                     </td>
@@ -335,7 +335,7 @@
                                     <td>
                                         <span>States valid in:</span>
                                     </td>
-                                    <td style="height:30px;">
+                                    <td style="height:54px;">
                                         <span>{{result.data.trgtLocation | statefilter: 'ellipse' | maxlengthfilter : 28 }}</span>
                                     </td>
                                 </tr>

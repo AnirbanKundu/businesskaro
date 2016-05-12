@@ -44,13 +44,13 @@ angular
               var industryName = LookUpService.getIndustryName($scope.entityResult.summary.industrys[i]);
               var t = {
                 name: industryName,
-                url : '#/search/ALL' + '/' + industryName
+                url : '#/search/ALL' + '/' + industryName + ',' + 'ALL'
               }
               $scope.relatedTags.push(t);
             }
             var s = {
               name: $scope.entityResult.summary.stateName,
-              url : '#/search/ALL' + '/' + ',' + $scope.entityResult.summary.stateName
+              url : '#/search/ALL' + '/' + 'ALL' + ',' + $scope.entityResult.summary.stateName
             }
             $scope.relatedTags.push(s);
           },500);
@@ -82,7 +82,7 @@ angular
               var industryName = LookUpService.getIndustryName($scope.entityResult.trgtIndustry[i]);
               var t = {
                 name: industryName,
-                url : '#/search/ALL' + '/' + encodeURIComponent(industryName)
+                url : '#/search/ALL' + '/' + encodeURIComponent(industryName) + ',' + 'ALL'
               }
               $scope.relatedTags.push(t);
             }
@@ -90,7 +90,7 @@ angular
               var stateName = LookUpService.getStateName($scope.entityResult.trgtLocation[i]);
               var s = {
                 name: stateName,
-                url : '#/search/ALL' + '/' + ',' + encodeURIComponent(stateName)
+                url : '#/search/ALL' + '/' + 'ALL' + ',' + encodeURIComponent(stateName)
               }
               $scope.relatedTags.push(s);
             }
@@ -135,7 +135,7 @@ angular
               var industryName = LookUpService.getIndustryName($scope.entityResult.industrys[i]);
               var t = {
                 name: industryName,
-                url : '#/search/ALL' + '/' + encodeURIComponent(industryName)
+                url : '#/search/ALL' + '/' + encodeURIComponent(industryName) + ',' + 'ALL'
               }
               $scope.relatedTags.push(t);
             }
@@ -143,7 +143,7 @@ angular
               var stateName = LookUpService.getIndustryName($scope.entityResult.states[i]);
               var s = {
                 name: stateName,
-                url : '#/search/ALL' + '/' + ',' + encodeURIComponent(stateName)
+                url : '#/search/ALL' + '/' + 'ALL' + ',' + encodeURIComponent(stateName)
               }
               $scope.relatedTags.push(s);
             }

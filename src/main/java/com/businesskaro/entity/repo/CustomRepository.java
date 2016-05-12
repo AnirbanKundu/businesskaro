@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.businesskaro.entity.TagEntity;
 import com.businesskaro.model.AdminEntitySearch;
+import com.businesskaro.model.BKException;
 
 @Configuration
 public class CustomRepository {
@@ -59,34 +60,32 @@ public class CustomRepository {
 		return adminSearch;
 	}
 	
-//	public List<TagEntity> searchTag(final String tagNames,final String entityType) throws Exception{
-//		List<TagEntity> tagEntities = new ArrayList<TagEntity>();
-////		try {
-////			JdbcTemplate jdbcTemplate = new JdbcTemplate(datasource);
-////			tagEntities = jdbcTemplate.query("CALL Return_offer_details( ?,? )",
-////					new Object[] { tagNames, entityType}, new RowMapper<TagEntity>() {
-////
-////						@Override
-////						public TagEntity mapRow(ResultSet rs, int arg1)
-////								throws SQLException {
-////							TagEntity entity = new TagEntity();
-////							entity.setTagEntityId(rs.getInt("tag_entity_id"));
-////							entity.setCreatedDate(rs.getDate("created_date"));
-////							entity.setEntityType(rs.getString("entity_type"));
-////							entity.setTagId(rs.getInt("tag_id"));
-////							entity.setEntityId(rs.getInt("entity_id"));							
-////							System.out.println(entity.toString());
-////							return entity;
-////						}
-////						});
-////			
-////		}catch(Exception e){
-////			e.printStackTrace();
-////			throw new Exception("Error occurs while executing procedure");
-////		}finally{
-////			
-////		}
-//		return tagEntities;
-//	}
+	public List<TagEntity> searchTag(final String tagNames,final String entityType) throws Exception{
+		List<TagEntity> tagEntities = new ArrayList<TagEntity>();
+		try {
+			JdbcTemplate jdbcTemplate = new JdbcTemplate(datasource);
+			tagEntities = jdbcTemplate.query("CALL return_tag_entity_data( ?,? )",
+					new Object[] { tagNames, entityType}, new RowMapper<TagEntity>() {
+
+						@Override
+						public TagEntity mapRow(ResultSet rs, int arg1)
+								throws SQLException {
+							TagEntity entity = new TagEntity();
+							entity.setTagEntityId(rs.getInt("n_tag_entity_id"));
+							entity.setCreatedDate(rs.getDate("n_created_date"));
+							entity.setEntityType(rs.getString("n_entity_type"));
+							entity.setTagId(rs.getInt("n_tag_id"));
+							entity.setEntityId(rs.getInt("n_entity_id"));							
+							System.out.println(entity.toString());
+							return entity;
+						}
+						});			
+		}catch(BKException e){
+			throw new BKException("Error occurs while executing procedure" , "500" , BKException.Type.INTERNAL_ERRROR);
+		}finally{
+			
+		}
+		return tagEntities;
+	}
 
 }

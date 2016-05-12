@@ -304,6 +304,15 @@ angular
     });
   }]);
 
+(function(){
+
+  //Place to add all Javascript methods.
+  // String.prototype.capitalizeFirstLetter = function() {
+  //   return this.charAt(0).toUpperCase() + this.slice(1);
+  // }
+
+})();
+
 window.fbAsyncInit = function() {
     FB.init({
       appId      : '1611093962546498',

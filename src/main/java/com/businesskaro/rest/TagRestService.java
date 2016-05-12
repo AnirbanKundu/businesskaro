@@ -35,7 +35,7 @@ public class TagRestService {
 		return tagService.getTagNames(keyword);
 	}
 	
-	@RequestMapping(value="/services/tag/entity", method = RequestMethod.GET)
+	
 	public List<TagEntity> searchTag(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
 		
 		String[] keywordArr = keywords.split(",");
@@ -46,12 +46,12 @@ public class TagRestService {
 			return tagService.searchForTagNameAndEntityType(keywordArr, entityType.name());
 		}
 	}
-	
-//	public List<TagEntity> searchTag1(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ){
-//		String[] keywordArr = keywords.split(",");
-//		System.out.println(keywordArr);		
-//		return customRepo.searchTag(keywordArr, entityType.name());
-//	}
+	@RequestMapping(value="/services/tag/entity", method = RequestMethod.GET)
+	public List<TagEntity> searchTag1(@RequestParam("keywords") String keywords , @RequestParam("entityType") BKEntityType entityType ) throws Exception{
+		//String[] keywordArr = keywords.split(",");
+		//System.out.println(keywordArr);		
+		return customRepo.searchTag(keywords, entityType.name());
+	}
 	
 	
 	
