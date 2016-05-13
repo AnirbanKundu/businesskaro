@@ -52,11 +52,10 @@ angular.module('theme.demos.dashboard', [
     $timeout(function(){
       twttr.widgets.load(); 
       FB.init({
-        appId      : '1628152447465336',
-        status     : true,
-        xfbml      : true,
-        version    : 'v2.3' // or v2.0, v2.1, v2.0
-      });
+          appId      : '1611093962546498',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
     },1000);
 
     $scope.searchTags = function(){

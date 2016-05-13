@@ -182,33 +182,44 @@ angular
     };
 
   }])
-  .controller('RestPasswordController', ['$scope', '$theme', '$http', '$window',function($scope, $theme, $http, $window) {
+  .controller('RestPasswordController', ['$scope', '$theme', '$http', '$window','$location','$timeout',function($scope, $theme, $http, $window,$location,$timeout) {
     $scope.waiting = false;
-    $scope.serverMessage = '';    
+    $scope.serverMessage = '';   
+    $scope.isPasswordSent=false;
+    
     $theme.set('fullscreen', true);
     $scope.$on('$destroy', function() {
       $theme.set('fullscreen', false);
     });
     $scope.reset = function(){
-      $scope.waiting = true; 
-      console.log('In reset'+$scope.resetEmail);
-      $http({
-            url: 'services/resetPassword',
-            method: 'POST',
-            data: {
-              "email":$scope.resetEmail
-            }
-          }).then(function(response){
-            $scope.waiting = false;  
-            $scope.showServerMessage = 'Your temporary password has been emailed. Please use that password to login.';            
-          },function(error){
-            $scope.waiting = false;
-            if(error.data.type ==='USER_AUTH_FAIL'){
-               $scope.showServerMessage = 'User email not found. Please enter a valid email';
-              }else{
-                $scope.showServerMessage = 'Unknow error. Please try again.';
-              }               
-          });      
+      if($scope.isPasswordSent===false){
+        $scope.waiting = true; 
+            console.log('In reset'+$scope.resetEmail);
+            $http({
+                  url: 'services/resetPassword',
+                  method: 'POST',
+                  data: {
+                    "email":$scope.resetEmail
+                  }
+                }).then(function(response){
+                  $scope.waiting = false;  
+                  $scope.showServerMessage = 'Your temporary password has been emailed. Please use that password to login.';  
+                  $scope.isPasswordSent=true;          
+                },function(error){          
+                  $scope.waiting = false;
+                  if(error.data.type ==='USER_AUTH_FAIL'){
+                    $scope.showServerMessage = 'User email not found. Please enter a valid email';     
+                    $scope.isPasswordSent=false;
+                    }else{
+                      $scope.showServerMessage = 'Unknow error. Please try again.';
+                    }             
+                });
+      }
+      else
+      {
+        $location.path('/login');
+      }
+            
     }
 
   }])

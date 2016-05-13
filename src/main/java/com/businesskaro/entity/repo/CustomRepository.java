@@ -47,6 +47,9 @@ public class CustomRepository {
 									.getString("n_req_offr_descr");
 							entity.usercreatedId = rs.getInt("n_usr_id");
 							entity.name = rs.getString("n_fst_name") + " " + rs.getString("n_lst_name");
+							entity.createDate = rs.getDate("n_create_dt");
+							entity.updateDate=rs.getDate("n_last_upd");
+							
 							System.out.println(entity.toString());
 							return entity;
 						}

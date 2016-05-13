@@ -31,5 +31,10 @@ angular
     }).error(function () {
         $scope.policy = [];
         $scope.waiting = false;
-    });       
+    });     
+    FB.init({
+        appId      : '1611093962546498',
+        xfbml      : true,
+        version    : 'v2.6'
+      });
 }]);

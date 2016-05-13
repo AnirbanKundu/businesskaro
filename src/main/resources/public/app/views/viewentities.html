@@ -69,7 +69,7 @@
 						<tr ng-repeat="e in entities">
 							<td align="left" data-title="Title"><i>{{e.entitytitle | maxlengthfilter : 70}}</i></td>
 							<td>{{e.entitydescription | maxlengthfilter : 100 }}</td>
-							<td>{{e.updateDate}}</td>
+							<td>{{e.createDate}}</td>
 							<td>						
 								<button type="button" class="btn btn-small" ng-click="editEntity(e)">Edit</button>  
 							</td>
