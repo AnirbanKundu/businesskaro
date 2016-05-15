@@ -103,6 +103,21 @@ public class PolicyRestService extends BKRestService {
 		}		
 		
 	}
+	//get all iscarousal policies
+	@RequestMapping(value = "/services/getAllIsCarousalPolicies", method = RequestMethod.GET)
+	public List<TblPolicySingleEntity> getAllIsCarousalPolicies()
+	{
+		List<TblPolicySingleEntity> allPolicies=null;
+		try 
+		{			
+			allPolicies = policySERepo.findAllByIsFeatured(2);
+			return allPolicies;
+		} 
+		catch (BKException ex) {
+			throw new BKException("User not an admin/publisher", "403",BKException.Type.IN_VALID_USER);
+		}		
+		
+	}
 	//ADDED HERE -END
 	@RequestMapping(value="/services/policies" , method = RequestMethod.GET)
 	public List<Policy> getPolicy(@PathVariable("policyId") Integer id,@RequestHeader("SECURE_TOKEN") String secureToken, 

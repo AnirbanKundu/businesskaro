@@ -3,17 +3,17 @@ angular
   .controller('EntityManagementController', ['$rootScope','$scope', '$http', '$location','$modal','$log', 'LookUpService',function ($rootScope, $scope, $http, $location,$modal,$log, LookUpService) {
 
     $scope.waiting = false;
-    $scope.SELECT = 'Please Select';
-    $scope.selectedEntity = "SELECT";
-    $scope.selectedIndustry =  "SELECT";
-    $scope.selectedState = "SELECT"
+    $scope.SELECT = "";
+    $scope.selectedEntity ="";
+    $scope.selectedIndustry ="";
+    $scope.selectedState = "";
 
     LookUpService.getIndustries().then(function(data){
         $scope.industries = data;
     },function(error){
         $log.log(error);
     });
-
+    
     LookUpService.getStates().then(function(data){
         $scope.states = data;
       },function(error){
@@ -21,24 +21,33 @@ angular
     });
 
     $scope.searchEntity = function(){
-      $scope.waiting = true;
-      if($scope.selectedEntity===$scope.SELECT || $scope.selectedIndustry===$scope.SELECT|| $scope.selectedState===$scope.SELECT){
-        $scope.waiting = false;
-        return false;
+      if($scope.selectedEntity==$scope.SELECT)
+      {
+         $scope.showServerMessage = 'Please select mandatory field';
       }
-      
-      $http({
-          url: '/admin/manageEntity?entityType='+ $scope.selectedEntity +'&industryId='+$scope.selectedIndustry+'&stateId='+$scope.selectedState,
-          method: 'GET',
-          cache : false
-        }).then(function(response){  
-          $scope.waiting = false;         
-          $scope.message = 'success';
-          $scope.entities = response.data;
-        },function(error){
-          $scope.waiting = false;
-          //$scope.alert = { type: 'alert', msg: '<strong>User role</strong> was not updated. Try again.'};
-      });
+      if($scope.selectedIndustry==$scope.SELECT)
+      {
+        $scope.showServerMessage = 'Please select mandatory field';
+      }
+      if($scope.selectedState==$scope.SELECT)
+      {
+        $scope.showServerMessage = 'Please select mandatory field';
+      }
+      if($scope.selectedEntity!=$scope.SELECT && $scope.selectedIndustry!=$scope.SELECT && $scope.selectedState!=$scope.SELECT){
+        $scope.waiting = true;
+        $scope.showServerMessage = "";
+        $http({
+                url: '/admin/manageEntity?entityType='+ $scope.selectedEntity +'&industryId='+$scope.selectedIndustry+'&stateId='+$scope.selectedState,
+                method: 'GET',
+                cache : false
+              }).then(function(response){  
+                $scope.waiting = false;         
+                $scope.message = 'success';
+                $scope.entities = response.data;
+              },function(error){
+                $scope.waiting = false;
+            });
+      }     
     }
       
     $scope.editEntity=function(e){

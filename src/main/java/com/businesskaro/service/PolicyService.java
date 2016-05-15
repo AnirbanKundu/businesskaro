@@ -128,13 +128,16 @@ public class PolicyService {
 		if(tblPolicy.getIsFeatured()==1)
 		{
 			return mapper(tblPolicy);
-		}		
+		}	
+		else if(tblPolicy.getIsFeatured()==2)
+		{
+			return mapper(tblPolicy);
+		}
 		else
 		{ 
 			throw new BKException("Policy not a featured policy, hence authentication failed", "403",BKException.Type.INTERNAL_ERRROR);
-		}		
-		//return policy;
-	}
+		}				
+	}	
 
 	public void deletePolicy(Integer id) {
 		

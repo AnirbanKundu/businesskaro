@@ -20,7 +20,8 @@
 				<div class="panel panel-default panel-profile">
 					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:700px;overflow-y:auto;">
 						<h3>{{policy.policyTitle}}</h3>
-						<img src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" alt="" class="img-responsive user-avatar">						
+						<img ng-if="policy.imageUrl" ng-src="{{policy.imageUrl}}" class="img-responsive user-avatar" />
+                    	<img ng-if="!policy.imageUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" class="img-responsive user-avatar"/>							
 						<hr/>
 						<div>
 							<span>Last Updated:</span><span>{{policy.updateDate| date:"MM/dd/yyyy"}}</span>
@@ -46,6 +47,11 @@
 			<div class="panel" style="padding:20px;">
 				<div class="col-md-12">							
 					<div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/entitydetail/{{entityType}}/{{entityId}}" data-layout="box_count" data-mobile-iframe="true"></div>
+				</div>
+			</div>
+			<div class="panel" style="padding:20px;">
+				<div class="col-md-12">							
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://businesskaro.herokuapp.com/#/public/featurednews/{{policyId}}" data-text="#Welcome to the #Entrepreneural #Diaspora. Submit your #offer/#request and get #connected.." data-size="large">Tweet</a>
 				</div>
 			</div>
 		</div>

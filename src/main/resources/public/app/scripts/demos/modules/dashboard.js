@@ -32,6 +32,7 @@ angular.module('theme.demos.dashboard', [
       });
 
     $scope.tags = [];
+    $scope.phoneNumbr = /^\+?\d{2}[- ]?\d{5}[- ]?\d{5}$/;
     /*
     $scope.getTags = function(val) {
       if(val){
@@ -156,7 +157,15 @@ angular.module('theme.demos.dashboard', [
         $scope.waiting = false;
     });   
     
-    
+  //isCarousal policies--written by nagendra
+    $http.get('/services/getAllIsCarousalPolicies').success(function(response) {
+      $scope.myInterval = 5000;
+        $scope.slides = response;         
+        $scope.waiting = false;
+    }).error(function () {
+        $scope.slides = [];
+        $scope.waiting = false;
+    });   
     
     //public featured news
     //written by nagendra

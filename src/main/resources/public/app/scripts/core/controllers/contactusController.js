@@ -3,6 +3,7 @@ angular
   .controller('ContactUsController', ['$scope', '$filter', '$http',function($scope, $filter,$http) {
     'use strict';
     $scope.contactusForm={};
+    $scope.phoneNumbr = /^\+?\d{2}[- ]?\d{5}[- ]?\d{5}$/;
 
     $scope.resetValidationForm = function() {      
       $scope.contactusForm.contacterName = '';

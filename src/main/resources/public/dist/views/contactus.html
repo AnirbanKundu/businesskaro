@@ -38,28 +38,34 @@ Our mission and vision is to connect the entrepreneurial world. Post your needs 
                 <form action="#" class="form-horizontal row-border" name="form">
                     <div class="form-group">
                             <input name="name" type="text" placeholder="Name *" ng-model="contactusForm.contacterName" class="form-control" required/>
+                            <span class="help-block" ng-show="form.name.$error.required">Required</span>   
                     </div>
                     <div class="form-group">                        
-                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="contactusForm.email" required>
-                    <span class="help-block" ng-show="form.email.$error.required && form.email.$dirty">Required</span>                                       
+                        <input type="email" class="form-control" name="email" placeholder="*Email" ng-model="contactusForm.email" required>
+                      <span class="help-block" ng-show="form.email.$error.required">Required</span>                                       
+                      <span class="help-block" ng-show="form.email.$error.email">Invalid email</span>
                     </div>
                     
                     <div class="form-group">
-                           <input name="digits" type="number" placeholder="Mobile No." id="mobile" ng-model="contactusForm.mobile" class="form-control" required/> 
-                           <span class="help-block" ng-show="form.mobile.$error.required && form.mobile.$dirty">Required</span>  
+                      <input type="text" placeholder="*Mobile No." name="phone" ng-pattern="phoneNumbr" ng-model="contactusForm.mobile" class="form-control" required/>
+                <span class="help-block" ng-show="form.phone.$error.required">Required!</span>
+                <span class="help-block" ng-show="form.phone.$error.minlength">Phone No. not less that 10 char.</span>
+                <span class="help-block" ng-show="form.phone.$error.maxlength">Phone No. not more than 12 char.</span>
+                <br><span class="help-block" ng-show="form.phone.$error.pattern">Please match pattern [+00-00000-00000 ]</span>
                     </div>
                     <div class="form-group">
-                            <input type="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" maxlength="250" required />   
+                         <input type="text" name="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" maxlength="250" required />
+                         <span class="help-block" ng-show="form.sub.$error.required">Required</span>    
                     </div>
                     <div class="form-group">
-                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control" maxlength="500"></textarea>       
+                         <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control" maxlength="500"></textarea>       
                     </div>
                     <div ng-if="alert">
-                      <p class="text-danger">{{alert.msg}}</p>
+                        <p class="text-danger">{{alert.msg}}</p>
                     </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="contactus($event)" ng-disabled="!form.$valid" >Submit</button>
-                            <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
+                        <button class="btn-primary btn" ng-click="contactus($event)" ng-disabled="!form.$valid" >Submit</button>
+                        <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
                 </form>              
             </panel>
@@ -76,23 +82,23 @@ Our mission and vision is to connect the entrepreneurial world. Post your needs 
         </div>  
         
         <div class="col-md-4">  
-                           <div class="clearfix"> 
-            <panel panel-class="panel-sky" heading="Connect With Social">  
-            <div id="fb-root" style="margin-bottom: 2px;" ></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-           <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false" style="float: left; margin-right: 10px; font-size: 23px;"></div>
-           <a href="https://twitter.com/TwitterDev" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @TwitterDev</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            <div class="clearfix"> 
+            <panel panel-class="panel-sky" heading="Connect With Social">           
+          <div class="row">
+                <div class="panel panel-widget" style="padding:20px;">                  
+                    <div class="fb-like" data-href="https://www.facebook.com/BusinessKaro/" data-layout="box_count" data-action="like" data-show-faces="true"></div>
+                    <div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/" data-layout="box_count" data-mobile-iframe="true"></div>                    
+                </div>
+          </div>   
+            <div class="row">
+              <div class="panel panel-widget" style="padding:20px;">        
+                <a href="https://twitter.com/businesskaro" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @businesskaro</a>
+                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://businesskaro.herokuapp.com/#/contactus" data-text="#Welcome to the #Entrepreneural #Diaspora. Submit your #offer/#request and get #connected.." data-size="large">Tweet</a>
+               </div>       
+            </div>
             </panel>
-            
+          </div> 
         </div>  
-        </div>
         
             </div>
         </div>

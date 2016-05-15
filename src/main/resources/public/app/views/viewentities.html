@@ -13,28 +13,30 @@
 	<div class="row" style="margin-bottom:20px;">
 		<div class="col-sm-12" style="margin-bottom:20px;">
 			<div class="col-sm-4">
-				Select Entity Type
+				*Select Entity Type
 				<select class="form-control input-sm" ng-model="selectedEntity" style="width:250px;">
-					<option value="SELECT">{{SELECT}}</option>
+					<!-- <option value="SELECT">{{SELECT}}</option> -->
+					<option value="">Please select</option>
 					<option value="OFFER">Offer</option>
 					<option value="REQUEST">Request</option>
 					<option value="POLICY">Policy</option>
 				</select>
 			</div>
-			<div class="col-sm-4" ng-show="selectedEntity!='SELECT'">
-				Select Industry
+			<div class="col-sm-4" ng-show="selectedEntity!=''">
+				*Select Industry
 				<select class="form-control input-sm" ng-model="selectedIndustry" style="width:250px;">
-					<option value="SELECT">{{SELECT}}</option>
+					<option value="">Please select</option>
                 	<option ng:repeat="i in industries" value="{{i.industryId}}">{{i.industryName}}</option>
                 </select>
 			</div>	
-			<div class="col-sm-4" ng-show="selectedEntity!='SELECT'">
-				Select State
+			<div class="col-sm-4" ng-show="selectedEntity!=''">
+				*Select State
 				 <select class="form-control input-sm" ng-model="selectedState" style="width:250px;">
-				 	<option value="SELECT">{{SELECT}}</option>
+				 	<option value="">Please select</option>
             		<option ng:repeat="s in states" value="{{s.stateId}}">{{s.stateName}}</option>				                		
             	</select>
 			</div>	
+			<span ng-show="showServerMessage.length>0" style="color:red">{{showServerMessage}}</span>
 		</div>	
 		<div class="col-sm-12">
 			<div class="col-sm-4">

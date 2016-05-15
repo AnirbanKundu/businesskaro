@@ -124,10 +124,9 @@
                        <div id="slides_control">
                             <carousel interval="myInterval" style="width:100%;margin:0 auto" disable-animation="true">
                                 <slide ng-repeat="slide in slides" active="slide.active">
-                                    <img ng-src="{{slide.image}}" style="margin:auto;" height="285">
-                                    <div class="carousel-caption">
-                                        <h4>Slide {{$index+1}}</h4>
-                                       <p>{{slide.text}}</p>     
+                                    <img ng-src="{{slide.imageUrl}}" ng-click="linkClicked(slide.policyId)" style="margin:auto; height:285">
+                                    <div class="carousel-caption">                                        
+                                       <h1 style="color:#0F94C7">{{slide.policyTitle}}</h1s>
                                     </div>
                                 </slide>
                             </carousel>
@@ -142,9 +141,20 @@
                     <div class="fb-share-button" data-href="http://businesskaro.herokuapp.com/#/" data-layout="box_count" data-mobile-iframe="true"></div>                    
                 </div>
         </div>
+       </div>
+        <div class="col-md-3">
             <div class="row">
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                <a class="twitter-timeline" href="https://twitter.com/TwitterDev" data-widget-id="640828866504753152">Tweets by @TwitterDev</a>
+              <div class="panel panel-widget" style="padding:20px;">        
+                <a href="https://twitter.com/businesskaro" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @businesskaro</a>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://businesskaro.herokuapp.com" data-text="#Welcome to the #Entrepreneural #Diaspora. Submit your #offer/#request and get #connected.." data-size="large">Tweet</a>
+               </div>       
+            </div>
+      </div> 
+       <div class="col-md-3">
+            <div class="row">
+              <div class="panel panel-widget" style="padding:20px;">        
+                  <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/BusinessKaro" data-widget-id="730650768823353344">Tweets by @BusinessKaro</a>
+               </div>       
             </div>
       </div> 
       <div class="col-md-3">  
@@ -153,30 +163,36 @@
                 <form action="#" class="form-horizontal row-border" name="form">
                     <div class="form-group">
                             <input name="name" type="text" placeholder="Name *" ng-model="contactusForm.contacterName" class="form-control" required/>
+                            <span class="help-block" ng-show="form.name.$error.required">Required</span>   
                     </div>
                     <div class="form-group">                        
-                        <input type="email" class="form-control" id="email" placeholder="Email" ng-model="contactusForm.email" required />
-                    <span class="help-block" ng-show="form.email.$error.required && form.email.$dirty">Required</span>                                       
+                        <input type="email" class="form-control" name="email" placeholder="*Email" ng-model="contactusForm.email" required>
+                      <span class="help-block" ng-show="form.email.$error.required">Required</span>                                       
+                      <span class="help-block" ng-show="form.email.$error.email">Invalid email</span>
                     </div>
                     
                     <div class="form-group">
-                           <input name="digits" type="number" placeholder="Mobile No." id="mobile" ng-model="contactusForm.mobile" class="form-control" required/> 
-                           <span class="help-block" ng-show="form.mobile.$error.required && form.mobile.$dirty">Required</span>  
+                      <input type="text" placeholder="*Mobile No." name="phone" ng-pattern="phoneNumbr" ng-model="contactusForm.mobile" class="form-control" required/>
+                <span class="help-block" ng-show="form.phone.$error.required">Required!</span>
+                <span class="help-block" ng-show="form.phone.$error.minlength">Phone No. not less that 10 char.</span>
+                <span class="help-block" ng-show="form.phone.$error.maxlength">Phone No. not more than 12 char.</span>
+                <br><span class="help-block" ng-show="form.phone.$error.pattern">Please match pattern [+00-00000-00000 ]</span>
                     </div>
                     <div class="form-group">
-                            <input type="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" maxlength="250" required />   
+                         <input type="text" name="sub" placeholder="Subject *" ng-model="contactusForm.subject" class="form-control" maxlength="250" required />
+                         <span class="help-block" ng-show="form.sub.$error.required">Required</span>    
                     </div>
                     <div class="form-group">
-                           <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control" maxlength="500"></textarea>       
+                         <textarea name="description" placeholder="Message" ng-model="contactusForm.message" class="form-control" maxlength="500"></textarea>       
                     </div>
                     <div ng-if="alert">
-                      <p class="text-danger">{{alert.msg}}</p>
+                        <p class="text-danger">{{alert.msg}}</p>
                     </div>
                     <div class="btn-toolbar">
-                            <button class="btn-primary btn" ng-click="contactus($event)" ng-disabled="!form.$valid" >Submit</button>
-                            <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
+                        <button class="btn-primary btn" ng-click="contactus($event)" ng-disabled="!form.$valid" >Submit</button>
+                        <button class="btn-default btn" ng-click="resetValidationForm()">Reset</button>
                     </div>
-                </form>              
+                </form>                 
             </panel>
             </div>
         </div>     
