@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.businesskaro.entity.Tag;
 import com.businesskaro.entity.TagEntity;
 import com.businesskaro.entity.repo.CustomRepository;
+import com.businesskaro.entity.repo.TagEntityRepo;
 import com.businesskaro.model.BKEntityType;
 import com.businesskaro.rest.dto.TagEntityRequest;
 import com.businesskaro.service.TagService;
@@ -23,11 +24,19 @@ public class TagRestService {
 	TagService tagService;
 	
 	@Autowired
+	TagEntityRepo tagRepo;
+	
+	@Autowired
 	CustomRepository customRepo;
 	
 	@RequestMapping(value="/services/tag", method = RequestMethod.POST)
 	public void createTag(@RequestBody TagEntityRequest request){
 		tagService.createTagEntry(request);
+	}
+	
+	@RequestMapping(value="/services/tag", method = RequestMethod.DELETE)
+	public void deleteTag(@RequestParam("entityId") Integer entityId , @RequestParam("entityType") BKEntityType entityType){
+		//tagRepo.deleteAllByEntityIdAndEntityType(entityId, entityType.name());
 	}
 	
 	@RequestMapping(value="/services/tag/names", method = RequestMethod.GET)

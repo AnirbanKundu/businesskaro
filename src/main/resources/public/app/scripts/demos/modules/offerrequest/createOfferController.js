@@ -245,7 +245,17 @@ angular
           url: '/services/offer/'+$scope.id,
             method: 'DELETE'
         }).then(function(){
-          $window.location.href = '/#/myoffers'; 
+          //Now Delete the TAG from TAG Entity table.
+          $http({
+            url: '/services/tag/'+$scope.id + '/'+ 'OFFER',
+            method: 'DELETE'
+          }).then(function(){
+            
+            $window.location.href = '/#/myoffers'; 
+          },function(error){
+            console.log('Cannot delete request',error);
+          });
+          //$window.location.href = '/#/myoffers'; 
         },function(error){
           console.log('Cannot delete request',error);
         });
