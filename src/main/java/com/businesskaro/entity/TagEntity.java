@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -18,7 +19,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="tag_entity")
-@NamedQuery(name="TagEntity.findAll", query="SELECT t FROM TagEntity t")
+//@NamedQueries({
+	@NamedQuery(name="TagEntity.findAll", query="SELECT t FROM TagEntity t")
+	//@NamedQuery(name="TagEntity.deleteByEntityIdAndEntityType", query="delete from tag_entity where entity_id = ?1 and entity_type=?2 and tag_entity_id <> 0")
+//}) 
 public class TagEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
