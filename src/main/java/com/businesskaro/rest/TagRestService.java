@@ -36,7 +36,10 @@ public class TagRestService {
 	
 	@RequestMapping(value="/services/tag", method = RequestMethod.DELETE)
 	public void deleteTag(@RequestParam("entityId") Integer entityId , @RequestParam("entityType") BKEntityType entityType){
-		tagRepo.deleteByEntityId(entityId);
+		//tagRepo.deleteByEntityId(entityId);
+		//tagRepo.delete(tagRepo.findAllByTagIdAndEntityType(entityId, entityType.name()));
+		tagRepo.deleteByEntityIdAndEntityType(entityId, entityType.name());
+		
 	}
 	
 	@RequestMapping(value="/services/tag/names", method = RequestMethod.GET)
