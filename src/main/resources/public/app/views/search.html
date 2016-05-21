@@ -238,7 +238,7 @@
                                     <td>
                                        Company
                                     </td>
-                                    <td style="height:52px;">
+                                    <td style="height:51px;">
                                        {{result.data.companyUrl}}                                 
                                     </td>
                                  </tr>
@@ -262,8 +262,8 @@
                                     <td>
                                        Company
                                     </td>
-                                    <td style="height:52px;">
-                                       {{result.data.companyUrl}}                                 
+                                    <td style="height:51px;">
+                                       {{result.data.companyUrl | maxlengthfilter : 25}}                                 
                                     </td>
                                  </tr>
                               </tbody>

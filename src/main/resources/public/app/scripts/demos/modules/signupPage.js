@@ -143,7 +143,7 @@ angular
           vcRecaptchaService.reload($scope.widgetId);
           //added by nagendra --CAPTCHA
           
-          $scope.showServerMessage = "A registration email has been sent. Please click on the link sent to register."
+          $scope.showServerMessage = "A registration email has been sent. Please use the link sent in the email to register in the application."
         },function(error){
           $scope.waiting = false;
           if(error.data.type ==='USER_ALREADY_EXIST'){

@@ -56,8 +56,7 @@ public class PolicyRestService extends BKRestService {
 			@RequestHeader("CLIENT_ID") String clientId){
 		try {
 			Integer userId = validateSecureToken(secureTokenUtil, clientId,secureToken);
-			validateSecureToken(secureTokenUtil,clientId, secureToken);
-			policy.userId = userId;
+			validateSecureToken(secureTokenUtil,clientId, secureToken);			
 			return policyService.createPolicy(policy);
 		} catch (Exception e) {
 			throw e;

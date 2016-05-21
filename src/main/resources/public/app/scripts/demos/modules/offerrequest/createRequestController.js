@@ -158,8 +158,15 @@ angular
     		$http({
     			url: '/services/request/'+$scope.id,
 	    	    method: 'DELETE'
-    		}).then(function(){
-    			$window.location.href = '/#/requests';
+	    		}).then(function(){
+	    		$http({
+		            url: '/services/tag/?entityId='+$scope.id + '&entityType='+ 'REQUEST',
+		            method: 'DELETE'
+		          }).then(function(){            
+		            $window.location.href = '/#/requests';
+		          },function(error){
+		            console.log('Cannot delete request',error);
+		        });    			
     		},function(error){
     			console.log('Cannot delete request',error);
     		});

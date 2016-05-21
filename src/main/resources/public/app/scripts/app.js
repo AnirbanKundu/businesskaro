@@ -280,25 +280,34 @@ angular
           }
         }
       });
-      $rootScope.$on('$routeChangeSuccess', function() {
+      $rootScope.$on('$routeChangeSuccess', function(event) {
+        event.preventDefault();
+        var currentPath = ''
+        if($location.$$path === '/resetpassword')
+        {
+          currentPath = '/';
+        } 
+        else{
+          currentPath = $location.$$path;
+        }
         var apphistory = UserAuthentication.getuserRoutes();
         if(apphistory && apphistory.length ==0){
-          apphistory.push($location.$$path);
+          apphistory.push(currentPath);
         }
         else if(apphistory && apphistory.length ==1){
-          apphistory.push($location.$$path);
+          apphistory.push(currentPath);
         }
         else if(apphistory && apphistory.length>1){
           var previous = apphistory.pop();
           apphistory[0] = previous;
-          apphistory[1] = $location.$$path;
+          apphistory[1] = currentPath;
         }
         UserAuthentication.setuserRoutes(apphistory);
         console.log('Rootscope success in app.js', $location);
 
         if($rootScope.currentroute){
-          $rootScope.previous=$location.$$path;
-          $rootScope.current=$location.$$path;
+          $rootScope.previous=currentPath;
+          $rootScope.current=currentPath;
         }
         
     });

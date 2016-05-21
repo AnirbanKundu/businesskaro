@@ -1,6 +1,6 @@
 angular
 .module('theme.demos.featurednewscontroller', [])
-.controller('FeaturedNewsController', ['$rootScope','$scope', '$http', '$location','$route','LookUpService',function ($rootScope, $scope, $http, $location, $route,LookUpService) 
+.controller('FeaturedNewsController', ['$rootScope','$scope', '$http', '$location','$route','LookUpService','$timeout',function ($rootScope, $scope, $http, $location, $route,LookUpService,$timeout) 
 {
   'use strict';  
     $scope.policyId = $route.current.params.entityId;    
@@ -31,10 +31,13 @@ angular
     }).error(function () {
         $scope.policy = [];
         $scope.waiting = false;
-    });      
-    FB.init({
-        appId      : '1611093962546498',
-        xfbml      : true,
-        version    : 'v2.6'
-      });  
+    }); 
+    $timeout(function(){
+      twttr.widgets.load(); 
+      FB.init({
+          appId      : '1611093962546498',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+    },1000);
 }]);

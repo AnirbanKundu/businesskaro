@@ -1,6 +1,6 @@
 angular
   .module('theme.core.contactus_controller', [])
-  .controller('ContactUsController', ['$scope', '$filter', '$http',function($scope, $filter,$http) {
+  .controller('ContactUsController', ['$scope', '$filter', '$http','$timeout',function($scope, $filter,$http,$timeout) {
     'use strict';
     $scope.contactusForm={};
     $scope.phoneNumbr = /^\+?\d{2}[- ]?\d{5}[- ]?\d{5}$/;
@@ -37,4 +37,13 @@ angular
             $scope.alert = { type: 'alert', msg: 'Email was not sent. Try again.'};
           });
     }
-  }]);
+    $timeout(function(){
+      twttr.widgets.load();  
+      FB.init({
+          appId      : '1611093962546498',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+    },1000);    
+
+}]);

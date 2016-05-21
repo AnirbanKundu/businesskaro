@@ -247,7 +247,7 @@ angular
         }).then(function(){
           //Now Delete the TAG from TAG Entity table.
           $http({
-            url: '/services/tag/?entityId='+$scope.id + '&&entityType='+ 'OFFER',
+            url: '/services/tag/?entityId='+$scope.id + '&entityType='+ 'OFFER',
             method: 'DELETE'
           }).then(function(){            
             $window.location.href = '/#/myoffers'; 

@@ -172,10 +172,12 @@ angular
       $scope.checkValidation('isstateValid', newval);   
     });
     $scope.$watch('user.summary.companyUrl',function(newval,oldval){
-      if($scope.user.summary.userType!='E'){
-        $scope.checkValidation('iscompanyUrlValid', newval);   
-      }      
-    });
+        if(newval){
+          if($scope.user.summary.userType!='E'){
+          $scope.checkValidation('iscompanyUrlValid', newval);   
+          }    
+        }           
+      });
     $scope.$watch('user.details.faceBookUrl',function(newval,oldval){
       if(newval){
         if(!validateURL(newval,"facebook")){
@@ -388,11 +390,5 @@ angular
       $scope.user.details.twiterURL = '';
       $scope.user.details.linkedInUrl = '';
     };
-
-
-
-
-
-
 
   }]);

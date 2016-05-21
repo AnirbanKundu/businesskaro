@@ -1,6 +1,6 @@
 angular
   .module('theme.demos.myoffer', [])
-  .controller('MyOfferController', ['$scope', '$http','$location', function($scope,$http,$location){
+  .controller('MyOfferController', ['$scope', '$http','$location','$timeout', function($scope,$http,$location, $timeout){
 
   	  $scope.waiting = true;	
 	  $http.get('/services/offer').success(function(response){
@@ -12,7 +12,9 @@ angular
 	    });
 	  
 	  $scope.openOffer = function(offer){
-		 $location.url('/createoffer?id='+offer.id);
+	  	$timeout(function(){
+	  		$location.url('/createoffer/'+offer.id);
+	  	},50);		
 	  }
 
 	  $scope.createOffer=function(){

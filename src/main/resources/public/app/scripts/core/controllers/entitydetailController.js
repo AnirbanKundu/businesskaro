@@ -1,6 +1,6 @@
 angular
   .module('theme.core.entitydetail_controller', ['theme.core.search_controller'])
-  .controller('EntityDetailController', ['$scope', '$http', '$route', '$state', '$timeout', '$log', 'EntityService','LookUpService', function($scope, $http, $route, $state, $timeout, $log, EntityService,LookUpService) {
+  .controller('EntityDetailController', ['$rootScope','$scope', '$http', '$route', '$state', '$timeout', '$log', 'EntityService','LookUpService', function($rootScope,$scope, $http, $route, $state, $timeout, $log, EntityService,LookUpService) {
     'use strict';
 
     $scope.entityType = $route.current.params.type.toUpperCase();
@@ -8,7 +8,7 @@ angular
     $scope.entityResult = {};
     $scope.userDetail = {};
     $scope.serverMessage = '';
-    //$scope.waiting = false;
+    $scope.waiting = false;
     
     LookUpService.getStates().then(function(data){
 
@@ -154,7 +154,8 @@ angular
     });
 
     $timeout(function(){
-       FB.init({
+      twttr.widgets.load();  
+      FB.init({
              appId      : '1611093962546498',
              xfbml      : true,
              version    : 'v2.6'
@@ -162,6 +163,7 @@ angular
     },1000);
 
     $scope.connect = function(connectMessage){
+      $scope.waiting = true;
       $http({
               url: '/services/communicate',
               method: 'POST',

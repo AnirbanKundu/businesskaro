@@ -14,6 +14,8 @@ angular
   $scope.selectedEducationId=0;
   $scope.selectedProfessionId = 0;
   $scope.selectedStateId = 0;
+  $scope.userId=0;
+  
   
   /*********** Get all Lookup values *********/
   LookUpService.getStates().then(function(data){
@@ -39,6 +41,7 @@ angular
               $scope.offerTitle=data.policyTitle;
               $scope.offerDescription=data.policyDesc;
               $scope.isFeatured = data.isFeatured;
+              $scope.userId=data.userId;
               if(data.imageUrl){
                 var imagePath = $scope.imageUrl = data.imageUrl;
                 var widgetFileInput = $('.fileinput').fileinput();
@@ -205,7 +208,15 @@ angular
         url: '/services/policy/'+$scope.id,
           method: 'DELETE'
       }).then(function(){
-        $window.location.href = '/#/mypolicies'; 
+          $http({
+                url: '/services/tag/?entityId='+$scope.id + '&entityType='+ 'GOVT_POLICY',
+                method: 'DELETE'
+              }).then(function(){            
+                $window.location.href = '/#/mypolicies'; 
+              },function(error){
+                console.log('Cannot delete request',error);
+            });
+        
       },function(error){
         console.log('Cannot delete request',error);
       });
@@ -250,6 +261,7 @@ angular
                       "industrys" : industries,
                       "states" : state,
                       "imageUrl" :$scope.imageUrl,
+                      "userId":$scope.userId,
                       "isFeatured":parseInt($scope.isFeatured)                     
                       },
                   cache : false}).then(function(response){
