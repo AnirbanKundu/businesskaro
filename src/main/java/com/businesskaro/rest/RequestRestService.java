@@ -116,7 +116,7 @@ public class RequestRestService extends BKRestService{
 			@RequestHeader("CLIENT_ID") String clientId,@PathVariable("userId") Integer userId){
 		try{
 			validateSecureToken(secureTokenUtil,clientId, secureToken);
-			return service.getOfferByUserId(userId, OfferRequestEnum.OFFER);
+			return service.getOfferByUserId(userId, OfferRequestEnum.REQUEST);
 		} catch(Exception e){
 			throw new BKException("User Not Authorized" , "001" , BKException.Type.INTERNAL_ERRROR);
 		}

@@ -63,7 +63,7 @@
 						<tr>
 							<th style="padding-right: 100px">Title</th>
 							<th>Description</th>
-							<th>Created Date</th>
+							<th>Created Date(yyyy-MM-dd)</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -71,7 +71,7 @@
 						<tr ng-repeat="e in entities">
 							<td align="left" data-title="Title"><i>{{e.entitytitle | maxlengthfilter : 70}}</i></td>
 							<td>{{e.entitydescription | maxlengthfilter : 100 }}</td>
-							<td>{{e.createDate}}</td>
+							<td>{{e.createDate| date:"yyyy-MM-dd"}}</td>
 							<td>						
 								<button type="button" class="btn btn-small" ng-click="editEntity(e)">Edit</button>  
 							</td>

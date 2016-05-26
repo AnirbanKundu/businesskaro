@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,10 +16,11 @@ import com.businesskaro.entity.repo.CustomRepository;
 import com.businesskaro.entity.repo.TagEntityRepo;
 import com.businesskaro.model.BKEntityType;
 import com.businesskaro.rest.dto.TagEntityRequest;
+import com.businesskaro.security.SecureTokenUtil;
 import com.businesskaro.service.TagService;
 
 @RestController
-public class TagRestService {
+public class TagRestService extends BKRestService {
 
 	@Autowired
 	TagService tagService;
@@ -29,15 +31,21 @@ public class TagRestService {
 	@Autowired
 	CustomRepository customRepo;
 	
+	@Autowired
+	SecureTokenUtil secureTokenUtil;
+	
 	@RequestMapping(value="/services/tag", method = RequestMethod.POST)
 	public void createTag(@RequestBody TagEntityRequest request){
 		tagService.createTagEntry(request);
 	}
 	
 	@RequestMapping(value="/services/tag", method = RequestMethod.DELETE)
-	public void deleteTag(@RequestParam("entityId") Integer entityId , @RequestParam("entityType") BKEntityType entityType){
+	public void deleteTag(@RequestParam("entityId") Integer entityId , @RequestParam("entityType") BKEntityType entityType, 
+			@RequestHeader("SECURE_TOKEN") String secureToken, 
+			@RequestHeader("CLIENT_ID") String clientId){
 		//tagRepo.deleteByEntityId(entityId);
 		//tagRepo.delete(tagRepo.findAllByTagIdAndEntityType(entityId, entityType.name()));
+		validateSecureToken(secureTokenUtil,clientId, secureToken);
 		tagRepo.deleteByEntityIdAndEntityType(entityId, entityType.name());
 		
 	}

@@ -18,7 +18,7 @@
 </div>
 <div class="container-fluid" >
 	<div class="row">
-		<div class="col-md-9" ng-if="entityType=='GOVT_POLICY'">
+		<div class="col-md-9" ng-if="entityType=='GOVERNMENT-POLICY'">
 				<div class="panel panel-default panel-profile">
 					<div class="panel-body user-profile" style="padding:20px;text-align:justify;height:700px;overflow-y:auto;">
 						<h3>{{entityResult.policyTitle}}</h3>
@@ -50,12 +50,12 @@
 									<tbody>
 										<tr>
 											<td style="border-top: 0">Web</td>
-											<td style="border-top: 0"><a href="#">{{entityResult.summary.companyUrl}}</a></td>
+											<td style="border-top: 0">{{entityResult.summary.companyUrl}}</td>
 										</tr>
-										<tr>
+										<!-- <tr>
 											<td>Email</td>
-											<td><a href="">TBD</a></td>
-										</tr>
+											<td>TBD</td>
+										</tr> -->
 										
 										<tr>
 											<td>Education</td>
@@ -100,16 +100,16 @@
 									<tbody>
 										<tr>
 											<td style="border-top: 0">Submitted by</td>
-											<td style="border-top: 0"><a href="#">{{userDetail.firstName}}&nbsp;{{userDetail.lastName}}</a></td>
+											<td style="border-top: 0">{{userDetail.firstName}}&nbsp;{{userDetail.lastName}}</td>
 										</tr>
 										<tr>
 											<td style="border-top: 0">Company</td>
-											<td style="border-top: 0"><a href="#">{{userDetail.companyUrl}}</a></td>
+											<td style="border-top: 0">{{userDetail.companyUrl}}</td>
 										</tr>
-										<tr>
+										<!-- <tr>
 											<td>Email</td>
-											<td><a href="">TBD</a></td>
-										</tr>
+											<td>TBD</td>
+										</tr> -->
 										<tr>
 											<td>Location</td>
 											<td>{{userDetail.cityName}},&nbsp;{{userDetail.stateName}}</td>
@@ -194,7 +194,7 @@
 											<span class="date">{{o.updateDate}}</span>
 										</div>
 										<div class="timeline-content">
-											<h3>{{o.title}}</h3>
+											<h3><a href="#/entitydetail/OFFER/{{o.id}}">{{o.title}}</a></h3>
 											<p>{{o.description | maxlengthfilter : 65}}</p>
 										</div>
 									</div>
@@ -211,7 +211,7 @@
 											<span class="date">{{r.updateDate}}</span>
 										</div>
 										<div class="timeline-content">
-											<h3>{{r.title}}</h3>
+											<h3><a href="#/entitydetail/OFFER/{{r.id}}">{{r.title}}</a></h3>
 											<p>{{r.description | maxlengthfilter : 65}}</p>
 										</div>
 									</div>
