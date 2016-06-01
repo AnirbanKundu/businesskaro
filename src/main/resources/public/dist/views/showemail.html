@@ -26,8 +26,9 @@
         </div>
         <!-- Email Content -->
         <div class="form-group">
-          <label for="name">Email Content</label>          
-          <textarea rows="4" cols="50" id="emailcontext" ng-model="email.emailContent" class="form-control" disabled></textarea>          
+          <label for="name">Sent Email Date</label>    
+           <input type="text" class="form-control" id="sentEmailDate" ng-model="email.emailSentDate | date:yyyy-MM-dd" disabled />      
+          <!-- <textarea rows="4" cols="50" id="emailcontext" ng-model="email.emailSentDate" class="form-control" disabled></textarea> -->          
         </div>
       </form>
       </div>

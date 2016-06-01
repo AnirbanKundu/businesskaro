@@ -11,6 +11,10 @@
 .panel-midnightblue{
   height:300px;
 }
+/*.embedlink {
+    float: left!important;
+    display: none;
+}*/
 </style>
 <div class="container-fluid" ng-controller="DashboardController">
     <!--<div class="row" style="margin-top: -20px;padding-top: 0;margin-left: 25%;">  
@@ -116,15 +120,15 @@
                   <!-- <button class="btn btn-primary btn-sm mr10" ng-click="linkClicked(p.policyId)" style="margin-top: -5px;">Read More...</button> -->                 
                 </p>
               </panel>
-          </div>
-          
+          </div>          
           <!-- Carousel -->
                     <div class="col-md-12">  
                    <div ng-app="theme.demos.ui_components">
                        <div id="slides_control">
                             <carousel interval="myInterval" style="width:100%;margin:0 auto" disable-animation="true">
                                 <slide ng-repeat="slide in slides" active="slide.active">
-                                    <img ng-src="{{slide.imageUrl}}" ng-click="linkClicked(slide.policyId)" style="margin:auto; height:285">
+                                    <img ng-if="slide.imageUrl" ng-src="{{slide.imageUrl}}" ng-click="linkClicked(slide.policyId)" style="margin:auto; height:285">
+                                    <img ng-if="!slide.imageUrl" ng-src="http://res.cloudinary.com/difyxhuza/image/upload/v1441404252/application_images/employee_pic.jpg" ng-click="linkClicked(slide.policyId)" style="margin:auto; height:285">
                                     <div class="carousel-caption">                                        
                                        <h1 style="color:#0F94C7">{{slide.policyTitle}}</h1s>
                                     </div>
@@ -153,8 +157,8 @@
        <div class="col-md-3">
             <div class="row">
               <div class="panel panel-widget" style="padding:20px;">        
-                  <!-- <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/BusinessKaro" data-widget-id="730650768823353344">Tweets by @BusinessKaro</a> -->
-                  <a class="twitter-timeline" href="https://twitter.com/nagendramca2011" data-widget-id="734708044722896898">Tweets by @nagendramca2011</a>
+                    <a class="twitter-timeline" data-dnt="true" href="https://twitter.com/BusinessKaro" data-widget-id="730650768823353344" style="frameborder:none">Tweets by @BusinessKaro</a> 
+                      <!--<a class="twitter-timeline" href="https://twitter.com/nagendramca2011" data-widget-id="734708044722896898">Tweets by @nagendramca2011</a>-->
                </div>       
             </div>
       </div> 

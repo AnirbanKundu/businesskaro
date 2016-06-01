@@ -47,7 +47,7 @@
               <th>Sent To Email</th>
               <th>Entity Type</th>
               <th>Email Subject</th>
-              <th>Email Content</th>
+              <th>Sent Email Date (YYYY-MM-DD)</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@
               <td>{{email.sentToEmail}}</td>
               <td>{{email.entityType}}</td>
               <td>{{email.emailSubject}}</td>
-              <td>{{email.emailContent}}</td>
+              <td>{{email.emailSentDate | date:"yyyy-MM-dd"}}</td>
               <!-- <td>   emailContent        
                 <button type="button" class="btn btn-small" ng-click="open();">Edit</button>  
               </td>
