@@ -190,7 +190,7 @@ angular
 	        else{
 	        	for(var i=0;i<$scope.selectedStates.selected.length;i++){
 	    			state.push($scope.selectedStates.selected[i].stateId);
-	    			tags.push($scope.states[i].stateName);
+	    			tags.push($scope.selectedStates.selected[i].stateName);
 	    		}
 	    		var industries=[];
 	    		for(var i=0;i<$scope.selectedIndustries.selected.length;i++){
