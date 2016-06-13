@@ -1,4 +1,10 @@
 <style type="text/css">
+   /* added by nagendra */
+   .panel-widget.widget-userfocus .img-user {
+    height: 100px;
+    width: 100px;   
+}
+
    .panel-body{
    padding:0 !important;
    }
@@ -88,6 +94,11 @@
    */
    cursor: pointer;
    }
+   
+   .widget-body{
+    height: 150px;
+   }
+  
 </style>
 <!--
    <div id="page-heading">
@@ -151,8 +162,8 @@
                         <div class="panel-loading" ng-if="!result.data">
                            <div class="panel-loader-dots"></div>
                         </div>
-                        <img ng-if="result.data.imageUrl" ng-src="{{result.data.imageUrl}}" class="img-offer" />
-                        <img ng-if="!result.data.imageUrl" ng-src="https://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1462651317/mqqmly2ika0tsfw0s0vq.jpg" class="img-offer"/>
+                        <img ng-if="result.data.imageUrl" ng-src="{{result.data.imageUrl}}" class="img-offer" width="100px" height="100px"/>
+                        <img ng-if="!result.data.imageUrl" ng-src="https://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1462651317/mqqmly2ika0tsfw0s0vq.jpg" class="img-offer" width="100px" height="100px"/>
                         <span class="name" style="height:53px;">{{result.data.policyTitle}}</span>
                      </div>
                      <div class="widget-footer">
@@ -174,16 +185,16 @@
                                     <td>
                                        <span>Industry</span>
                                     </td>
-                                    <td style="height:58px;">
+                                    <td style="height:60px;">
                                        {{result.data.industrys | industryfilter : 'ellipse' | maxlengthfilter : 65 | capitalizeFirstLetterfilter}}                                      
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td style="height:40px;">
+                                    <td style="height:50px;">
                                        <span>States Linked</span>
                                     </td>
                                     <td>
-                                       <span>{{result.data.states | statefilter:'ellipse' | maxlengthfilter : 45}}</span>
+                                       <span>{{result.data.states | statefilter:'ellipse' | maxlengthfilter :35}}</span>
                                     </td>
                                  </tr>
                               </tbody>
@@ -209,7 +220,7 @@
                         <!-- <img ng-src="{{result.data.imageUrl}}" class="img-circle img-user" ng-if="result.data.imageUrl"/> -->
                         <img ng-src="http://res.cloudinary.com/difyxhuza/image/upload/c_limit,h_100,w_150/v1441951746/m9gwnhnpmtwki0ho1pqb.png" class="img-circle img-user" ng-if="!result.data.imageUrl"/>
                         <span class="name">{{result.data.firstName}}&nbsp;{{result.data.lastName}}</span>
-                        <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span>
+                       <span class="location"><span class="glyphicon glyphicon-map-marker"></span> {{result.data.stateName}},&nbsp;{{result.data.cityName}}</span> 
                      </div>
                      <div class="widget-footer">
                         <!--<p>
@@ -238,7 +249,7 @@
                                     <td>
                                        Company
                                     </td>
-                                    <td style="height:51px;">
+                                    <td style="height:50px;">
                                        {{result.data.companyUrl}}                                 
                                     </td>
                                  </tr>
@@ -247,7 +258,7 @@
                                  <tr>
                                     <td>Profession</td>
                                     <td style="height:60px;">
-                                       {{result.data.aboutMe | maxlengthfilter : 50}}                          
+                                      {{result.data.aboutMe | maxlengthfilter : 50}}                           
                                     </td>
                                  </tr>
                                  <tr>
@@ -255,14 +266,14 @@
                                        Industry known
                                     </td>
                                     <td style="height:60px;">
-                                       {{result.data.industrys | industryfilter: 'ellipse' }}                                 
+                                     {{result.data.industrys | industryfilter: 'ellipse' }}                                  
                                     </td>
                                  </tr>
                                  <tr>
                                     <td>
                                        Company
                                     </td>
-                                    <td style="height:51px;">
+                                    <td style="height:50px;">
                                        {{result.data.companyUrl | maxlengthfilter : 25}}                                 
                                     </td>
                                  </tr>
@@ -298,7 +309,7 @@
                                  <td style="width:50px;">
                                     <span class="">Title</span>
                                  </td>
-                                 <td style="height:50px;">
+                                 <td style="height:60px;">
                                     <span>{{result.data.title | maxlengthfilter : 80}} </span>
                                  </td>
                               </tr>
@@ -315,7 +326,7 @@
                                  <td style="width:48px;">
                                     <span>Target Industry</span>
                                  </td>
-                                 <td style="height:55px;">
+                                 <td style="height:60px;">
                                     <span>{{result.data.trgtIndustry | industryfilter : 'ellipse'}}   </span>
                                  </td>
                               </tr>
@@ -323,7 +334,7 @@
                                  <td>
                                     <span>States valid in:</span>
                                  </td>
-                                 <td style="height:54px;">
+                                 <td style="height:50px;">
                                     <span>{{result.data.trgtLocation | statefilter: 'ellipse' | maxlengthfilter : 28 }}</span>
                                  </td>
                               </tr>
