@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <head>
-  <title>Businesskaro</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>Businesskaro</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<table style="border:0px solid black;">
-  <tr><td style="padding-left:10px;"><center><img src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1460444499/application_images/bk_new.png" style="display: block;" /></center></td></tr>
-  <tr><td style="padding-left:10px;"><center><img src="https://res.cloudinary.com/difyxhuza/image/upload/v1461324359/yunwzvcyenmltjutkhte.png" style="display: block;" /></center></td></tr>
-  <tr><td style="padding-left:10px;"><br><br><b>Dear #to_Name,<b></td></tr>
-  <tr><td style="padding-left:10px;"><br> #from_Name, wanted to connect with you regarding <a href="#server/#/entitydetail/#entity_type/#entity_id">#entity_type</a>.<br></td></tr>
-  <tr><td style="padding-left:10px;"><br><b> Message:</b></td></tr>  
-  <tr><td style="padding-left:10px;"><br> #message</td></tr>  
-   <tr style="padding:30px 30px 30px 30px;"><td style="padding-left:10px;" ><p style="font-size:0.83em;">Please do not reply to this email.  This is an automated message. This email contains BusinessKaro Confidential information. If you have received this email in error, please immediately delete it from your inbox. If you need help or support, please contact admin@bk.com. Thank you. </p> </td></tr>
-  <tr><td style="text-align:center;color:grey"><br>Useful Links:<a href="http://businesskaro.herokuapp.com/#/" target="_blank">Help</a> & <a href="http://businesskaro.herokuapp.com/#/contactus" target="_blank">Contact</a></td></tr>
-  </table> 
+    <table style="border:0px solid black;">
+        <tr><td style="padding-left:10px;"><center><img src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1460444499/application_images/bk_new.png" style="display: block;" /></center></td></tr>
+        <tr><td style="padding-left:10px;"><center><img src="https://res.cloudinary.com/difyxhuza/image/upload/v1465808719/mgnc7l1j8kouq0iznvdk.png" style="display: block;" /></center></td></tr>
+        <tr><td style="padding-left:10px;"><br><br><b>Dear Admin,<b></td></tr>
+        <tr><td style="padding-left:10px;"><br> #from_Name, wanted to connect with you regarding #subject.<br></td></tr>
+        <tr><td style="padding-left:10px;"><br><b> Message:</b></td></tr>
+        <tr><td style="padding-left:10px;"><br> #message</td></tr>
+        <tr><td style="padding-left:10px;"><br><b>Sincerely,</b></td></tr>
+        <tr><td style="padding-left:10px;">#from_Name </td></tr>
+        <tr><td style="padding-left:10px;">#mobile</td></tr>
+        <tr><td style="padding-left:10px;">#from_Email</td></tr>
+    </table>
 </body>
 </html>
