@@ -166,31 +166,33 @@ angular
     }
 
 
-    
+    $scope.fileTime = null;
     $('.fileinput').bind('change.bs.fileinput', function(file){ 
-        if(file && file.target.value!==undefined){
-          var fileIndex = file.target.value.lastIndexOf('\\'),
-          fileName = file.target.value.substring(file.target.value.lastIndexOf('\\')+1, file.target.value.length);
-          if(fileIndex > -1){
-            if(fileName!=$scope.actualImageName){
-              if($scope.actualImageName!==""){
-                $scope.actualImageName = fileName;
-                //Now Delete & Create
-                $scope.deleteFile();
-                $timeout(function(){
+        if(file && file.timeStamp && file.timeStamp+2000 > $scope.fileTime){
+          if(file && file.target.value!==undefined){
+            var fileIndex = file.target.value.lastIndexOf('\\'),
+            fileName = file.target.value.substring(file.target.value.lastIndexOf('\\')+1, file.target.value.length);
+            if(fileIndex > -1){
+              if(fileName!=$scope.actualImageName){
+                if($scope.actualImageName!==""){
+                  $scope.actualImageName = fileName;
+                  //Now Delete & Create
+                  $scope.deleteFile();
+                  $timeout(function(){
+                    $scope.createFile();
+                  },100);
+                }
+                else{
+                  $scope.actualImageName = fileName;
                   $scope.createFile();
-                },100);
-              }
-              else{
+                }            
+              }         
+            }
+            else{
                 $scope.actualImageName = fileName;
-                $scope.createFile();
-              }            
-            }         
-          }
-          else{
-              $scope.actualImageName = fileName;
-          }
+            }
 
+          }
         }
         //$scope.actualImageName = file.target.value
         console.log('change.bs.fileinput was called');
@@ -199,7 +201,10 @@ angular
 
       $('.fileinput').bind('clear.bs.fileinput', function(event,file){ 
         console.log('clear.bs.fileinput was called');
-        $scope.deleteFile();
+        //if(file && file.timeStamp && file.timeStamp+2000 > $scope.fileTime){
+          $scope.deleteFile();
+        //}
+        
       });
       $('.fileinput').bind('reset.bs.fileinput', function(event,file){ 
         console.log('reset.bs.fileinput was called'); 
@@ -208,9 +213,9 @@ angular
       $scope.deleteFile = function(){
         $http({
           url : 'services/delete/'+ $scope.userImageId +'/image',
-          method: 'GET'
+          method: 'GET' /** Backend method is GET. THis is not wrong. The actual internal method is DELETE***/
         }).then(function(data){
-          $scope.ImageId = "";
+          $scope.userImageId = "";
           //$scope.ImageUrl = "";
           $scope.imageUrl = "";
         },function(error){
@@ -231,7 +236,7 @@ angular
             cache : false
           }).then(function(response){
               $scope.imageUrl = response.data.url;
-              $scope.ImageId = response.data.publicId;
+              $scope.userImageId = response.data.publicId;
               //$scope.ImageUrl = response.data.url;
               return response.data;
             }, function(response){
