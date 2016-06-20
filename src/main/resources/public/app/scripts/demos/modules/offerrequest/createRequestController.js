@@ -155,6 +155,7 @@ angular
 	    /*********** Get all Lookup values *********/
 
     	$scope.delete = function(){
+    		$scope.waiting = true;
     		$http({
     			url: '/services/request/'+$scope.id,
 	    	    method: 'DELETE'
@@ -162,13 +163,19 @@ angular
 	    		$http({
 		            url: '/services/tag/?entityId='+$scope.id + '&entityType='+ 'REQUEST',
 		            method: 'DELETE'
-		          }).then(function(){            
-		            $window.location.href = '/#/requests';
+		          }).then(function(response){  
+		        	$scope.message = 'success';
+		        	$scope.waiting = false;
+               		$scope.alert = { type: 'success', msg: '<strong>Request</strong> deleted successfully.'};               		
 		          },function(error){
-		            console.log('Cannot delete request',error);
+		        	  $scope.message = 'error';
+                      $scope.alert = { type: 'danger', msg: '<strong>Request</strong> was not deleted. Try again.'};
+		            //console.log('Cannot delete request',error);
 		        });    			
     		},function(error){
-    			console.log('Cannot delete request',error);
+    			//console.log('Cannot delete request',error);
+    			 $scope.message = 'error';
+                 $scope.alert = { type: 'danger', msg: '<strong>Request</strong> was not deleted. Try again.'};
     		});
     	}
 	      

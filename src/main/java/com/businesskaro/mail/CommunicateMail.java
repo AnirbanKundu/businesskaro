@@ -57,7 +57,8 @@ public class CommunicateMail extends AbstractEmailNotification{
 		emailTokens.put("#message", communicate.message);
 		emailTokens.put("#entity_type", communicate.entityType);
 		emailTokens.put("#entity_id", communicate.entityId);
-		emailTokens.put("#server", "https://businesskaro.herokuapp.com");
+		//emailTokens.put("#server", "https://businesskaro.in");
+		emailTokens.put("#server", "http://www.businesskaro.in");
 	}
 	
 	@Override

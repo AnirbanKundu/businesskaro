@@ -9,7 +9,7 @@
   <tr><td style="padding-left:10px;"><center><img src="http://res.cloudinary.com/difyxhuza/image/upload/t_media_lib_thumb/v1460444499/application_images/bk_new.png" style="display: block;" /></center></td></tr>
   <tr><td style="padding-left:10px;"><center><img src="https://res.cloudinary.com/difyxhuza/image/upload/v1465808719/mgnc7l1j8kouq0iznvdk.png" style="display: block;" /></center></td></tr>
   <tr><td style="padding-left:10px;"><br><br><b>Dear #to_Name,<b></td></tr>
-  <tr><td style="padding-left:10px;"><br> #from_Name, wanted to connect with you regarding <a href="#server/#/#entity_type/#entity_id">#entity_type</a>.<br></td></tr>
+  <tr><td style="padding-left:10px;"><br> #from_Name, wanted to connect with you regarding <a href="#server/#/entitydetail/#entity_type/#entity_id">#entity_type</a>.<br></td></tr>
   <tr><td style="padding-left:10px;"><br><b> Message:</b></td></tr>  
   <tr><td style="padding-left:10px;"><br> #message</td></tr>  
   <tr style="padding:30px 30px 30px 30px;"><td style="padding-left:10px;" ><p style="font-size:0.83em;">Please do not reply to this email.  This is an automated message. This email contains BusinessKaro Confidential information. If you have received this email in error, please immediately delete it from your inbox. If you need help or support, please contact contactus.businesskaro@gmail.com. Thank you. </p> </td></tr>
