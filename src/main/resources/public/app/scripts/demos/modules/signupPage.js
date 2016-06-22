@@ -207,7 +207,7 @@ angular
                   $scope.isPasswordSent=true;          
                 },function(error){          
                   $scope.waiting = false;
-                  if(error.data.type ==='USER_AUTH_FAIL'){
+                  if(error.data.type ==='IN_VALID_USER'){
                     $scope.showServerMessage = 'User email not found. Please enter a valid email';     
                     $scope.isPasswordSent=false;
                     }else{

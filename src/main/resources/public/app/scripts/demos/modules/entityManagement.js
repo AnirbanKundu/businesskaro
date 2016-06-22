@@ -34,6 +34,10 @@ angular
         $scope.showServerMessage = 'Please select mandatory field';
       }
       if($scope.selectedEntity!=$scope.SELECT && $scope.selectedIndustry!=$scope.SELECT && $scope.selectedState!=$scope.SELECT){
+
+        //$scope.selectedState =  $scope.selectedState ==='ALL' ? -1 : $scope.selectedState; 
+        //$scope.selectedIndustry = $scope.selectedIndustry === 'ALL' ? -1 : $scope.selectedIndustry;
+
         $scope.waiting = true;
         $scope.showServerMessage = "";
         $http({

@@ -139,7 +139,7 @@ public class UserSecurityRestService extends BKRestService {
 		
 		List<TblUserPassword> userPswdEntitys = userDao.findByUsrName(loginRequest.email);
 		if(userPswdEntitys.size() == 0){
-			throw new BKException("UserNot Found", "", BKException.Type.USER_AUTH_FAIL );
+			throw new BKException("Email id not found", "", BKException.Type.IN_VALID_USER );
 		}
 		
 		TblUserPassword userPswd = userPswdEntitys.get(0);

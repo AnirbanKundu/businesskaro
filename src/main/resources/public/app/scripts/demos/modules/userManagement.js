@@ -85,11 +85,17 @@ angular
         });//end open      
       }//end showEntity
 }])
-.controller('ShowEmailController',['$rootScope', '$scope','showEmail','$location','$modalInstance', function ($rootScope, $scope, showEmail,$location,$modalInstance) {
+.controller('ShowEmailController',['$rootScope', '$scope','showEmail','$location','$modalInstance','$filter', function ($rootScope, $scope, showEmail,$location,$modalInstance,$filter) {
     $scope.email = showEmail;   
     $scope.close=function()
     {
        $modalInstance.dismiss('cancel');
     }
+    
+    $scope.$watch('email.emailSentDate', function (newValue) {
+        $scope.email.emailSentDate = $filter('date')(newValue, 'yyyy-MM-dd'); 
+    });
+   
+   
 
 }]);
