@@ -14,8 +14,8 @@ public class SecureTokenCache {
 	public void createConnection() {
 		try {
 			pool = new JedisPool(new JedisPoolConfig(),
-					"pub-redis-16365.us-east-1-3.6.ec2.redislabs.com", 16365,
-					Protocol.DEFAULT_TIMEOUT, "6uNtA6zeP5GlBVmV");
+					"pub-redis-18337.us-east-1-2.4.ec2.garantiadata.com", 18337,
+					Protocol.DEFAULT_TIMEOUT, "xr9QG8zu8d54fGCN");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
